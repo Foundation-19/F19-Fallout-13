@@ -660,7 +660,7 @@ GLOBAL_VAR_INIT(vendor_cash, 0)
 		new /datum/data/wasteland_equipment("varmint rifle",				/obj/item/gun/ballistic/automatic/marksman/servicerifle/varmint, 	100),
 		new /datum/data/wasteland_equipment("service rifle",				/obj/item/gun/ballistic/automatic/marksman/servicerifle, 			200),
 		new /datum/data/wasteland_equipment("single shotgun",				/obj/item/gun/ballistic/revolver/single_shotgun,					50),
-		new /datum/data/wasteland_equipment("single shotgun",				/obj/item/gun/ballistic/revolver/caravan_shotgun,					80),
+		new /datum/data/wasteland_equipment("caravan shotgun",				/obj/item/gun/ballistic/revolver/caravan_shotgun,					80),
 		new /datum/data/wasteland_equipment("9mm handgun",					/obj/item/gun/ballistic/automatic/pistol/ninemil,					50),
 		new /datum/data/wasteland_equipment(".45 handgun",					/obj/item/gun/ballistic/automatic/pistol/m1911,						75),
 		new /datum/data/wasteland_equipment("10mm handgun",					/obj/item/gun/ballistic/automatic/pistol/n99,						125),
@@ -705,7 +705,7 @@ GLOBAL_VAR_INIT(vendor_cash, 0)
 		new /datum/data/wasteland_equipment("box of .45 ammunition",	/obj/item/ammo_box/c45,													20),
 		new /datum/data/wasteland_equipment("box of 9mm ammunition",	/obj/item/ammo_box/c9mm,												10),
 		new /datum/data/wasteland_equipment("box of 10mm ammunition",	/obj/item/ammo_box/c10mm,												15),
-		new /datum/data/wasteland_equipment("box of 5.56mm ammunition",	/obj/item/ammo_box/a556,												30),
+		new /datum/data/wasteland_equipment("box of 5.56mm ammunition",	/obj/item/ammo_box/a556,												30)
 		)
 
 /obj/machinery/mineral/wasteland_vendor/clothing
@@ -892,6 +892,37 @@ GLOBAL_VAR_INIT(vendor_cash, 0)
 		new /datum/data/wasteland_equipment("X03b PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/advanced/mk2,		0),
 		new /datum/data/wasteland_equipment("X03b PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/advanced/mk2,	0),
 		new /datum/data/wasteland_equipment("Power Armor Manual",	/obj/item/book/granter/trait/pa_wear,						0)
+		)
+		
+/obj/machinery/mineral/wasteland_vendor/admin/weapons
+	name = "Brown Caravan Company Weaponsmith"
+	desc = "A well-maintained matter fabricator bearing a small, unfamilar logo. This one has the words 'WEAPONRY' printed across the front."
+	icon_state = "generic_idle"
+	prize_list = list(
+		new /datum/data/wasteland_equipment("pipe rifle",					/obj/item/gun/ballistic/revolver/pipe_rifle, 						0),
+		new /datum/data/wasteland_equipment("varmint rifle",				/obj/item/gun/ballistic/automatic/marksman/servicerifle/varmint, 	0),
+		new /datum/data/wasteland_equipment("service rifle",				/obj/item/gun/ballistic/automatic/marksman/servicerifle, 			0),
+		new /datum/data/wasteland_equipment("single shotgun",				/obj/item/gun/ballistic/revolver/single_shotgun,					0),
+		new /datum/data/wasteland_equipment("caravan shotgun",				/obj/item/gun/ballistic/revolver/caravan_shotgun,					0),
+		new /datum/data/wasteland_equipment("caravan shotgun",				/obj/item/gun/ballistic/revolver/caravan_shotgun,					80),
+		new /datum/data/wasteland_equipment("9mm handgun",					/obj/item/gun/ballistic/automatic/pistol/ninemil,					0),
+		new /datum/data/wasteland_equipment(".45 handgun",					/obj/item/gun/ballistic/automatic/pistol/m1911,						0),
+		new /datum/data/wasteland_equipment("10mm handgun",					/obj/item/gun/ballistic/automatic/pistol/n99,						0),
+		new /datum/data/wasteland_equipment("10mm speedloader",				/obj/item/ammo_box/l10mm,											0),
+		new /datum/data/wasteland_equipment("10mm handgun magazine",		/obj/item/ammo_box/magazine/m10mm_adv,								0),
+		new /datum/data/wasteland_equipment("12ga junk shell",				/obj/item/ammo_casing/shotgun/improvised,							0),
+		new /datum/data/wasteland_equipment("12ga buckshot shell",			/obj/item/ammo_casing/shotgun/buckshot,								0),
+		new /datum/data/wasteland_equipment("9mm handgun magazine",			/obj/item/ammo_box/magazine/m9mm,									0),
+		new /datum/data/wasteland_equipment(".45 handgun magazine",			/obj/item/ammo_box/magazine/m45,									0),
+		new /datum/data/wasteland_equipment("small 5.56mm rifle magazine",	/obj/item/ammo_box/magazine/m556/rifle/small,						0),
+		new /datum/data/wasteland_equipment("standard 5.56mm rifle magazine",	/obj/item/ammo_box/magazine/m556/rifle,							0),
+		new /datum/data/wasteland_equipment(".357 speedloader",				/obj/item/ammo_box/a357,											0),
+		new /datum/data/wasteland_equipment(".44 speedloader",				/obj/item/ammo_box/m44,												0),
+		new /datum/data/wasteland_equipment(".38 speedloader",				/obj/item/ammo_box/c38,												0),
+		new /datum/data/wasteland_equipment("box of .45 ammunition",		/obj/item/ammo_box/c45,												0),
+		new /datum/data/wasteland_equipment("box of 9mm ammunition",		/obj/item/ammo_box/c9mm,											0),
+		new /datum/data/wasteland_equipment("box of 10mm ammunition",		/obj/item/ammo_box/c10mm,											0),
+		new /datum/data/wasteland_equipment("box of 5.56mm ammunition",		/obj/item/ammo_box/a556,											0)
 		)
 
 #undef STATE_IDLE
