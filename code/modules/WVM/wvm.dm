@@ -652,40 +652,60 @@ GLOBAL_VAR_INIT(vendor_cash, 0)
 		)
 
 /obj/machinery/mineral/wasteland_vendor/weapons
-	name = "Guns and Bullets Magazine Vendor"
-	desc = "A battered, abused vending machine owned and supplied by the fine authors at Guns and Bullets Magazine. It also stocks blackpowder."
+	name = "Gun Runners Muniti-fab Mark II"
+	desc = "An ancient matter printer, jury-rigged by the Gun Runners to print guns and ammo and accept caps in exchange. This one has the letters 'MKII' spray-painted on the side in red lettering."
 	icon_state = "weapon_idle"
 	prize_list = list(
-		new /datum/data/wasteland_equipment("Blackpowder",					/obj/item/reagent_containers/glass/bottle/blackpowder,				50),
-		new /datum/data/wasteland_equipment("Guns and Bullets, Part 1",		/obj/item/book/granter/trait/gunsmith_one, 							100),
-		new /datum/data/wasteland_equipment("Guns and Bullets, Part 2",		/obj/item/book/granter/trait/gunsmith_two,							200),
-		new /datum/data/wasteland_equipment("Guns and Bullets, Part 3",		/obj/item/book/granter/trait/gunsmith_three, 						300),
-		new /datum/data/wasteland_equipment("Guns and Bullets, Part 4",		/obj/item/book/granter/trait/gunsmith_four, 						400)
+		new /datum/data/wasteland_equipment("pipe rifle",					/obj/item/gun/ballistic/revolver/pipe_rifle, 						20),
+		new /datum/data/wasteland_equipment("varmint rifle",				/obj/item/gun/ballistic/automatic/marksman/servicerifle/varmint, 	100),
+		new /datum/data/wasteland_equipment("service rifle",				/obj/item/gun/ballistic/automatic/marksman/servicerifle, 			200),
+		new /datum/data/wasteland_equipment("single shotgun",				/obj/item/gun/ballistic/revolver/single_shotgun,					50),
+		new /datum/data/wasteland_equipment("single shotgun",				/obj/item/gun/ballistic/revolver/caravan_shotgun,					80),
+		new /datum/data/wasteland_equipment("9mm handgun",					/obj/item/gun/ballistic/automatic/pistol/ninemil,					50),
+		new /datum/data/wasteland_equipment(".45 handgun",					/obj/item/gun/ballistic/automatic/pistol/m1911,						75),
+		new /datum/data/wasteland_equipment("10mm handgun",					/obj/item/gun/ballistic/automatic/pistol/n99,						125),
+		new /datum/data/wasteland_equipment("10mm speedloader",				/obj/item/ammo_box/l10mm,											5),
+		new /datum/data/wasteland_equipment("10mm handgun magazine",		/obj/item/ammo_box/magazine/m10mm_adv,								20),
+		new /datum/data/wasteland_equipment("12ga junk shell",				/obj/item/ammo_casing/shotgun/improvised,							2),
+		new /datum/data/wasteland_equipment("12ga buckshot shell",			/obj/item/ammo_casing/shotgun/buckshot,								10),
+		new /datum/data/wasteland_equipment("9mm handgun magazine",			/obj/item/ammo_box/magazine/m9mm,									10),
+		new /datum/data/wasteland_equipment(".45 handgun magazine",			/obj/item/ammo_box/magazine/m45,									20),
+		new /datum/data/wasteland_equipment("small 5.56mm rifle magazine",	/obj/item/ammo_box/magazine/m556/rifle/small,						20),
+		new /datum/data/wasteland_equipment("standard 5.56mm rifle magazine",	/obj/item/ammo_box/magazine/m556/rifle,							50)
 		)
 
 /obj/machinery/mineral/wasteland_vendor/weapons/shitty
-	name = "Gun Runners Vending Machine"
-	desc = "A battered, abused vending machine owned and supplied by the Gun Runners."
+	name = "Gun Runners Muniti-fab Mark I"
+	desc = "An ancient matter printer, jury-rigged by the Gun Runners to print guns and ammo and accept caps in exchange. This one has the letters 'MKI' spray-painted on the side in black lettering."
 	icon_state = "weapon_idle"
 	prize_list = list(
-		new /datum/data/wasteland_equipment("survival knife",				/obj/item/kitchen/knife/combat/survival, 							5),
-		new /datum/data/wasteland_equipment("9mm pistol",					/obj/item/gun/ballistic/automatic/pistol/ninemil,					50),
-		new /datum/data/wasteland_equipment("M1911",						/obj/item/gun/ballistic/automatic/pistol/m1911,						70),
-		new /datum/data/wasteland_equipment("Blackpowder",					/obj/item/reagent_containers/glass/bottle/blackpowder,				50),
+		new /datum/data/wasteland_equipment("pipe rifle",					/obj/item/gun/ballistic/revolver/pipe_rifle, 						20),
+		new /datum/data/wasteland_equipment("single shotgun",				/obj/item/gun/ballistic/revolver/single_shotgun,					50),
+		new /datum/data/wasteland_equipment("9mm handgun",					/obj/item/gun/ballistic/automatic/pistol/ninemil,					50),
+		new /datum/data/wasteland_equipment("10mm speedloader",				/obj/item/ammo_box/l10mm,											5),
+		new /datum/data/wasteland_equipment("12ga junk shell",				/obj/item/ammo_casing/shotgun/improvised,							2),
+		new /datum/data/wasteland_equipment("12ga buckshot shell",			/obj/item/ammo_casing/shotgun/buckshot,								10),
+		new /datum/data/wasteland_equipment("9mm handgun magazine",			/obj/item/ammo_box/magazine/m9mm,									10)
 		)
 
 /obj/machinery/mineral/wasteland_vendor/ammo
-	name = "Hauer Premium Ammo Vending Machine"
-	desc = "A prewar vending machine with a tiny, delicate internal fabricator for printing magazines. A label for Hauer Premium Ammo is printed on the side in blocky letters."
+	name = "Gun Runners Bullet-synth"
+	desc = "An ancient matter printer, jury-rigged by the Gun Runners to print ammo in bulk in exchange for caps. This one has a green bullet spray-painted on the side."
 	icon_state = "ammo_idle"
 	prize_list = list(
-		new /datum/data/wasteland_equipment("Handgun magazine (.45)",		/obj/item/ammo_box/magazine/m45,									6),
-		new /datum/data/wasteland_equipment("9mm pistol magazine (9mm)",	/obj/item/ammo_box/magazine/m9mm,									6),
-		new /datum/data/wasteland_equipment("10mm pistol magazine (10mm)",	/obj/item/ammo_box/magazine/m10mm_adv,								10),
-		new /datum/data/wasteland_equipment("Speed strip (.357)",			/obj/item/ammo_box/a357,											5),
-		new /datum/data/wasteland_equipment("Speed loader (.44)",			/obj/item/ammo_box/m44,												8),
-		new /datum/data/wasteland_equipment("Speed loader (.38)",			/obj/item/ammo_box/c38,												5),
-		new /datum/data/wasteland_equipment("small rifle magazine (5.56mm)",/obj/item/ammo_box/magazine/m556/rifle/small,						22)
+		new /datum/data/wasteland_equipment(".45 handgun magazine",			/obj/item/ammo_box/magazine/m45,									10),
+		new /datum/data/wasteland_equipment("9mm handgun magazine)",		/obj/item/ammo_box/magazine/m9mm,									5),
+		new /datum/data/wasteland_equipment("10mm handgun magazine",		/obj/item/ammo_box/magazine/m10mm_adv,								10),
+		new /datum/data/wasteland_equipment("10mm speedloader",				/obj/item/ammo_box/l10mm,											2),
+		new /datum/data/wasteland_equipment(".357 speedloader",				/obj/item/ammo_box/a357,											5),
+		new /datum/data/wasteland_equipment(".44 speedloader",				/obj/item/ammo_box/m44,												10),
+		new /datum/data/wasteland_equipment(".38 speedloader",				/obj/item/ammo_box/c38,												2),
+		new /datum/data/wasteland_equipment("small 5.56mm rifle magazine",	/obj/item/ammo_box/magazine/m556/rifle/small,						10),
+		new /datum/data/wasteland_equipment("standard 5.56mm rifle magazine",	/obj/item/ammo_box/magazine/m556/rifle,							25),
+		new /datum/data/wasteland_equipment("box of .45 ammunition",	/obj/item/ammo_box/c45,													20),
+		new /datum/data/wasteland_equipment("box of 9mm ammunition",	/obj/item/ammo_box/c9mm,												10),
+		new /datum/data/wasteland_equipment("box of 10mm ammunition",	/obj/item/ammo_box/c10mm,												15),
+		new /datum/data/wasteland_equipment("box of 5.56mm ammunition",	/obj/item/ammo_box/a556,												30),
 		)
 
 /obj/machinery/mineral/wasteland_vendor/clothing
@@ -836,6 +856,39 @@ GLOBAL_VAR_INIT(vendor_cash, 0)
 		new /datum/data/wasteland_equipment("Advanced mining scanner",	/obj/item/t_scanner/adv_mining_scanner,						300),
 		new /datum/data/wasteland_equipment("Proto-kinetic crusher",	/obj/item/twohanded/required/kinetic_crusher,				1000),
 		new /datum/data/wasteland_equipment("ORM Board",				/obj/item/circuitboard/machine/ore_redemption,				150)
+		)
+		
+/obj/machinery/mineral/wasteland_vendor/admin
+	name = "Brown Caravan Company Gen-fab"
+	desc = "A well-maintained matter fabricator bearing a small, unfamilar logo. This one has the words 'GENERAL GOODS' printed across the front."
+	icon_state = "generic_idle"
+	prize_list = list(
+		new /datum/data/wasteland_equipment("Economy-sized Cram",		/obj/item/reagent_containers/food/snacks/f13/cram/large,	0),
+		new /datum/data/wasteland_equipment("Economy-sized BlamCo Mac-n-Cheese",	/obj/item/reagent_containers/food/snacks/f13/blamco/large,	0),
+		new /datum/data/wasteland_equipment("Nuka-Cola",				/obj/item/reagent_containers/food/drinks/bottle/f13nukacola,	0),
+		new /datum/data/wasteland_equipment("Sunset Sarsparilla",		/obj/item/reagent_containers/food/drinks/bottle/sunset ,		0),
+		new /datum/data/wasteland_equipment("Stimpak",					/obj/item/reagent_containers/hypospray/medipen/stimpak,			0),
+		new /datum/data/wasteland_equipment("Super stimpak",			/obj/item/reagent_containers/hypospray/medipen/stimpak/super,	0),
+		new /datum/data/wasteland_equipment("RadAway",					/obj/item/reagent_containers/blood/radaway,						0),
+		new /datum/data/wasteland_equipment("Pip-boy",					/obj/item/pda,													0)
+		)
+		
+/obj/machinery/mineral/wasteland_vendor/admin/powerarmor
+	name = "Brown Caravan Company Power-Armorer"
+	desc = "A well-maintained matter fabricator bearing a small, unfamilar logo. This one has the words 'POWERED ARMOR' printed across the front."
+	icon_state = "generic_idle"
+	prize_list = list(
+		new /datum/data/wasteland_equipment("T45b PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/t45b,			0),
+		new /datum/data/wasteland_equipment("T45b PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/t45b,		0),
+		new /datum/data/wasteland_equipment("T45d PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/t45d,			0),
+		new /datum/data/wasteland_equipment("T45d PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/t45d,		0),
+		new /datum/data/wasteland_equipment("T60a PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/t60,			0),
+		new /datum/data/wasteland_equipment("T60a PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/t60,			0),
+		new /datum/data/wasteland_equipment("X03a PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/advanced,		0),
+		new /datum/data/wasteland_equipment("X03a PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/advanced,	0),
+		new /datum/data/wasteland_equipment("X03b PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/advanced/mk2,		0),
+		new /datum/data/wasteland_equipment("X03b PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/advanced/mk2,	0),
+		new /datum/data/wasteland_equipment("Power Armor Manual",	/obj/item/book/granter/trait/pa_wear,						0)
 		)
 
 #undef STATE_IDLE
