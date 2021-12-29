@@ -858,6 +858,9 @@ GLOBAL_VAR_INIT(vendor_cash, 0)
 		new /datum/data/wasteland_equipment("ORM Board",				/obj/item/circuitboard/machine/ore_redemption,				150)
 		)
 		
+		
+// admin vendors, not for actual use by players
+
 /obj/machinery/mineral/wasteland_vendor/admin
 	name = "Brown Caravan Company Gen-fab"
 	desc = "A well-maintained matter fabricator bearing a small, unfamilar logo. This one has the words 'GENERAL GOODS' printed across the front."
