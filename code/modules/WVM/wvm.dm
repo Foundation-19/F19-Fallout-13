@@ -882,17 +882,34 @@ GLOBAL_VAR_INIT(vendor_cash, 0)
 	desc = "A well-maintained matter fabricator bearing a small, unfamilar logo. This one has the words 'ARMOR' printed across the front."
 	icon_state = "generic_idle"
 	prize_list = list(
-		new /datum/data/wasteland_equipment("T45b PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/t45b,			0),
-		new /datum/data/wasteland_equipment("T45b PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/t45b,		0),
-		new /datum/data/wasteland_equipment("T45d PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/t45d,			0),
-		new /datum/data/wasteland_equipment("T45d PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/t45d,		0),
-		new /datum/data/wasteland_equipment("T60a PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/t60,			0),
-		new /datum/data/wasteland_equipment("T60a PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/t60,			0),
-		new /datum/data/wasteland_equipment("X03a PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/advanced,		0),
-		new /datum/data/wasteland_equipment("X03a PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/advanced,	0),
-		new /datum/data/wasteland_equipment("X03b PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/advanced/mk2,		0),
-		new /datum/data/wasteland_equipment("X03b PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/advanced/mk2,	0),
-		new /datum/data/wasteland_equipment("Power Armor Manual",	/obj/item/book/granter/trait/pa_wear,						0)
+		new /datum/data/wasteland_equipment("basic armor kit",				/obj/item/clothing/suit/armor/f13/kit,						0),
+		new /datum/data/wasteland_equipment("leather jacket",				/obj/item/clothing/suit/armor/f13/leather_jacket,			0),
+		new /datum/data/wasteland_equipment("reinforced leather jacket",	/obj/item/clothing/suit/armor/f13/leather_jacket/combat,	0),
+		new /datum/data/wasteland_equipment("leather armor",				/obj/item/clothing/suit/armor/f13/leatherarmor,				0),
+		new /datum/data/wasteland_equipment("advanced leather armor",		/obj/item/clothing/suit/armor/f13/leatherarmor/reinforced,	0),
+		new /datum/data/wasteland_equipment("security vest",				/obj/item/clothing/suit/armor/vest,							0),
+		new /datum/data/wasteland_equipment("security helmet",				/obj/item/clothing/head/helmet,								0),
+		new /datum/data/wasteland_equipment("metal armor",					/obj/item/clothing/suit/armor/f13/metalarmor,				0),
+		new /datum/data/wasteland_equipment("metal helmet",					/obj/item/clothing/head/helmet/f13/metalmask,				0),
+		new /datum/data/wasteland_equipment("advanced metal armor",			/obj/item/clothing/suit/armor/f13/metalarmor/reinforced,	0),
+		new /datum/data/wasteland_equipment("advanced metal helmet",		/obj/item/clothing/head/helmet/f13/metalmask/mk2,			0),
+		new /datum/data/wasteland_equipment("combat armor",					/obj/item/clothing/suit/armor/f13/combat,					0),
+		new /datum/data/wasteland_equipment("combat helmet",				/obj/item/clothing/head/helmet/f13/combat,					0),
+		new /datum/data/wasteland_equipment("advanced combat armor",		/obj/item/clothing/suit/armor/f13/combat/mk2,				0),
+		new /datum/data/wasteland_equipment("advanced combat helmet",		/obj/item/clothing/head/helmet/f13/combat/mk2,				0),
+		new /datum/data/wasteland_equipment("elite riot armor",				/obj/item/clothing/suit/armor/f13/rangercombat/eliteriot/reclaimed,		0),
+		new /datum/data/wasteland_equipment("elite riot helmet",			/obj/item/clothing/head/helmet/f13/rangercombat/eliteriot/reclaimed,	0),
+		new /datum/data/wasteland_equipment("T45b PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/t45b,						0),
+		new /datum/data/wasteland_equipment("T45b PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/t45b,					0),
+		new /datum/data/wasteland_equipment("T45d PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/t45d,						0),
+		new /datum/data/wasteland_equipment("T45d PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/t45d,					0),
+		new /datum/data/wasteland_equipment("T60a PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/t60,						0),
+		new /datum/data/wasteland_equipment("T60a PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/t60,						0),
+		new /datum/data/wasteland_equipment("X03a PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/advanced,					0),
+		new /datum/data/wasteland_equipment("X03a PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/advanced,				0),
+		new /datum/data/wasteland_equipment("X03b PA suit",		/obj/item/clothing/suit/armor/f13/power_armor/advanced/mk2,				0),
+		new /datum/data/wasteland_equipment("X03b PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/advanced/mk2,			0),
+		new /datum/data/wasteland_equipment("Power Armor Manual",	/obj/item/book/granter/trait/pa_wear,								0)
 		)
 		
 /obj/machinery/mineral/wasteland_vendor/admin/weapons
