@@ -87,7 +87,6 @@
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
-		client.screen += new /obj/screen/fullscreen/death
 		if(getToxLoss() > 20)
 			switch(rand(1,2))
 				if(1)

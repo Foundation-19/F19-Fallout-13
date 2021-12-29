@@ -162,7 +162,7 @@ HEAVY!
 
 /datum/job/enclave/f13usheavy
 	title = "Enclave Heavy Soldier"
-	flag = F13USPRIVATE
+	flag = F13USHEAVY
 	department_flag = ENCLAVE
 	faction = "Enclave"
 	total_positions = 1

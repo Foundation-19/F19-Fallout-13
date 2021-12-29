@@ -453,8 +453,8 @@
 we
 /obj/structure/sign/poster/contraband/pinup_topless
 	name = "Pin-up - Topless Times"
-	desc = "A pin-up of a woman without a shirt, freed from the restraints of clothing."
-	icon_state = "poster57"
+	desc = "Pervert."
+	icon_state = "poster43"
 
 /obj/structure/sign/poster/contraband/pinup_shower
 	name = "Pin-up - Take a Shower"

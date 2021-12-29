@@ -1,0 +1,8 @@
+{
+    "map_name": "Турбо Пустоши",
+    "map_path": "map_files/debug",
+    "map_file": "turbo_wasteland-redux.dmm",
+	"shuttles": {
+	    "cargo": "cargo_delta"
+    }
+}

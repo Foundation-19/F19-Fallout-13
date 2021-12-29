@@ -50,6 +50,8 @@
 	else
 		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>Player List</a></p>"
 		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
+		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
+
 
 	if(!IsGuestKey(src.key))
 		if (SSdbcore.Connect())

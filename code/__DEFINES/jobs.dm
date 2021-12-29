@@ -145,7 +145,8 @@
 #define F13USPRIVATE	(1<<2)
 #define F13USSCIENTIST	(1<<3)
 #define F13USENGINEER	(1<<4)
-#define F13USCOLONIST	(1<<5)
+#define F13USHEAVY	(1<<5)
+#define F13USCOLONIST	(1<<6)
 
 #define TRIBAL			(1<<10)
 
