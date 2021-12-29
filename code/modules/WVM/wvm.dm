@@ -867,14 +867,19 @@ GLOBAL_VAR_INIT(vendor_cash, 0)
 	desc = "A well-maintained matter fabricator bearing a small, unfamilar logo. This one has the words 'GENERAL GOODS' printed across the front."
 	icon_state = "generic_idle"
 	prize_list = list(
-		new /datum/data/wasteland_equipment("Economy-sized Cram",		/obj/item/reagent_containers/food/snacks/f13/cram/large,	0),
-		new /datum/data/wasteland_equipment("Economy-sized BlamCo Mac-n-Cheese",	/obj/item/reagent_containers/food/snacks/f13/blamco/large,	0),
+		new /datum/data/wasteland_equipment("economy-sized Cram",		/obj/item/reagent_containers/food/snacks/f13/cram/large,	0),
+		new /datum/data/wasteland_equipment("economy-sized BlamCo Mac-n-Cheese",	/obj/item/reagent_containers/food/snacks/f13/blamco/large,	0),
 		new /datum/data/wasteland_equipment("Nuka-Cola",				/obj/item/reagent_containers/food/drinks/bottle/f13nukacola,	0),
 		new /datum/data/wasteland_equipment("Sunset Sarsparilla",		/obj/item/reagent_containers/food/drinks/bottle/sunset ,		0),
-		new /datum/data/wasteland_equipment("Stimpak",					/obj/item/reagent_containers/hypospray/medipen/stimpak,			0),
-		new /datum/data/wasteland_equipment("Super stimpak",			/obj/item/reagent_containers/hypospray/medipen/stimpak/super,	0),
+		new /datum/data/wasteland_equipment("stimpak",					/obj/item/reagent_containers/hypospray/medipen/stimpak,			0),
+		new /datum/data/wasteland_equipment("super stimpak",			/obj/item/reagent_containers/hypospray/medipen/stimpak/super,	0),
 		new /datum/data/wasteland_equipment("RadAway",					/obj/item/reagent_containers/blood/radaway,						0),
-		new /datum/data/wasteland_equipment("Pip-boy",					/obj/item/pda,													0)
+		new /datum/data/wasteland_equipment("high-quality scrap metal",	/obj/item/stack/crafting/goodparts,								0),
+		new /datum/data/wasteland_equipment("scrap metal",				/obj/item/stack/crafting/metalparts,							0),
+		new /datum/data/wasteland_equipment("electronic scrap",			/obj/item/stack/crafting/electronicparts,						0),
+		new /datum/data/wasteland_equipment("metal sheets",				/obj/item/stack/sheet/metal/fifty,								0),
+		new /datum/data/wasteland_equipment("glass sheets",				/obj/item/stack/sheet/glass/fifty,								0),
+		new /datum/data/wasteland_equipment("Pip-Boy",					/obj/item/pda,													0)
 		)
 		
 /obj/machinery/mineral/wasteland_vendor/admin/armor
