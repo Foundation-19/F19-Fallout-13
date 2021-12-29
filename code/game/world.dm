@@ -267,7 +267,7 @@ GLOBAL_PROTECT(security_mode)
 			features += "vote"
 		hostedby = CONFIG_GET(string/hostedby)
 
-	s += "Med RP \[https://discord.gg/GEMmJYV]<br>"
+	s += "Med RP \[https://discord.gg/xmZMKfAzAb]<br>"
 
 	var/n = 0
 	for (var/mob/M in GLOB.player_list)
