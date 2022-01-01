@@ -13,7 +13,7 @@
 	move_to_delay = 5
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
-	environment_smash = ENVIRONMENT_SMASH_WALLS
+	environment_smash = ENVIRONMENT_SMASH_WALLS | ENVIRONMENT_SMASH_RWALLS | ENVIRONMENT_SMASH_STRUCTURES
 	emote_taunt_sound = list('sound/f13npc/supermutant/attack1.ogg', 'sound/f13npc/supermutant/attack2.ogg', 'sound/f13npc/supermutant/attack3.ogg')
 	emote_taunt = list("yells")
 	taunt_chance = 30

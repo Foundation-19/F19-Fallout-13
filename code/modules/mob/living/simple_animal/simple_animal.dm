@@ -168,6 +168,7 @@
 						turns_since_move = 0
 			return 1
 
+
 /mob/living/simple_animal/proc/handle_automated_speech(var/override)
 	set waitfor = FALSE
 	if(speak_chance)
@@ -202,7 +203,6 @@
 						emote("me", 1, pick(emote_see))
 					else
 						emote("me", 2, pick(emote_hear))
-
 
 /mob/living/simple_animal/proc/environment_is_safe(datum/gas_mixture/environment, check_temp = FALSE)
 	. = TRUE

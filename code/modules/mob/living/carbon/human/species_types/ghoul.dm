@@ -27,15 +27,15 @@
 /datum/species/ghoul/qualifies_for_rank(rank, list/features)
 	if(rank in GLOB.legion_positions) /* legion HATES these ghoul */
 		return 0
-	if(rank in GLOB.brotherhood_positions) //don't hate them, just tolorate. 
+	if(rank in GLOB.brotherhood_positions) //don't hate them, just tolorate.
 		return 0
 	if(rank in GLOB.vault_positions) //purest humans left in america. supposedly.
 		return 0
 	return ..()
 
-/*/datum/species/ghoul/glowing
+/datum/species/ghoul/glowing
 	name = "Glowing Ghoul"
-	id = "glowing ghoul"
+	id = "glowing_ghoul"
 	limbs_id = "glowghoul"
 	armor = -30
 	speedmod = 0.5
@@ -61,5 +61,14 @@
 	for(var/obj/item/bodypart/b in C.bodyparts)
 		b.max_damage = initial(b.max_damage)
 	SSradiation.processing -= C
-*/
 
+/datum/species/ghoul/glowing/qualifies_for_rank(rank, list/features)
+	if(rank in GLOB.legion_positions) /* legion HATES these ghoul */
+		return 0
+	if(rank in GLOB.brotherhood_positions) //don't hate them, just tolorate.
+		return 0
+	if(rank in GLOB.vault_positions) //purest humans left in america. supposedly.
+		return 0
+	if(rank in GLOB.enclave_positions) //purest humans left in america. supposedly.
+		return 0
+	return ..()

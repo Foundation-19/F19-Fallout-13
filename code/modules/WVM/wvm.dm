@@ -858,8 +858,8 @@ GLOBAL_VAR_INIT(vendor_cash, 0)
 		new /datum/data/wasteland_equipment("Proto-kinetic crusher",	/obj/item/twohanded/required/kinetic_crusher,				1000),
 		new /datum/data/wasteland_equipment("ORM Board",				/obj/item/circuitboard/machine/ore_redemption,				150)
 		)
-		
-		
+
+
 // admin vendors, not for actual use by players
 
 /obj/machinery/mineral/wasteland_vendor/admin
@@ -881,7 +881,7 @@ GLOBAL_VAR_INIT(vendor_cash, 0)
 		new /datum/data/wasteland_equipment("glass sheets",				/obj/item/stack/sheet/glass/fifty,								0),
 		new /datum/data/wasteland_equipment("Pip-Boy",					/obj/item/pda,													0)
 		)
-		
+
 /obj/machinery/mineral/wasteland_vendor/admin/armor
 	name = "Brown Caravan Company Armorer"
 	desc = "A well-maintained matter fabricator bearing a small, unfamilar logo. This one has the words 'ARMOR' printed across the front."
@@ -916,7 +916,7 @@ GLOBAL_VAR_INIT(vendor_cash, 0)
 		new /datum/data/wasteland_equipment("X03b PA helmet",	/obj/item/clothing/head/helmet/f13/power_armor/advanced/mk2,			0),
 		new /datum/data/wasteland_equipment("Power Armor Manual",	/obj/item/book/granter/trait/pa_wear,								0)
 		)
-		
+
 /obj/machinery/mineral/wasteland_vendor/admin/weapons
 	name = "Brown Caravan Company Weaponsmith"
 	desc = "A well-maintained matter fabricator bearing a small, unfamilar logo. This one has the words 'WEAPONRY' printed across the front."

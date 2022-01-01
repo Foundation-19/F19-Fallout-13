@@ -250,6 +250,20 @@
 	idlesound = list('sound/f13npc/roach/idle1.ogg', 'sound/f13npc/roach/idle2.ogg', 'sound/f13npc/roach/idle3.ogg',)
 	death_sound = 'sound/f13npc/roach/roach_death.ogg'
 
+/mob/living/simple_animal/hostile/radroach/Initialize()
+	. = ..()
+
+/mob/living/simple_animal/hostile/radroach/Aggro()
+	..()
+	summon_backup(10)
+
+/mob/living/simple_animal/hostile/radroach/AttackingTarget()
+	. = ..()
+	if(. && ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.apply_effect(20, EFFECT_IRRADIATE, 0)
+
+
 /mob/living/simple_animal/hostile/giantant
 	name = "fireant"
 	desc = "A large mutated insect that finds its way everywhere."

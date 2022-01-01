@@ -40,6 +40,7 @@
 	aggrosound = list('sound/f13npc/ghoul/aggro1.ogg', 'sound/f13npc/ghoul/aggro2.ogg')
 	idlesound = list('sound/f13npc/ghoul/idle.ogg')
 	death_sound = 'sound/f13npc/ghoul/ghoul_death.ogg'
+	var/multiple_sprites = TRUE
 
 /mob/living/simple_animal/hostile/dungemobs/ghoul/Initialize()
 	. = ..()
@@ -207,7 +208,6 @@
 /mob/living/simple_animal/hostile/dungemobs/ghoul/soldier/armored
 	name = "Armored Ghoul Soldier"
 	desc = "Have you ever seen a living ghoul before?<br>Ghouls are necrotic post-humans - decrepit, rotting, zombie-like mutants."
-	icon = 'icons/mob/wastemobs.dmi'
 	icon_state = "soldier_ghoul_a"
 	icon_living = "soldier_ghoul_a"
 	icon_dead = "soldier_ghoul_a_d"
@@ -218,7 +218,6 @@
 /mob/living/simple_animal/hostile/dungemobs/ghoul/scorched
 	name = "Scorched Ghoul Soldier"
 	desc = "Have you ever seen a living ghoul before?<br>Ghouls are necrotic post-humans - decrepit, rotting, zombie-like mutants."
-	icon = 'icons/mob/wastemobs.dmi'
 	icon_state = "scorched_m"
 	icon_living = "scorched_m"
 	icon_dead = "scorched_m_d"
@@ -240,11 +239,17 @@
 	attacktext = "punches"
 	attack_sound = "punch"
 
+/mob/living/simple_animal/hostile/dungemobs/ghoul/scorched/Initialize()
+	. = ..()
+	if(multiple_sprites)
+		icon_state = initial(icon_state) + "-[rand(1,5)]"
+		icon_living = icon_state
+		icon_dead = icon_living + "_d"
+
 
 /mob/living/simple_animal/hostile/dungemobs/ghoul/scorched/ranged
 	name = "Ranged Ghoul Solder"
 	desc = "Have you ever seen a living ghoul before?<br>Ghouls are necrotic post-humans - decrepit, rotting, zombie-like mutants."
-	icon = 'icons/mob/wastemobs.dmi'
 	icon_state = "scorched_r"
 	icon_living = "scorched_r"
 	icon_dead = "scorched_r_d"
@@ -269,6 +274,13 @@
 	attacktext = "shoots"
 	attack_sound = "punch"
 
+/mob/living/simple_animal/hostile/dungemobs/ghoul/scorched/ranged/Initialize()
+	. = ..()
+	if(multiple_sprites)
+		icon_state = initial(icon_state) + "-[rand(1,5)]"
+		icon_living = icon_state
+		icon_dead = icon_living + "_d"
+
 
 //////////////////////////Super Mutants////////////////////////
 
@@ -287,7 +299,7 @@
 	move_to_delay = 5
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
-	environment_smash = ENVIRONMENT_SMASH_WALLS
+	environment_smash = ENVIRONMENT_SMASH_WALLS | ENVIRONMENT_SMASH_RWALLS | ENVIRONMENT_SMASH_STRUCTURES
 	emote_taunt_sound = list('sound/f13npc/supermutant/attack1.ogg', 'sound/f13npc/supermutant/attack2.ogg', 'sound/f13npc/supermutant/attack3.ogg')
 	emote_taunt = list("yells")
 	taunt_chance = 30

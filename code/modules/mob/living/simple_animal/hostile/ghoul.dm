@@ -13,7 +13,7 @@
 	a_intent = INTENT_HARM
 	maxHealth = 40
 	health = 40
-	speed = 2
+	speed = 1.5
 	harm_intent_damage = 15
 	melee_damage_lower = 10
 	melee_damage_upper = 10
@@ -24,7 +24,7 @@
 	robust_searching = 0
 	gold_core_spawnable = HOSTILE_SPAWN
 	faction = list("ghoul")
-	//decompose = FALSE 
+	//decompose = FALSE
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/human/ghoul = 2,
 							/obj/item/stack/sheet/animalhide/human = 1,
 							/obj/item/stack/sheet/bone = 1)
@@ -39,7 +39,7 @@
 	death_sound = 'sound/f13npc/ghoul/ghoul_death.ogg'
 
 	XP = 15
-
+	var/charging = FALSE
 	var/multiple_sprites = TRUE
 
 /mob/living/simple_animal/hostile/ghoul/New()
@@ -91,7 +91,7 @@
 	icon_dead = "retro_glowghoul_d"
 	maxHealth = 80
 	health = 80
-	speed = 2
+	speed = 1.5
 	harm_intent_damage = 10
 	melee_damage_lower = 20
 	melee_damage_upper = 20
@@ -190,7 +190,7 @@
 	icon = 'icons/mob/ghouls.dmi'
 	icon_state = "soldier_ghoul"
 	icon_living = "soldier_ghoul"
-	icon_dead = "soldier_ghoul_d"
+	icon_dead = "soldier_ghoul_a"
 	icon_gib = "gib"
 	maxHealth = 90
 	health = 90
@@ -213,10 +213,17 @@
 	maxHealth = 100
 	health = 100
 
+/mob/living/simple_animal/hostile/ghoul/soldier/armored/New()
+	. = ..()
+	if(multiple_sprites)
+		icon_state = initial(icon_state) + "-[rand(1,10)]"
+		icon_living = icon_state
+		icon_dead = icon_living + "_d"
+
 /mob/living/simple_animal/hostile/ghoul/scorched
 	name = "Scorched Ghoul Soldier"
 	desc = "Have you ever seen a living ghoul before?<br>Ghouls are necrotic post-humans - decrepit, rotting, zombie-like mutants."
-	icon = 'icons/mob/ghouls.dmi'
+	icon = 'icons/mob/wastemobs.dmi'
 	icon_state = "scorched_m"
 	icon_living = "scorched_m"
 	icon_dead = "scorched_m_d"
@@ -272,3 +279,10 @@
 	aggro_vision_range = 10
 	attacktext = "shoots"
 	attack_sound = "punch"
+
+/mob/living/simple_animal/hostile/ghoul/scorched/ranged/New()
+	. = ..()
+	if(multiple_sprites)
+		icon_state = initial(icon_state) + "-[rand(1,5)]"
+		icon_living = icon_state
+		icon_dead = icon_living + "_d"

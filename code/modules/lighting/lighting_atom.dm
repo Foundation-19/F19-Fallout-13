@@ -11,23 +11,24 @@
 #define NONSENSICAL_VALUE -99999
 /atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE, l_on)
 	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
-		l_range = MINIMUM_USEFUL_LIGHT_RANGE	//Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
-	if (!isnull(l_power))
-		light_power = l_power
+		l_range = MINIMUM_USEFUL_LIGHT_RANGE //Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
 
-	if (!isnull(l_range))
-		light_range = l_range
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on) & COMPONENT_BLOCK_LIGHT_UPDATE)
+		return
 
-	if (l_color != NONSENSICAL_VALUE)
-		light_color = l_color
+	if(!isnull(l_power))
+		set_light_power(l_power)
+
+	if(!isnull(l_range))
+		set_light_range(l_range)
+
+	if(l_color != NONSENSICAL_VALUE)
+		set_light_color(l_color)
 
 	if(!isnull(l_on))
-		light_on = l_on
-
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT, l_range, l_power, l_color, l_on)
+		set_light_on(l_on)
 
 	update_light()
-
 #undef NONSENSICAL_VALUE
 
 // Will update the light (duh).

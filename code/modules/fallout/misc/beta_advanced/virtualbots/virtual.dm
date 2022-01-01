@@ -1,5 +1,6 @@
 /mob/living/simple_animal/hostile/eyebot/virtual
 	var/mob/living/carbon/human/pilot
+	see_in_dark = 8
 
 /mob/living/simple_animal/hostile/eyebot/virtual/New()
 	..()
