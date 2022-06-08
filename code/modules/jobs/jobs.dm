@@ -287,6 +287,30 @@ GLOBAL_LIST_INIT(followers_positions, list(
     "Followers Volunteer"
 	//"Followers Scientist"
 ))
+
+GLOBAL_LIST_INIT(riogrande_command_positions, list(
+    "El Jefe",
+))
+
+GLOBAL_LIST_INIT(riogrande_positions, list(
+    "Followers Administrator",
+))
+
+GLOBAL_LIST_INIT(texasranger_command_positions, list(
+    "Texas Ranger Cpt",
+))
+
+GLOBAL_LIST_INIT(texasranger_positions, list(
+    "Texas Ranger",
+))
+
+GLOBAL_LIST_INIT(cartel_command_positions, list(
+    "Sinaloa Boss",
+))
+
+GLOBAL_LIST_INIT(cartel_positions, list(
+    "Sinaloa Sicario",
+))
 /*
 GLOBAL_LIST_INIT(engineering_positions, list(
     "Chief Engineer",
@@ -341,6 +365,9 @@ GLOBAL_LIST_INIT(exp_jobsmap, list(
     EXP_TYPE_WASTELAND     = list("titles" = wasteland_positions),
   	EXP_TYPE_TRIBAL        = list("titles" = tribal_positions),
   	EXP_TYPE_FOLLOWERS     = list("titles" = followers_positions),
+	EXP_TYPE_CARTEL		   = list("titles" = cartel_positions),
+	EXP_TYPE_RIOGRANDE	   = list("titles" = riogrande_positions),
+	EXP_TYPE_TEXASRANGER   = list("titles" = texasranger_positions),
     EXP_TYPE_RANGER        = list("titles" = list("NCR Veteran Ranger","NCR Patrol Ranger", "NCR Scout Ranger")),
     EXP_TYPE_SCRIBE        = list("titles" = list("Scribe")),
     EXP_TYPE_DECANUS       = list("titles" = list("Legion Decanus")),
