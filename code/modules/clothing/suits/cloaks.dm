@@ -93,4 +93,5 @@
 	name = "Texas Ranger poncho"
 	desc = "A poncho made by the tribals for the texas rangers"
 	icon_state = "ponchoopen"
+	item_state = "poncho"
 	allowed = list(/obj/item/gun, /obj/item/kitchen, /obj/item/twohanded, /obj/item/claymore, /obj/item/twohanded/spear)
