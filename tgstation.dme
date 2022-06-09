@@ -1897,6 +1897,7 @@
 #include "code\modules\jobs\job_types\fallout\followers.dm"
 #include "code\modules\jobs\job_types\fallout\legion.dm"
 #include "code\modules\jobs\job_types\fallout\ncr.dm"
+#include "code\modules\jobs\job_types\fallout\riogrande.dm"
 #include "code\modules\jobs\job_types\fallout\vault.dm"
 #include "code\modules\jobs\job_types\fallout\wasteland.dm"
 #include "code\modules\jobs\map_changes\map_changes.dm"

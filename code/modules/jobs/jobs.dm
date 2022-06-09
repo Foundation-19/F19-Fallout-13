@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(riogrande_command_positions, list(
 ))
 
 GLOBAL_LIST_INIT(riogrande_positions, list(
-    "Followers Administrator",
+    "Rio Grande Soldier",
 ))
 
 GLOBAL_LIST_INIT(texasranger_command_positions, list(

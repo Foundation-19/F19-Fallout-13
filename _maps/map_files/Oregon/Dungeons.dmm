@@ -7227,7 +7227,7 @@
 "aMi" = (
 /obj/machinery/vending/wallmed{
 	pixel_y = 30;
-	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 10, /obj/item/reagent_containers/pill/patch/silver_sulf = 10, /obj/item/reagent_containers/medspray/styptic = 4, /obj/item/reagent_containers/medspray/silver_sulf = 4, /obj/item/reagent_containers/pill/charcoal = 2, /obj/item/reagent_containers/medspray/sterilizine = 2)
+	products = list(/obj/item/reagent_containers/syringe=3,/obj/item/reagent_containers/pill/patch/styptic=10,/obj/item/reagent_containers/pill/patch/silver_sulf=10,/obj/item/reagent_containers/medspray/styptic=4,/obj/item/reagent_containers/medspray/silver_sulf=4,/obj/item/reagent_containers/pill/charcoal=2,/obj/item/reagent_containers/medspray/sterilizine=2)
 	},
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/f13/vault_floor/blue/white,
@@ -14743,11 +14743,11 @@
 "blc" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/f13/combat/enclave{
-	armor = list("melee" = 55, "bullet" = 60, "laser" = 50, "energy" = 80, "bomb" = 80, "bio" = 90, "rad" = 80, "fire" = 80, "acid" = 70);
+	armor = list("melee"=55,"bullet"=60,"laser"=50,"energy"=80,"bomb"=80,"bio"=90,"rad"=80,"fire"=80,"acid"=70);
 	name = "hardened enclave combat armor"
 	},
 /obj/item/clothing/head/helmet/f13/combat/enclave{
-	armor = list("melee" = 65, "bullet" = 55, "laser" = 55, "energy" = 55, "bomb" = 60, "bio" = 50, "rad" = 60, "fire" = 50, "acid" = 60);
+	armor = list("melee"=65,"bullet"=55,"laser"=55,"energy"=55,"bomb"=60,"bio"=50,"rad"=60,"fire"=50,"acid"=60);
 	name = "hardened enclave combat helmet"
 	},
 /obj/item/clothing/shoes/combat{
@@ -14755,7 +14755,7 @@
 	slowdown = -0.25
 	},
 /obj/item/clothing/gloves/f13/military{
-	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 30, "bio" = 20, "rad" = 40, "fire" = 40, "acid" = 50)
+	armor = list("melee"=25,"bullet"=20,"laser"=20,"energy"=20,"bomb"=30,"bio"=20,"rad"=40,"fire"=40,"acid"=50)
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -14871,7 +14871,7 @@
 	name = "Enclave commander beret"
 	},
 /obj/item/clothing/gloves/f13/military{
-	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 30, "bio" = 20, "rad" = 40, "fire" = 40, "acid" = 50)
+	armor = list("melee"=25,"bullet"=20,"laser"=20,"energy"=20,"bomb"=30,"bio"=20,"rad"=40,"fire"=40,"acid"=50)
 	},
 /obj/item/pda,
 /obj/machinery/light,
@@ -15822,18 +15822,18 @@
 	tag = "icon-left (WEST)"
 	},
 /obj/item/clothing/head/helmet/f13/power_armor/midwest/hardened{
-	armor = list("melee" = 85, "bullet" = 85, "laser" = 65, "energy" = 75, "bomb" = 82, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 80);
+	armor = list("melee"=85,"bullet"=85,"laser"=65,"energy"=75,"bomb"=82,"bio"=100,"rad"=100,"fire"=90,"acid"=80);
 	desc = "Новые разработки Анклава привели к созданию улучшенной броник МК2! Очень идет к вашей крутой офицерской форме!";
 	max_integrity = 1200;
 	name = "Enclave MK2 power helmet"
 	},
 /obj/item/clothing/suit/armor/f13/power_armor/midwest/reinforced{
-	armor = list("melee" = 85, "bullet" = 85, "laser" = 65, "energy" = 75, "bomb" = 82, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 80);
+	armor = list("melee"=85,"bullet"=85,"laser"=65,"energy"=75,"bomb"=82,"bio"=100,"rad"=100,"fire"=90,"acid"=80);
 	desc = "Новые разработки Анклава привели к созданию улучшенной броник МК2! Очень идет к вашей крутой офицерской форме!";
 	name = "Enclave MK2 power armor"
 	},
 /obj/item/clothing/under/f13/recon{
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 0, "energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 30, "fire" = 30, "acid" = 40);
+	armor = list("melee"=5,"bullet"=5,"laser"=0,"energy"=5,"bomb"=0,"bio"=0,"rad"=30,"fire"=30,"acid"=40);
 	desc = "Улучшенная технология разведкостюмов подогнанная специально под вашу прекрасную офицерскую фигуру!";
 	max_integrity = 600
 	},
@@ -18157,7 +18157,7 @@
 	slowdown = -0.25
 	},
 /obj/item/clothing/gloves/f13/military{
-	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 30, "bio" = 20, "rad" = 40, "fire" = 40, "acid" = 50)
+	armor = list("melee"=25,"bullet"=20,"laser"=20,"energy"=20,"bomb"=30,"bio"=20,"rad"=40,"fire"=40,"acid"=50)
 	},
 /turf/open/floor/f13{
 	icon_state = "reddirtyfull";
@@ -18167,11 +18167,11 @@
 "btX" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/f13/combat/enclave{
-	armor = list("melee" = 55, "bullet" = 60, "laser" = 50, "energy" = 80, "bomb" = 80, "bio" = 90, "rad" = 80, "fire" = 80, "acid" = 70);
+	armor = list("melee"=55,"bullet"=60,"laser"=50,"energy"=80,"bomb"=80,"bio"=90,"rad"=80,"fire"=80,"acid"=70);
 	name = "hardened enclave combat armor"
 	},
 /obj/item/clothing/head/helmet/f13/combat/enclave{
-	armor = list("melee" = 65, "bullet" = 55, "laser" = 55, "energy" = 55, "bomb" = 60, "bio" = 50, "rad" = 60, "fire" = 50, "acid" = 60);
+	armor = list("melee"=65,"bullet"=55,"laser"=55,"energy"=55,"bomb"=60,"bio"=50,"rad"=60,"fire"=50,"acid"=60);
 	name = "hardened enclave combat helmet"
 	},
 /obj/item/clothing/shoes/combat{
@@ -18179,7 +18179,7 @@
 	slowdown = -0.25
 	},
 /obj/item/clothing/gloves/f13/military{
-	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 30, "bio" = 20, "rad" = 40, "fire" = 40, "acid" = 50)
+	armor = list("melee"=25,"bullet"=20,"laser"=20,"energy"=20,"bomb"=30,"bio"=20,"rad"=40,"fire"=40,"acid"=50)
 	},
 /turf/open/floor/f13{
 	icon_state = "reddirtyfull";
@@ -18190,7 +18190,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/f13/combat/enclave,
 /obj/item/clothing/head/helmet/f13/combat/enclave{
-	armor = list("melee" = 65, "bullet" = 55, "laser" = 55, "energy" = 55, "bomb" = 60, "bio" = 50, "rad" = 60, "fire" = 50, "acid" = 60);
+	armor = list("melee"=65,"bullet"=55,"laser"=55,"energy"=55,"bomb"=60,"bio"=50,"rad"=60,"fire"=50,"acid"=60);
 	name = "hardened enclave combat helmet"
 	},
 /obj/item/clothing/shoes/combat{
@@ -18198,7 +18198,7 @@
 	slowdown = -0.25
 	},
 /obj/item/clothing/gloves/f13/military{
-	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 30, "bio" = 20, "rad" = 40, "fire" = 40, "acid" = 50)
+	armor = list("melee"=25,"bullet"=20,"laser"=20,"energy"=20,"bomb"=30,"bio"=20,"rad"=40,"fire"=40,"acid"=50)
 	},
 /turf/open/floor/f13{
 	icon_state = "reddirtyfull";

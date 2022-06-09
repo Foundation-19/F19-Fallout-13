@@ -86,6 +86,7 @@
 /mob/living/simple_animal/hostile/ghoul/glowing
 	name = "glowing ghoul"
 	desc = "A feral ghoul that has absorbed massive amounts of radiation, causing them to glow in the dark and radiate constantly."
+	icon = 'icons/mob/ghouls.dmi'
 	icon_state = "retro_glowghoul"
 	icon_living = "retro_glowghoul"
 	icon_dead = "retro_glowghoul_d"
