@@ -88,3 +88,9 @@
 	desc = "A cloak decorated with bones of a deathclaw and small trinkets repersenting the machine spirit of fire."
 	icon_state = "chiefcloak"
 	allowed = list(/obj/item/gun, /obj/item/kitchen, /obj/item/twohanded, /obj/item/claymore, /obj/item/twohanded/spear)
+
+/obj/item/clothing/neck/cloak/texasrangerponcho
+	name = "Texas Ranger poncho"
+	desc = "A poncho made by the tribals for the texas rangers"
+	icon_state = "ponchoopen"
+	allowed = list(/obj/item/gun, /obj/item/kitchen, /obj/item/twohanded, /obj/item/claymore, /obj/item/twohanded/spear)

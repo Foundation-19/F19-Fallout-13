@@ -537,3 +537,11 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	item_flags = NODROP
+
+
+/obj/item/clothing/head/f13/akubra
+	name = "Akubra Hat"
+	desc = "Noice *clicks*"
+	icon_state = "akubra"
+	item_state = "akubra"
+	armor = list("melee" = 10, "bullet" = 16, "laser" = 15, "energy" = 5, "bomb" = 16, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)

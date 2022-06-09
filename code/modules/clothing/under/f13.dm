@@ -1226,3 +1226,18 @@
 	name = "True Mafiosy Uniform"
 	icon_state = "un_zubenkomp"
 	item_state = "un_zubenkomp"
+
+/obj/item/clothing/under/f13/texranger
+	name = "Texas Ranger Uniform"
+	icon_state = "westendernew"
+	item_state = "westendernew"
+
+/obj/item/clothing/under/f13/rioofficer
+	name = "Rio Grande Officer"
+	icon_state = "riograndeofficer"
+	item_state = "riograndeofficer"
+
+/obj/item/clothing/under/f13/riosoldier
+	name = "Rio Grande Soldato"
+	icon_state = "riograndesoldato"
+	item_state = "riograndesoldato"

@@ -1342,3 +1342,26 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
+
+/obj/item/clothing/head/helmet/f13/texranger/rangercombat
+	name = "texas ranger combat helmet"
+	desc = "An old combat helmet, out of use around the time of the war."
+	icon_state = "texranger"
+	item_state = "texranger"
+	armor = list("melee" = 60, "bullet" = 50, "laser" = 30, "energy" = 50, "bomb" = 39, "bio" = 60, "rad" = 60, "fire" = 90, "acid" = 0)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	dynamic_hair_suffix = ""
+	dynamic_fhair_suffix = ""
+	flash_protect = 1
+	glass_colour_type = /datum/client_colour/glass_colour/red
+	lighting_alpha = LIGHTING_PLANE_ALPHA_LOWLIGHT_VISION
+	darkness_view = 128
+
+/obj/item/clothing/head/helmet/f13/rio/riosoldier
+	name = "spanish soldier helmet"
+	desc = "Rio grande soldier helmet"
+	icon_state = "adrian_rio"
+	item_state = "adrian_rio"
+	// armor = list("melee" = 60, "bullet" = 50, "laser" = 30, "energy" = 50, "bomb" = 39, "bio" = 60, "rad" = 60, "fire" = 40, "acid" = 0)
