@@ -2,7 +2,7 @@
 	set name = "Choose perk"
 	set category = "Advanced"
 
-#warning Perks need recoding
+#warn Perks need recoding
 
 //	perks.uiChoose()
 

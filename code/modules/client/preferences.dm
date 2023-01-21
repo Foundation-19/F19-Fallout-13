@@ -199,6 +199,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/icon/bgstate = "steel"
 	var/list/bgstate_options = list("000", "midgrey", "FFF", "white", "steel", "techmaint", "dark", "plating", "reinforced")
 
+	var/music_volume = 1
+	var/sounds_volume = 1
+	var/ambient_volume = 1
+
 /datum/preferences/New(client/C)
 	parent = C
 

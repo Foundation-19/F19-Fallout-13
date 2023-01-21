@@ -25,6 +25,12 @@
 	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
 	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
 	var/obj/vehicle/trailer
+	var/datum/riding/riding_datum = null
+	var/engine_on = 0
+	var/engine_on_sound = null
+	var/engine_loop_sound = null
+	var/obj/item/key/key = null
+
 
 /obj/vehicle/Initialize(mapload)
 	. = ..()
@@ -33,6 +39,10 @@
 	autogrant_actions_controller = list()
 	occupant_actions = list()
 	generate_actions()
+	if(engine_on)
+		src.verbs += /obj/vehicle/proc/StopEngine
+	else
+		src.verbs += /obj/vehicle/proc/StartEngine
 
 /obj/vehicle/proc/is_key(obj/item/I)
 	return I? (key_type_exact? (I.type == key_type) : istype(I, key_type)) : FALSE
@@ -151,3 +161,49 @@
 	if(trailer && .)
 		var/dir_to_move = get_dir(trailer.loc, newloc)
 		step(trailer, dir_to_move)
+
+/obj/vehicle/proc/StartEngine()
+	set name = "Start Engine"
+	set category = "Object"
+	set src in view(1)
+
+	start_engine()
+
+/obj/vehicle/proc/StopEngine()
+	set name = "Stop Engine"
+	set category = "Object"
+	set src in view(1)
+
+	stop_engine()
+
+/obj/vehicle/proc/stop_engine()
+	src.verbs += /obj/vehicle/proc/StartEngine
+	src.verbs -= /obj/vehicle/proc/StopEngine
+
+	if(usr)
+		usr.visible_message("[usr] stop engine of [src].", "You stop engine.")
+
+	engine_on = FALSE
+
+/obj/vehicle/proc/start_engine()
+	if(!riding_datum)
+		usr.visible_message("<span class = 'notice'>Sit on [src] to do this.</span>")
+		return
+
+	if(!key)
+		usr.visible_message("<span class = 'notice'>There is no key.</span>")
+		return
+
+	if(!istype(key, riding_datum.keytype))
+		usr.visible_message("<span class = 'notice'>Wrong key.</span>")
+		return
+
+	src.verbs += /obj/vehicle/proc/StopEngine
+	src.verbs -= /obj/vehicle/proc/StartEngine
+
+	if(usr)
+		usr.visible_message("[usr] start engine of [src].", "You start engine.")
+
+	engine_on = TRUE
+	if(engine_on_sound)
+		playsound(src, engine_on_sound, 50)

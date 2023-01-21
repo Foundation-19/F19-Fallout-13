@@ -16,7 +16,7 @@ var/datum/subsystem/flag/SSflag
 /datum/subsystem/flag/New()
 	NEW_SS_GLOBAL(SSflag)
 */
-#warning Recode this section
+#warn Recode this section
 /* Recode
 /datum/subsystem/flag/fire(resumed = 0)
 	for(var/obj/flagpole/flag in processing)

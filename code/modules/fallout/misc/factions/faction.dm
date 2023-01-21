@@ -1,19 +1,19 @@
 var/human_factions = list()
 
-proc/get_faction_by_freq(freq)
+/proc/get_faction_by_freq(freq)
 	for(var/F in human_factions)
 		var/datum/f13_faction/datum = get_faction_datum(F)
 		if(freq == datum.freq)
 			return datum.id
 	return null
 
-proc/get_faction_datum(faction)
+/proc/get_faction_datum(faction)
 	if(!human_factions[faction])
 		return null
 
 	return human_factions[faction]
 
-proc/get_faction_members(var/faction)
+/proc/get_faction_members(var/faction)
 	var/list/mobs = list()
 	for(var/mob/M in world)
 		if(M.social_faction == faction)
@@ -61,7 +61,7 @@ proc/get_faction_members(var/faction)
 
 //Vote for new leader. At voting involvement near staying members
 //This proc is so big, but it's easy to understand.
-mob/proc/begin_head_voting()
+/mob/proc/begin_head_voting()
 	set name = "Leader Voting"
 	set category = "Faction"
 
@@ -166,7 +166,7 @@ mob/proc/begin_head_voting()
 
 	return 1
 
-mob/proc/set_faction(var/faction)
+/mob/proc/set_faction(var/faction)
 	var/datum/f13_faction/F = get_faction_datum(faction)
 	var/datum/f13_faction/last_F = get_faction_datum(src.social_faction)
 	if(!F)
