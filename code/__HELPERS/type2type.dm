@@ -649,3 +649,16 @@
 		. += copytext(text, last_found, found)
 		last_found = found + delim_len
 	while(found)
+
+/proc/weight2feeling(var/weight)
+	switch(weight)
+		if(0 to LIGHT_WEIGHT)
+			return "Lightly"
+		if(LIGHT_WEIGHT to MIDDLE_WEIGHT)
+			return "Middling"
+		if(MIDDLE_WEIGHT to HEAVY_WEIGHT)
+			return "Heavily"
+		if(HEAVY_WEIGHT to LIMIT_WEIGHT)
+			return "Limit"
+		if(LIMIT_WEIGHT to INFINITY)
+			return "Unbearably"
