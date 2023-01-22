@@ -464,7 +464,10 @@ SUBSYSTEM_DEF(timer)
 	if (callback.object != GLOBAL_PROC && QDELETED(callback.object) && !QDESTROYING(callback.object))
 		stack_trace("addtimer called with a callback assigned to a qdeleted object. In the future such timers will not be supported and may refuse to run or run with a 0 wait")
 
-	wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
+	if (flags & TIMER_CLIENT_TIME)
+		wait = max(CEILING(wait, 1), 1)
+	else
+		wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
 
 	if(wait >= INFINITY)
 		CRASH("Attempted to create timer with INFINITY delay")
@@ -519,3 +522,4 @@ SUBSYSTEM_DEF(timer)
 #undef BUCKET_POS
 #undef TIMER_MAX
 #undef TIMER_ID_MAX
+
