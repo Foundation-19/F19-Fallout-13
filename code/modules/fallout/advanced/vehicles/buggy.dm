@@ -5,7 +5,7 @@
 	desc = "<i>Ain't no place for fancy cars on the wasteland.<br>No place for classy brands, but nicknames.<br>Only the rusty and trusty death machines.<br>Only fuel and blood.</i>"
 	icon = 'icons/fallout/vehicles/medium_vehicles.dmi'
 	icon_state = "buggy_dune"
-	datum_type = /datum/riding/motorcycle/buggy
+	var/datum_type = /datum/riding/motorcycle/buggy
 	pixel_x = -17
 	pixel_y = -2
 	obj_integrity = 600
@@ -108,8 +108,8 @@
 	forceMove(NewLoc)
 	..()
 
-/obj/vehicle/fuel/motorcycle/buggy/vertibird/NCR
-	name = "NCR vertibird"
+/obj/vehicle/fuel/motorcycle/buggy/vertibird/ncr
+	name = "ncr vertibird"
 	desc = "A vertibird belonging to the NCR."
 	icon = 'icons/fallout/vehicles/vertibird.dmi'
 	icon_state = "vb-fast_ncr"

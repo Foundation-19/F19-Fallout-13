@@ -4,7 +4,7 @@
 	var/contents_weight = 0
 	var/self_weight = 0
 
-/atom/movable/initialize()
+/atom/movable/Initialize()
 	..()
 	if(self_weight == null && isitem(src))
 		var/obj/item/I = src
@@ -25,25 +25,25 @@
 				self_weight = 100.000
 	if(istype(loc, /atom/movable))
 		var/atom/movable/L = loc
-		L.update_weight(self_weight)
+		L.update_carry_weight(self_weight)
 
-/atom/movable/proc/update_weight(var/weight)
+/atom/movable/proc/update_carry_weight(var/weight)
 	if(istype(loc, /atom/movable))
 		var/atom/movable/L = loc
-		L.update_weight(weight)
+		L.update_carry_weight(weight)
 	contents_weight = max(0, contents_weight + weight)
 
 /atom/movable/Entered(atom/movable/A, atom/oldloc)
 	. = ..()
-	update_weight(A.self_weight + A.contents_weight)
+	update_carry_weight(A.self_weight + A.contents_weight)
 
 /atom/movable/Exited(atom/movable/A, atom/newloc)
 	. = ..()
-	update_weight( -(A.self_weight + A.contents_weight))
+	update_carry_weight( -(A.self_weight + A.contents_weight))
 
 /mob/living/carbon/Move(n, direct)
 	. = ..()
 	if(!.)
 		return .
 	if(contents_weight > LIMIT_WEIGHT && prob(5))
-		Weaken(1)
+		Knockdown (1)
