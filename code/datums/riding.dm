@@ -238,11 +238,6 @@
 /datum/riding/boat
 	keytype = /obj/item/oar
 
-/datum/riding/boat/handle_ride(mob/user, direction)
-	var/turf/next = get_step(ridden, direction)
-	var/turf/current = get_turf(ridden)
-
-
 /datum/riding/boat/dragon
 	keytype = null
 	generic_pixel_y = 2
@@ -267,12 +262,9 @@
 		return
 
 	next_vehicle_move = world.time + vehicle_move_delay
-	if(TRUE) //Mheh
-		if(!isturf(ridden.loc))
-			return
-		step(ridden, direction)
+	if(!isturf(ridden.loc))
+		return
+	step(ridden, direction)
 
-		handle_vehicle_layer()
-		handle_vehicle_offsets()
-	else
-		to_chat(user, "<span class='notice'>You'll need something  to guide the [ridden.name].</span>")
+	handle_vehicle_layer()
+	handle_vehicle_offsets()
