@@ -1,463 +1,595 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"fV" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube"
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/processor/chopping_block,
-/obj/machinery/light/floor,
-/turf/open/floor/plasteel/f13{
-	icon_state = "showroomfloor"
-	},
-/area/shuttle/escape)
-"gf" = (
-/obj/structure/sink/kitchen{
-	dir = 4;
-	icon_state = "sink_alt";
-	pixel_x = -15;
-	tag = "icon-sink_alt (EAST)"
-	},
-/obj/machinery/food_cart,
-/obj/machinery/light/floor,
-/turf/open/floor/plasteel/f13{
-	icon_state = "showroomfloor"
-	},
-/area/shuttle/escape)
-"gs" = (
-/obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	icon_state = "stove_act"
-	},
-/obj/machinery/light/floor,
-/turf/open/floor/plasteel/f13{
-	icon_state = "showroomfloor"
-	},
-/area/shuttle/escape)
-"gE" = (
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"it" = (
-/obj/effect/spawner/structure/window/plastitanium,
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"iQ" = (
-/obj/machinery/door/window/survival_pod,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 9
-	},
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"kK" = (
-/obj/structure/chair/right{
-	dir = 8
-	},
-/obj/machinery/light/floor,
-/turf/open/floor/plasteel/f13{
-	icon_state = "greenfull"
-	},
-/area/shuttle/escape)
-"my" = (
-/obj/structure/fluff/beach_railings{
-	dir = 4
-	},
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"mG" = (
-/obj/structure/chair/comfy/black{
-	dir = 1
-	},
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"oy" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/f13{
-	icon_state = "bluefull"
-	},
-/area/shuttle/escape)
-"pF" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/bag/tray,
-/obj/item/storage/bag/trash,
-/turf/open/floor/plasteel/f13{
-	icon_state = "showroomfloor"
-	},
-/area/shuttle/escape)
-"pG" = (
-/turf/open/floor/plasteel/f13{
-	icon_state = "greenfull"
-	},
-/area/shuttle/escape)
-"pU" = (
-/obj/structure/chair/left{
-	dir = 8
-	},
-/obj/machinery/light/floor,
-/turf/open/floor/plasteel/f13{
-	icon_state = "greenfull"
-	},
-/area/shuttle/escape)
-"qc" = (
-/obj/structure/table/reinforced,
-/obj/item/kitchen/knife/butcher,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/food/snacks/dough,
-/obj/item/reagent_containers/food/snacks/dough,
-/obj/item/reagent_containers/food/snacks/dough,
-/obj/item/reagent_containers/food/snacks/dough,
-/obj/item/reagent_containers/food/snacks/dough,
-/obj/item/reagent_containers/food/snacks/dough,
-/turf/open/floor/plasteel/f13{
-	icon_state = "showroomfloor"
-	},
-/area/shuttle/escape)
-"rH" = (
-/obj/structure/table/reinforced,
-/obj/machinery/light/floor,
-/turf/open/floor/plasteel/f13{
-	icon_state = "bluefull"
-	},
-/area/shuttle/escape)
-"sv" = (
-/obj/docking_port/mobile/emergency{
-	dwidth = 24;
-	height = 6;
-	name = "Vault emergency shuttle";
-	width = 25
-	},
-/turf/closed/wall/f13/vault,
-/area/shuttle/escape)
-"um" = (
-/obj/structure/chair/comfy/black{
-	dir = 1
-	},
-/obj/machinery/door/window/survival_pod,
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"uH" = (
-/obj/effect/spawner/structure/window/plastitanium,
-/obj/machinery/light/floor,
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"vQ" = (
-/obj/structure/bed/pod,
-/obj/structure/curtain{
-	color = "gray";
-	desc = "lush luxurious velvet curtains from before the war."
-	},
-/turf/open/floor/plasteel/f13{
-	icon_state = "bluefull"
-	},
-/area/shuttle/escape)
-"yI" = (
-/obj/effect/spawner/structure/window/plastitanium,
-/obj/structure/curtain{
-	color = "gray";
-	desc = "lush luxurious velvet curtains from before the war."
-	},
-/turf/open/floor/f13{
-	icon_state = "floorrustysolid"
-	},
-/area/shuttle/escape)
-"zT" = (
-/obj/effect/spawner/structure/window/plastitanium,
-/turf/open/floor/f13{
-	icon_state = "floorrustysolid"
-	},
-/area/shuttle/escape)
-"CP" = (
-/obj/structure/fluff/beach_railings{
-	dir = 8
-	},
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"Ei" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 8
-	},
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"EZ" = (
+"aa" = (
 /turf/template_noop,
 /area/template_noop)
-"Fm" = (
-/obj/structure/chair/comfy/black{
+"ac" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ad" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"ae" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/escape)
+"af" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"ag" = (
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/door/window/survival_pod,
-/obj/structure/window/reinforced/survival_pod{
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"ah" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"ai" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/crowbar,
+/obj/item/storage/medkit/fire,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"al" = (
+/obj/machinery/computer/atmos_alert{
 	dir = 4
 	},
-/turf/open/floor/carpet/black,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"GL" = (
-/turf/closed/wall/f13/vault,
-/area/shuttle/escape)
-"HR" = (
-/obj/machinery/door/airlock/hatch,
-/turf/open/floor/plasteel/f13{
-	icon_state = "greenfull"
-	},
-/area/shuttle/escape)
-"IU" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/brahminwellington,
-/obj/effect/spawner/lootdrop/food,
-/obj/effect/spawner/lootdrop/food,
-/obj/effect/spawner/lootdrop/food,
-/obj/effect/spawner/lootdrop/three_course_meal,
-/obj/effect/spawner/lootdrop/three_course_meal,
-/obj/effect/spawner/lootdrop/three_course_meal,
-/obj/effect/spawner/lootdrop/three_course_meal,
-/obj/effect/spawner/lootdrop/three_course_meal,
-/obj/effect/spawner/lootdrop/three_course_meal,
-/obj/effect/spawner/lootdrop/three_course_meal,
-/obj/effect/spawner/lootdrop/three_course_meal,
-/obj/effect/spawner/lootdrop/three_course_meal,
-/obj/effect/spawner/lootdrop/three_course_meal,
-/obj/machinery/light/floor,
-/turf/open/floor/plasteel/f13{
-	icon_state = "showroomfloor"
-	},
-/area/shuttle/escape)
-"JZ" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 1
-	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 10
-	},
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"Ki" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 1
-	},
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"Lk" = (
-/obj/machinery/door/window/survival_pod,
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"Ng" = (
-/obj/structure/bedsheetbin,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/f13{
-	icon_state = "bluefull"
-	},
-/area/shuttle/escape)
-"NR" = (
-/obj/structure/table/abductor{
-	desc = "After YEARS of research, prototyping, and testing, the brotherhood created the sequel to the table. Advanced flat surface technology at work!";
-	name = "advanced table"
-	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
-/obj/machinery/computer/shuttle,
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"QS" = (
-/turf/open/floor/circuit/f13_blue,
-/area/shuttle/escape)
-"Sd" = (
-/obj/structure/curtain{
-	color = "gray";
-	desc = "lush luxurious velvet curtains from before the war."
-	},
-/obj/machinery/door/window/survival_pod,
-/turf/open/floor/carpet/black,
-/area/shuttle/escape)
-"Tm" = (
-/obj/structure/chair/middle{
+"am" = (
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/light/floor,
-/turf/open/floor/plasteel/f13{
-	icon_state = "greenfull"
-	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"XL" = (
-/obj/structure/decoration/clock/active,
-/turf/closed/wall/f13/vault,
+"an" = (
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"YS" = (
-/obj/structure/table/abductor{
-	desc = "After YEARS of research, prototyping, and testing, the brotherhood created the sequel to the table. Advanced flat surface technology at work!";
-	name = "advanced table"
+"ao" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
 	},
-/obj/structure/window/reinforced/survival_pod{
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"ap" = (
+/obj/machinery/computer/security{
 	dir = 8
 	},
-/obj/machinery/computer/shuttle,
-/turf/open/floor/carpet/black,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aq" = (
+/obj/machinery/computer/crew{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"ar" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"as" = (
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"at" = (
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_x = 6;
+	pixel_y = -24
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"au" = (
+/obj/machinery/computer/communications{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"ay" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"aA" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"aB" = (
+/obj/machinery/flasher/directional/north{
+	id = "cockpit_flasher"
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aC" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"aD" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aE" = (
+/obj/structure/table,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/crowbar,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aF" = (
+/obj/machinery/button/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24;
+	pixel_y = -6
+	},
+/obj/machinery/light/small/directional/west,
+/obj/machinery/flasher/directional/west{
+	id = "shuttle_flasher"
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"aG" = (
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"aH" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Brig"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape/brig)
+"aI" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"aJ" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"aK" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aM" = (
+/obj/structure/table,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aP" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	name = "Box emergency shuttle"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"aQ" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"aR" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"aS" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aT" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aV" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"aW" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"aX" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Cargo"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"aZ" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Infirmary"
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bb" = (
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"bc" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"bd" = (
+/obj/machinery/stasis,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"be" = (
+/obj/structure/table,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/crowbar,
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"bf" = (
+/obj/structure/closet,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"bg" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"bi" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"bj" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"bk" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"bl" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bm" = (
+/obj/structure/table,
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bn" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bo" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bp" = (
+/obj/machinery/light/directional/south,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"bq" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"br" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"bs" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"ga" = (
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Dk" = (
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Nt" = (
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"XC" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 
 (1,1,1) = {"
-uH
-it
-it
-it
-it
-uH
-GL
-EZ
-GL
-GL
-GL
-GL
-GL
-EZ
-GL
-zT
-zT
-zT
-GL
-EZ
-GL
-HR
-zT
-HR
-sv
+aa
+aa
+aa
+aa
+ad
+ad
+ad
+aI
+ad
+aP
+ad
+ac
+ac
+ac
+ad
+aV
+ad
+aV
+ad
+ad
+ad
+aa
 "}
 (2,1,1) = {"
-it
-NR
-Fm
-gE
-mG
-mG
-yI
-EZ
-zT
-gf
-pF
-fV
-zT
-EZ
-zT
-vQ
-vQ
-vQ
-zT
-EZ
-zT
-pG
-pG
-pG
-GL
+aa
+ad
+ad
+ad
+ad
+aA
+aF
+aG
+ad
+bn
+ao
+ao
+ao
+ao
+ao
+bo
+ad
+bb
+bq
+bf
+ad
+ad
 "}
 (3,1,1) = {"
-it
-QS
-gE
-gE
-gE
-gE
-Sd
-CP
-Ki
-gE
-gE
-gE
-Lk
-CP
-JZ
-Ei
-Ei
-Ei
-iQ
-CP
-Ki
-gE
-gE
-gE
-GL
+ad
+ae
+al
+aq
+ad
+aA
+aG
+aJ
+ad
+aQ
+aC
+aC
+aC
+aC
+aC
+aW
+ad
+bb
+bb
+bf
+bi
+bk
 "}
 (4,1,1) = {"
-it
-QS
-gE
-gE
-gE
-gE
-Sd
-my
-Ki
-gE
-gE
-gE
-Lk
-my
-Ki
-gE
-gE
-gE
-Lk
-my
-Ki
-gE
-gE
-gE
-GL
+ac
+af
+am
+ar
+ad
+aA
+aG
+aJ
+ad
+aC
+aS
+aS
+aS
+aS
+aS
+aC
+aX
+bb
+bb
+bg
+bi
+bk
 "}
 (5,1,1) = {"
-it
-YS
-um
-gE
-mG
-mG
-yI
-EZ
-zT
-gs
-qc
-IU
-zT
-EZ
-zT
-Ng
-rH
-oy
-zT
-EZ
-zT
-kK
-Tm
-pU
-GL
+ac
+ag
+aC
+as
+ad
+ac
+aH
+ac
+bj
+Dk
+aT
+aT
+aT
+aT
+aT
+aC
+ad
+bc
+br
+bg
+bi
+bk
 "}
 (6,1,1) = {"
-uH
-it
-it
-it
-it
-uH
-GL
-EZ
-GL
-XL
-GL
-GL
-GL
-EZ
-GL
-zT
-zT
-zT
-GL
-EZ
-GL
-XL
-GL
-GL
-GL
+ac
+ah
+aC
+at
+ad
+aB
+aC
+aK
+bm
+aC
+aC
+aC
+aC
+aC
+aC
+bp
+ad
+ad
+ad
+ad
+bi
+bk
+"}
+(7,1,1) = {"
+ac
+ag
+aC
+aC
+ay
+aC
+aC
+ao
+aM
+aC
+aS
+aS
+aS
+aS
+aS
+aC
+ac
+XC
+bs
+XC
+bi
+bk
+"}
+(8,1,1) = {"
+ac
+ai
+ao
+ao
+ad
+Nt
+aC
+aM
+aM
+aC
+aT
+aT
+aT
+aT
+aT
+aC
+aZ
+ga
+ga
+ga
+bi
+bk
+"}
+(9,1,1) = {"
+ad
+ae
+ap
+au
+ad
+aD
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+aC
+ac
+ga
+ga
+ga
+bi
+bk
+"}
+(10,1,1) = {"
+aa
+ad
+ad
+ad
+ad
+aE
+bl
+an
+an
+aR
+am
+am
+am
+am
+am
+aR
+ac
+bd
+be
+bd
+ad
+ad
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+ad
+ac
+ad
+ac
+ad
+ad
+ad
+ac
+ac
+ac
+ad
+ad
+ad
+ac
+ad
+ac
+ad
+aa
 "}

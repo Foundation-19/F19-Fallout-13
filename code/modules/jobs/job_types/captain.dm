@@ -1,104 +1,118 @@
-/*
-Captain
-*/
 /datum/job/captain
-	title = "Captain"
-	flag = CAPTAIN
+	title = JOB_CAPTAIN
+	description = "Be responsible for the station, manage your Heads of Staff, \
+		keep the crew alive, be prepared to do anything and everything or die \
+		horribly trying."
+	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("CentCom")
-	department_flag = ENGSEC
-	//faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "Vault-Tec officials and Space law"
-	selection_color = "#ccccff"
+	supervisors = "Nanotrasen officials and Space Law"
 	req_admin_notify = 1
 	minimal_player_age = 14
 	exp_requirements = 180
-	exp_type = EXP_TYPE_CREW
+	exp_required_type = EXP_TYPE_CREW
+	exp_required_type_department = EXP_TYPE_COMMAND
+	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "CAPTAIN"
 
 	outfit = /datum/outfit/job/captain
+	plasmaman_outfit = /datum/outfit/plasmaman/captain
 
-	access = list() 			//See get_access()
-	minimal_access = list() 	//See get_access()
+	paycheck = PAYCHECK_COMMAND
+	paycheck_department = ACCOUNT_SEC
 
-/datum/job/captain/get_access()
-	return get_all_accesses()
+	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
-/datum/job/captain/announce(mob/living/carbon/human/H)
-	..()
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Captain [H.real_name] on deck!"))
+	display_order = JOB_DISPLAY_ORDER_CAPTAIN
+	department_for_prefs = /datum/job_department/captain
+	departments_list = list(
+		/datum/job_department/command,
+	)
+
+	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/flask/gold, /obj/item/toy/captainsaid/collector)
+
+	mail_goodies = list(
+		/obj/item/clothing/mask/cigarette/cigar/havana = 20,
+		/obj/item/storage/fancy/cigarettes/cigars/havana = 15,
+		/obj/item/reagent_containers/cup/glass/bottle/champagne = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/champagne/cursed = 5,
+		/obj/item/toy/captainsaid/collector = 20,
+		/obj/item/skillchip/sabrage = 5,
+	)
+
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	rpg_title = "Star Duke"
+
+	voice_of_god_power = 1.4 //Command staff has authority
+
+
+/datum/job/captain/get_captaincy_announcement(mob/living/captain)
+	return "Captain [captain.real_name] on deck!"
+
 
 /datum/outfit/job/captain
 	name = "Captain"
 	jobtype = /datum/job/captain
 
-	id = /obj/item/card/id/gold
-	belt = /obj/item/pda/captain
-	glasses = /obj/item/clothing/glasses/sunglasses
-	ears = /obj/item/radio/headset/heads/captain/alt
-	gloves = /obj/item/clothing/gloves/color/captain
-	uniform =  /obj/item/clothing/under/rank/captain
+	id = /obj/item/card/id/advanced/gold
+	id_trim = /datum/id_trim/job/captain
+	uniform = /obj/item/clothing/under/rank/captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
-	shoes = /obj/item/clothing/shoes/sneakers/brown
-	head = /obj/item/clothing/head/caphat
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/station_charter=1)
+	backpack_contents = list(
+		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/station_charter = 1,
+		)
+	belt = /obj/item/modular_computer/pda/heads/captain
+	ears = /obj/item/radio/headset/heads/captain/alt
+	glasses = /obj/item/clothing/glasses/sunglasses
+	gloves = /obj/item/clothing/gloves/captain
+	head = /obj/item/clothing/head/hats/caphat
+	shoes = /obj/item/clothing/shoes/laceup
+
 
 	backpack = /obj/item/storage/backpack/captain
 	satchel = /obj/item/storage/backpack/satchel/cap
 	duffelbag = /obj/item/storage/backpack/duffelbag/captain
 
-	implants = list(/obj/item/implant/mindshield)
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
+	chameleon_extras = list(
+		/obj/item/gun/energy/e_gun,
+		/obj/item/stamp/captain,
+		)
+	implants = list(/obj/item/implant/mindshield)
+	skillchips = list(/obj/item/skillchip/disk_verifier)
 
-	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
+	var/special_charter
 
-/*
-Head of Personnel
-*/
-/datum/job/hop
-	title = "Head of Personnel"
-	flag = HOP
-	department_head = list("Captain")
-	department_flag = CIVILIAN
-	head_announce = list("Supply", "Service")
-	//faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
-	supervisors = "the captain"
-	selection_color = "#ddddff"
-	req_admin_notify = 1
-	minimal_player_age = 10
-	exp_requirements = 180
-	exp_type = EXP_TYPE_CREW
-	exp_type_department = EXP_TYPE_SUPPLY
+/datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	var/list/job_changes = SSmapping.config.job_changes
+	if(!length(job_changes))
+		return
+	var/list/captain_changes = job_changes[JOB_CAPTAIN]
+	if(!length(captain_changes))
+		return
+	special_charter = captain_changes["special_charter"]
+	if(!special_charter)
+		return
+	backpack_contents.Remove(/obj/item/station_charter)
+	l_hand = /obj/item/station_charter/banner
 
-	outfit = /datum/outfit/job/hop
+/datum/outfit/job/captain/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+	. = ..()
+	var/obj/item/station_charter/banner/celestial_charter = equipped.held_items[LEFT_HANDS]
+	if(!celestial_charter)
+		return
+	celestial_charter.name_type = special_charter
 
-	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_COURT, ACCESS_WEAPONS,
-			            ACCESS_MEDICAL, ACCESS_ENGINE, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD, ACCESS_EVA, ACCESS_HEADS,
-			            ACCESS_ALL_PERSONAL_LOCKERS, ACCESS_MAINT_TUNNELS, ACCESS_BAR, ACCESS_JANITOR, ACCESS_CONSTRUCTION, ACCESS_MORGUE,
-			            ACCESS_CREMATORIUM, ACCESS_KITCHEN, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_MAILSORTING, ACCESS_QM, ACCESS_HYDROPONICS, ACCESS_LAWYER,
-			            ACCESS_THEATRE, ACCESS_CHAPEL_OFFICE, ACCESS_LIBRARY, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_VAULT, ACCESS_MINING_STATION,
-			            ACCESS_HOP, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM)
-	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_COURT, ACCESS_WEAPONS,
-			            ACCESS_MEDICAL, ACCESS_ENGINE, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD, ACCESS_EVA, ACCESS_HEADS,
-			            ACCESS_ALL_PERSONAL_LOCKERS, ACCESS_MAINT_TUNNELS, ACCESS_BAR, ACCESS_JANITOR, ACCESS_CONSTRUCTION, ACCESS_MORGUE,
-			            ACCESS_CREMATORIUM, ACCESS_KITCHEN, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_MAILSORTING, ACCESS_QM, ACCESS_HYDROPONICS, ACCESS_LAWYER,
-			            ACCESS_THEATRE, ACCESS_CHAPEL_OFFICE, ACCESS_LIBRARY, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_VAULT, ACCESS_MINING_STATION,
-			            ACCESS_HOP, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM)
+/datum/outfit/job/captain/mod
+	name = "Captain (MODsuit)"
 
-
-/datum/outfit/job/hop
-	name = "Head of Personnel"
-	jobtype = /datum/job/hop
-
-	id = /obj/item/card/id/silver
-	belt = /obj/item/pda/heads/hop
-	ears = /obj/item/radio/headset/heads/hop
-	uniform = /obj/item/clothing/under/rank/head_of_personnel
-	shoes = /obj/item/clothing/shoes/sneakers/brown
-	head = /obj/item/clothing/head/hopcap
-	backpack_contents = list(/obj/item/storage/box/ids=1,\
-		/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced = 1)
-
-	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/hop)
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/magnate
+	suit = null
+	head = null
+	mask = /obj/item/clothing/mask/gas/atmos/captain
+	internals_slot = ITEM_SLOT_SUITSTORE

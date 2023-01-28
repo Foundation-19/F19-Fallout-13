@@ -1,32 +1,47 @@
-/obj/item/disk/surgery/nerve_splicing
-	name = "Nerve Splicing Surgery Disk"
-	desc = "The disk provides instructions on how to splice the circulatory system to counter stuns and paralysis."
-	surgeries = list(/datum/surgery/advanced/bioware/nerve_splicing)
-
 /datum/surgery/advanced/bioware/nerve_splicing
-	name = "nerve splicing"
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/splice_nerves,
-				/datum/surgery_step/close)
+	name = "Nerve Splicing"
+	desc = "A surgical procedure which splices the patient's nerves, making them more resistant to stuns."
 	possible_locs = list(BODY_ZONE_CHEST)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/splice_nerves,
+		/datum/surgery_step/close,
+	)
+
 	bioware_target = BIOWARE_NERVES
 
 /datum/surgery_step/splice_nerves
-	name = "splice nerves"
+	name = "splice nerves (hand)"
 	accept_hand = TRUE
 	time = 155
 
 /datum/surgery_step/splice_nerves/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] starts splicing together [target]'s nerves.", "<span class='notice'>You start splicing together [target]'s nerves.</span>")
+	display_results(
+		user,
+		target,
+		span_notice("You start splicing together [target]'s nerves."),
+		span_notice("[user] starts splicing together [target]'s nerves."),
+		span_notice("[user] starts manipulating [target]'s nervous system."),
+	)
+	display_pain(target, "Your entire body goes numb!")
 
-/datum/surgery_step/splice_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] successfully splices [target]'s nervous system!", "<span class='notice'>You successfully splice [target]'s nervous system!</span>")
+/datum/surgery_step/splice_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	display_results(
+		user,
+		target,
+		span_notice("You successfully splice [target]'s nervous system!"),
+		span_notice("[user] successfully splices [target]'s nervous system!"),
+		span_notice("[user] finishes manipulating [target]'s nervous system."),
+	)
+	display_pain(target, "You regain feeling in your body; It feels like everything's happening around you in slow motion!")
 	new /datum/bioware/spliced_nerves(target)
-	return TRUE
+	if(target.ckey)
+		SSblackbox.record_feedback("nested tally", "nerve_splicing", 1, list("[target.ckey]", "got")) 
+	return ..()
 
 /datum/bioware/spliced_nerves
 	name = "Spliced Nerves"
@@ -36,7 +51,9 @@
 /datum/bioware/spliced_nerves/on_gain()
 	..()
 	owner.physiology.stun_mod *= 0.5
+	owner.physiology.stamina_mod *= 0.8
 
 /datum/bioware/spliced_nerves/on_lose()
 	..()
 	owner.physiology.stun_mod *= 2
+	owner.physiology.stamina_mod *= 1.25

@@ -1,12 +1,43 @@
 /datum/emote/living/carbon/human
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 
+/// The time it takes for the crying visual to be removed
+#define CRY_DURATION (12.8 SECONDS)
+
+/datum/emote/living/carbon/human/cry
+	key = "cry"
+	key_third_person = "cries"
+	message = "cries."
+	message_mime = "sobs silently."
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	stat_allowed = SOFT_CRIT
+
+/datum/emote/living/carbon/human/cry/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(. && ishuman(user)) // Give them a visual crying effect if they're human
+		var/mob/living/carbon/human/human_user = user
+		ADD_TRAIT(human_user, TRAIT_CRYING, "[type]")
+		human_user.update_body()
+
+		// Use a timer to remove the effect after the defined duration has passed
+		var/list/key_emotes = GLOB.emote_list["cry"]
+		for(var/datum/emote/living/carbon/human/cry/human_emote in key_emotes)
+			// The existing timer restarts if it is already running
+			addtimer(CALLBACK(human_emote, PROC_REF(end_visual), human_user), CRY_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/datum/emote/living/carbon/human/cry/proc/end_visual(mob/living/carbon/human/human_user)
+	if(!QDELETED(human_user))
+		REMOVE_TRAIT(human_user, TRAIT_CRYING, "[type]")
+		human_user.update_body()
+
+#undef CRY_DURATION
+
 /datum/emote/living/carbon/human/dap
 	key = "dap"
 	key_third_person = "daps"
 	message = "sadly can't find anybody to give daps to, and daps themself. Shameful."
 	message_param = "give daps to %t."
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/eyebrow
 	key = "eyebrow"
@@ -16,28 +47,57 @@
 	key = "grumble"
 	key_third_person = "grumbles"
 	message = "grumbles!"
-	emote_type = EMOTE_AUDIBLE
+	message_mime = "grumbles silently!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/handshake
 	key = "handshake"
 	message = "shakes their own hands."
 	message_param = "shakes hands with %t."
-	restraint_check = TRUE
-	emote_type = EMOTE_AUDIBLE
+	hands_use_check = TRUE
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/hug
 	key = "hug"
 	key_third_person = "hugs"
 	message = "hugs themself."
 	message_param = "hugs %t."
-	restraint_check = TRUE
-	emote_type = EMOTE_AUDIBLE
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/mumble
 	key = "mumble"
 	key_third_person = "mumbles"
 	message = "mumbles!"
-	emote_type = EMOTE_AUDIBLE
+	message_mime = "mumbles silently!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+
+/datum/emote/living/carbon/human/scream
+	key = "scream"
+	key_third_person = "screams"
+	message = "screams!"
+	message_mime = "acts out a scream!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	only_forced_audio = TRUE
+	vary = TRUE
+
+/datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+
+	return user.dna.species.get_scream_sound(user)
+
+/datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
+	key = "screech"
+	key_third_person = "screeches"
+	message = "screeches."
+	message_mime = "screeches silently."
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	vary = FALSE
+
+/datum/emote/living/carbon/human/scream/screech/should_play_sound(mob/user, intentional)
+	if(ismonkey(user))
+		return TRUE
+	return ..()
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"
@@ -47,26 +107,14 @@
 	key = "raise"
 	key_third_person = "raises"
 	message = "raises a hand."
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/salute
 	key = "salute"
 	key_third_person = "salutes"
 	message = "salutes."
 	message_param = "salutes to %t."
-	restraint_check = TRUE
-
-/datum/emote/living/carbon/human/salute/run_emote(mob/user, params)
-	. = ..()
-	if(. && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
-			playsound(H, 'sound/voice/human/salute.ogg', 50, 1)
-
-/datum/emote/living/carbon/human/shudder
-	key = "shudder"
-	key_third_person = "shudders"
-	message = "shudders."
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/shrug
 	key = "shrug"
@@ -76,107 +124,106 @@
 /datum/emote/living/carbon/human/wag
 	key = "wag"
 	key_third_person = "wags"
-	message = "wags their tail."
+	message = "their tail."
 
-/datum/emote/living/carbon/human/wag/run_emote(mob/user, params)
+/datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/carbon/human/H = user
-	if(!H.is_wagging_tail())
-		H.startTailWag()
+	var/obj/item/organ/external/tail/oranges_accessory = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(oranges_accessory.wag_flags & WAG_WAGGING) //We verified the tail exists in can_run_emote()
+		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, FALSE)
 	else
-		H.endTailWag()
+		SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, TRUE)
 
-/mob/living/carbon/human/proc/is_wagging_tail()
-	return (dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts) || ("waggingtail_human" in dna.species.mutant_bodyparts)))
-
-/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE)
-	if(!..())
-		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("tail_human" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts)))
-		return TRUE
-
-/datum/emote/living/carbon/human/wag/select_message_type(mob/user)
+/datum/emote/living/carbon/human/wag/select_message_type(mob/user, intentional)
 	. = ..()
-	var/mob/living/carbon/human/H = user
-	if(H.is_wagging_tail())
-		. = null
+	var/obj/item/organ/external/tail/oranges_accessory = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(oranges_accessory.wag_flags & WAG_WAGGING)
+		. = "stops wagging " + message
+	else
+		. = "wags " + message
 
-//Don't know where else to put this, it's basically an emote
-/mob/living/carbon/human/proc/startTailWag()
-	if(!dna || !dna.species)
-		return
-	if("tail_lizard" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "tail_lizard"
-		dna.species.mutant_bodyparts -= "spines"
-		dna.species.mutant_bodyparts |= "waggingtail_lizard"
-		dna.species.mutant_bodyparts |= "waggingspines"
-	if("tail_human" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "tail_human"
-		dna.species.mutant_bodyparts |= "waggingtail_human"
-	update_body()
-
-/mob/living/carbon/human/proc/endTailWag()
-	if(!dna || !dna.species)
-		return
-	if("waggingtail_lizard" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "waggingtail_lizard"
-		dna.species.mutant_bodyparts -= "waggingspines"
-		dna.species.mutant_bodyparts |= "tail_lizard"
-		dna.species.mutant_bodyparts |= "spines"
-	if("waggingtail_human" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "waggingtail_human"
-		dna.species.mutant_bodyparts |= "tail_human"
-	update_body()
+/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check, intentional)
+	var/obj/item/organ/external/tail/tail = user.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(tail?.wag_flags & WAG_ABLE)
+		return ..()
+	return FALSE
 
 /datum/emote/living/carbon/human/wing
 	key = "wing"
 	key_third_person = "wings"
 	message = "their wings."
 
-/datum/emote/living/carbon/human/wing/run_emote(mob/user, params)
+/datum/emote/living/carbon/human/wing/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(.)
 		var/mob/living/carbon/human/H = user
-		if(findtext_char(select_message_type(user), "open"))
-			H.OpenWings()
+		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(wings && findtext(select_message_type(user,intentional), "open"))
+			wings.open_wings()
 		else
-			H.CloseWings()
+			wings.close_wings()
 
-/datum/emote/living/carbon/human/wing/select_message_type(mob/user)
+/datum/emote/living/carbon/human/wing/select_message_type(mob/user, intentional)
 	. = ..()
 	var/mob/living/carbon/human/H = user
-	if("wings" in H.dna.species.mutant_bodyparts)
+	if(H.dna.species.mutant_bodyparts["wings"])
 		. = "opens " + message
 	else
 		. = "closes " + message
 
-/datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE)
+/datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
 	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
 		return TRUE
 
-/mob/living/carbon/human/proc/OpenWings()
-	if(!dna || !dna.species)
-		return
-	if("wings" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "wings"
-		dna.species.mutant_bodyparts |= "wingsopen"
-	update_body()
+/datum/emote/living/carbon/human/clear_throat
+	key = "clear"
+	key_third_person = "clears throat"
+	message = "clears their throat."
 
-/mob/living/carbon/human/proc/CloseWings()
-	if(!dna || !dna.species)
-		return
-	if("wingsopen" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "wingsopen"
-		dna.species.mutant_bodyparts |= "wings"
-	update_body()
-	if(isturf(loc))
-		var/turf/T = loc
-		T.Entered(src)
+///Snowflake emotes only for le epic chimp
+/datum/emote/living/carbon/human/monkey
 
-//Ayy lmao
+/datum/emote/living/carbon/human/monkey/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(ismonkey(user))
+		return ..()
+	return FALSE
+
+/datum/emote/living/carbon/human/monkey/gnarl
+	key = "gnarl"
+	key_third_person = "gnarls"
+	message = "gnarls and shows its teeth..."
+	message_mime = "gnarls silently, baring its teeth..."
+
+/datum/emote/living/carbon/human/monkey/roll
+	key = "roll"
+	key_third_person = "rolls"
+	message = "rolls."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/monkey/scratch
+	key = "scratch"
+	key_third_person = "scratches"
+	message = "scratches."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/monkey/screech/roar
+	key = "roar"
+	key_third_person = "roars"
+	message = "roars."
+	message_mime = "acts out a roar."
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+
+/datum/emote/living/carbon/human/monkey/tail
+	key = "tail"
+	message = "waves their tail."
+
+/datum/emote/living/carbon/human/monkey/sign
+	key = "sign"
+	key_third_person = "signs"
+	message_param = "signs the number %t."
+	hands_use_check = TRUE

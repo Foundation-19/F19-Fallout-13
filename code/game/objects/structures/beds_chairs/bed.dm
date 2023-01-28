@@ -1,7 +1,7 @@
 /* Beds... get your mind out of the gutter, they're for sleeping!
  * Contains:
- * 		Beds
- *		Roller beds
+ * Beds
+ * Roller beds
  */
 
 /*
@@ -14,19 +14,22 @@
 	icon = 'icons/obj/objects.dmi'
 	anchored = TRUE
 	can_buckle = TRUE
-	buckle_lying = TRUE
+	buckle_lying = 90
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
-	integrity_failure = 30
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	integrity_failure = 0.35
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 2
 	var/bolts = TRUE
-	var/obj/item/decontool = /obj/item/wrench
+
+/obj/structure/bed/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/soft_landing)
 
 /obj/structure/bed/examine(mob/user)
-	..()
+	. = ..()
 	if(bolts)
-		to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+		. += span_notice("It's held together by a couple of <b>bolts</b>.")
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -34,81 +37,98 @@
 			new buildstacktype(loc,buildstackamount)
 	..()
 
-/obj/structure/bed/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/bed/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/bed/attackby(obj/item/W, mob/user, params)
-	if(istype(W, decontool) && !(flags_1&NODECONSTRUCT_1))
-		W.play_tool_sound(src)
-		deconstruct(TRUE)
-	else
-		return ..()
+/obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
+	if(flags_1&NODECONSTRUCT_1)
+		return TRUE
+	..()
+	weapon.play_tool_sound(src)
+	deconstruct(disassembled = TRUE)
+	return TRUE
 
 /*
  * Roller beds
  */
 /obj/structure/bed/roller
 	name = "roller bed"
-	icon = 'icons/obj/rollerbed.dmi'
+	icon = 'icons/obj/medical/rollerbed.dmi'
 	icon_state = "down"
 	anchored = FALSE
 	resistance_flags = NONE
-	drag_delay = 0 //Pulling something on wheels is easy
+	///The item it spawns when it's folded up.
 	var/foldabletype = /obj/item/roller
+
+/obj/structure/bed/roller/Initialize(mapload)
+	. = ..()
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Fold up", \
+	)
+
+/obj/structure/bed/roller/examine(mob/user)
+	. = ..()
+	. += span_notice("You can fold it up with a Right-click.")
 
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/roller/robo))
 		var/obj/item/roller/robo/R = W
 		if(R.loaded)
-			to_chat(user, "<span class='warning'>You already have a roller bed docked!</span>")
+			to_chat(user, span_warning("You already have a roller bed docked!"))
 			return
 
 		if(has_buckled_mobs())
 			if(buckled_mobs.len > 1)
 				unbuckle_all_mobs()
-				user.visible_message("<span class='notice'>[user] unbuckles all creatures from [src].</span>")
+				user.visible_message(span_notice("[user] unbuckles all creatures from [src]."))
 			else
 				user_unbuckle_mob(buckled_mobs[1],user)
 		else
 			R.loaded = src
 			forceMove(R)
-			user.visible_message("[user] collects [src].", "<span class='notice'>You collect [src].</span>")
+			user.visible_message(span_notice("[user] collects [src]."), span_notice("You collect [src]."))
 		return 1
 	else
 		return ..()
 
-/obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
+/obj/structure/bed/roller/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(over_object == usr && Adjacent(usr))
-		if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
-			return 0
-		if(has_buckled_mobs())
-			return 0
-		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
-		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
-		usr.put_in_hands(B)
-		qdel(src)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!ishuman(user) || !user.canUseTopic(src, be_close = TRUE))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(has_buckled_mobs())
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
+	var/obj/structure/bed/roller/folding_bed = new foldabletype(get_turf(src))
+	user.put_in_hands(folding_bed)
+	qdel(src)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
-	density = TRUE
+	set_density(TRUE)
 	icon_state = "up"
-	M.pixel_y = initial(M.pixel_y)
+	//Push them up from the normal lying position
+	M.pixel_y = M.base_pixel_y
 
-/obj/structure/bed/roller/Moved()
+/obj/structure/bed/roller/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, 1)
+		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
+
 
 /obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
-	density = FALSE
+	set_density(FALSE)
 	icon_state = "down"
-	M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
-	M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
+	//Set them back down to the normal lying position
+	M.pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
+
 
 /obj/item/roller
 	name = "roller bed"
 	desc = "A collapsed roller bed that can be carried around."
-	icon = 'icons/obj/rollerbed.dmi'
+	icon = 'icons/obj/medical/rollerbed.dmi'
 	icon_state = "folded"
 	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
 
@@ -116,9 +136,9 @@
 	if(istype(I, /obj/item/roller/robo))
 		var/obj/item/roller/robo/R = I
 		if(R.loaded)
-			to_chat(user, "<span class='warning'>[R] already has a roller bed loaded!</span>")
+			to_chat(user, span_warning("[R] already has a roller bed loaded!"))
 			return
-		user.visible_message("<span class='notice'>[user] loads [src].</span>", "<span class='notice'>You load [src] into [R].</span>")
+		user.visible_message(span_notice("[user] loads [src]."), span_notice("You load [src] into [R]."))
 		R.loaded = new/obj/structure/bed/roller(R)
 		qdel(src) //"Load"
 		return
@@ -142,25 +162,24 @@
 
 /obj/item/roller/robo //ROLLER ROBO DA!
 	name = "roller bed dock"
-	var/loaded = null
-
-/obj/item/roller/robo/New()
-	loaded = new /obj/structure/bed/roller(src)
 	desc = "A collapsed roller bed that can be ejected for emergency use. Must be collected or replaced after use."
-	..()
+	var/obj/structure/bed/roller/loaded = null
+
+/obj/item/roller/robo/Initialize(mapload)
+	. = ..()
+	loaded = new(src)
 
 /obj/item/roller/robo/examine(mob/user)
-	..()
-	to_chat(user, "The dock is [loaded ? "loaded" : "empty"].")
+	. = ..()
+	. += "The dock is [loaded ? "loaded" : "empty"]."
 
 /obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)
-		var/obj/structure/bed/roller/R = loaded
-		R.forceMove(location)
-		user.visible_message("[user] deploys [loaded].", "<span class='notice'>You deploy [loaded].</span>")
+		loaded.forceMove(location)
+		user.visible_message(span_notice("[user] deploys [loaded]."), span_notice("You deploy [loaded]."))
 		loaded = null
 	else
-		to_chat(user, "<span class='warning'>The dock is empty!</span>")
+		to_chat(user, span_warning("The dock is empty!"))
 
 //Dog bed
 
@@ -171,7 +190,7 @@
 	anchored = FALSE
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
-	var/mob/living/owner = null
+	var/owned = FALSE
 
 /obj/structure/bed/dogbed/ian
 	desc = "Ian's bed! Looks comfy."
@@ -183,84 +202,63 @@
 	name = "Cayenne's bed"
 	anchored = TRUE
 
+/obj/structure/bed/dogbed/lia
+	desc = "Seems kind of... fishy."
+	name = "Lia's bed"
+	anchored = TRUE
+
 /obj/structure/bed/dogbed/renault
 	desc = "Renault's bed! Looks comfy. A foxy person needs a foxy pet."
 	name = "Renault's bed"
 	anchored = TRUE
+
+/obj/structure/bed/dogbed/mcgriff
+	desc = "McGriff's bed, because even crimefighters sometimes need a nap."
+	name = "McGriff's bed"
 
 /obj/structure/bed/dogbed/runtime
 	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off."
 	name = "Runtime's bed"
 	anchored = TRUE
 
+///Used to set the owner of a dogbed, returns FALSE if called on an owned bed or an invalid one, TRUE if the possesion succeeds
 /obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
-	owner = M
+	if(owned || type != /obj/structure/bed/dogbed) //Only marked beds work, this is hacky but I'm a hacky man
+		return FALSE //Failed
+	owned = TRUE
 	name = "[M]'s bed"
 	desc = "[M]'s bed! Looks comfy."
+	return TRUE //Let any callers know that this bed is ours now
 
 /obj/structure/bed/dogbed/buckle_mob(mob/living/M, force, check_loc)
 	. = ..()
 	update_owner(M)
 
-/obj/structure/bed/alien
-	name = "resting contraption"
-	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
-	icon_state = "abed"
+/obj/structure/bed/maint
+	name = "dirty mattress"
+	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
+	icon_state = "dirty_mattress"
 
-/obj/structure/bed/mattress
-	name = "mattress"
-	desc = "Mattress. thank gods if this one without clops..."
-	icon_state = "mattress0"
-	buildstacktype = /obj/item/stack/sheet/cloth
-	buildstackamount = 3
-	decontool = /obj/item/wirecutters
+/obj/structure/bed/maint/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
 
-/obj/structure/bed/mattress/pregame/New()
-	..()
-	icon_state = "mattress[rand(0,6)]"
+//Double Beds, for luxurious sleeping, i.e. the captain and maybe heads- if people use this for ERP, send them to skyrat
+/obj/structure/bed/double
+	name = "double bed"
+	desc = "A luxurious double bed, for those too important for small dreams."
+	icon_state = "bed_double"
+	buildstackamount = 4
+	max_buckled_mobs = 2
+	///The mob who buckled to this bed second, to avoid other mobs getting pixel-shifted before he unbuckles.
+	var/mob/living/goldilocks
 
-/obj/structure/bed/wooden
-	name = "wooden bed"
-	icon_state = "wood_bed"
+/obj/structure/bed/double/post_buckle_mob(mob/living/target)
+	if(buckled_mobs.len > 1 && !goldilocks) //Push the second buckled mob a bit higher from the normal lying position
+		target.pixel_y = target.base_pixel_y + 6
+		goldilocks = target
 
-/obj/structure/bed/bedroll
-	name = "bedroll"
-	icon_state = "bedroll"
-
-/obj/structure/bed/bedroll/attack_hand(mob/living/carbon/human/user)
-	to_chat(user, "You start folding the sleeping bag.")
-	if(do_after(user, 25, target = loc))
-		new/obj/item/bedroll(get_turf(src))
-		qdel(src)
-
-/obj/item/bedroll
-	name = "bedroll"
-	desc = "Simple in use bedroll."
-	icon = 'icons/obj/f13misc.dmi'
-	icon_state = "bedroll"
-
-/obj/item/bedroll/attack_self(mob/user)
-	to_chat(user, "You start unfolding the sleeping bag.")
-	if(do_after(user, 25, target = loc))
-		new/obj/structure/bed/bedroll(get_turf(src))
-		qdel(src)
-
-/obj/structure/bed/metal
-	name = "metal bed"
-	icon_state = "metal_bed_nm"
-
-/obj/structure/bed/wire
-	name = "wire bed"
-	icon_state = "wire_bed"
-
-/obj/structure/bed/wire/rand
-	name = "metal bed"
-	icon_state = "wire_bed"
-
-/obj/structure/bed/metal/rand
-	name = "metal bed"
-	icon_state = "metal_bed5"
-
-/obj/structure/bed/metal/rand/New()
-	..()
-	icon_state = "metal_bed[rand(1,5)]"
+/obj/structure/bed/double/post_unbuckle_mob(mob/living/target)
+	target.pixel_y = target.base_pixel_y + target.body_position_pixel_y_offset
+	if(target == goldilocks)
+		goldilocks = null

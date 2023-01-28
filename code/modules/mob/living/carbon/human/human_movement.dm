@@ -1,86 +1,40 @@
-/mob/living/carbon/human/movement_delay()
-	. = 1
-	var/static/config_human_delay
-	if(isnull(config_human_delay))
-		config_human_delay = CONFIG_GET(number/human_delay)
-	. += ..() + config_human_delay + dna.species.movement_delay(src)
+/mob/living/carbon/human/get_movespeed_modifiers()
+	var/list/considering = ..()
+	if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))
+		. = list()
+		for(var/id in considering)
+			var/datum/movespeed_modifier/M = considering[id]
+			if(M.flags & IGNORE_NOSLOW || M.multiplicative_slowdown < 0)
+				.[id] = M
+		return
+	return considering
 
-/mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
-	if(has_trait(TRAIT_NOSLIPALL))
-		return 0
-	if (!(lube&GALOSHES_DONT_HELP))
-		if(has_trait(TRAIT_NOSLIPWATER))
-			return 0
-		if(shoes && istype(shoes, /obj/item/clothing))
+/mob/living/carbon/human/slip(knockdown_amount, obj/O, lube, paralyze, forcedrop)
+	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
+		return FALSE
+	if (!(lube & GALOSHES_DONT_HELP))
+		if(HAS_TRAIT(src, TRAIT_NOSLIPWATER))
+			return FALSE
+		if(shoes && isclothing(shoes))
 			var/obj/item/clothing/CS = shoes
 			if (CS.clothing_flags & NOSLIP)
-				return 0
+				return FALSE
+	if (lube & SLIDE_ICE)
+		if(shoes && isclothing(shoes))
+			var/obj/item/clothing/CS = shoes
+			if (CS.clothing_flags & NOSLIP_ICE)
+				return FALSE
 	return ..()
-
-/mob/living/carbon/human/experience_pressure_difference()
-	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
-	if(shoes && istype(shoes, /obj/item/clothing))
-		var/obj/item/clothing/S = shoes
-		if (S.clothing_flags & NOSLIP)
-			return 0
-	return ..()
-
-/mob/living/carbon/human/mob_has_gravity()
-	. = ..()
-	if(!.)
-		if(mob_negates_gravity())
-			. = 1
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return ((shoes && shoes.negates_gravity()) || (dna.species.negates_gravity(src)))
+	return dna.species.negates_gravity(src) || ..()
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
-	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_move(src, NewLoc)
-	
-	var/turf/T = get_turf(src)
-		
-	//Snow footprints
-	if(T.snow && T.snow_trail)
-		if(!lying && !buckled)
-			if(loc == NewLoc)
-				if(!has_gravity(loc))
-					return
-				var/obj/effect/decal/cleanable/snow/footprints/oldFP = locate(/obj/effect/decal/cleanable/snow/footprints) in T
-				if(oldFP)
-					oldFP.entered_dirs |= dir
-					oldFP.update_icon()
-				else
-					var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/snow/footprints(T)
-					FP.entered_dirs |= dir
-					FP.update_icon()
+	if(shoes && body_position == STANDING_UP && loc == NewLoc && has_gravity(loc))
+		SEND_SIGNAL(shoes, COMSIG_SHOES_STEP_ACTION)
 
-	if(shoes)
-		if(!lying && !buckled)
-			if(loc == NewLoc)
-				if(!has_gravity(loc))
-					return
-				var/obj/item/clothing/shoes/S = shoes
-				if(S.bloody_shoes && S.bloody_shoes[S.blood_state])
-					var/obj/effect/decal/cleanable/blood/footprints/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints) in T
-					if(oldFP && oldFP.blood_state == S.blood_state)
-						return
-					else
-						//No oldFP or it's a different kind of blood
-						S.bloody_shoes[S.blood_state] = max(0, S.bloody_shoes[S.blood_state] - BLOOD_LOSS_PER_STEP)
-						if (S.bloody_shoes[S.blood_state] > BLOOD_LOSS_IN_SPREAD)
-							var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints(T)
-							FP.blood_state = S.blood_state
-							FP.entered_dirs |= dir
-							FP.bloodiness = (S.bloody_shoes[S.blood_state] - BLOOD_LOSS_IN_SPREAD)/5
-							FP.add_blood_DNA(S.return_blood_DNA())
-							FP.update_icon()
-						update_inv_shoes()
-				//End bloody footprints
-				S.step_action()
-
-/mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
-	if(..())
-		return 1
-	return dna.species.space_move(src)
+/mob/living/carbon/human/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
+	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
+		return TRUE
+	return ..()

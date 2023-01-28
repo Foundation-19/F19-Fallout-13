@@ -1,137 +1,222 @@
+/**
+ * The mob, usually meant to be a creature of some type
+ *
+ * Has a client attached that is a living person (most of the time), although I have to admit
+ * sometimes it's hard to tell they're sentient
+ *
+ * Has a lot of the creature game world logic, such as health etc
+ */
 /mob
-	datum_flags = DF_USE_TAG
 	density = TRUE
 	layer = MOB_LAYER
-	animate_movement = 2
-	flags_1 = HEAR_1
+	plane = GAME_PLANE_FOV_HIDDEN
+	animate_movement = SLIDE_STEPS
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	throwforce = 10
-	drag_delay = 0.05 SECONDS
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	pass_flags_self = PASSMOB
+	/// The current client inhabiting this mob. Managed by login/logout
+	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed
+	/// We need to do this because the mob on logout never actually has a reference to client
+	/// We also need to clear this var/do other cleanup in client/Destroy, since that happens before logout
+	/// HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+	var/client/canon_client
+
+	var/shift_to_open_context_menu = TRUE
+
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
-	var/list/datum/action/actions = list()
-	var/list/datum/action/chameleon_item_actions
 	var/static/next_mob_id = 0
 
-	var/stat = CONSCIOUS //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
+	/// List of movement speed modifiers applying to this mob
+	var/list/movespeed_modification //Lazy list, see mob_movespeed.dm
+	/// List of movement speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	var/list/movespeed_mod_immunities //Lazy list, see mob_movespeed.dm
+	/// The calculated mob speed slowdown based on the modifiers list
+	var/cached_multiplicative_slowdown
+	/// List of action speed modifiers applying to this mob
+	var/list/actionspeed_modification //Lazy list, see mob_movespeed.dm
+	/// List of action speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	var/list/actionspeed_mod_immunities //Lazy list, see mob_movespeed.dm
+	/// The calculated mob action speed slowdown based on the modifiers list
+	var/cached_multiplicative_actions_slowdown
+	/// List of action hud items the user has
+	var/list/datum/action/actions
+	/// A list of chameleon actions we have specifically
+	/// This can be unified with the actions list
+	var/list/datum/action/item_action/chameleon/chameleon_item_actions
+	///Cursor icon used when holding shift over things
+	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 
+	///Whether this mob has or is in the middle of committing suicide.
+	var/suiciding = FALSE
 
-	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
+	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
+	var/stat = CONSCIOUS
+
+	/* A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
 	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
+
+	/// The zone this mob is currently targeting
 	var/zone_selected = BODY_ZONE_CHEST
 
-	var/emote_cd = 0
-
 	var/computer_id = null
-	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG, INDIVIDUAL_LOOC_LOG)
+	var/list/logging = list()
+
+	/// The machine the mob is interacting with (this is very bad old code btw)
 	var/obj/machinery/machine = null
 
+	/// Tick time the mob can next move
 	var/next_move = null
-	var/notransform = null	//Carbon
-	var/eye_blind = 0		//Carbon
-	var/eye_blurry = 0		//Carbon
+
+	/**
+	  * Magic var that stops you moving and interacting with anything
+	  *
+	  * Set when you're being turned into something else and also used in a bunch of places
+	  * it probably shouldn't really be
+	  */
+	var/notransform = null //Carbon
+
+	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
-	var/spacewalk = FALSE
-	var/resting = 0			//Carbon
-	var/lying = 0
-	var/lying_prev = 0
-	var/canmove = 1
 
-	//MOVEMENT SPEED
-	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
-	var/cached_multiplicative_slowdown
-
+	/**
+	  * back up of the real name during admin possession
+	  *
+	  * If an admin possesses an object it's real name is set to the admin name and this
+	  * stores whatever the real name was previously. When possession ends, the real name
+	  * is reset to this value
+	  */
 	var/name_archive //For admin things like possession
 
-	var/bodytemperature = BODYTEMP_NORMAL	//310.15K / 98.6F
-	var/drowsyness = 0//Carbon
-	var/dizziness = 0//Carbon
-	var/jitteriness = 0//Carbon
+	/// Default body temperature
+	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
+	/// Our body temperatue as of the last process, prevents pointless work when handling alerts
+	var/old_bodytemperature = 0
+
+	/// Hunger level of the mob
 	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
-	var/hydration = HYDRATION_LEVEL_START_MIN // randomised in Initialize
+	/// Satiation level of the mob
 	var/satiety = 0//Carbon
 
-	var/overeatduration = 0		// How long this guy is overeating //Carbon
-	var/a_intent = INTENT_HELP//Living
-	var/list/possible_a_intents = null//Living
+	/// How many ticks this mob has been over reating
+	var/overeatduration = 0 // How long this guy is overeating //Carbon
+
+	/// The movement intent of the mob (run/wal)
 	var/m_intent = MOVE_INTENT_RUN//Living
+
+	/// The last known IP of the client who was in this mob
 	var/lastKnownIP = null
+
+	/// movable atom we are buckled to
 	var/atom/movable/buckled = null//Living
-	var/atom/movable/buckling
 
 	//Hands
+	///What hand is the active hand
 	var/active_hand_index = 1
-	var/list/held_items = list() //len = number of hands, eg: 2 nulls is 2 empty hands, 1 item and 1 null is 1 full hand and 1 empty hand.
-	//held_items[active_hand_index] is the actively held item, but please use get_active_held_item() instead, because OOP
+	/**
+	  * list of items held in hands
+	  *
+	  * len = number of hands, eg: 2 nulls is 2 empty hands, 1 item and 1 null is 1 full hand
+	  * and 1 empty hand.
+	  *
+	  * NB: contains nulls!
+	  *
+	  * `held_items[active_hand_index]` is the actively held item, but please use
+	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
+	  */
+	var/list/held_items = list()
 
-	var/datum/component/storage/active_storage = null//Carbon
+	//HUD things
 
+	/// Storage component (for mob inventory)
+	var/datum/storage/active_storage
+	/// Active hud
 	var/datum/hud/hud_used = null
 
-	var/research_scanner = 0 //For research scanner equipped mobs. Enable to show research data when examining.
+	/// Is the mob throw intent on
+	var/throw_mode = THROW_MODE_DISABLED
 
-	var/in_throw_mode = 0
-
+	/// What job does this mob have
 	var/job = null//Living
 
-	var/list/faction = list("neutral") //A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
-	var/list/faction_deaths = list() // A list of people of the same faction that this mob has seen dead, for mood modifiers after seeing enough dead comrades and for removal upon burying
+	/// A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
+	var/list/faction = list(FACTION_NEUTRAL)
 
-	var/social_faction = null //A social faction a mob is in, for special actions
+	/// Can this mob enter shuttles
+	var/move_on_shuttle = 1
 
-	var/gang = null // A gang a mob is in
+	///A weakref to the last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)
+	var/datum/weakref/LAssailant = null
 
-	var/move_on_shuttle = 1 // Can move on the shuttle.
+	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
+	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 
-//The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
-	var/mob/living/carbon/LAssailant = null
+	/// Can they interact with station electronics
+	var/has_unlimited_silicon_privilege = FALSE
 
-	var/list/obj/user_movement_hooks	//Passes movement in client/Move() to these!
+	///Used by admins to possess objects. All mobs should have this var
+	var/obj/control_object
 
-	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
+	///Calls relay_move() to whatever this is set to when the mob tries to move
+	var/atom/movable/remote_control
 
+	///the current turf being examined in the stat panel
+	var/turf/listed_turf = null
 
-	var/status_flags = CANPARALYZE|CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
+	///The list of people observing this mob.
+	var/list/observers = null
 
-	var/digitalcamo = 0 // Can they be tracked by the AI?
-	var/digitalinvis = 0 //Are they ivisible to the AI?
-	var/image/digitaldisguise = null  //what does the AI see instead of them?
+	///List of progress bars this mob is currently seeing for actions
+	var/list/progressbars = null //for stacking do_after bars
 
-	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
+	///For storing what do_after's someone has, key = string, value = amount of interactions of that type happening.
+	var/list/do_afters
 
-	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
-	var/atom/movable/remote_control //Calls relaymove() to whatever it is
-
-
-	var/turf/listed_turf = null	//the current turf being examined in the stat panel
-
-	var/list/observers = null	//The list of people observing this mob.
-
-	var/list/progressbars = null	//for stacking do_after bars
-
-	var/list/mousemove_intercept_objects
-
+	///Allows a datum to intercept all click calls this mob is the source of
 	var/datum/click_intercept
 
-	var/timeofdeath = 0 /* moved here from mob/living for player respawn */
-	var/logout_time = 0 //for despawn and general logging
+	///THe z level this mob is currently registered in
+	var/registered_z = null
 
 	var/memory_throttle_time = 0
 
-	///////TYPING INDICATORS///////
-	/// Set to true if we want to show typing indicators.
-	var/typing_indicator_enabled = FALSE
-	/// Default icon_state of our typing indicator. Currently only supports paths (because anything else is, as of time of typing this, unnecesary.
-	var/typing_indicator_state = /obj/effect/overlay/typing_indicator
-	/// The timer that will remove our indicator for early aborts (like when an user finishes their message)
-	var/typing_indicator_timerid
-	/// Current state of our typing indicator. Used for cut overlay, DO NOT RUNTIME ASSIGN OTHER THAN FROM SHOW/CLEAR. Used to absolutely ensure we do not get stuck overlays.
-	var/typing_indicator_current
+	/// Contains [/atom/movable/screen/alert] only.
+	///
+	/// On [/mob] so clientless mobs will throw alerts properly.
+	var/list/alerts = list()
+	var/list/screens = list()
+	var/list/client_colours = list()
+	var/hud_type = /datum/hud
 
-	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
+	var/datum/focus //What receives our keyboard inputs. src by default
+
+	/// Used for tracking last uses of emotes for cooldown purposes
+	var/list/emotes_used
+
+	///Whether the mob is updating glide size when movespeed updates or not
+	var/updating_glide_size = TRUE
+
+	///Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)
+	var/sound_environment_override = SOUND_ENVIRONMENT_NONE
+
+	/// A mock client, provided by tests and friends
+	var/datum/client_interface/mock_client
+
+	var/interaction_range = 0 //how far a mob has to be to interact with something without caring about obsctruction, defaulted to 0 tiles
+
+	///the icon currently used for the typing indicator's bubble
+	var/active_typing_indicator
+	///the icon currently used for the thinking indicator's bubble
+	var/active_thinking_indicator
+	/// User is thinking in character. Used to revert to thinking state after stop_typing
+	var/thinking_IC = FALSE
+
+	///how much gravity is slowing us down
+	var/gravity_slowdown = 0

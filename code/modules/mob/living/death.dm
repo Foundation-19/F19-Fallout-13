@@ -1,7 +1,15 @@
-/mob/living/gib(no_brain, no_organs, no_bodyparts, lowgibs)
-	var/prev_lying = lying
+/**
+ * Blow up the mob into giblets
+ *
+ * Arguments:
+ * * no_brain - Should the mob NOT drop a brain?
+ * * no_organs - Should the mob NOT drop organs?
+ * * no_bodyparts - Should the mob NOT drop bodyparts?
+*/
+/mob/living/proc/gib(no_brain, no_organs, no_bodyparts)
+	var/prev_lying = lying_angle
 	if(stat != DEAD)
-		death(1)
+		death(TRUE)
 
 	if(!prev_lying)
 		gib_animation()
@@ -11,21 +19,15 @@
 	if(!no_bodyparts)
 		spread_bodyparts(no_brain, no_organs)
 
-	if(lowgibs)
-		spawn_lowgibs()
-	else
-		spawn_gibs(no_bodyparts)
-
+	spawn_gibs(no_bodyparts)
+	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, no_brain, no_organs, no_bodyparts)
 	qdel(src)
 
 /mob/living/proc/gib_animation()
 	return
 
 /mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(drop_location(), null, get_static_viruses())
-
-/mob/living/proc/spawn_lowgibs()
-	new /obj/effect/decal/cleanable/blood(drop_location())
+	new /obj/effect/gibspawner/generic(drop_location(), src, get_static_viruses())
 
 /mob/living/proc/spill_organs()
 	return
@@ -33,14 +35,23 @@
 /mob/living/proc/spread_bodyparts()
 	return
 
-/mob/living/dust(just_ash = FALSE, drop_items = FALSE)
+/**
+ * This is the proc for turning a mob into ash.
+ * Dusting robots does not eject the MMI, so it's a bit more powerful than gib()
+ *
+ * Arguments:
+ * * just_ash - If TRUE, ash will spawn where the mob was, as opposed to remains
+ * * drop_items - Should the mob drop their items before dusting?
+ * * force - Should this mob be FORCABLY dusted?
+*/
+/mob/living/proc/dust(just_ash, drop_items, force)
 	death(TRUE)
 
 	if(drop_items)
 		unequip_everything()
 
 	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+		buckled.unbuckle_mob(src, force = TRUE)
 
 	dust_animation()
 	spawn_dust(just_ash)
@@ -52,57 +63,49 @@
 /mob/living/proc/spawn_dust(just_ash = FALSE)
 	new /obj/effect/decal/cleanable/ash(loc)
 
+/*
+ * Called when the mob dies. Can also be called manually to kill a mob.
+ *
+ * Arguments:
+ * * gibbed - Was the mob gibbed?
+*/
+/mob/living/proc/death(gibbed)
+	if(stat == DEAD)
+		return FALSE
 
-/mob/living/death(gibbed)
-	stat = DEAD
+	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time
 	tod = station_time_timestamp()
-	var/turf/T = get_turf(src)
-	for(var/obj/item/I in contents)
-		I.on_mob_death(src, gibbed)
-	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf))
-		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[get_area_name(T)]</b>.</span>"
-		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
-	if(mind)
-		mind.store_memory("Time of death: [tod]", 0)
-	GLOB.alive_mob_list -= src
-	if(!gibbed)
-		GLOB.dead_mob_list += src
-	set_drugginess(0)
+	var/turf/death_turf = get_turf(src)
+	var/area/death_area = get_area(src)
+	// Display a death message if the mob is a player mob (has an active mind)
+	var/player_mob_check = mind && mind.name && mind.active
+	// and, display a death message if the area allows it (or if they're in nullspace)
+	var/valid_area_check = !death_area || !(death_area.area_flags & NO_DEATH_MESSAGE)
+	if(player_mob_check && valid_area_check)
+		deadchat_broadcast(" has died at <b>[get_area_name(death_turf)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = death_turf, message_type=DEADCHAT_DEATHRATTLE)
+		if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client?.holder)
+			to_chat(src, span_deadsay(span_big("Observer freelook is disabled.\nPlease use Orbit, Teleport, and Jump to look around.")))
+			ghostize(TRUE)
 	set_disgust(0)
 	SetSleeping(0, 0)
-	blind_eyes(1)
 	reset_perspective(null)
 	reload_fullscreen()
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	update_damage_hud()
 	update_health_hud()
-	update_canmove()
 	med_hud_set_health()
 	med_hud_set_status()
-	if(!gibbed && !QDELETED(src))
-		addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
 	stop_pulling()
+
+	SEND_SIGNAL(src, COMSIG_LIVING_DEATH, gibbed)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_DEATH, src, gibbed)
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
-		if(getToxLoss() > 20)
-			switch(rand(1,2))
-				if(1)
-					to_chat(src, sound('sound/f13effects/NAR_7.ogg',0,1,90))
-				else
-					to_chat(src, sound('sound/f13effects/NAR_5.ogg',0,1,90))
-		else
-			to_chat(src, sound('sound/f13effects/NAR_6.ogg',0,1,90))
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
-		S.ownerDies(gibbed)
-	for(var/s in sharedSoullinks)
-		var/datum/soullink/S = s
-		S.sharerDies(gibbed)
 
-	set_typing_indicator(FALSE) //SKYRAT CHANGE
-	change_combat_indicator(FALSE)
+	if(!gibbed && (death_sound || death_message))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "deathgasp")
 
 	return TRUE

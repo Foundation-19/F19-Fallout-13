@@ -13,7 +13,7 @@ Configuration:
 
 Usage:
 - Define mouse event procs on your (probably HUD) object and simply call the show and hide procs respectively:
-	/obj/screen/hud
+	/atom/movable/screen/hud
 		MouseEntered(location, control, params)
 			usr.client.tooltip.show(params, title = src.name, content = src.desc)
 
@@ -51,7 +51,7 @@ Notes:
 
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
 	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
-		return 0
+		return FALSE
 	if (!init)
 		//Initialize some vars
 		init = 1
@@ -83,16 +83,16 @@ Notes:
 	if (queueHide)
 		hide()
 
-	return 1
+	return TRUE
 
 
 /datum/tooltip/proc/hide()
+	queueHide = showing ? TRUE : FALSE
+
 	if (queueHide)
-		addtimer(CALLBACK(src, .proc/do_hide), 1)
+		addtimer(CALLBACK(src, PROC_REF(do_hide)), 1)
 	else
 		do_hide()
-
-	queueHide = showing ? TRUE : FALSE
 
 	return TRUE
 
@@ -103,13 +103,16 @@ Notes:
 
 
 //Open a tooltip for user, at a location based on params
-//Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's
+//Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style (Midnight, Plasmafire, Retro, etc)
 //Includes sanity.checks
 /proc/openToolTip(mob/user = null, atom/movable/tip_src = null, params = null,title = "",content = "",theme = "")
 	if(istype(user))
 		if(user.client && user.client.tooltips)
+			var/ui_style = user.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
+			if(!theme && ui_style)
+				theme = lowertext(ui_style)
 			if(!theme)
-				theme = "fallout"
+				theme = "default"
 			user.client.tooltips.show(tip_src, params,title,content,theme)
 
 

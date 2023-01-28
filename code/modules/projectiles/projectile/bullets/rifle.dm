@@ -1,40 +1,43 @@
-//7.62x51 NATO / .308 Winchester
-/obj/item/projectile/bullet/a762
-	damage = 40
-	armour_penetration = 20
-	penetrating = 65
+// 5.56mm (M-90gl Carbine)
 
-/obj/item/projectile/bullet/a762/ap
+/obj/projectile/bullet/a556
+	name = "5.56mm bullet"
 	damage = 35
-	armour_penetration = 40
-
-/obj/item/projectile/bullet/a762/jhp
-	damage = 65 //45
-	armour_penetration = -35 //0
-
-/obj/item/projectile/bullet/a762/sport //.308 Winchester
-	damage = 40
 	armour_penetration = 30
+	wound_bonus = -40
 
-//5.56x45mm
-/obj/item/projectile/bullet/a556
-	damage = 37 //35
-	armour_penetration = 0 //5
-	penetrating = 42
+/obj/projectile/bullet/a556/weak //centcom
+	damage = 20
 
-/obj/item/projectile/bullet/a556/ap
-	damage = 25
-	armour_penetration = 33 //30
+/obj/projectile/bullet/a556/phasic
+	name = "5.56mm phasic bullet"
+	icon_state = "gaussphase"
+	damage = 20
+	armour_penetration = 70
+	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
-/obj/item/projectile/bullet/a556/jhp
-	damage = 55 //45
-	armour_penetration = -40//-5
+// 7.62 (Nagant Rifle)
 
-/obj/item/projectile/bullet/a556/sport
-	damage = 30
+/obj/projectile/bullet/a762
+	name = "7.62 bullet"
+	damage = 60
 	armour_penetration = 10
+	wound_bonus = -45
+	wound_falloff_tile = 0
 
-//2mm Electromagnetic
-/obj/item/projectile/bullet/c2mm
-	damage = 55
+/obj/projectile/bullet/a762/enchanted
+	name = "enchanted 7.62 bullet"
+	damage = 20
+	stamina = 80
+
+// Harpoons (Harpoon Gun)
+
+/obj/projectile/bullet/harpoon
+	name = "harpoon"
+	icon_state = "gauss"
+	damage = 60
 	armour_penetration = 50
+	wound_bonus = -20
+	bare_wound_bonus = 80
+	embedding = list(embed_chance=100, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	wound_falloff_tile = -5

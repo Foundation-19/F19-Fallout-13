@@ -1,6 +1,7 @@
 //Chain link fences
 //Sprites ported from /VG/
 
+
 #define CUT_TIME 100
 #define CLIMB_TIME 150
 
@@ -14,58 +15,31 @@
 	desc = "A chain link fence. Not as effective as a wall, but generally it keeps people out."
 	density = TRUE
 	anchored = TRUE
+
 	icon = 'icons/obj/fence.dmi'
 	icon_state = "straight"
-	barricade = TRUE
-	proj_pass_rate = 40
 
 	var/cuttable = TRUE
 	var/hole_size= NO_HOLE
 	var/invulnerable = FALSE
 
-/obj/structure/fence/Initialize()
+/obj/structure/fence/Initialize(mapload)
 	. = ..()
+
 	update_cut_status()
 
 /obj/structure/fence/examine(mob/user)
 	. = ..()
+
 	switch(hole_size)
 		if(MEDIUM_HOLE)
-			user.show_message("There is a large hole in \the [src].")
+			. += "There is a large hole in \the [src]."
 		if(LARGE_HOLE)
-			user.show_message("\The [src] has been completely cut through.")
+			. += "\The [src] has been completely cut through."
 
 /obj/structure/fence/end
 	icon_state = "end"
 	cuttable = FALSE
-
-/obj/structure/fence/handrail_end
-	name = "handrail"
-	desc = "A waist high handrail, perhaps you could climb over it."
-	icon_state = "y_handrail_end"
-	cuttable = FALSE
-
-/obj/structure/fence/handrail_corner
-	name = "handrail"
-	desc = "A waist high handrail, perhaps you could climb over it."
-	icon_state = "y_handrail_corner"
-	cuttable = FALSE
-	climbable = TRUE
-
-/obj/structure/fence/handrail
-	name = "handrail"
-	desc = "A waist high handrail, perhaps you could climb over it."
-	icon_state = "y_handrail"
-	cuttable= FALSE
-	climbable = TRUE
-
-/obj/structure/fence/handrail_end/non_dense
-	name = "handrail"
-	desc = "A waist high handrail, perhaps you could climb over it."
-	icon_state = "y_handrail_end"
-	cuttable = FALSE
-	density = FALSE
-	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fence/corner
 	icon_state = "corner"
@@ -74,21 +48,6 @@
 /obj/structure/fence/post
 	icon_state = "post"
 	cuttable = FALSE
-
-/obj/structure/fence/pole_t
-	name = "pole"
-	icon_state = "pole_t"
-	desc = "A stout pole."
-	cuttable = FALSE
-	density = FALSE
-	layer = ABOVE_MOB_LAYER
-
-/obj/structure/fence/pole_b
-	name = "pole"
-	icon_state = "pole_b"
-	desc = "A pole, commonly used in traditional fertility rituals. Or by degenerates."
-	cuttable = FALSE
-	density = FALSE
 
 /obj/structure/fence/cut/medium
 	icon_state = "straight_cut2"
@@ -99,61 +58,41 @@
 	hole_size = LARGE_HOLE
 
 /obj/structure/fence/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/wirecutters))
+	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if(!cuttable)
-			to_chat(user, "<span class='notice'>This section of the fence can't be cut.</span>")
+			to_chat(user, span_warning("This section of the fence can't be cut!"))
 			return
 		if(invulnerable)
-			to_chat(user, "<span class='notice'>This fence is too strong to cut through.</span>")
+			to_chat(user, span_warning("This fence is too strong to cut through!"))
 			return
 		var/current_stage = hole_size
 		if(current_stage >= MAX_HOLE_SIZE)
-			to_chat(user, "<span class='notice'>This fence has too much cut out of it already.</span>")
+			to_chat(user, span_warning("This fence has too much cut out of it already!"))
 			return
 
-		user.visible_message("<span class='danger'>\The [user] starts cutting through \the [src] with \the [W].</span>",\
-		"<span class='danger'>You start cutting through \the [src] with \the [W].</span>")
+		user.visible_message(span_danger("\The [user] starts cutting through \the [src] with \the [W]."),\
+		span_danger("You start cutting through \the [src] with \the [W]."))
 
 		if(do_after(user, CUT_TIME*W.toolspeed, target = src))
 			if(current_stage == hole_size)
 				switch(++hole_size)
 					if(MEDIUM_HOLE)
-						visible_message("<span class='notice'>\The [user] cuts a decent-sized hole into \the [src].</span>")
-						to_chat(user, "<span class='info'>You could probably fit yourself through that hole now. Although climbing through would be much faster if you made it even bigger.</span>")
-						climbable = TRUE
+						visible_message(span_notice("\The [user] cuts into \the [src] some more."))
+						to_chat(user, span_info("You could probably fit yourself through that hole now. Although climbing through would be much faster if you made it even bigger."))
+						AddElement(/datum/element/climbable)
 					if(LARGE_HOLE)
-						visible_message("<span class='notice'>\The [user] completely cuts through \the [src].</span>")
-						to_chat(user, "<span class='info'>The hole in \the [src] is now big enough to walk through.</span>")
-						climbable = FALSE
+						visible_message(span_notice("\The [user] completely cuts through \the [src]."))
+						to_chat(user, span_info("The hole in \the [src] is now big enough to walk through."))
+						RemoveElement(/datum/element/climbable)
 
 				update_cut_status()
-	else if(istype(W, /obj/item/stack/sheet/mineral/wood))
-		var/obj/item/stack/sheet/mineral/wood/Z = W
-		if(locate(/obj/structure/barricade/wooden/planks) in get_turf(src))
-			to_chat(user, "<span class='warning'>This fence is already barricaded!</span>")
-			return
-		if(Z.get_amount() < 3)
-			to_chat(user, "<span class='warning'>You need atleast 3 wooden planks to reinforce this fence!</span>")
-			return
-		else
-			to_chat(user, "<span class='notice'>You start adding [Z] to [src]...</span>")
-			if(do_after(user, 50, target=src))
-				if(locate(/obj/structure/barricade/wooden/planks) in get_turf(src))
-					to_chat(user, "<span class='warning'>This fence is already barricaded!</span>")
-					return
-				if(Z.get_amount() < 3)
-					to_chat(user, "<span class='warning'>You need atleast 3 wooden planks to reinforce this fence!</span>")
-					return
-				Z.use(3)
-				new /obj/structure/barricade/wooden/planks(get_turf(src))
-				user.visible_message("<span class='notice'>[user] reinforces the fence with some planks.</span>", "<span class='notice'>You reinforce the fence with some planks.</span>")
-				return
+
 	return TRUE
 
 /obj/structure/fence/proc/update_cut_status()
 	if(!cuttable)
 		return
-	density = TRUE
+	var/new_density = TRUE
 	switch(hole_size)
 		if(NO_HOLE)
 			icon_state = initial(icon_state)
@@ -161,7 +100,8 @@
 			icon_state = "straight_cut2"
 		if(LARGE_HOLE)
 			icon_state = "straight_cut3"
-			density = FALSE
+			new_density = FALSE
+	set_density(new_density)
 
 //FENCE DOORS
 
@@ -170,137 +110,39 @@
 	desc = "Not very useful without a real lock."
 	icon_state = "door_closed"
 	cuttable = FALSE
-	var/open = FALSE
-	var/obj/item/lock_construct/Lock = null
 
-/obj/structure/fence/door/Initialize()
+/obj/structure/fence/door/Initialize(mapload)
 	. = ..()
 
-	update_door_status()
-
-/obj/structure/fence/door/Destroy()
-	if(Lock)
-		qdel(Lock)
-	return ..()
+	update_icon_state()
 
 /obj/structure/fence/door/opened
 	icon_state = "door_opened"
-	open = TRUE
-	density = TRUE
+	density = FALSE
 
-/obj/structure/fence/door/attack_hand(mob/user)
-	if(check_locked(user))
-		return
-	else if(can_open(user))
+/obj/structure/fence/door/attack_hand(mob/user, list/modifiers)
+	if(can_open(user))
 		toggle(user)
+
 	return TRUE
 
-/obj/structure/fence/door/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/lock_construct)) /* attempt to add a lock */
-		return add_lock(I, user) /* call add_lock proc, so we can disable for airlocks */
-	else if(istype(I, /obj/item/key))
-		return check_key(I, user)
-	else
-		return ..()
-
-/obj/structure/fence/door/crowbar_act(mob/living/user, obj/item/I)
-	if(Lock) /* attempt to pry the lock off */
-		if(Lock.pry_off(user,src))
-			qdel(Lock)
-			Lock = null
-			src.desc = "[initial(desc)]"
-	return
-
-/obj/structure/fence/door/proc/check_key(obj/item/key/K, mob/user)
-	if(!Lock)
-		to_chat(user, "[src] has no lock attached")
-		return
-	else
-		return Lock.check_key(K,user)
-
-/obj/structure/fence/door/proc/check_locked(mob/user)
-	if(Lock)
-		if(Lock.check_locked())
-			to_chat(user, "[src] is bolted [density ? "shut" : "open"]")
-			return TRUE
-	return FALSE
-
-/obj/structure/fence/door/proc/add_lock(obj/item/lock_construct/L, mob/user)
-	if(Lock)
-		to_chat(user, "[src] already has \a [Lock] attached")
-		return
-	else
-		if(user.transferItemToLoc(L, src))
-			user.visible_message("<span class='notice'>[user] adds [L] to \the [src].</span>", \
-								 "<span class='notice'>You add [L] to \the [src].</span>")
-			desc = "[src.desc] Has a lock engraved with a [L.lock_data]."
-			Lock = L
-
 /obj/structure/fence/door/proc/toggle(mob/user)
-	switch(open)
-		if(FALSE)
-			visible_message("<span class='notice'>\The [user] opens \the [src].</span>")
-			open = TRUE
-		if(TRUE)
-			visible_message("<span class='notice'>\The [user] closes \the [src].</span>")
-			open = FALSE
+	visible_message(span_notice("\The [user] [density ? "opens" : "closes"] \the [src]."))
+	set_density(!density)
+	update_icon_state()
+	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 
-	update_door_status()
-	playsound(src, 'sound/machines/click.ogg', 100, 1)
-
-/obj/structure/fence/door/proc/update_door_status()
-	switch(open)
-		if(FALSE)
-			density = TRUE
-			icon_state = "door_closed"
-		if(TRUE)
-			density = FALSE
-			icon_state = "door_opened"
+/obj/structure/fence/door/update_icon_state()
+	icon_state = density ? "door_closed" : "door_opened"
+	return ..()
 
 /obj/structure/fence/door/proc/can_open(mob/user)
 	return TRUE
 
-/obj/structure/simple_door/metal/fence
-	name = "fence gate"
-	desc = "A gate for a fence."
-	icon_state = "fence"
-	door_type = "fence"
-	open_sound = "sound/f13machines/doorchainlink_open.ogg"
-	close_sound = "sound/f13machines/doorchainlink_close.ogg"
-	opaque = 0
-	can_hold_padlock = TRUE
-	icon = 'icons/obj/fence.dmi'
-
 #undef CUT_TIME
 #undef CLIMB_TIME
+
 #undef NO_HOLE
 #undef MEDIUM_HOLE
 #undef LARGE_HOLE
 #undef MAX_HOLE_SIZE
-
-/obj/structure/fence/wooden
-	name = "wooden fence"
-	desc = "A fence fashioned out of wood planks. Designed to keep animals in and vagrants out"
-	icon = 'icons/obj/fence.dmi'
-	icon_state = "straight_wood"
-	cuttable = FALSE
-	climbable = TRUE
-
-/obj/structure/fence/end/wooden
-	icon_state = "end_wood"
-	cuttable = FALSE
-
-/obj/structure/fence/corner/wooden
-	icon_state = "corner_wood"
-	cuttable = FALSE
-
-/obj/structure/simple_door/metal/fence/wooden
-	name = "wood fence gate"
-	desc = "A wooden gate for a wood fence."
-	icon_state = "fence_wooden"
-	door_type = "fence_wooden"
-	open_sound = "sound/f13machines/doorchainlink_open.ogg"
-	close_sound = "sound/f13machines/doorchainlink_close.ogg"
-	opaque = 0
-	can_hold_padlock = TRUE
-	icon = 'icons/obj/fence.dmi'

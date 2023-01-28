@@ -1,21 +1,20 @@
-#define ION_RANDOM 0
-#define ION_ANNOUNCE 1
 /datum/round_event_control/ion_storm
 	name = "Ion Storm"
 	typepath = /datum/round_event/ion_storm
 	weight = 15
 	min_players = 2
+	category = EVENT_CATEGORY_AI
+	description = "Gives the AI a new, randomized law."
 
 /datum/round_event/ion_storm
 	var/replaceLawsetChance = 25 //chance the AI's lawset is completely replaced with something else per config weights
 	var/removeRandomLawChance = 10 //chance the AI has one random supplied or inherent law removed
 	var/removeDontImproveChance = 10 //chance the randomly created law replaces a random law instead of simply being added
 	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
-	var/botEmagChance = 10
-	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means
+	var/botEmagChance = 1
 	var/ionMessage = null
-	var/ionAnnounceChance = 33
-	announceWhen	= 1
+	announce_when = 1
+	announce_chance = 33
 
 /datum/round_event/ion_storm/add_law_only // special subtype that adds a law only
 	replaceLawsetChance = 0
@@ -25,17 +24,24 @@
 	botEmagChance = 0
 
 /datum/round_event/ion_storm/announce(fake)
-	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)) || fake)
-		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/ai/ionstorm.ogg')
+	if(prob(announce_chance) || fake)
+		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", ANNOUNCER_IONSTORM)
 
 
 /datum/round_event/ion_storm/start()
 	//AI laws
 	for(var/mob/living/silicon/ai/M in GLOB.alive_mob_list)
 		M.laws_sanity_check()
-		if(M.stat != DEAD && M.see_in_dark != 0)
+		if(M.stat != DEAD && !M.incapacitated())
 			if(prob(replaceLawsetChance))
-				M.laws.pick_weighted_lawset()
+				var/datum/ai_laws/ion_lawset = pick_weighted_lawset()
+				// pick_weighted_lawset gives us a typepath,
+				// so we have to instantiate it to access its laws
+				ion_lawset = new()
+				// our inherent laws now becomes the picked lawset's laws!
+				M.laws.inherent = ion_lawset.inherent.Copy()
+				// and clean up after.
+				qdel(ion_lawset)
 
 			if(prob(removeRandomLawChance))
 				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
@@ -43,14 +49,14 @@
 			var/message = ionMessage || generate_ion_law()
 			if(message)
 				if(prob(removeDontImproveChance))
-					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION), LAW_ION)
 				else
 					M.add_ion_law(message)
 
 			if(prob(shuffleLawsChance))
 				M.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
 
-			log_game("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
+			log_silicon("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
 			M.post_lawchange()
 
 	if(botEmagChance)
@@ -562,6 +568,3 @@
 							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
 
 	return message
-
-#undef ION_RANDOM
-#undef ION_ANNOUNCE

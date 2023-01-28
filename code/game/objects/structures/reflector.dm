@@ -5,46 +5,52 @@
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
 	density = FALSE
-	layer = BELOW_OBJ_LAYER
 	var/deflector_icon_state
-	var/image/deflector_overlay
+	var/mutable_appearance/deflector_overlay
 	var/finished = FALSE
 	var/admin = FALSE //Can't be rotated or deconstructed
 	var/can_rotate = TRUE
-	var/framebuildstacktype = /obj/item/stack/sheet/metal
+	var/framebuildstacktype = /obj/item/stack/sheet/iron
 	var/framebuildstackamount = 5
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 0
-	var/list/allowed_projectile_typecache = list(/obj/item/projectile/beam)
+	var/list/allowed_projectile_typecache = list(/obj/projectile/beam, /obj/projectile/energy/nuclear_particle)
 	var/rotation_angle = -1
 
-/obj/structure/reflector/Initialize()
+/obj/structure/reflector/Initialize(mapload)
 	. = ..()
 	icon_state = "reflector_base"
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
 	if(deflector_icon_state)
-		deflector_overlay = image(icon, deflector_icon_state)
+		deflector_overlay = mutable_appearance(icon, deflector_icon_state)
+		// We offset our physical position DOWN, because TRANSFORM IS A FUCK
+		deflector_overlay.pixel_y = -32
+		deflector_overlay.pixel_z = 32
 		add_overlay(deflector_overlay)
 
 	if(rotation_angle == -1)
-		setAngle(dir2angle(dir))
+		set_angle(dir2angle(dir))
 	else
-		setAngle(rotation_angle)
+		set_angle(rotation_angle)
 
 	if(admin)
 		can_rotate = FALSE
 
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/reflector,
+	))
+
 /obj/structure/reflector/examine(mob/user)
-	..()
+	. = ..()
 	if(finished)
-		to_chat(user, "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"].")
+		. += "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"]."
 		if(!admin)
 			if(can_rotate)
-				to_chat(user, "<span class='notice'>Alt-click to adjust its direction.</span>")
+				. += span_notice("Alt-click to adjust its direction.")
 			else
-				to_chat(user, "<span class='notice'>Use screwdriver to unlock the rotation.</span>")
+				. += span_notice("Use screwdriver to unlock the rotation.")
 
-/obj/structure/reflector/proc/setAngle(new_angle)
+/obj/structure/reflector/proc/set_angle(new_angle)
 	if(can_rotate)
 		rotation_angle = new_angle
 		if(deflector_overlay)
@@ -56,80 +62,78 @@
 /obj/structure/reflector/setDir(new_dir)
 	return ..(NORTH)
 
-/obj/structure/reflector/proc/dir_map_to_angle(dir)
-	return 0
-
-/obj/structure/reflector/bullet_act(obj/item/projectile/P)
+/obj/structure/reflector/bullet_act(obj/projectile/P)
 	var/pdir = P.dir
 	var/pangle = P.Angle
 	var/ploc = get_turf(P)
 	if(!finished || !allowed_projectile_typecache[P.type] || !(P.dir in GLOB.cardinals))
 		return ..()
-	if(auto_reflect(P, pdir, ploc, pangle) != -1)
+	if(auto_reflect(P, pdir, ploc, pangle) != BULLET_ACT_FORCE_PIERCE)
 		return ..()
-	return -1
+	return BULLET_ACT_FORCE_PIERCE
 
-/obj/structure/reflector/proc/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
+/obj/structure/reflector/proc/auto_reflect(obj/projectile/P, pdir, turf/ploc, pangle)
 	P.ignore_source_check = TRUE
 	P.range = P.decayedRange
 	P.decayedRange = max(P.decayedRange--, 0)
-	return -1
+	return BULLET_ACT_FORCE_PIERCE
+
+/obj/structure/reflector/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+	if(admin)
+		return FALSE
+	return ..()
+
+/obj/structure/reflector/screwdriver_act(mob/living/user, obj/item/tool)
+	can_rotate = !can_rotate
+	to_chat(user, span_notice("You [can_rotate ? "unlock" : "lock"] [src]'s rotation."))
+	tool.play_tool_sound(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/structure/reflector/wrench_act(mob/living/user, obj/item/tool)
+	if(anchored)
+		to_chat(user, span_warning("Unweld [src] from the floor first!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
+	if(!tool.use_tool(src, user, 8 SECONDS, volume=50))
+		return
+	to_chat(user, span_notice("You dismantle [src]."))
+	new framebuildstacktype(drop_location(), framebuildstackamount)
+	if(buildstackamount)
+		new buildstacktype(drop_location(), buildstackamount)
+	qdel(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/structure/reflector/welder_act(mob/living/user, obj/item/tool)
+	if(!tool.tool_start_check(user, amount=0))
+		return
+	if(atom_integrity < max_integrity)
+		user.visible_message(span_notice("[user] starts to repair [src]."),
+							span_notice("You begin repairing [src]..."),
+							span_hear("You hear welding."))
+		if(tool.use_tool(src, user, 4 SECONDS, volume=40))
+			atom_integrity = max_integrity
+			user.visible_message(span_notice("[user] repairs [src]."), \
+								span_notice("You finish repairing [src]."))
+	else if(!anchored)
+		user.visible_message(span_notice("[user] starts to weld [src] to the floor."),
+							span_notice("You start to weld [src] to the floor..."),
+							span_hear("You hear welding."))
+		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
+			set_anchored(TRUE)
+			to_chat(user, span_notice("You weld [src] to the floor."))
+	else
+		user.visible_message(span_notice("[user] starts to cut [src] free from the floor."),
+							span_notice("You start to cut [src] free from the floor..."),
+							span_hear("You hear welding."))
+		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
+			set_anchored(FALSE)
+			to_chat(user, span_notice("You cut [src] free from the floor."))
+
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
 	if(admin)
 		return
-
-	if(istype(W, /obj/item/screwdriver))
-		can_rotate = !can_rotate
-		to_chat(user, "<span class='notice'>You [can_rotate ? "unlock" : "lock"] [src]'s rotation.</span>")
-		W.play_tool_sound(src)
-		return
-
-	if(istype(W, /obj/item/wrench))
-		if(anchored)
-			to_chat(user, "<span class='warning'>Unweld [src] from the floor first!</span>")
-			return
-		user.visible_message("[user] starts to dismantle [src].", "<span class='notice'>You start to dismantle [src]...</span>")
-		if(W.use_tool(src, user, 80, volume=50))
-			to_chat(user, "<span class='notice'>You dismantle [src].</span>")
-			new framebuildstacktype(drop_location(), framebuildstackamount)
-			if(buildstackamount)
-				new buildstacktype(drop_location(), buildstackamount)
-			qdel(src)
-	else if(istype(W, /obj/item/weldingtool))
-		if(obj_integrity < max_integrity)
-			if(!W.tool_start_check(user, amount=0))
-				return
-
-			user.visible_message("[user] starts to repair [src].",
-								"<span class='notice'>You begin repairing [src]...</span>",
-								"<span class='italics'>You hear welding.</span>")
-			if(W.use_tool(src, user, 40, volume=40))
-				obj_integrity = max_integrity
-				user.visible_message("[user] has repaired [src].", \
-									"<span class='notice'>You finish repairing [src].</span>")
-
-		else if(!anchored)
-			if(!W.tool_start_check(user, amount=0))
-				return
-
-			user.visible_message("[user] starts to weld [src] to the floor.",
-								"<span class='notice'>You start to weld [src] to the floor...</span>",
-								"<span class='italics'>You hear welding.</span>")
-			if (W.use_tool(src, user, 20, volume=50))
-				setAnchored(TRUE)
-				to_chat(user, "<span class='notice'>You weld [src] to the floor.</span>")
-		else
-			if(!W.tool_start_check(user, amount=0))
-				return
-
-			user.visible_message("[user] starts to cut [src] free from the floor.",
-								"<span class='notice'>You start to cut [src] free from the floor...</span>",
-								"<span class='italics'>You hear welding.</span>")
-			if (W.use_tool(src, user, 20, volume=50))
-				setAnchored(FALSE)
-				to_chat(user, "<span class='notice'>You cut [src] free from the floor.</span>")
-
 	//Finishing the frame
 	else if(istype(W, /obj/item/stack/sheet))
 		if(finished)
@@ -140,14 +144,14 @@
 				new /obj/structure/reflector/single(drop_location())
 				qdel(src)
 			else
-				to_chat(user, "<span class='warning'>You need five sheets of glass to create a reflector!</span>")
+				to_chat(user, span_warning("You need five sheets of glass to create a reflector!"))
 				return
 		if(istype(S, /obj/item/stack/sheet/rglass))
 			if(S.use(10))
 				new /obj/structure/reflector/double(drop_location())
 				qdel(src)
 			else
-				to_chat(user, "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>")
+				to_chat(user, span_warning("You need ten sheets of reinforced glass to create a double reflector!"))
 				return
 		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
 			if(S.use(1))
@@ -158,17 +162,16 @@
 
 /obj/structure/reflector/proc/rotate(mob/user)
 	if (!can_rotate || admin)
-		to_chat(user, "<span class='warning'>The rotation is locked!</span>")
+		to_chat(user, span_warning("The rotation is locked!"))
 		return FALSE
-	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
-	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	if(!isnull(new_angle))
-		setAngle(SIMPLIFY_DEGREES(new_angle))
+	var/new_angle = tgui_input_number(user, "New angle for primary reflection face", "Reflector Angle", rotation_angle, 360)
+	if(isnull(new_angle) || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+		return FALSE
+	set_angle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		return
 	else if(finished)
 		rotate(user)
@@ -194,12 +197,12 @@
 	admin = TRUE
 	anchored = TRUE
 
-/obj/structure/reflector/single/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
+/obj/structure/reflector/single/auto_reflect(obj/projectile/P, pdir, turf/ploc, pangle)
 	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (P.Angle + 180))
 	if(abs(incidence) > 90 && abs(incidence) < 270)
 		return FALSE
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	P.setAngle(new_angle)
+	P.set_angle_centered(new_angle)
 	return ..()
 
 //DOUBLE
@@ -220,10 +223,10 @@
 	admin = TRUE
 	anchored = TRUE
 
-/obj/structure/reflector/double/auto_reflect(obj/item/projectile/P, pdir, turf/ploc, pangle)
+/obj/structure/reflector/double/auto_reflect(obj/projectile/P, pdir, turf/ploc, pangle)
 	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (P.Angle + 180))
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	P.setAngle(new_angle)
+	P.set_angle_centered(new_angle)
 	return ..()
 
 //BOX
@@ -244,21 +247,44 @@
 	admin = TRUE
 	anchored = TRUE
 
-/obj/structure/reflector/box/auto_reflect(obj/item/projectile/P)
-	P.setAngle(rotation_angle)
+/obj/structure/reflector/box/auto_reflect(obj/projectile/P)
+	P.set_angle_centered(rotation_angle)
 	return ..()
 
 /obj/structure/reflector/ex_act()
 	if(admin)
-		return
-	else
-		return ..()
-
-/obj/structure/reflector/dir_map_to_angle(dir)
-	return dir2angle(dir)
+		return FALSE
+	return ..()
 
 /obj/structure/reflector/singularity_act()
 	if(admin)
 		return
 	else
 		return ..()
+
+//	USB
+
+/obj/item/circuit_component/reflector
+	display_name = "Reflector"
+	desc = "Allows you to adjust the angle of a reflector."
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
+
+	///angle the reflector will be set to at trigger unless locked
+	var/datum/port/input/angle
+
+	var/obj/structure/reflector/attached_reflector
+
+/obj/item/circuit_component/reflector/populate_ports()
+	angle = add_input_port("Angle", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/reflector/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/structure/reflector))
+		attached_reflector = parent
+
+/obj/item/circuit_component/reflector/unregister_usb_parent(atom/movable/parent)
+	attached_reflector = null
+	return ..()
+
+/obj/item/circuit_component/reflector/input_received(datum/port/input/port)
+	attached_reflector?.set_angle(angle.value)

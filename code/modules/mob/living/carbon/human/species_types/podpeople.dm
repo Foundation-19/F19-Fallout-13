@@ -1,66 +1,69 @@
 /datum/species/pod
 	// A mutation caused by a human being ressurected in a revival pod. These regain health in light, and begin to wither in darkness.
-	name = "Podperson"
-	id = "pod"
-	default_color = "59CE00"
-	species_traits = list(MUTCOLORS,EYECOLOR)
-	attack_verb = "slash"
-	attack_sound = 'sound/weapons/slice.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
+	name = "\improper Podperson"
+	plural_form = "Podpeople"
+	id = SPECIES_PODPERSON
+	species_traits = list(
+		MUTCOLORS,
+		EYECOLOR,
+	)
+	inherent_traits = list(
+		TRAIT_PLANT_SAFE,
+	)
+	external_organs = list(
+		/obj/item/organ/external/pod_hair = "None",
+	)
+	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
+	inherent_factions = list("plants", "vines")
+
 	burnmod = 1.25
 	heatmod = 1.5
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
-	disliked_food = MEAT | DAIRY
+	payday_modifier = 0.75
+	meat = /obj/item/food/meat/slab/human/mutant/plant
+	exotic_blood = /datum/reagent/water
+	disliked_food = MEAT | DAIRY | SEAFOOD | BUGS
 	liked_food = VEGETABLES | FRUIT | GRAIN
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	species_language_holder = /datum/language_holder/plant
 
-/datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	C.faction |= "plants"
-	C.faction |= "vines"
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/pod,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/pod,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/pod,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/pod,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/pod,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/pod,
+	)
 
-/datum/species/pod/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	C.faction -= "plants"
-	C.faction -= "vines"
+	ass_image = 'icons/ass/asspodperson.png'
 
-/datum/species/pod/spec_life(mob/living/carbon/human/H)
+/datum/species/pod/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD)
 		return
+
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
-		light_amount = min(1,T.get_lumcount()) - 0.5
-		H.nutrition += light_amount * 10
-		if(H.nutrition > NUTRITION_LEVEL_FULL)
-			H.nutrition = NUTRITION_LEVEL_FULL
+		light_amount = min(1, T.get_lumcount()) - 0.5
+		H.adjust_nutrition(5 * light_amount * delta_time)
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(1,1)
-			H.adjustToxLoss(-1)
-			H.adjustOxyLoss(-1)
+			H.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, BODYTYPE_ORGANIC)
+			H.adjustToxLoss(-0.5 * delta_time)
+			H.adjustOxyLoss(-0.5 * delta_time)
+
+	if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL) //don't make podpeople fat because they stood in the sun for too long
+		H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		H.take_overall_damage(2,0)
+		H.take_overall_damage(1 * delta_time, 0)
+	..()
 
-/datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "plantbgone")
-		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
+/datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+	if(chem.type == /datum/reagent/toxin/plantbgone)
+		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+		return TRUE
 
-/datum/species/pod/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
-	switch(P.type)
-		if(/obj/item/projectile/energy/floramut)
-			if(prob(15))
-				H.rad_act(rand(30,80))
-				H.Knockdown(100)
-				H.visible_message("<span class='warning'>[H] writhes in pain as [H.p_their()] vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
-				if(prob(80))
-					H.randmutb()
-				else
-					H.randmutg()
-				H.domutcheck()
-			else
-				H.adjustFireLoss(rand(5,15))
-				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
-		if(/obj/item/projectile/energy/florayield)
-			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
+
+/datum/species/pod/randomize_features(mob/living/carbon/human_mob)
+	randomize_external_organs(human_mob)

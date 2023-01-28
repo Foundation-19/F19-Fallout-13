@@ -1,98 +1,72 @@
-//Bomb
-/mob/living/simple_animal/hostile/guardian/bomb
+#define UNREGISTER_BOMB_SIGNALS(A) \
+	do { \
+		UnregisterSignal(A, boom_signals); \
+		UnregisterSignal(A, COMSIG_PARENT_EXAMINE); \
+	} while (0)
+
+//Explosive
+/mob/living/simple_animal/hostile/guardian/explosive
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
 	range = 13
-	playstyle_string = "<span class='holoparasite'>As an <b>explosive</b> type, you have moderate close combat abilities, may explosively teleport targets on attack, and are capable of converting nearby items and objects into disguised bombs via alt click.</span>"
-	magic_fluff_string = "<span class='holoparasite'>..And draw the Scientist, master of explosive death.</span>"
-	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Explosive modules active. Holoparasite swarm online.</span>"
-	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an explosive carp! Boom goes the fishy.</span>"
-	var/bomb_cooldown = 0
+	playstyle_string = span_holoparasite("As an <b>explosive</b> type, you have moderate close combat abilities and are capable of converting nearby items and objects into disguised bombs via right-click.")
+	magic_fluff_string = span_holoparasite("..And draw the Scientist, master of explosive death.")
+	tech_fluff_string = span_holoparasite("Boot sequence complete. Explosive modules active. Holoparasite swarm online.")
+	carp_fluff_string = span_holoparasite("CARP CARP CARP! Caught one! It's an explosive carp! Boom goes the fishy.")
+	miner_fluff_string = span_holoparasite("You encounter... Gibtonite, an explosive fighter.")
+	creator_name = "Explosive"
+	creator_desc = "High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay."
+	creator_icon = "explosive"
+	/// Static list of signals that activate the boom.
+	var/static/list/boom_signals = list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
+	/// After this amount of time passses, boom deactivates.
+	var/decay_time = 1 MINUTES
+	/// Time between bombs.
+	var/bomb_cooldown_time = 20 SECONDS
+	/// The cooldown timer between bombs.
+	COOLDOWN_DECLARE(bomb_cooldown)
 
-/mob/living/simple_animal/hostile/guardian/bomb/Stat()
-	..()
-	if(statpanel("Status"))
-		if(bomb_cooldown >= world.time)
-			stat(null, "Bomb Cooldown Remaining: [DisplayTimeText(bomb_cooldown - world.time)]")
-
-/mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
+/mob/living/simple_animal/hostile/guardian/explosive/get_status_tab_items()
 	. = ..()
-	if(. && prob(40) && isliving(target))
-		var/mob/living/M = target
-		if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
-			new /obj/effect/temp_visual/guardian/phase/out(get_turf(M))
-			do_teleport(M, M, 10)
-			for(var/mob/living/L in range(1, M))
-				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
-					continue
-				if(L != src && L != summoner)
-					L.apply_damage(15, BRUTE)
-			new /obj/effect/temp_visual/explosion(get_turf(M))
+	if(!COOLDOWN_FINISHED(src, bomb_cooldown))
+		. += "Bomb Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, bomb_cooldown))]"
 
-/mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
-	if(!istype(A))
+/mob/living/simple_animal/hostile/guardian/explosive/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && proximity_flag && isobj(attack_target))
+		plant_bomb(attack_target)
 		return
-	if(loc == summoner)
-		to_chat(src, "<span class='danger'><B>You must be manifested to create bombs!</span></B>")
+	return ..()
+
+/mob/living/simple_animal/hostile/guardian/explosive/proc/plant_bomb(obj/planting_on)
+	if(!COOLDOWN_FINISHED(src, bomb_cooldown))
+		to_chat(src, span_bolddanger("Your powers are on cooldown! You must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, bomb_cooldown))] between bombs."))
 		return
-	if(isobj(A) && Adjacent(A))
-		if(bomb_cooldown <= world.time && !stat)
-			var/obj/guardian_bomb/B = new /obj/guardian_bomb(get_turf(A))
-			to_chat(src, "<span class='danger'><B>Success! Bomb armed!</span></B>")
-			bomb_cooldown = world.time + 200
-			B.spawner = src
-			B.disguise(A)
-		else
-			to_chat(src, "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>")
+	to_chat(src, span_bolddanger("Success! Bomb armed!"))
+	COOLDOWN_START(src, bomb_cooldown, bomb_cooldown_time)
+	RegisterSignal(planting_on, COMSIG_PARENT_EXAMINE, PROC_REF(display_examine))
+	RegisterSignal(planting_on, boom_signals, PROC_REF(kaboom))
+	addtimer(CALLBACK(src, PROC_REF(disable), planting_on), decay_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-/obj/guardian_bomb
-	name = "bomb"
-	desc = "You shouldn't be seeing this!"
-	var/obj/stored_obj
-	var/mob/living/simple_animal/hostile/guardian/spawner
+/mob/living/simple_animal/hostile/guardian/explosive/proc/kaboom(atom/source, mob/living/explodee)
+	SIGNAL_HANDLER
+	if(!istype(explodee))
+		return
+	if(explodee == src || explodee == summoner || hasmatchingsummoner(explodee))
+		return
+	to_chat(explodee, span_bolddanger("[source] was boobytrapped!"))
+	to_chat(src, span_bolddanger("Success! Your trap caught [explodee]"))
+	playsound(source, 'sound/effects/explosion2.ogg', 200, TRUE)
+	new /obj/effect/temp_visual/explosion(get_turf(source))
+	EX_ACT(explodee, EXPLODE_HEAVY)
+	UNREGISTER_BOMB_SIGNALS(source)
 
+/mob/living/simple_animal/hostile/guardian/explosive/proc/disable(obj/rigged_obj)
+	to_chat(src, span_bolddanger("Failure! Your trap didn't catch anyone this time."))
+	UNREGISTER_BOMB_SIGNALS(rigged_obj)
 
-/obj/guardian_bomb/proc/disguise(obj/A)
-	A.forceMove(src)
-	stored_obj = A
-	opacity = A.opacity
-	anchored = A.anchored
-	density = A.density
-	appearance = A.appearance
-	addtimer(CALLBACK(src, .proc/disable), 600)
+/mob/living/simple_animal/hostile/guardian/explosive/proc/display_examine(datum/source, mob/user, text)
+	SIGNAL_HANDLER
+	text += span_holoparasite("It glows with a strange <font color=\"[guardian_color]\">light</font>!")
 
-/obj/guardian_bomb/proc/disable()
-	stored_obj.forceMove(get_turf(src))
-	to_chat(spawner, "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>")
-	qdel(src)
-
-/obj/guardian_bomb/proc/detonate(mob/living/user)
-	if(isliving(user))
-		if(user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
-			to_chat(user, "<span class='danger'><B>[src] was boobytrapped!</span></B>")
-			to_chat(spawner, "<span class='danger'><B>Success! Your trap caught [user]</span></B>")
-			var/turf/T = get_turf(src)
-			stored_obj.forceMove(T)
-			playsound(T,'sound/effects/explosion2.ogg', 200, 1)
-			new /obj/effect/temp_visual/explosion(T)
-			user.ex_act(EXPLODE_HEAVY)
-			qdel(src)
-		else
-			to_chat(user, "<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>, and you don't touch it.</span>")
-
-/obj/guardian_bomb/Bump(atom/A)
-	detonate(A)
-	..()
-
-/obj/guardian_bomb/attackby(mob/living/user)
-	detonate(user)
-
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/guardian_bomb/attack_hand(mob/living/user)
-	detonate(user)
-
-/obj/guardian_bomb/examine(mob/user)
-	stored_obj.examine(user)
-	if(get_dist(user,src)<=2)
-		to_chat(user, "<span class='holoparasite'>It glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>!</span>")
+#undef UNREGISTER_BOMB_SIGNALS

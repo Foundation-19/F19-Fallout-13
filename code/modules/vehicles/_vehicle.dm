@@ -1,36 +1,48 @@
-#define VEHICLE_CONTROL_PERMISSION 1
-#define VEHICLE_CONTROL_DRIVE 2
-
 /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
 	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "fuckyou"
+	icon_state = "error"
 	max_integrity = 300
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	armor_type = /datum/armor/obj_vehicle
+	layer = VEHICLE_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 	density = TRUE
 	anchored = FALSE
-	var/list/mob/occupants				//mob = bitflags of their control level.
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	pass_flags_self = PASSVEHICLE
+	COOLDOWN_DECLARE(cooldown_vehicle_move)
+	var/list/mob/occupants //mob = bitflags of their control level.
+	///Maximum amount of passengers plus drivers
 	var/max_occupants = 1
+	////Maximum amount of drivers
 	var/max_drivers = 1
 	var/movedelay = 2
 	var/lastmove = 0
+	/**
+	  * If the driver needs a certain item in hand (or inserted, for vehicles) to drive this. For vehicles, this must be duplicated on their riding component subtype
+	  * [/datum/component/riding/var/keytype] variable because only a few specific checks are handled here with this var, and the majority of it is on the riding component
+	  * Eventually the remaining checks should be moved to the component and this var removed.
+	  */
 	var/key_type
+	///The inserted key, needed on some vehicles to start the engine
 	var/obj/item/key/inserted_key
-	var/key_type_exact = TRUE		//can subtypes work
+	/// Whether the vehicle is currently able to move
 	var/canmove = TRUE
-	var/emulate_door_bumps = TRUE	//when bumping a door try to make occupants bump them to open them.
-	var/default_driver_move = TRUE	//handle driver movement instead of letting something else do it like riding datums.
-	var/list/autogrant_actions_passenger	//plain list of typepaths
-	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
-	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
+	var/list/autogrant_actions_passenger //plain list of typepaths
+	var/list/autogrant_actions_controller //assoc list "[bitflag]" = list(typepaths)
+	var/list/mob/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
+	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
-	var/datum/riding/riding_datum = null
-	var/engine_on = 0
-	var/engine_on_sound = null
-	var/engine_loop_sound = null
-	var/obj/item/key/key = null
+	var/are_legs_exposed = FALSE
 
+/datum/armor/obj_vehicle
+	melee = 30
+	bullet = 30
+	laser = 30
+	bomb = 30
+	fire = 60
+	acid = 60
 
 /obj/vehicle/Initialize(mapload)
 	. = ..()
@@ -39,19 +51,45 @@
 	autogrant_actions_controller = list()
 	occupant_actions = list()
 	generate_actions()
-	if(engine_on)
-		src.verbs += /obj/vehicle/proc/StopEngine
-	else
-		src.verbs += /obj/vehicle/proc/StartEngine
+
+/obj/vehicle/Destroy(force)
+	QDEL_NULL(trailer)
+	inserted_key = null
+	return ..()
+
+/obj/vehicle/Exited(atom/movable/gone, direction)
+	if(gone == inserted_key)
+		inserted_key = null
+	return ..()
+
+/obj/vehicle/examine(mob/user)
+	. = ..()
+	if(resistance_flags & ON_FIRE)
+		. += span_warning("It's on fire!")
+	. += generate_integrity_message()
+
+/// Returns a readable string of the vehicle's health for examining. Overridden by subtypes who want to be more verbose with their health messages.
+/obj/vehicle/proc/generate_integrity_message()
+	var/examine_text = ""
+	var/integrity = atom_integrity/max_integrity * 100
+	switch(integrity)
+		if(50 to 99)
+			examine_text = "It looks slightly damaged."
+		if(25 to 50)
+			examine_text = "It appears heavily damaged."
+		if(0 to 25)
+			examine_text = span_warning("It's falling apart!")
+
+	return examine_text
 
 /obj/vehicle/proc/is_key(obj/item/I)
-	return I? (key_type_exact? (I.type == key_type) : istype(I, key_type)) : FALSE
+	return istype(I, key_type)
 
 /obj/vehicle/proc/return_occupants()
 	return occupants
 
 /obj/vehicle/proc/occupant_amount()
-	return length(occupants)
+	return LAZYLEN(occupants)
 
 /obj/vehicle/proc/return_amount_of_controllers_with_flag(flag)
 	. = 0
@@ -60,6 +98,7 @@
 			.++
 
 /obj/vehicle/proc/return_controllers_with_flag(flag)
+	RETURN_TYPE(/list/mob)
 	. = list()
 	for(var/i in occupants)
 		if(occupants[i] & flag)
@@ -75,64 +114,50 @@
 	return is_occupant(M) && occupants[M] & VEHICLE_CONTROL_DRIVE
 
 /obj/vehicle/proc/is_occupant(mob/M)
-	return !isnull(occupants[M])
+	return !isnull(LAZYACCESS(occupants, M))
 
 /obj/vehicle/proc/add_occupant(mob/M, control_flags)
-	if(!istype(M) || occupants[M])
+	if(!istype(M) || is_occupant(M))
 		return FALSE
-	occupants[M] = NONE
+
+	LAZYSET(occupants, M, NONE)
 	add_control_flags(M, control_flags)
-	grant_passenger_actions(M)
 	after_add_occupant(M)
+	grant_passenger_actions(M)
 	return TRUE
 
 /obj/vehicle/proc/after_add_occupant(mob/M)
 	auto_assign_occupant_flags(M)
 
-/obj/vehicle/proc/auto_assign_occupant_flags(mob/M)	//override for each type that needs it. Default is assign driver if drivers is not at max.
+/obj/vehicle/proc/auto_assign_occupant_flags(mob/M) //override for each type that needs it. Default is assign driver if drivers is not at max.
 	if(driver_amount() < max_drivers)
-		add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
+		add_control_flags(M, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/proc/remove_occupant(mob/M)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!istype(M))
 		return FALSE
 	remove_control_flags(M, ALL)
 	remove_passenger_actions(M)
-	occupants -= M
+	LAZYREMOVE(occupants, M)
 	cleanup_actions_for_mob(M)
 	after_remove_occupant(M)
 	return TRUE
 
 /obj/vehicle/proc/after_remove_occupant(mob/M)
 
-/obj/vehicle/relaymove(mob/user, direction)
+/obj/vehicle/relaymove(mob/living/user, direction)
+	if(!canmove)
+		return FALSE
 	if(is_driver(user))
-		return driver_move(user, direction)
+		return relaydrive(user, direction)
 	return FALSE
 
-/obj/vehicle/proc/driver_move(mob/user, direction)
-	if(key_type && !is_key(inserted_key))
-		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
-		return FALSE
-	if(!default_driver_move)
-		return
-	vehicle_move(direction)
-
-/obj/vehicle/proc/vehicle_move(direction)
-	if(lastmove + movedelay > world.time)
-		return FALSE
-	lastmove = world.time
-	if(trailer)
-		var/dir_to_move = get_dir(trailer.loc, loc)
-		var/did_move = step(src, direction)
-		if(did_move)
-			step(trailer, dir_to_move)
-		return did_move
-	else
-		return step(src, direction)
+/obj/vehicle/proc/after_move(direction)
+	return
 
 /obj/vehicle/proc/add_control_flags(mob/controller, flags)
-	if(!istype(controller) || !flags)
+	if(!is_occupant(controller) || !flags)
 		return FALSE
 	occupants[controller] |= flags
 	for(var/i in GLOB.bitflags)
@@ -141,7 +166,7 @@
 	return TRUE
 
 /obj/vehicle/proc/remove_control_flags(mob/controller, flags)
-	if(!istype(controller) || !flags)
+	if(!is_occupant(controller) || !flags)
 		return FALSE
 	occupants[controller] &= ~flags
 	for(var/i in GLOB.bitflags)
@@ -149,61 +174,22 @@
 			remove_controller_actions_by_flag(controller, i)
 	return TRUE
 
-/obj/vehicle/Bump(atom/movable/M)
-	. = ..()
-	if(emulate_door_bumps)
-		if(istype(M, /obj/machinery/door) && has_buckled_mobs())
-			for(var/m in occupants)
-				M.Bumped(m)
+/// To add a trailer to the vehicle in a manner that allows safe qdels
+/obj/vehicle/proc/add_trailer(obj/vehicle/added_vehicle)
+	trailer = added_vehicle
+	RegisterSignal(trailer, COMSIG_PARENT_QDELETING, PROC_REF(remove_trailer))
+
+/// To remove a trailer from the vehicle in a manner that allows safe qdels
+/obj/vehicle/proc/remove_trailer()
+	SIGNAL_HANDLER
+	UnregisterSignal(trailer, COMSIG_PARENT_QDELETING)
+	trailer = null
 
 /obj/vehicle/Move(newloc, dir)
+	// It is unfortunate, but this is the way to make it not mess up
+	var/atom/old_loc = loc
+	// When we do this, it will set the loc to the new loc
 	. = ..()
 	if(trailer && .)
-		var/dir_to_move = get_dir(trailer.loc, newloc)
+		var/dir_to_move = get_dir(trailer.loc, old_loc)
 		step(trailer, dir_to_move)
-
-/obj/vehicle/proc/StartEngine()
-	set name = "Start Engine"
-	set category = "Object"
-	set src in view(1)
-
-	start_engine()
-
-/obj/vehicle/proc/StopEngine()
-	set name = "Stop Engine"
-	set category = "Object"
-	set src in view(1)
-
-	stop_engine()
-
-/obj/vehicle/proc/stop_engine()
-	src.verbs += /obj/vehicle/proc/StartEngine
-	src.verbs -= /obj/vehicle/proc/StopEngine
-
-	if(usr)
-		usr.visible_message("[usr] stop engine of [src].", "You stop engine.")
-
-	engine_on = FALSE
-
-/obj/vehicle/proc/start_engine()
-	if(!riding_datum)
-		usr.visible_message("<span class = 'notice'>Sit on [src] to do this.</span>")
-		return
-
-	if(!key)
-		usr.visible_message("<span class = 'notice'>There is no key.</span>")
-		return
-
-	if(!istype(key, riding_datum.keytype))
-		usr.visible_message("<span class = 'notice'>Wrong key.</span>")
-		return
-
-	src.verbs += /obj/vehicle/proc/StopEngine
-	src.verbs -= /obj/vehicle/proc/StartEngine
-
-	if(usr)
-		usr.visible_message("[usr] start engine of [src].", "You start engine.")
-
-	engine_on = TRUE
-	if(engine_on_sound)
-		playsound(src, engine_on_sound, 50)

@@ -1,7 +1,7 @@
 /obj/structure/closet/crate
 	name = "crate"
 	desc = "A rectangular steel crate."
-	icon = 'icons/obj/crates.dmi'
+	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "crate"
 	req_access = null
 	can_weld_shut = FALSE
@@ -9,72 +9,91 @@
 	allow_objects = TRUE
 	allow_dense = TRUE
 	dense_when_open = TRUE
-	climbable = TRUE
-	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
-	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
+	open_sound = 'sound/machines/crate_open.ogg'
+	close_sound = 'sound/machines/crate_close.ogg'
+	open_sound_volume = 35
+	close_sound_volume = 50
+	drag_slowdown = 0
+	door_anim_time = 0 // no animation
+	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
+	var/crate_climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
-/obj/structure/closet/crate/New()
-	..()
+/obj/structure/closet/crate/Initialize(mapload)
+	. = ..()
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
-	update_icon()
+		AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	else
+		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	update_appearance()
 
-/obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)
+/obj/structure/closet/crate/Destroy()
+	QDEL_NULL(manifest)
+	return ..()
+
+/obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
 	if(!istype(mover, /obj/structure/closet))
 		var/obj/structure/closet/crate/locatedcrate = locate(/obj/structure/closet/crate) in get_turf(mover)
 		if(locatedcrate) //you can walk on it like tables, if you're not in an open crate trying to move to a closed crate
 			if(opened) //if we're open, allow entering regardless of located crate openness
-				return 1
+				return TRUE
 			if(!locatedcrate.opened) //otherwise, if the located crate is closed, allow entering
-				return 1
-	if(barricade == FALSE)
-		return !density
-	else if(density == FALSE)
-		return 1
-	else if(istype(mover, /obj/item/projectile)) //bullets can fly over crates, guaranteed if the shooter is adjacent
-		var/obj/item/projectile/proj = mover
-		if(proj.firer && Adjacent(proj.firer))
-			return 1
-		if(prob(proj_pass_rate))
-			return 1
-		return 0
-	else
-		return !density
+				return TRUE
 
-/obj/structure/closet/crate/update_icon()
+/obj/structure/closet/crate/update_icon_state()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
+	return ..()
 
-	cut_overlays()
+/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
+	. = new_overlays
 	if(manifest)
-		add_overlay("manifest")
+		. += "manifest"
+	if(broken)
+		. += "securecrateemag"
+	else if(locked)
+		. += "securecrater"
+	else if(secure)
+		. += "securecrateg"
 
-/obj/structure/closet/crate/attack_hand(mob/user)
+/obj/structure/closet/crate/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(manifest)
 		tear_manifest(user)
 
-/obj/structure/closet/crate/open(mob/living/user)
+/obj/structure/closet/crate/after_open(mob/living/user, force)
 	. = ..()
-	if(. && manifest)
-		to_chat(user, "<span class='notice'>The manifest is torn off [src].</span>")
-		playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
+	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+
+/obj/structure/closet/crate/after_close(mob/living/user, force)
+	. = ..()
+	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+
+
+/obj/structure/closet/crate/open(mob/living/user, force = FALSE)
+	. = ..()
+	if(. && !QDELETED(manifest))
+		to_chat(user, span_notice("The manifest is torn off [src]."))
+		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
 		manifest = null
-		update_icon()
+		update_appearance()
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
-	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
-	playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
+	to_chat(user, span_notice("You tear the manifest off of [src]."))
+	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 
 	manifest.forceMove(loc)
 	if(ishuman(user))
 		user.put_in_hands(manifest)
 	manifest = null
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/crate/coffin
 	name = "coffin"
@@ -84,67 +103,69 @@
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound_volume = 25
+	close_sound_volume = 50
+	can_install_electronics = FALSE
+
+/obj/structure/closet/crate/maint
+
+/obj/structure/closet/crate/maint/Initialize(mapload)
+	..()
+
+	var/static/list/possible_crates = RANDOM_CRATE_LOOT
+
+	var/crate_path = pick_weight(possible_crates)
+
+	var/obj/structure/closet/crate = new crate_path(loc)
+	crate.RegisterSignal(crate, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
+	if (prob(50))
+		crate.opened = TRUE
+		crate.update_appearance()
+
+	return INITIALIZE_HINT_QDEL
+
+/obj/structure/closet/proc/populate_with_random_maint_loot()
+	SIGNAL_HANDLER
+
+	for (var/i in 1 to rand(2,6))
+		new /obj/effect/spawner/random/maintenance(src)
+
+/obj/structure/closet/crate/trashcart/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
+
+/obj/structure/closet/crate/trashcart/filled
+
+/obj/structure/closet/crate/trashcart/filled/PopulateContents()
+	. = ..()
+	for(var/i in 1 to rand(7,15))
+		new /obj/effect/spawner/random/trash/garbage(src)
+		if(prob(12))
+			new /obj/item/storage/bag/trash/filled(src)
+	new /obj/effect/spawner/random/trash/grime(loc)
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
 	name = "internals crate"
 	icon_state = "o2crate"
 
-// f13
-
-/obj/structure/closet/crate/footlocker
-	name = "footlocker"
-	desc = "A metal footlocker. The lock appears to be broken off."
-	icon_state = "footlocker"
-
-/obj/structure/closet/crate/footlocker/legion
-	name = "legion footlocker"
-	desc = "A metal footlocker. This one contains a set of Caesar's Legion equipment."
-
-/obj/structure/closet/crate/footlocker/legion/PopulateContents()
-	. = ..()
-	new /obj/item/clothing/shoes/legionleather(src)
-	new /obj/item/clothing/suit/armor/f13/legion/prime(src)
-	new /obj/item/clothing/head/helmet/f13/legion/prime(src)
-	new /obj/item/clothing/mask/bandana/legprime(src)
-	new /obj/item/clothing/glasses/legiongoggles(src)
-	new /obj/item/gun/ballistic/revolver/colt357(src)
-	new /obj/item/throwing_star/spear(src)
-	new /obj/item/claymore/machete/gladius(src)
-
-/obj/structure/closet/crate/footlocker/brotherhood
-	name = "brotherhood footlocker"
-	desc = "A metal footlocker. This one contains a set of Brotherhood of Steel equipment."
-
-/obj/structure/closet/crate/footlocker/brotherhood/PopulateContents()
-	. = ..()
-	new /obj/item/radio/headset/headset_bos(src)
-	new /obj/item/clothing/under/f13/recon(src)
-	new /obj/item/storage/backpack/explorer(src)
-	new /obj/item/clothing/shoes/combat/swat(src)
-	new /obj/item/clothing/gloves/combat(src)
-	new /obj/item/storage/belt/utility/full/engi(src)
-	new /obj/item/clothing/glasses/sunglasses/big(src)
-	new /obj/item/gun/energy/laser/pistol(src)
-
-/obj/structure/closet/crate/footlocker/ncr
-	name = "NCR footlocker"
-	desc = "A metal footlocker. This one contains a set of New California Republic equipment."
-
-/obj/structure/closet/crate/footlocker/ncr/PopulateContents()
-	. = ..()
-	new /obj/item/clothing/under/f13/ncr(src)
-	new /obj/item/clothing/suit/armor/f13/ncrarmor/reinforced(src)
-	new /obj/item/clothing/head/f13/ncr/goggles(src)
-	new /obj/item/storage/belt/military/NCR_Bandolier(src)
-	new /obj/item/gun/ballistic/automatic/marksman/servicerifle(src)
-	new /obj/item/clothing/shoes/f13/military/ncr(src)
-
-/obj/structure/closet/crate/trashcart
+/obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
 	icon_state = "trashcart"
-	drag_delay = 0.0 SECONDS //Heavy, but wheeled. 
+	can_install_electronics = FALSE
+
+/obj/structure/closet/crate/trashcart/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
+
+/obj/structure/closet/crate/trashcart/laundry
+	name = "laundry cart"
+	desc = "A large cart for hauling around large amounts of laundry."
+	icon_state = "laundry"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
@@ -156,6 +177,25 @@
 	name = "freezer"
 	icon_state = "freezer"
 
+//Snowflake organ freezer code
+//Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
+
+/obj/structure/closet/crate/freezer/open(mob/living/user, force = FALSE)
+	toggle_organ_decay(src)
+	..()
+
+/obj/structure/closet/crate/freezer/close()
+	..()
+	toggle_organ_decay(src)
+
+/obj/structure/closet/crate/freezer/Destroy()
+	toggle_organ_decay(src)
+	return ..()
+
+/obj/structure/closet/crate/freezer/Initialize(mapload)
+	. = ..()
+	toggle_organ_decay(src)
+
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"
 	desc = "A freezer containing packs of blood."
@@ -164,12 +204,13 @@
 	. = ..()
 	new /obj/item/reagent_containers/blood(src)
 	new /obj/item/reagent_containers/blood(src)
-	new /obj/item/reagent_containers/blood/AMinus(src)
-	new /obj/item/reagent_containers/blood/BMinus(src)
-	new /obj/item/reagent_containers/blood/BPlus(src)
-	new /obj/item/reagent_containers/blood/OMinus(src)
-	new /obj/item/reagent_containers/blood/OPlus(src)
+	new /obj/item/reagent_containers/blood/a_minus(src)
+	new /obj/item/reagent_containers/blood/b_minus(src)
+	new /obj/item/reagent_containers/blood/b_plus(src)
+	new /obj/item/reagent_containers/blood/o_minus(src)
+	new /obj/item/reagent_containers/blood/o_plus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
+	new /obj/item/reagent_containers/blood/ethereal(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
 
@@ -179,14 +220,14 @@
 
 /obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
 	. = ..()
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/r_arm/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/l_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
-	new /obj/item/bodypart/r_leg/robot/surplus(src)
+	new /obj/item/bodypart/arm/left/robot/surplus(src)
+	new /obj/item/bodypart/arm/left/robot/surplus(src)
+	new /obj/item/bodypart/arm/right/robot/surplus(src)
+	new /obj/item/bodypart/arm/right/robot/surplus(src)
+	new /obj/item/bodypart/leg/left/robot/surplus(src)
+	new /obj/item/bodypart/leg/left/robot/surplus(src)
+	new /obj/item/bodypart/leg/right/robot/surplus(src)
+	new /obj/item/bodypart/leg/right/robot/surplus(src)
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
@@ -238,9 +279,14 @@
 
 /obj/structure/closet/crate/goldcrate/PopulateContents()
 	..()
+	new /obj/item/storage/belt/champion(src)
+
+/obj/structure/closet/crate/goldcrate/populate_contents_immediate()
+	. = ..()
+
+	// /datum/objective_item/stack/gold
 	for(var/i in 1 to 3)
 		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
-	new /obj/item/storage/belt/champion(src)
 
 /obj/structure/closet/crate/silvercrate
 	name = "silver crate"
@@ -249,3 +295,11 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/coin/silver(src)
+
+/obj/structure/closet/crate/decorations
+	icon_state = "engi_crate"
+
+/obj/structure/closet/crate/decorations/PopulateContents()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /obj/effect/spawner/random/decoration/generic(src)

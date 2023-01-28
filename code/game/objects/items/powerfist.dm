@@ -1,200 +1,144 @@
+///Defines for the pressure strength of the fist
+#define LOW_PRESSURE 1
+#define MID_PRESSURE 2
+#define HIGH_PRESSURE 3
+///Defines for the tank change action
+#define TANK_INSERTING 0
+#define TANK_REMOVING 1
+
 /obj/item/melee/powerfist
-	name = "powerfist"
-	desc = "A metal gauntlet with a piston-powered ram on top for that extra 'oomph' in your punch."
+	name = "power-fist"
+	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
 	icon_state = "powerfist"
-	item_state = "powerfist"
+	inhand_icon_state = "powerfist"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	flags_1 = CONDUCT_1
-	attack_verb = list("whacked", "fisted", "power-punched")
-	force = 40
-	armour_penetration = 50
-	throwforce = 10
-	throw_range = 7
-	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
-	var/transfer_prints = TRUE //prevents runtimes with forensics when held in glove slot
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 40)
-
-/obj/item/melee/powerfist/goliath
-	name = "\improper Goliath" //the Goliath
-	desc = "A metal gauntlet with a piston-powered ram on top. This one has been painted in the colors of Caesar's Legion, and features a brutal metal spike to increase penetration and damage."
-	icon_state = "goliath"
-	force = 40 //you are Strongly Encouraged not to get hit by this.
-	armour_penetration = 80 //what is armor?
-	throwforce = 20
-
-/obj/item/gun/ballistic/revolver/ballisticfist //it's a double-barrel shotgun disguised as a fist shhh
-	name = "ballistic fist"
-	desc = "This powerfist has been modified to have two shotgun barrels welded to it, with the trigger integrated into the knuckle guard. For those times when you want to punch someone and shoot them in the face at the same time."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "ballisticfist"
-	item_state = "powerfist"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 30
-	armour_penetration = 40
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
-	fire_sound = 'sound/f13weapons/caravan_shotgun.ogg'
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
-	w_class = WEIGHT_CLASS_NORMAL
-	item_flags = NEEDS_PERMIT //doesn't slow you down
-	fire_delay = 0
-	distro = 1
-	var/transfer_prints = TRUE //prevents runtimes with forensics when held in glove slot
-
-/obj/item/melee/unarmed/brass
-	name = "brass knuckles"
-	desc = "Hardened knuckle grip that is actually made out of steel. They protect your hand, and do more damage, in unarmed combat."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "brass"
-	item_state = "brass"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	flags_1 = CONDUCT_1
-	attack_verb = list("punched", "jabbed", "whacked")
-	sharpness = IS_BLUNT
+	attack_verb_continuous = list("whacks", "fists", "power-punches")
+	attack_verb_simple = list("whack", "fist", "power-punch")
 	force = 20
 	throwforce = 10
 	throw_range = 7
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/melee/unarmed/brass/spiked
-	name = "spiked knuckes"
-	desc = "Unlike normal brass knuckles, these have a metal plate across the knuckles with four spikes on, one for each knuckle. So not only does the victim feel the force of the punch, but also the devastating effects of spikes being driven in."
-	icon_state = "spiked"
-	item_state = "spiked"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	flags_1 = CONDUCT_1
-	force = 23
-
-/obj/item/melee/unarmed/sappers
-	name = "sappers"
-	desc = "Lead filled gloves which are ideal for beating the crap out of opponents."
-	icon_state = "sapper"
-	item_state = "sapper"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 25
-	throwforce = 20
-	sharpness = IS_BLUNT
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
 	w_class = WEIGHT_CLASS_NORMAL
+	armor_type = /datum/armor/melee_powerfist
+	resistance_flags = FIRE_PROOF
+	/// Delay between attacks
+	var/click_delay = 0.15 SECONDS
+	/// Pressure level on the fist
+	var/fist_pressure_setting = LOW_PRESSURE
+	/// Amount of moles per punch
+	var/gas_per_fist = 3
+	/// Tank used for the gauntlet's piston-ram.
+	var/obj/item/tank/internals/tank
 
-/obj/item/melee/unarmed/tigerclaw
-	name = "tiger claws"
-	desc = "Gloves with short claws built into the palms."
-	icon_state = "tiger_claw"
-	item_state = "tiger_claw"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 25
-	throwforce = 10
-	attack_verb = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP_ACCURATE
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
-	w_class = WEIGHT_CLASS_NORMAL
+/datum/armor/melee_powerfist
+	fire = 100
+	acid = 40
 
-/obj/item/melee/unarmed/bladed
-	name = "bladed gauntlet"
-	desc = "A weapon composed of a thick, reinforced leather armband with three crude, jagged blades made from scrap metal bound to it with leather straps."
-	icon_state = "bladed_g"
-	item_state = "bladed_g"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	flags_1 = CONDUCT_1
-	force = 27
-	throwforce = 10
-	attack_verb = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
-	w_class = WEIGHT_CLASS_NORMAL
+/obj/item/melee/powerfist/examine(mob/user)
+	. = ..()
+	if(!in_range(user, src))
+		. += span_notice("You'll need to get closer to see any more.")
+		return
+	if(tank)
+		. += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it.")
+		. += span_notice("Can be removed with a screwdriver.")
 
+	. += span_notice("Use a wrench to change the valve strength. Current strength at [fist_pressure_setting].")
 
-/obj/item/melee/unarmed/lacerator
-	name = "lacerator"
-	desc = "Leather gloves with razor blades built into the back of the hand."
-	icon_state = "lacerator"
-	item_state = "lacerator"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 28
-	throwforce = 20
-	attack_verb = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
-	w_class = WEIGHT_CLASS_NORMAL
+/obj/item/melee/powerfist/wrench_act(mob/living/user, obj/item/tool)
+	fist_pressure_setting = fist_pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : fist_pressure_setting + 1
+	tool.play_tool_sound(src)
+	balloon_alert(user, "piston strength set to [fist_pressure_setting]")
+	return TRUE
 
-/obj/item/melee/unarmed/maceglove
-	name = "mace glove"
-	desc = "Weighted metal gloves that are covered in spikes.  Don't expect to grab things with this."
-	icon_state = "mace_glove"
-	item_state = "mace_glove"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	flags_1 = CONDUCT_1
-	force = 30
-	throwforce = 30
-	sharpness = IS_BLUNT
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
-	w_class = WEIGHT_CLASS_BULKY
+/obj/item/melee/powerfist/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!tank)
+		balloon_alert(user, "no tank present")
+		return
+	update_tank(tank, TANK_REMOVING, user)
+	return TRUE
 
-/obj/item/melee/unarmed/punchdagger
-	name = "punch dagger"
-	desc = "A dagger designed to be gripped in the user’s fist with the blade protruding between the middle and ring fingers, to increase the penetration of a punch."
-	icon_state = "punch_dagger"
-	item_state = "punch_dagger"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	flags_1 = CONDUCT_1
-	force = 32
-	throwforce = 10
-	attack_verb = list("stabbed", "sliced", "pierced", "diced", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP_ACCURATE
-	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
+/obj/item/melee/powerfist/attackby(obj/item/item_to_insert, mob/user, params)
+	if(!istype(item_to_insert, /obj/item/tank/internals))
+		return ..()
+	if(tank)
+		to_chat(user, span_notice("A tank is already present, remove it with a screwdriver first."))
+		return
+	var/obj/item/tank/internals/tank_to_insert = item_to_insert
+	if(tank_to_insert.volume <= 3)
+		to_chat(user, span_warning("\The [tank_to_insert] is too small for \the [src]."))
+		return
+	update_tank(item_to_insert, TANK_INSERTING, user)
 
-/obj/item/melee/unarmed/deathclawgauntlet
-	name = "deathclaw gauntlet"
-	desc = "The severed hand of a mighty Deathclaw, cured, hollowed out, and given a harness to turn it into the deadliest gauntlet the wastes have ever seen."
-	icon_state = "deathclaw_g"
-	item_state = "deathclaw_g"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 30
-	armour_penetration = 100 //there is no such thing as armor to the claws of death
-	attack_verb = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
-	slot_flags = ITEM_SLOT_GLOVES
-	w_class = WEIGHT_CLASS_NORMAL
+/obj/item/melee/powerfist/proc/update_tank(obj/item/tank/internals/the_tank, removing = TANK_INSERTING, mob/living/carbon/human/user)
+	if(removing)
+		if(!tank)
+			to_chat(user, span_notice("\The [src] currently has no tank attached to it."))
+			return
+		to_chat(user, span_notice("You detach \the [the_tank] from \the [src]."))
+		tank.forceMove(get_turf(user))
+		user.put_in_hands(tank)
+		tank = null
+		return
 
-/obj/item/melee/powerfist/moleminer
-	name = "mole miner gauntlet"
-	desc = "A hand-held mining and cutting implement, repurposed into a deadly melee weapon.  Its name origins are a mystery..."
-	icon_state = "mole_miner_g"
-	item_state = "mole_miner_g"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	flags_1 = CONDUCT_1
-	force = 40
-	armour_penetration = 20
-	throwforce = 10
-	throw_range = 7
-	attack_verb = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
-	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	if(tank)
+		to_chat(user, span_warning("\The [src] already has a tank."))
+		return
+	if(!user.transferItemToLoc(the_tank, src))
+		return
+	to_chat(user, span_notice("You hook \the [the_tank] up to \the [src]."))
+	tank = the_tank
 
 /obj/item/melee/powerfist/attack(mob/living/target, mob/living/user)
-	. = ..()
-	var/atom/throw_target = get_edge_target_turf(target, user.dir)
-	target.throw_at(throw_target, rand(1,2), 7, user)
+	if(!tank)
+		to_chat(user, span_warning("\The [src] can't operate without a source of gas!"))
+		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("You don't want to harm other living beings!"))
+		return
+	var/turf/our_turf = get_turf(src)
+	if(!our_turf)
+		return
+
+	var/datum/gas_mixture/gas_used = tank.remove_air(gas_per_fist * fist_pressure_setting)
+	if(!gas_used)
+		to_chat(user, span_warning("\The [src]'s tank is empty!"))
+		target.apply_damage((force / 5), BRUTE)
+		playsound(loc, 'sound/weapons/punch1.ogg', 50, TRUE)
+		target.visible_message(span_danger("[user]'s powerfist lets out a dull thunk as [user.p_they()] punch[user.p_es()] [target.name]!"), \
+			span_userdanger("[user]'s punches you!"))
+		return
+
+	if(!molar_cmp_equals(gas_used.total_moles(), gas_per_fist * fist_pressure_setting))
+		our_turf.assume_air(gas_used)
+		to_chat(user, span_warning("\The [src]'s piston-ram lets out a weak hiss, it needs more gas!"))
+		playsound(loc, 'sound/weapons/punch4.ogg', 50, TRUE)
+		target.apply_damage((force / 2), BRUTE)
+		target.visible_message(span_danger("[user]'s powerfist lets out a weak hiss as [user.p_they()] punch[user.p_es()] [target.name]!"), \
+			span_userdanger("[user]'s punch strikes with force!"))
+		return
+
+	target.visible_message(span_danger("[user]'s powerfist lets out a loud hiss as [user.p_they()] punch[user.p_es()] [target.name]!"), \
+		span_userdanger("You cry out in pain as [user]'s punch flings you backwards!"))
+	new /obj/effect/temp_visual/kinetic_blast(target.loc)
+	target.apply_damage(force * fist_pressure_setting, BRUTE, wound_bonus = CANT_WOUND)
+	playsound(src, 'sound/weapons/resonator_blast.ogg', 50, TRUE)
+	playsound(src, 'sound/weapons/genhit2.ogg', 50, TRUE)
+
+	if(!QDELETED(target))
+		var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
+
+		target.throw_at(throw_target, 5 * fist_pressure_setting, 0.5 + (fist_pressure_setting / 2))
+
+	log_combat(user, target, "power fisted", src)
+
+	user.changeNext_move(CLICK_CD_MELEE * click_delay)
+
+	our_turf.assume_air(gas_used)
+
+#undef LOW_PRESSURE
+#undef MID_PRESSURE
+#undef HIGH_PRESSURE
+#undef TANK_INSERTING
+#undef TANK_REMOVING

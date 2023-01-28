@@ -1,22 +1,17 @@
-/obj/item/projectile/ion
+/obj/projectile/ion
 	name = "ion bolt"
 	icon_state = "ion"
-	damage = 28
+	damage = 0
 	damage_type = BURN
-	flag = "energy"
-	armour_penetration = 75
+	nodamage = TRUE
+	armor_flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/ion
+	var/emp_radius = 1
 
-/obj/item/projectile/ion/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/ion/on_hit(atom/target, blocked = FALSE)
 	..()
-	empulse(target, 1, 0)
-	return TRUE
+	empulse(target, emp_radius, emp_radius)
+	return BULLET_ACT_HIT
 
-/obj/item/projectile/ion/weak
-	damage = 25
-	armour_penetration = 55
-
-/obj/item/projectile/ion/weak/on_hit(atom/target, blocked = FALSE)
-	..()
-	empulse(target, 0, 1)
-	return TRUE
+/obj/projectile/ion/weak
+	emp_radius = 0

@@ -3,118 +3,86 @@
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
+	inhand_icon_state = "mop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	force = 15
-	throwforce = 5
+	force = 8
+	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	damtype = STAMINA
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
+	attack_verb_continuous = list("mops", "bashes", "bludgeons", "whacks")
+	attack_verb_simple = list("mop", "bash", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
-	var/mopping = 0
 	var/mopcount = 0
-	var/mopcap = 7
-	var/mopspeed = 25
+	///Maximum volume of reagents it can hold.
+	var/max_reagent_volume = 15
+	var/mopspeed = 1.5 SECONDS
 	force_string = "robust... against germs"
 	var/insertable = TRUE
+	var/static/list/clean_blacklist = typecacheof(list(
+		/obj/item/reagent_containers/cup/bucket,
+		/obj/structure/mop_bucket,
+	))
 
-/obj/item/mop/New()
-	..()
-	create_reagents(mopcap)
-
-
-/obj/item/mop/Initialize()
+/obj/item/mop/Initialize(mapload)
 	. = ..()
-	var/datum/component/jousting/JC = AddComponent(/datum/component/jousting)
-	JC.unmounted_damage_boost_per_tile = 1
-	JC.unmounted_knockdown_chance_per_tile = 15
-	JC.unmounted_knockdown_time = 50
-	JC.mounted_damage_boost_per_tile = 5
-	JC.mounted_knockdown_chance_per_tile = 25
-	JC.mounted_knockdown_time = 80
+	AddComponent(/datum/component/cleaner, mopspeed, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)), on_cleaned_callback=CALLBACK(src, PROC_REF(apply_reagents)))
+	create_reagents(max_reagent_volume)
+	GLOB.janitor_devices += src
 
-/obj/item/mop/proc/clean(turf/A)
-	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
-		SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
-		for(var/obj/effect/O in A)
-			if(is_cleanable(O))
-				qdel(O)
-	reagents.reaction(A, TOUCH, 10)	//Needed for proper floor wetting.
-	reagents.remove_any(1)			//reaction() doesn't use up the reagents
+/obj/item/mop/Destroy(force)
+	GLOB.janitor_devices -= src
+	return ..()
 
+///Checks whether or not we should clean.
+/obj/item/mop/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
+	if(clean_blacklist[atom_to_clean.type])
+		return DO_NOT_CLEAN
+	if(reagents.total_volume < 0.1)
+		to_chat(cleaner, span_warning("Your mop is dry!"))
+		return DO_NOT_CLEAN
+	return reagents.has_chemical_flag(REAGENT_CLEANS, 1)
 
-/obj/item/mop/afterattack(atom/A, mob/user, proximity)
+/**
+ * Applies reagents to the cleaned floor and removes them from the mop.
+ *
+ * Arguments
+ * * cleaning_source the source of the cleaning
+ * * cleaned_turf the turf that is being cleaned
+ * * cleaner the mob that is doing the cleaning
+ */
+/obj/item/mop/proc/apply_reagents(datum/cleaning_source, turf/cleaned_turf, mob/living/cleaner)
+	reagents.expose(cleaned_turf, TOUCH, 10) //Needed for proper floor wetting.
+	var/val2remove = 1
+	if(cleaner?.mind)
+		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER), 0.1)
+	reagents.remove_any(val2remove) //reaction() doesn't use up the reagents
+
+/obj/item/mop/cyborg/Initialize(mapload)
 	. = ..()
-	if(!proximity)
-		return
-
-	if(reagents.total_volume < 1)
-		to_chat(user, "<span class='warning'>Your mop is dry.</span>")
-		return
-
-	var/turf/T = get_turf(A)
-
-	if(istype(A, /obj/item/reagent_containers/glass/bucket) || istype(A, /obj/structure/janitorialcart))
-		return
-
-	if(T)
-		user.visible_message("[user] begins to clean \the [T] with [src].", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
-
-		if(do_after(user, src.mopspeed, target = T))
-			to_chat(user, "<span class='notice'>You finish mopping.</span>")
-			clean(T)
-
-
-/obj/effect/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/mop) || istype(I, /obj/item/soap))
-		return
-	else
-		return ..()
-
-
-/obj/item/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	if(insertable)
-		J.put_in_cart(src, user)
-		J.mymop=src
-		J.update_icon()
-	else
-		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
-		return
-
-/obj/item/mop/cyborg
-	insertable = FALSE
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
-	mopcap = 20
+	max_reagent_volume = 10
 	icon_state = "advmop"
-	item_state = "mop"
+	inhand_icon_state = "advmop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	force = 25 //It's stamina damage
-	throwforce = 8
+	force = 12
+	throwforce = 14
 	throw_range = 4
-	mopspeed = 45
+	mopspeed = 0.8 SECONDS
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
-	var/refill_rate = 1 //Rate per process() tick mop refills itself
-	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
+	/// Amount of reagent to refill per second
+	var/refill_rate = 0.5
+	var/refill_reagent = /datum/reagent/water //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
 
-/obj/item/mop/advanced/New()
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/mop/advanced/Initialize()
+/obj/item/mop/advanced/Initialize(mapload)
 	. = ..()
-	GET_COMPONENT(JC,/datum/component/jousting) //Actually excellent for jousting/charging
-	JC.unmounted_damage_boost_per_tile = 5
-	JC.unmounted_knockdown_chance_per_tile = 25
-	JC.unmounted_knockdown_time = 30
-	JC.mounted_damage_boost_per_tile = 10
-	JC.mounted_knockdown_chance_per_tile = 30
-	JC.mounted_knockdown_time = 100
+	START_PROCESSING(SSobj, src)
 
 /obj/item/mop/advanced/attack_self(mob/user)
 	refill_enabled = !refill_enabled
@@ -122,21 +90,20 @@
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj,src)
-	to_chat(user, "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>")
-	playsound(user, 'sound/machines/click.ogg', 30, 1)
+	to_chat(user, span_notice("You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position."))
+	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
 
-/obj/item/mop/advanced/process()
-
-	if(reagents.total_volume < mopcap)
-		reagents.add_reagent(refill_reagent, refill_rate)
+/obj/item/mop/advanced/process(delta_time)
+	var/amadd = min(max_reagent_volume - reagents.total_volume, refill_rate * delta_time)
+	if(amadd > 0)
+		reagents.add_reagent(refill_reagent, amadd)
 
 /obj/item/mop/advanced/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>")
+	. = ..()
+	. += span_notice("The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.")
 
 /obj/item/mop/advanced/Destroy()
-	if(refill_enabled)
-		STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/mop/advanced/cyborg

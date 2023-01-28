@@ -1,44 +1,64 @@
-/obj/item/disk/surgery/pacification
-	name = "Pacification Surgery Disk"
-	desc = "The disk provides instructions on how to suppress violence by manipulating the patient's brain."
-	surgeries = list(/datum/surgery/advanced/pacify)
-
 /datum/surgery/advanced/pacify
-	name = "violence neutralization"
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/saw,
-				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/pacify,
-				/datum/surgery_step/close)
-
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	name = "Pacification"
+	desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
 	possible_locs = list(BODY_ZONE_HEAD)
-	requires_bodypart_type = 0
+	requires_bodypart_type = NONE
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/pacify,
+		/datum/surgery_step/close,
+	)
 
-/datum/surgery/advanced/pacify/can_start(mob/living/carbon/user, mob/living/carbon/target)
+/datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target)
 	. = ..()
-	if(!..() && !user.has_trait(TRAIT_ADVANCED_SURGEON))
+	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	if(!target_brain)
 		return FALSE
-	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
-		return FALSE
-	return TRUE
 
 /datum/surgery_step/pacify
-	name = "rewire brain"
-	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
+	name = "rewire brain (hemostat)"
+	implements = list(
+		TOOL_HEMOSTAT = 100,
+		TOOL_SCREWDRIVER = 35,
+		/obj/item/pen = 15)
 	time = 40
+	preop_sound = 'sound/surgery/hemostat1.ogg'
+	success_sound = 'sound/surgery/hemostat1.ogg'
+	failure_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery_step/pacify/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to reshape [target]'s brain.", "<span class='notice'>You begin to reshape [target]'s brain...</span>")
+	display_results(
+		user,
+		target,
+		span_notice("You begin to pacify [target]..."),
+		span_notice("[user] begins to fix [target]'s brain."),
+		span_notice("[user] begins to perform surgery on [target]'s brain."),
+	)
+	display_pain(target, "Your head pounds with unimaginable pain!")
 
-/datum/surgery_step/pacify/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] reshapes [target]'s brain!", "<span class='notice'>You succeed in reshaping [target]'s brain.</span>")
+/datum/surgery_step/pacify/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	display_results(
+		user,
+		target,
+		span_notice("You succeed in neurologically pacifying [target]."),
+		span_notice("[user] successfully fixes [target]'s brain!"),
+		span_notice("[user] completes the surgery on [target]'s brain."),
+	)
+	display_pain(target, "Your head pounds... the concept of violence flashes in your head, and nearly makes you hurl!")
 	target.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_LOBOTOMY)
-	return TRUE
+	return ..()
 
 /datum/surgery_step/pacify/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] reshapes [target]'s brain!", "<span class='notice'>You screwed up, and rewired [target]'s brain the wrong way around...</span>")
+	display_results(
+		user,
+		target,
+		span_notice("You screw up, rewiring [target]'s brain the wrong way around..."),
+		span_warning("[user] screws up, causing brain damage!"),
+		span_notice("[user] completes the surgery on [target]'s brain."),
+	)
+	display_pain(target, "Your head pounds, and it feels like it's getting worse!")
 	target.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 	return FALSE

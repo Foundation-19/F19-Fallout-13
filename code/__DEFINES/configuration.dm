@@ -5,5 +5,10 @@
 #define CONFIG_MAPS_FILE "maps.txt"
 
 //flags
-#define CONFIG_ENTRY_LOCKED 1	//can't edit
-#define CONFIG_ENTRY_HIDDEN 2	//can't see value
+/// can't edit
+#define CONFIG_ENTRY_LOCKED 1
+/// can't see value
+#define CONFIG_ENTRY_HIDDEN 2
+
+/// Force the config directory to be something other than "config"
+#define OVERRIDE_CONFIG_DIRECTORY_PARAMETER "config-directory"

@@ -61,6 +61,13 @@
 	glass_type = /obj/machinery/door/airlock/medical/glass
 	airlock_type = /obj/machinery/door/airlock/medical
 
+/obj/structure/door_assembly/door_assembly_hydro
+	name = "hydroponics airlock assembly"
+	icon = 'icons/obj/doors/airlocks/station/hydroponics.dmi'
+	base_name = "hydroponics airlock"
+	glass_type = /obj/machinery/door/airlock/hydroponics/glass
+	airlock_type = /obj/machinery/door/airlock/hydroponics
+
 /obj/structure/door_assembly/door_assembly_mai
 	name = "maintenance airlock assembly"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
@@ -114,7 +121,7 @@
 	airlock_type = /obj/machinery/door/airlock/highsecurity
 	noglass = TRUE
 	material_type = /obj/item/stack/sheet/plasteel
-	material_amt = 6
+	material_amt = 4
 
 /obj/structure/door_assembly/door_assembly_vault
 	name = "vault door assembly"
@@ -124,7 +131,7 @@
 	airlock_type = /obj/machinery/door/airlock/vault
 	noglass = TRUE
 	material_type = /obj/item/stack/sheet/plasteel
-	material_amt = 8
+	material_amt = 6
 
 /obj/structure/door_assembly/door_assembly_shuttle
 	name = "shuttle airlock assembly"
@@ -200,9 +207,9 @@
 	glass_type = /obj/machinery/door/airlock/uranium/glass
 
 /obj/structure/door_assembly/door_assembly_plasma
-	name = "ultracite airlock assembly"
+	name = "plasma airlock assembly"
 	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
-	base_name = "ultracite airlock"
+	base_name = "plasma airlock"
 	airlock_type = /obj/machinery/door/airlock/plasma
 	mineral = "plasma"
 	glass_type = /obj/machinery/door/airlock/plasma/glass
@@ -240,3 +247,46 @@
 	airlock_type = /obj/machinery/door/airlock/wood
 	mineral = "wood"
 	glass_type = /obj/machinery/door/airlock/wood/glass
+
+/obj/structure/door_assembly/door_assembly_bronze
+	name = "bronze airlock assembly"
+	icon = 'icons/obj/doors/airlocks/clockwork/pinion_airlock.dmi'
+	base_name = "bronze airlock"
+	airlock_type = /obj/machinery/door/airlock/bronze
+	noglass = TRUE
+	material_type = /obj/item/stack/sheet/bronze
+
+/obj/structure/door_assembly/door_assembly_bronze/seethru
+	airlock_type = /obj/machinery/door/airlock/bronze/seethru
+
+/obj/structure/door_assembly/door_assembly_material
+	name = "airlock assembly"
+	airlock_type = /obj/machinery/door/airlock/material
+	glass_type = /obj/machinery/door/airlock/material/glass
+	greyscale_config = /datum/greyscale_config/material_airlock
+	nomineral = TRUE
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
+
+/obj/structure/door_assembly/door_assembly_material/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		var/turf/T = get_turf(src)
+		for(var/material in custom_materials)
+			var/datum/material/material_datum = material
+			var/material_count = FLOOR(custom_materials[material_datum] / MINERAL_MATERIAL_AMOUNT, 1)
+			if(!disassembled)
+				material_count = rand(FLOOR(material_count/2, 1), material_count)
+			new material_datum.sheet_type(T, material_count)
+		if(glass)
+			if(disassembled)
+				if(heat_proof_finished)
+					new /obj/item/stack/sheet/rglass(T)
+				else
+					new /obj/item/stack/sheet/glass(T)
+			else
+				new /obj/item/shard(T)
+	qdel(src)
+
+/obj/structure/door_assembly/door_assembly_material/finish_door()
+	var/obj/machinery/door/airlock/door = ..()
+	door.set_custom_materials(custom_materials)
+	return door

@@ -5,26 +5,47 @@ is currently following.
 */
 
 GLOBAL_LIST_INIT(disease_ability_singletons, list(
-	new /datum/disease_ability/action/cough(),
-	new /datum/disease_ability/action/sneeze(),
-	new /datum/disease_ability/action/infect(),
-	new /datum/disease_ability/symptom/cough(),
-	new /datum/disease_ability/symptom/sneeze(),\
-	new /datum/disease_ability/symptom/hallucigen(),
-	new /datum/disease_ability/symptom/choking(),
-	new /datum/disease_ability/symptom/confusion(),
-	new /datum/disease_ability/symptom/youth(),
-	new /datum/disease_ability/symptom/vomit(),
-	new /datum/disease_ability/symptom/voice_change(),
-	new /datum/disease_ability/symptom/visionloss(),
-	new /datum/disease_ability/symptom/viraladaptation(),
-	new /datum/disease_ability/symptom/vitiligo(),
-	// new /datum/disease_ability/symptom/sensory_restoration(),
-	new /datum/disease_ability/symptom/itching(),
-	new /datum/disease_ability/symptom/weight_loss(),
-	// new /datum/disease_ability/symptom/metabolism_heal(),
-	// new /datum/disease_ability/symptom/coma_heal()
-	))
+new /datum/disease_ability/action/cough,
+new /datum/disease_ability/action/sneeze,
+new /datum/disease_ability/action/infect,
+new /datum/disease_ability/symptom/mild/cough,
+new /datum/disease_ability/symptom/mild/sneeze,
+new /datum/disease_ability/symptom/medium/shedding,
+new /datum/disease_ability/symptom/medium/beard,
+new /datum/disease_ability/symptom/medium/hallucigen,
+new /datum/disease_ability/symptom/medium/choking,
+new /datum/disease_ability/symptom/medium/confusion,
+new /datum/disease_ability/symptom/medium/vomit,
+new /datum/disease_ability/symptom/medium/voice_change,
+new /datum/disease_ability/symptom/medium/visionloss,
+new /datum/disease_ability/symptom/medium/deafness,
+new /datum/disease_ability/symptom/powerful/narcolepsy,
+new /datum/disease_ability/symptom/medium/fever,
+new /datum/disease_ability/symptom/medium/chills,
+new /datum/disease_ability/symptom/medium/headache,
+new /datum/disease_ability/symptom/medium/viraladaptation,
+new /datum/disease_ability/symptom/medium/viralevolution,
+new /datum/disease_ability/symptom/medium/disfiguration,
+new /datum/disease_ability/symptom/medium/polyvitiligo,
+new /datum/disease_ability/symptom/medium/itching,
+new /datum/disease_ability/symptom/medium/heal/weight_loss,
+new /datum/disease_ability/symptom/medium/heal/sensory_restoration,
+new /datum/disease_ability/symptom/medium/heal/mind_restoration,
+new /datum/disease_ability/symptom/powerful/fire,
+new /datum/disease_ability/symptom/powerful/flesh_eating,
+new /datum/disease_ability/symptom/powerful/genetic_mutation,
+new /datum/disease_ability/symptom/powerful/inorganic_adaptation,
+new /datum/disease_ability/symptom/powerful/heal/starlight,
+new /datum/disease_ability/symptom/powerful/heal/oxygen,
+new /datum/disease_ability/symptom/powerful/heal/chem,
+new /datum/disease_ability/symptom/powerful/heal/metabolism,
+new /datum/disease_ability/symptom/powerful/heal/dark,
+new /datum/disease_ability/symptom/powerful/heal/water,
+new /datum/disease_ability/symptom/powerful/heal/plasma,
+new /datum/disease_ability/symptom/powerful/heal/radiation,
+new /datum/disease_ability/symptom/powerful/heal/coma,
+new /datum/disease_ability/symptom/powerful/youth
+))
 
 /datum/disease_ability
 	var/name
@@ -34,7 +55,7 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 	var/short_desc = ""
 	var/long_desc = ""
 	var/stat_block = ""
-	var/threshold_block = ""
+	var/threshold_block = list()
 	var/category = ""
 
 	var/list/symptoms
@@ -53,8 +74,14 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 			resistance += initial(S.resistance)
 			stage_speed += initial(S.stage_speed)
 			transmittable += initial(S.transmittable)
-			threshold_block += "<br><br>[initial(S.threshold_desc)]"
-		stat_block = "Resistance: [resistance]<br>Stealth: [stealth]<br>Stage Speed: [stage_speed]<br>Transmittability: [transmittable]<br><br>"
+			threshold_block += initial(S.threshold_descs)
+			stat_block = "Resistance: [resistance]<br>Stealth: [stealth]<br>Stage Speed: [stage_speed]<br>Transmissibility: [transmittable]<br><br>"
+			if(symptoms.len == 1) //lazy boy's dream
+				name = initial(S.name)
+				if(short_desc == "")
+					short_desc = initial(S.desc)
+				if(long_desc == "")
+					long_desc = initial(S.desc)
 
 /datum/disease_ability/proc/CanBuy(mob/camera/disease/D)
 	if(world.time < D.next_adaptation_time)
@@ -65,7 +92,7 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 
 /datum/disease_ability/proc/Buy(mob/camera/disease/D, silent = FALSE, trigger_cooldown = TRUE)
 	if(!silent)
-		to_chat(D, "<span class='notice'>Purchased [name].</span>")
+		to_chat(D, span_notice("Purchased [name]."))
 	D.points -= cost
 	D.unpurchased_abilities -= src
 	if(trigger_cooldown)
@@ -77,8 +104,10 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 			for(var/T in symptoms)
 				var/datum/symptom/S = new T()
 				SD.symptoms += S
+				S.OnAdd(SD)
 				if(SD.processing)
-					S.Start(SD)
+					if(S.Start(SD))
+						S.next_activation = world.time + rand(S.symptom_delay_min * 10, S.symptom_delay_max * 10)
 			SD.Refresh()
 	for(var/T in actions)
 		var/datum/action/A = new T()
@@ -92,7 +121,7 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 
 /datum/disease_ability/proc/Refund(mob/camera/disease/D, silent = FALSE, trigger_cooldown = TRUE)
 	if(!silent)
-		to_chat(D, "<span class='notice'>Refunded [name].</span>")
+		to_chat(D, span_notice("Refunded [name]."))
 	D.points += cost
 	D.unpurchased_abilities[src] = TRUE
 	if(trigger_cooldown)
@@ -105,6 +134,7 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 				var/datum/symptom/S = locate(T) in SD.symptoms
 				if(S)
 					SD.symptoms -= S
+					S.OnRemove(SD)
 					if(SD.processing)
 						S.End(SD)
 					qdel(S)
@@ -130,33 +160,39 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 	required_total_points = 0
 	start_with = TRUE
 	short_desc = "Force the host you are following to cough, spreading your infection to those nearby."
-	long_desc = "Force the host you are following to cough with extra force, spreading your infection to those within two meters of your host even if your transmitability is low.<br>Cooldown: 10 seconds"
+	long_desc = "Force the host you are following to cough with extra force, spreading your infection to those within two meters of your host even if your transmissibility is low.<br>Cooldown: 10 seconds"
 
 
 /datum/action/cooldown/disease_cough
 	name = "Cough"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "cough"
-	desc = "Force the host you are following to cough with extra force, spreading your infection to those within two meters of your host even if your transmitability is low.<br>Cooldown: 10 seconds"
+	desc = "Force the host you are following to cough with extra force, spreading your infection to those within two meters of your host even if your transmissibility is low.<br>Cooldown: 10 seconds"
 	cooldown_time = 100
 
-/datum/action/cooldown/disease_cough/Trigger()
-	if(!..())
-		return FALSE
-	var/mob/camera/disease/D = owner
-	var/mob/living/L = D.following_host
-	if(!L)
-		return FALSE
-	if(L.stat != CONSCIOUS)
-		to_chat(D, "<span class='warning'>Your host must be concious to cough.</span>")
-		return FALSE
-	to_chat(D, "<span class='notice'>You force [L.real_name] to cough.</span>")
-	L.emote("cough")
-	var/datum/disease/advance/sentient_disease/SD = D.hosts[L]
-	SD.spread(2)
+/datum/action/cooldown/disease_cough/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	trigger_cough()
 	StartCooldown()
 	return TRUE
 
+/*
+ * Cause a cough to happen from the host.
+ */
+/datum/action/cooldown/disease_cough/proc/trigger_cough()
+	var/mob/camera/disease/our_disease = owner
+	var/mob/living/host = our_disease.following_host
+	if(!host)
+		return FALSE
+	if(host.stat != CONSCIOUS)
+		to_chat(our_disease, span_warning("Your host must be conscious to cough."))
+		return FALSE
+	to_chat(our_disease, span_notice("You force [host.real_name] to cough."))
+	host.emote("cough")
+	if(host.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
+		var/datum/disease/advance/sentient_disease/disease_datum = our_disease.hosts[host]
+		disease_datum.spread(2)
+	return TRUE
 
 /datum/disease_ability/action/sneeze
 	name = "Voluntary Sneezing"
@@ -168,32 +204,40 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 
 /datum/action/cooldown/disease_sneeze
 	name = "Sneeze"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "sneeze"
-	desc = "Force the host you are following to sneeze with extra force, spreading your infection to any victims in a 4 meter cone in front of your host even if your transmitability is low.<br>Cooldown: 20 seconds"
+	desc = "Force the host you are following to sneeze with extra force, spreading your infection to any victims in a 4 meter cone in front of your host even if your transmissibility is low.<br>Cooldown: 20 seconds"
 	cooldown_time = 200
 
-/datum/action/cooldown/disease_sneeze/Trigger()
-	if(!..())
-		return FALSE
-	var/mob/camera/disease/D = owner
-	var/mob/living/L = D.following_host
-	if(!L)
-		return FALSE
-	if(L.stat != CONSCIOUS)
-		to_chat(D, "<span class='warning'>Your host must be concious to sneeze.</span>")
-		return FALSE
-	to_chat(D, "<span class='notice'>You force [L.real_name] to sneeze.</span>")
-	L.emote("sneeze")
-	var/datum/disease/advance/sentient_disease/SD = D.hosts[L]
-
-	for(var/mob/living/M in oview(4, SD.affected_mob))
-		if(is_A_facing_B(SD.affected_mob, M) && disease_air_spread_walk(get_turf(SD.affected_mob), get_turf(M)))
-			M.AirborneContractDisease(SD, TRUE)
-
+/datum/action/cooldown/disease_sneeze/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	trigger_sneeze()
 	StartCooldown()
 	return TRUE
 
+/*
+ * Cause a sneeze to happen from the host.
+ */
+/datum/action/cooldown/disease_sneeze/proc/trigger_sneeze()
+	var/mob/camera/disease/our_disease = owner
+	var/mob/living/host = our_disease.following_host
+	if(!host)
+		return FALSE
+	if(host.stat != CONSCIOUS)
+		to_chat(our_disease, span_warning("Your host must be conscious to sneeze."))
+		return FALSE
+	to_chat(our_disease, span_notice("You force [host.real_name] to sneeze."))
+	host.emote("sneeze")
+	if(host.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
+		var/datum/disease/advance/sentient_disease/disease_datum = our_disease.hosts[host]
+		for(var/mob/living/nearby_mob in oview(4, disease_datum.affected_mob))
+			if(!is_source_facing_target(disease_datum.affected_mob, nearby_mob))
+				continue
+			if(!disease_air_spread_walk(get_turf(disease_datum.affected_mob), get_turf(nearby_mob)))
+				continue
+			nearby_mob.AirborneContractDisease(disease_datum, TRUE)
+
+	return TRUE
 
 /datum/disease_ability/action/infect
 	name = "Secrete Infection"
@@ -205,185 +249,217 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 
 /datum/action/cooldown/disease_infect
 	name = "Secrete Infection"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "infect"
 	desc = "Cause the host you are following to excrete an infective substance from their pores, causing all objects touching their skin to transmit your infection to anyone who touches them for the next 30 seconds.<br>Cooldown: 40 seconds"
 	cooldown_time = 400
 
-/datum/action/cooldown/disease_infect/Trigger()
-	if(!..())
-		return FALSE
-	var/mob/camera/disease/D = owner
-	var/mob/living/carbon/human/H = D.following_host
-	if(!H)
-		return FALSE
-	for(var/V in H.get_equipped_items(FALSE))
-		var/obj/O = V
-		O.AddComponent(/datum/component/infective, D.disease_template, 300)
-	//no shoes? infect the floor.
-	if(!H.shoes)
-		var/turf/T = get_turf(H)
-		if(T && !isspaceturf(T))
-			T.AddComponent(/datum/component/infective, D.disease_template, 300)
-	//no gloves? infect whatever we are holding.
-	if(!H.gloves)
-		for(var/V in H.held_items)
-			if(!V)
-				continue
-			var/obj/O = V
-			O.AddComponent(/datum/component/infective, D.disease_template, 300)
+/datum/action/cooldown/disease_infect/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	trigger_infection()
 	StartCooldown()
 	return TRUE
 
-//passive symptom abilities
+/*
+ * Trigger the infection action.
+ */
+/datum/action/cooldown/disease_infect/proc/trigger_infection()
+	var/mob/camera/disease/our_disease = owner
+	var/mob/living/carbon/human/host = our_disease.following_host
+	if(!host)
+		return FALSE
+	for(var/obj/thing as anything in host.get_equipped_items(FALSE))
+		thing.AddComponent(/datum/component/infective, our_disease.disease_template, 300)
+	//no shoes? infect the floor.
+	if(!host.shoes)
+		var/turf/host_turf = get_turf(host)
+		if(host_turf && !isspaceturf(host_turf))
+			host_turf.AddComponent(/datum/component/infective, our_disease.disease_template, 300)
+	//no gloves? infect whatever we are holding.
+	if(!host.gloves)
+		for(var/obj/held_thing as anything in host.held_items)
+			if(isnull(held_thing))
+				continue
+			held_thing.AddComponent(/datum/component/infective, our_disease.disease_template, 300)
+	return TRUE
 
-/datum/disease_ability/symptom/cough
-	name = "Involuntary Coughing"
-	symptoms = list(/datum/symptom/cough)
+/*******************BASE SYMPTOM TYPES*******************/
+// cost is for convenience and can be changed. If you're changing req_tot_points then don't use the subtype...
+//healing costs more so you have to techswitch from naughty disease otherwise we'd have friendly disease for easy greentext (no fun!)
+
+/datum/disease_ability/symptom/mild
 	cost = 2
 	required_total_points = 4
-	short_desc = "Cause victims to cough intermittently."
-	long_desc = "Cause victims to cough intermittently, spreading your infection if your transmitability is high."
+	category = "Symptom (Weak)"
 
-/datum/disease_ability/symptom/sneeze
-	name = "Involuntary Sneezing"
-	symptoms = list(/datum/symptom/sneeze)
-	cost = 2
-	required_total_points = 4
-	short_desc = "Cause victims to sneeze intermittently."
-	long_desc = "Cause victims to sneeze intermittently, spreading your infection and also increasing transmitability and resistance, at the cost of stealth."
-
-/datum/disease_ability/symptom/beard
-	//I don't think I need to justify the fact that this is the best symptom
-	name = "Beard Growth"
-	symptoms = list(/datum/symptom/beard)
-	cost = 1
-	required_total_points = 8
-	short_desc = "Cause all victims to grow a luscious beard."
-	long_desc = "Cause all victims to grow a luscious beard. Decreases stats slightly. Ineffective against Santa Claus."
-
-/datum/disease_ability/symptom/hallucigen
-	name = "Hallucinations"
-	symptoms = list(/datum/symptom/hallucigen)
+/datum/disease_ability/symptom/medium
 	cost = 4
 	required_total_points = 8
+	category = "Symptom"
+
+/datum/disease_ability/symptom/medium/heal
+	cost = 5
+	category = "Symptom (+)"
+
+/datum/disease_ability/symptom/powerful
+	cost = 4
+	required_total_points = 16
+	category = "Symptom (Strong)"
+
+/datum/disease_ability/symptom/powerful/heal
+	cost = 8
+	category = "Symptom (Strong+)"
+
+/******MILD******/
+
+/datum/disease_ability/symptom/mild/cough
+	name = "Involuntary Coughing"
+	symptoms = list(/datum/symptom/cough)
+	short_desc = "Cause victims to cough intermittently."
+	long_desc = "Cause victims to cough intermittently, spreading your infection."
+
+/datum/disease_ability/symptom/mild/sneeze
+	name = "Involuntary Sneezing"
+	symptoms = list(/datum/symptom/sneeze)
+	short_desc = "Cause victims to sneeze intermittently."
+	long_desc = "Cause victims to sneeze intermittently, spreading your infection and also increasing transmissibility and resistance, at the cost of stealth."
+
+/******MEDIUM******/
+
+/datum/disease_ability/symptom/medium/shedding
+	symptoms = list(/datum/symptom/shedding)
+
+/datum/disease_ability/symptom/medium/beard
+	symptoms = list(/datum/symptom/beard)
+	short_desc = "Cause all victims to grow a luscious beard."
+	long_desc = "Cause all victims to grow a luscious beard. Ineffective against Santa Claus."
+
+/datum/disease_ability/symptom/medium/hallucigen
+	symptoms = list(/datum/symptom/hallucigen)
 	short_desc = "Cause victims to hallucinate."
 	long_desc = "Cause victims to hallucinate. Decreases stats, especially resistance."
 
-
-/datum/disease_ability/symptom/choking
-	name = "Choking"
+/datum/disease_ability/symptom/medium/choking
 	symptoms = list(/datum/symptom/choking)
-	cost = 4
-	required_total_points = 8
 	short_desc = "Cause victims to choke."
-	long_desc = "Cause victims to choke, threatening asphyxiation. Decreases stats, especially transmittability."
+	long_desc = "Cause victims to choke, threatening asphyxiation. Decreases stats, especially transmissibility."
 
-
-/datum/disease_ability/symptom/confusion
-	name = "Confusion"
+/datum/disease_ability/symptom/medium/confusion
 	symptoms = list(/datum/symptom/confusion)
-	cost = 4
-	required_total_points = 8
 	short_desc = "Cause victims to become confused."
 	long_desc = "Cause victims to become confused intermittently."
 
-
-/datum/disease_ability/symptom/youth
-	name = "Eternal Youth"
-	symptoms = list(/datum/symptom/youth)
-	cost = 4
-	required_total_points = 8
-	short_desc = "Cause victims to become eternally young."
-	long_desc = "Cause victims to become eternally young. Provides boosts to all stats except transmittability."
-
-
-/datum/disease_ability/symptom/vomit
-	name = "Vomiting"
+/datum/disease_ability/symptom/medium/vomit
 	symptoms = list(/datum/symptom/vomit)
-	cost = 4
-	required_total_points = 8
 	short_desc = "Cause victims to vomit."
-	long_desc = "Cause victims to vomit. Slightly increases transmittability. Vomiting also also causes the victims to lose nutrition and removes some toxin damage."
+	long_desc = "Cause victims to vomit. Slightly increases transmissibility. Vomiting also also causes the victims to lose nutrition and removes some toxin damage."
 
-
-/datum/disease_ability/symptom/voice_change
-	name = "Voice Changing"
+/datum/disease_ability/symptom/medium/voice_change
 	symptoms = list(/datum/symptom/voice_change)
-	cost = 4
-	required_total_points = 8
 	short_desc = "Change the voice of victims."
 	long_desc = "Change the voice of victims, causing confusion in communications."
 
-
-/datum/disease_ability/symptom/visionloss
-	name = "Vision Loss"
+/datum/disease_ability/symptom/medium/visionloss
 	symptoms = list(/datum/symptom/visionloss)
-	cost = 4
-	required_total_points = 8
 	short_desc = "Damage the eyes of victims, eventually causing blindness."
 	long_desc = "Damage the eyes of victims, eventually causing blindness. Decreases all stats."
 
+/datum/disease_ability/symptom/medium/deafness
+	symptoms = list(/datum/symptom/deafness)
 
-/datum/disease_ability/symptom/viraladaptation
-	name = "Self-Adaptation"
+/datum/disease_ability/symptom/medium/fever
+	symptoms = list(/datum/symptom/fever)
+
+/datum/disease_ability/symptom/medium/chills
+	symptoms = list(/datum/symptom/chills)
+
+/datum/disease_ability/symptom/medium/headache
+	symptoms = list(/datum/symptom/headache)
+
+/datum/disease_ability/symptom/medium/viraladaptation
 	symptoms = list(/datum/symptom/viraladaptation)
-	cost = 4
-	required_total_points = 8
 	short_desc = "Cause your infection to become more resistant to detection and eradication."
 	long_desc = "Cause your infection to mimic the function of normal body cells, becoming much harder to spot and to eradicate, but reducing its speed."
 
+/datum/disease_ability/symptom/medium/viralevolution
+	symptoms = list(/datum/symptom/viralevolution)
 
-/datum/disease_ability/symptom/vitiligo
-	name = "Skin Paleness"
-	symptoms = list(/datum/symptom/vitiligo)
-	cost = 1
-	required_total_points = 8
-	short_desc = "Cause victims to become pale."
-	long_desc = "Cause victims to become pale. Decreases all stats."
+/datum/disease_ability/symptom/medium/polyvitiligo
+	symptoms = list(/datum/symptom/polyvitiligo)
 
+/datum/disease_ability/symptom/medium/disfiguration
+	symptoms = list(/datum/symptom/disfiguration)
 
-/datum/disease_ability/symptom/sensory_restoration
-	name = "Sensory Restoration"
-	symptoms = list(/datum/symptom/sensory_restoration)
-	cost = 4
-	required_total_points = 8
-	short_desc = "Regenerate eye and ear damage of victims."
-	long_desc = "Regenerate eye and ear damage of victims."
-
-
-/datum/disease_ability/symptom/itching
-	name = "Itching"
+/datum/disease_ability/symptom/medium/itching
 	symptoms = list(/datum/symptom/itching)
-	cost = 4
-	required_total_points = 8
 	short_desc = "Cause victims to itch."
 	long_desc = "Cause victims to itch, increasing all stats except stealth."
 
-
-/datum/disease_ability/symptom/weight_loss
-	name = "Weight Loss"
+/datum/disease_ability/symptom/medium/heal/weight_loss
 	symptoms = list(/datum/symptom/weight_loss)
-	cost = 4
-	required_total_points = 8
 	short_desc = "Cause victims to lose weight."
-	long_desc = "Cause victims to lose weight, and make it almost immpossible for them to gain nutrition from food. Reduced nutrition allows your infection to spread more easily from hosts, especially by sneezing."
+	long_desc = "Cause victims to lose weight, and make it almost impossible for them to gain nutrition from food. Reduced nutrition allows your infection to spread more easily from hosts, especially by sneezing."
 
-/*
-/datum/disease_ability/symptom/metabolism_heal
-	name = "Metabolic Boost"
+/datum/disease_ability/symptom/medium/heal/sensory_restoration
+	symptoms = list(/datum/symptom/sensory_restoration)
+	short_desc = "Regenerate eye and ear damage of victims."
+	long_desc = "Regenerate eye and ear damage of victims."
+
+/datum/disease_ability/symptom/medium/heal/mind_restoration
+	symptoms = list(/datum/symptom/mind_restoration)
+
+/******POWERFUL******/
+
+/datum/disease_ability/symptom/powerful/fire
+	symptoms = list(/datum/symptom/fire)
+
+/datum/disease_ability/symptom/powerful/flesh_eating
+	symptoms = list(/datum/symptom/flesh_eating)
+
+/datum/disease_ability/symptom/powerful/genetic_mutation
+	symptoms = list(/datum/symptom/genetic_mutation)
+	cost = 8
+
+/datum/disease_ability/symptom/powerful/inorganic_adaptation
+	symptoms = list(/datum/symptom/inorganic_adaptation)
+
+/datum/disease_ability/symptom/powerful/narcolepsy
+	symptoms = list(/datum/symptom/narcolepsy)
+
+/datum/disease_ability/symptom/powerful/youth
+	symptoms = list(/datum/symptom/youth)
+	short_desc = "Cause victims to become eternally young."
+	long_desc = "Cause victims to become eternally young. Provides boosts to all stats except transmissibility."
+
+/****HEALING SUBTYPE****/
+
+/datum/disease_ability/symptom/powerful/heal/starlight
+	symptoms = list(/datum/symptom/heal/starlight)
+
+/datum/disease_ability/symptom/powerful/heal/oxygen
+	symptoms = list(/datum/symptom/oxygen)
+
+/datum/disease_ability/symptom/powerful/heal/chem
+	symptoms = list(/datum/symptom/heal/chem)
+
+/datum/disease_ability/symptom/powerful/heal/metabolism
 	symptoms = list(/datum/symptom/heal/metabolism)
-	cost = 4
-	required_total_points = 16
 	short_desc = "Increase the metabolism of victims, causing them to process chemicals and grow hungry faster."
 	long_desc = "Increase the metabolism of victims, causing them to process chemicals twice as fast and grow hungry more quickly."
 
+/datum/disease_ability/symptom/powerful/heal/dark
+	symptoms = list(/datum/symptom/heal/darkness)
 
-/datum/disease_ability/symptom/coma_heal
-	name = "Regenerative Coma"
+/datum/disease_ability/symptom/powerful/heal/water
+	symptoms = list(/datum/symptom/heal/water)
+
+/datum/disease_ability/symptom/powerful/heal/plasma
+	symptoms = list(/datum/symptom/heal/plasma)
+
+/datum/disease_ability/symptom/powerful/heal/radiation
+	symptoms = list(/datum/symptom/heal/radiation)
+
+/datum/disease_ability/symptom/powerful/heal/coma
 	symptoms = list(/datum/symptom/heal/coma)
-	cost = 8
-	required_total_points = 16
 	short_desc = "Cause victims to fall into a healing coma when hurt."
 	long_desc = "Cause victims to fall into a healing coma when hurt."
-*/

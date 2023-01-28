@@ -3,111 +3,113 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_3)
 "c" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/shuttle/medium_3)
 "d" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/powered/shuttle/medium_3)
-"g" = (
-/turf/closed/wall/mineral/plastitanium,
-/turf/closed/wall/mineral/titanium,
 /area/ruin/powered/shuttle/medium_3)
 "h" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/shuttle/medium_3)
 "j" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_3)
 "k" = (
 /obj/machinery/power/smes/magical,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_3)
 "l" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_3)
 "m" = (
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_3)
 "n" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_3)
 "o" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/powered/shuttle/medium_3)
 "p" = (
 /obj/machinery/door/airlock/public/glass,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_3)
 "q" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/powered/shuttle/medium_3)
 "r" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
-/turf/open/space,
+/turf/template_noop,
+/area/ruin/powered/shuttle/medium_3)
+"s" = (
+/obj/structure/table,
+/obj/item/storage/medkit,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "t" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_3)
-"v" = (
-/obj/structure/table,
-/turf/open/floor/plasteel/darkyellow,
-/area/ruin/powered/shuttle/medium_3)
-"w" = (
-/turf/open/floor/plasteel/darkyellow,
-/area/ruin/powered/shuttle/medium_3)
-"x" = (
-/obj/structure/chair/comfy{
-	dir = 8
-	},
-/turf/open/floor/plasteel/darkyellow,
-/area/ruin/powered/shuttle/medium_3)
 "z" = (
 /obj/machinery/sleeper,
-/turf/open/floor/plasteel/darkblue,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "A" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "C" = (
-/turf/open/floor/plasteel/darkblue,
-/area/ruin/powered/shuttle/medium_3)
-"D" = (
-/obj/structure/table,
-/obj/item/storage/firstaid,
-/turf/open/floor/plasteel/darkblue,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "E" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/ruin/powered/shuttle/medium_3)
 "F" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/space,
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_3)
 "G" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/shuttle/medium_3)
+"H" = (
+/obj/structure/chair/comfy{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_3)
+"K" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_3)
+"R" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 
 (1,1,1) = {"
@@ -211,20 +213,20 @@ a
 a
 a
 c
-g
-h
-h
-g
 c
-g
+h
+h
+c
+c
+c
 j
 j
-g
 c
-g
+c
+c
 h
 h
-g
+c
 c
 a
 a
@@ -283,7 +285,7 @@ a
 c
 c
 c
-g
+c
 G
 l
 l
@@ -296,7 +298,7 @@ l
 l
 l
 G
-g
+c
 c
 c
 c
@@ -315,7 +317,7 @@ G
 z
 C
 C
-D
+s
 G
 l
 l
@@ -331,11 +333,11 @@ a
 a
 c
 c
-g
+c
 G
 p
 G
-v
+R
 G
 C
 C
@@ -344,7 +346,7 @@ A
 G
 p
 G
-g
+c
 c
 c
 a
@@ -359,8 +361,8 @@ j
 m
 l
 t
-w
-w
+K
+K
 l
 l
 A
@@ -383,8 +385,8 @@ j
 m
 l
 t
-x
-w
+H
+K
 l
 l
 A
@@ -403,11 +405,11 @@ a
 a
 c
 c
-g
+c
 G
 p
 G
-w
+K
 G
 A
 A
@@ -416,7 +418,7 @@ A
 G
 p
 G
-g
+c
 c
 c
 a
@@ -451,7 +453,7 @@ a
 c
 c
 c
-g
+c
 G
 l
 l
@@ -464,7 +466,7 @@ l
 l
 l
 G
-g
+c
 c
 c
 c
@@ -523,20 +525,20 @@ a
 a
 a
 c
-g
-h
-h
-g
 c
-g
+h
+h
+c
+c
+c
 j
 j
-g
 c
-g
+c
+c
 h
 h
-g
+c
 c
 a
 a

@@ -2,14 +2,14 @@
 	name = "freedom implant"
 	desc = "Use this to escape from those evil Red Shirts."
 	icon_state = "freedom"
-	item_color = "r"
+	implant_color = "r"
 	uses = 4
 
 
 /obj/item/implant/freedom/activate()
 	. = ..()
 	uses--
-	to_chat(imp_in, "You feel a faint click.")
+	to_chat(imp_in, span_hear("You feel a faint click."))
 	if(iscarbon(imp_in))
 		var/mob/living/carbon/C_imp_in = imp_in
 		C_imp_in.uncuff()

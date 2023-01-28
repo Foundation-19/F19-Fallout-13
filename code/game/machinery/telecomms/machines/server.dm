@@ -9,15 +9,12 @@
 	name = "telecommunication server"
 	icon_state = "comm_server"
 	desc = "A machine used to store data and network statistics."
+	telecomms_type = /obj/machinery/telecomms/server
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 15
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	circuit = /obj/item/circuitboard/machine/telecomms/server
 	var/list/log_entries = list()
 	var/totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
-
-/obj/machinery/telecomms/server/Initialize()
-	. = ..()
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/subspace/vocal/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-vocal signals
@@ -36,14 +33,16 @@
 	log.parameters["name"] = signal.data["name"]
 	log.parameters["job"] = signal.data["job"]
 	log.parameters["message"] = signal.data["message"]
+	log.parameters["language"] = signal.language
 
 	// If the signal is still compressed, make the log entry gibberish
 	var/compression = signal.data["compression"]
 	if(compression > 0)
 		log.input_type = "Corrupt File"
-		log.parameters["name"] = Gibberish(signal.data["name"], compression + 50)
-		log.parameters["job"] = Gibberish(signal.data["job"], compression + 50)
-		log.parameters["message"] = Gibberish(signal.data["message"], compression + 50)
+		var/replace_characters = compression >= 20 ? TRUE : FALSE
+		log.parameters["name"] = Gibberish(signal.data["name"], replace_characters)
+		log.parameters["job"] = Gibberish(signal.data["job"], replace_characters)
+		log.parameters["message"] = Gibberish(signal.data["message"], replace_characters)
 
 	// Give the log a name and store it
 	var/identifier = num2text( rand(-1000,1000) + world.time )
@@ -54,6 +53,7 @@
 	if(!can_send)
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
+	use_power(idle_power_usage)
 
 // Simple log entry datum
 /datum/comm_log_entry
@@ -66,7 +66,7 @@
 /obj/machinery/telecomms/server/presets
 	network = "tcommsat"
 
-/obj/machinery/telecomms/server/presets/Initialize()
+/obj/machinery/telecomms/server/presets/Initialize(mapload)
 	. = ..()
 	name = id
 
@@ -91,43 +91,13 @@
 	freq_listening = list(FREQ_SERVICE)
 	autolinkers = list("service")
 
-/obj/machinery/telecomms/server/presets/vault
-	id = "Vault Server"
-	freq_listening = list(FREQ_VAULT)
-	autolinkers = list("vault")
-
-/obj/machinery/telecomms/server/presets/ncr
-	id = "NCR Server"
-	freq_listening = list(FREQ_NCR)
-	autolinkers = list("ncr")
-
-/obj/machinery/telecomms/server/presets/bos
-	id = "BOS Server"
-	freq_listening = list(FREQ_BOS)
-	autolinkers = list("bos")
-
-/obj/machinery/telecomms/server/presets/enclave
-	id = "Enclave Server"
-	freq_listening = list(FREQ_ENCLAVE)
-	autolinkers = list("enclave")
-
-/obj/machinery/telecomms/server/presets/den
-	id = "Town Server"
-	freq_listening = list(FREQ_DEN)
-	autolinkers = list("town")
-
-/obj/machinery/telecomms/server/presets/legion
-	id = "Legion Server"
-	freq_listening = list(FREQ_LEGION)
-	autolinkers = list("legion")
-
 /obj/machinery/telecomms/server/presets/common
 	id = "Common Server"
 	freq_listening = list()
 	autolinkers = list("common")
 
 //Common and other radio frequencies for people to freely use
-/obj/machinery/telecomms/server/presets/common/Initialize()
+/obj/machinery/telecomms/server/presets/common/Initialize(mapload)
 	. = ..()
 	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i
@@ -147,6 +117,6 @@
 	freq_listening = list(FREQ_SECURITY)
 	autolinkers = list("security")
 
-/obj/machinery/telecomms/server/presets/common/birdstation/Initialize()
+/obj/machinery/telecomms/server/presets/common/birdstation/Initialize(mapload)
 	. = ..()
 	freq_listening = list()

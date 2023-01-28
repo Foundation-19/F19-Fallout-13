@@ -1,6 +1,6 @@
 /*
 	The broadcaster sends processed messages to all radio devices in the game. They
-	do not have to be headsets; intercoms and shortwave radios suffice.
+	do not have to be headsets; intercoms and station-bounced radios suffice.
 
 	They receive their message from a server after the message has been logged.
 */
@@ -12,9 +12,9 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	name = "subspace broadcaster"
 	icon_state = "broadcaster"
 	desc = "A dish-shaped machine used to broadcast processed subspace signals."
+	telecomms_type = /obj/machinery/telecomms/broadcaster
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 25
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	circuit = /obj/item/circuitboard/machine/telecomms/broadcaster
 
 /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
@@ -47,13 +47,17 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	signal.broadcast()
 
 	if(!GLOB.message_delay)
-		GLOB.message_delay = 1
-		spawn(10)
-			GLOB.message_delay = 0
-			GLOB.recentmessages = list()
+		GLOB.message_delay = TRUE
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(end_message_delay)), 1 SECONDS)
 
 	/* --- Do a snazzy animation! --- */
 	flick("broadcaster_send", src)
+
+	use_power(idle_power_usage)
+
+/proc/end_message_delay()
+	GLOB.message_delay = FALSE
+	GLOB.recentmessages = list()
 
 /obj/machinery/telecomms/broadcaster/Destroy()
 	// In case message_delay is left on 1, otherwise it won't reset the list and people can't say the same thing twice anymore.

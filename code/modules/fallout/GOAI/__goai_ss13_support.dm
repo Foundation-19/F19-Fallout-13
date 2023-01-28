@@ -1,1 +1,0 @@
-# define GOAI_SS13_SUPPORT TRUE

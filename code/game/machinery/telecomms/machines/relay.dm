@@ -10,9 +10,9 @@
 	name = "telecommunication relay"
 	icon_state = "relay"
 	desc = "A mighty piece of hardware used to send massive amounts of data far away."
+	telecomms_type = /obj/machinery/telecomms/relay
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 30
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	netspeed = 5
 	long_range_link = 1
 	circuit = /obj/item/circuitboard/machine/telecomms/relay
@@ -21,12 +21,18 @@
 
 /obj/machinery/telecomms/relay/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	// Add our level and send it back
-	var/turf/T = get_turf(src)
-	if(can_send(signal) && T)
-		signal.levels |= T.z
+	var/turf/relay_turf = get_turf(src)
+	if(can_send(signal) && relay_turf)
+		// Relays send signals to all ZTRAIT_STATION z-levels
+		if(SSmapping.level_trait(relay_turf.z, ZTRAIT_STATION))
+			for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+				signal.levels |= z
+		else
+			signal.levels |= relay_turf.z
 
-// Checks to see if it can send/receive.
+	use_power(idle_power_usage)
 
+/// Checks to see if it can send/receive.
 /obj/machinery/telecomms/relay/proc/can(datum/signal/signal)
 	if(!on)
 		return FALSE
@@ -49,6 +55,11 @@
 /obj/machinery/telecomms/relay/preset
 	network = "tcommsat"
 
+/obj/machinery/telecomms/relay/Initialize(mapload)
+	. = ..()
+	if(autolinkers.len) //We want lateloaded presets to autolink (lateloaded aways/ruins/shuttles)
+		return INITIALIZE_HINT_LATELOAD
+
 /obj/machinery/telecomms/relay/preset/station
 	id = "Station Relay"
 	autolinkers = list("s_relay")
@@ -67,10 +78,7 @@
 	toggled = FALSE
 	autolinkers = list("r_relay")
 
-/obj/machinery/telecomms/relay/preset/reebe
-	name = "hierophant relay"
-	desc = "An arcane telecommunications relay that ingeniously combines bluespace technology with the Hierophant network to send and receive messages to and from Reebe."
-	id = "Hierophant Relay"
-	icon = 'icons/obj/clockwork_objects.dmi'
+//Generic preset relay
+/obj/machinery/telecomms/relay/preset/auto
 	hide = TRUE
-	autolinkers = list("h_relay")
+	autolinkers = list("autorelay")

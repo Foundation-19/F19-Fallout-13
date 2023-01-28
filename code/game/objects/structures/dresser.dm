@@ -7,73 +7,56 @@
 	anchored = TRUE
 
 /obj/structure/dresser/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
-		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
+	if(I.tool_behaviour == TOOL_WRENCH)
+		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
 		if(I.use_tool(src, user, 20, volume=50))
-			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
-			setAnchored(!anchored)
+			to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
+			set_anchored(!anchored)
 	else
 		return ..()
 
 /obj/structure/dresser/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 	qdel(src)
 
-/obj/structure/dresser/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/structure/dresser/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(. || !ishuman(user) || !user.canUseTopic(src, BE_CLOSE, FALSE))
+	if(.)
 		return
-	var/mob/living/carbon/human/H = user
+	if(!Adjacent(user))//no tele-grooming
+		return
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/dressing_human = user
 
-	if(H.dna && H.dna.species && (NO_UNDERWEAR in H.dna.species.species_traits))
-		to_chat(H, "<span class='warning'>You are not capable of wearing underwear.</span>")
+	if(dressing_human.dna && dressing_human.dna.species && (NO_UNDERWEAR in dressing_human.dna.species.species_traits))
+		to_chat(user, span_warning("You are not capable of wearing underwear."))
 		return
 
-	var/list/undergarment_choices = list("Underwear", "Underwear Color", "Undershirt", "Undershirt Color", "Socks", "Socks Color")
-	if(!(GLOB.underwear_list[H.underwear]?.has_color))
-		undergarment_choices -= "Underwear Color"
-	if(!(GLOB.undershirt_list[H.undershirt]?.has_color))
-		undergarment_choices -= "Undershirt Color"
-	if(!(GLOB.socks_list[H.socks]?.has_color))
-		undergarment_choices -= "Socks Color"
-
-	var/choice = input(H, "Underwear, Undershirt, or Socks?", "Changing") as null|anything in undergarment_choices
-	if(!H.canUseTopic(src, BE_CLOSE, FALSE))
+	var/choice = tgui_input_list(user, "Underwear, Undershirt, or Socks?", "Changing", list("Underwear","Underwear Color","Undershirt","Socks"))
+	if(isnull(choice))
 		return
-	var/dye_undie = FALSE
-	var/dye_shirt = FALSE
-	var/dye_socks = FALSE
+
+	if(!Adjacent(user))
+		return
 	switch(choice)
 		if("Underwear")
-			var/new_undies = input(H, "Select your underwear", "Changing") as null|anything in GLOB.underwear_list
+			var/new_undies = tgui_input_list(user, "Select your underwear", "Changing", GLOB.underwear_list)
 			if(new_undies)
-				H.underwear = new_undies
-				var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[new_undies]
-				dye_undie = B?.has_color
+				dressing_human.underwear = new_undies
+		if("Underwear Color")
+			var/new_underwear_color = input(dressing_human, "Choose your underwear color", "Underwear Color", dressing_human.underwear_color) as color|null
+			if(new_underwear_color)
+				dressing_human.underwear_color = sanitize_hexcolor(new_underwear_color)
 		if("Undershirt")
-			var/new_undershirt = input(H, "Select your undershirt", "Changing") as null|anything in GLOB.undershirt_list
+			var/new_undershirt = tgui_input_list(user, "Select your undershirt", "Changing", GLOB.undershirt_list)
 			if(new_undershirt)
-				H.undershirt = new_undershirt
-				var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[new_undershirt]
-				dye_shirt = T?.has_color
+				dressing_human.undershirt = new_undershirt
 		if("Socks")
-			var/new_socks = input(H, "Select your socks", "Changing") as null|anything in GLOB.socks_list
+			var/new_socks = tgui_input_list(user, "Select your socks", "Changing", GLOB.socks_list)
 			if(new_socks)
-				H.socks = new_socks
-				var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[new_socks]
-				dye_socks = S?.has_color
-	if(dye_undie || choice == "Underwear Color")
-		H.undie_color = recolor_undergarment(H, "underwear", H.undie_color)
-	if(dye_shirt || choice == "Undershirt Color")
-		H.shirt_color = recolor_undergarment(H, "undershirt", H.shirt_color)
-	if(dye_socks || choice == "Socks Color")
-		H.socks_color = recolor_undergarment(H, "socks", H.socks_color)
+				dressing_human.socks= new_socks
 
-	add_fingerprint(H)
-	H.update_body(TRUE)
-
-/obj/structure/dresser/proc/recolor_undergarment(mob/living/carbon/human/H, garment_type = "underwear", default_color)
-	var/n_color = input(H, "Choose your [garment_type]'\s color.", "Character Preference", default_color) as color|null
-	if(!n_color || !H.canUseTopic(src, BE_CLOSE, FALSE))
-		return default_color
-	return sanitize_hexcolor(n_color, 3, FALSE, default_color)
+	add_fingerprint(dressing_human)
+	dressing_human.update_body()

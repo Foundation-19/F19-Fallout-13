@@ -1,12 +1,16 @@
 /datum/antagonist/pirate
-	name = "Space Pirate"
+	name = "\improper Space Pirate"
 	job_rank = ROLE_TRAITOR
 	roundend_category = "space pirates"
-	antagpanel_category = "Pirate"
+	antagpanel_category = ANTAG_GROUP_PIRATES
+	show_in_antagpanel = FALSE
+	show_to_ghosts = TRUE
+	suicide_cry = "FOR ME MATEYS!!"
+	hijack_speed = 2 // That is without doubt the worst pirate I have ever seen.
 	var/datum/team/pirate/crew
 
 /datum/antagonist/pirate/greet()
-	to_chat(owner, "<span class='boldannounce'>You are a Space Pirate!</span>")
+	. = ..()
 	to_chat(owner, "<B>The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot.</B>")
 	owner.announce_objectives()
 
@@ -17,6 +21,7 @@
 	if(!new_team)
 		for(var/datum/antagonist/pirate/P in GLOB.antagonists)
 			if(!P.owner)
+				stack_trace("Antagonist datum without owner in GLOB.antagonists: [P]")
 				continue
 			if(P.crew)
 				crew = P.crew
@@ -31,79 +36,67 @@
 
 /datum/antagonist/pirate/on_gain()
 	if(crew)
-		owner.objectives |= crew.objectives
+		objectives |= crew.objectives
 	. = ..()
 
-/datum/antagonist/pirate/on_removal()
-	if(crew)
-		owner.objectives -= crew.objectives
+/datum/antagonist/pirate/apply_innate_effects(mob/living/mob_override)
 	. = ..()
+	var/mob/living/owner_mob = mob_override || owner.current
+	var/datum/language_holder/holder = owner_mob.get_language_holder()
+	holder.grant_language(/datum/language/piratespeak, TRUE, TRUE, LANGUAGE_PIRATE)
+	holder.selected_language = /datum/language/piratespeak
+
+/datum/antagonist/pirate/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/owner_mob = mob_override || owner.current
+	owner_mob.remove_language(/datum/language/piratespeak, TRUE, TRUE, LANGUAGE_PIRATE)
+	return ..()
 
 /datum/team/pirate
-	name = "Pirate crew"
+	name = "\improper Pirate crew"
 
 /datum/team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
 	getbooty.team = src
-	getbooty.storage_area = locate(/area/shuttle/pirate/vault) in GLOB.sortedAreas
-	getbooty.update_initial_value()
+	for(var/obj/machinery/computer/piratepad_control/P in GLOB.machines)
+		var/area/A = get_area(P)
+		if(istype(A,/area/shuttle/pirate))
+			getbooty.cargo_hold = P
+			break
 	getbooty.update_explanation_text()
 	objectives += getbooty
 	for(var/datum/mind/M in members)
-		M.objectives |= objectives
+		var/datum/antagonist/pirate/P = M.has_antag_datum(/datum/antagonist/pirate)
+		if(P)
+			P.objectives |= objectives
 
-
-GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
-	/obj/structure/reagent_dispensers/beerkeg,
-	/mob/living/simple_animal/parrot,
-	/obj/item/stack/sheet/mineral/gold,
-	/obj/item/stack/sheet/mineral/diamond,
-	/obj/item/stack/spacecash,
-	/obj/item/melee/sabre,)))
 
 /datum/objective/loot
-	var/area/storage_area //Place where we we will look for the loot.
+	var/obj/machinery/computer/piratepad_control/cargo_hold
 	explanation_text = "Acquire valuable loot and store it in designated area."
 	var/target_value = 50000
-	var/initial_value = 0 //Things in the vault at spawn time do not count
+
 
 /datum/objective/loot/update_explanation_text()
-	if(storage_area)
-		explanation_text = "Acquire loot and store [target_value] of credits worth in [storage_area.name]."
+	if(cargo_hold)
+		var/area/storage_area = get_area(cargo_hold)
+		explanation_text = "Acquire loot and store [target_value] of credits worth in [storage_area.name] cargo hold."
 
 /datum/objective/loot/proc/loot_listing()
 	//Lists notable loot.
-	if(!storage_area)
+	if(!cargo_hold || !cargo_hold.total_report)
 		return "Nothing"
-	var/list/loot_table = list()
-	for(var/atom/movable/AM in storage_area.GetAllContents())
-		if(is_type_in_typecache(AM,GLOB.pirate_loot_cache))
-			var/lootname = AM.name
-			var/count = 1
-			if(istype(AM,/obj/item/stack)) //Ugh.
-				var/obj/item/stack/S = AM
-				lootname = S.singular_name
-				count = S.amount
-			if(!loot_table[lootname])
-				loot_table[lootname] = count
-			else
-				loot_table[lootname] += count
+	cargo_hold.total_report.total_value = sortTim(cargo_hold.total_report.total_value, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+	var/count = 0
 	var/list/loot_texts = list()
-	for(var/key in loot_table)
-		var/amount = loot_table[key]
-		loot_texts += "[amount] [key][amount > 1 ? "s":""]"
+	for(var/datum/export/E in cargo_hold.total_report.total_value)
+		count++
+		if(count > 5)
+			break
+		loot_texts += E.total_printout(cargo_hold.total_report,notes = FALSE)
 	return loot_texts.Join(", ")
 
 /datum/objective/loot/proc/get_loot_value()
-	if(!storage_area)
-		return 0
-	var/value = 0
-	for(var/turf/T in storage_area.contents)
-		value += export_item_and_contents(T,TRUE, TRUE, dry_run = TRUE)
-	return value - initial_value
-
-/datum/objective/loot/proc/update_initial_value()
-	initial_value = get_loot_value()
+	return cargo_hold ? cargo_hold.points : 0
 
 /datum/objective/loot/check_completion()
 	return ..() || get_loot_value() >= target_value

@@ -4,38 +4,19 @@
 	name = "brown cloak"
 	desc = "It's a cape that can be worn around your neck."
 	icon = 'icons/obj/clothing/cloaks.dmi'
-	icon_state = "cloak"
-	item_state = "cloak"
+	icon_state = "qmcloak"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDESUITSTORAGE 
+	flags_inv = HIDESUITSTORAGE
 
-/obj/item/clothing/neck/cloak/grey
-	name = "grey cloak"
-	desc = "It's a grey cape that can be worn around your neck."
-	icon = 'icons/obj/clothing/cloaks.dmi'
-	icon_state = "cloakgrey"
-	item_state = "cloakgrey"
-	w_class = WEIGHT_CLASS_SMALL
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+/obj/item/clothing/neck/cloak/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/surgery_initiator)
 
-/obj/item/clothing/head/cloakhood
-	name = "cloak hood"
-	icon = 'icons/obj/clothing/hats.dmi'
-	icon_state = "golhood"
-	desc = "A hood for a cloak."
-	body_parts_covered = HEAD
-	item_flags = NODROP
-	flags_inv = HIDEHAIR|HIDEEARS
-
-/obj/item/clothing/neck/cloak/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return(OXYLOSS)
-
-/obj/item/clothing/neck/cloak/overseer
-	name = "vault-tec overseer's cloak"
-	desc = "This is the overseers cloak.  Issued by the Vault-tec corporation to easily identify the overseer. This cloak has been passed down from overseer to overseer"
-	icon_state = "overseercloak"
+/obj/item/clothing/neck/cloak/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return OXYLOSS
 
 /obj/item/clothing/neck/cloak/hos
 	name = "head of security's cloak"
@@ -55,6 +36,7 @@
 	name = "chief engineer's cloak"
 	desc = "Worn by Engitopia, wielders of an unlimited power."
 	icon_state = "cecloak"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/neck/cloak/rd
 	name = "research director's cloak"
@@ -71,27 +53,56 @@
 	desc = "Worn by the Head of Personnel. It smells faintly of bureaucracy."
 	icon_state = "hopcloak"
 
-/obj/item/clothing/neck/cloak/chiefcloak
-	name = "wayfarer cloak"
-	desc = "A symbol of the authority of the Wayfarer Chief."
-	icon_state = "chiefcloak"
+/obj/item/clothing/neck/cloak/skill_reward
+	var/associated_skill_path = /datum/skill
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 
-/obj/item/clothing/neck/cloak/amulet
-	name = "\improper hunter's amulet"
-	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
-	icon_state = "talisman"
-	item_state = "talisman"
-	body_parts_covered = null
+/obj/item/clothing/neck/cloak/skill_reward/examine(mob/user)
+	. = ..()
+	. += span_notice("You notice a powerful aura about this cloak, suggesting that only the truly experienced may wield it.")
 
-/obj/item/clothing/neck/cloak/Hhuntercloak
-	name = "Razorclaw cloak"
-	desc = "A cloak decorated with bones of a deathclaw and small trinkets repersenting the machine spirit of fire."
-	icon_state = "chiefcloak"
-	allowed = list(/obj/item/gun, /obj/item/kitchen, /obj/item/twohanded, /obj/item/claymore, /obj/item/twohanded/spear)
+/obj/item/clothing/neck/cloak/skill_reward/proc/check_wearable(mob/user)
+	return user.mind?.get_skill_level(associated_skill_path) >= SKILL_LEVEL_LEGENDARY
 
-/obj/item/clothing/neck/cloak/texasrangerponcho
-	name = "Texas Ranger poncho"
-	desc = "A poncho made by the tribals for the texas rangers"
-	icon_state = "ponchoopen"
-	item_state = "poncho"
-	allowed = list(/obj/item/gun, /obj/item/kitchen, /obj/item/twohanded, /obj/item/claymore, /obj/item/twohanded/spear)
+/obj/item/clothing/neck/cloak/skill_reward/proc/unworthy_unequip(mob/user)
+	to_chat(user, span_warning("You feel completely and utterly unworthy to even touch \the [src]."))
+	var/hand_index = user.get_held_index_of_item(src)
+	if (hand_index)
+		user.dropItemToGround(src, TRUE)
+	return FALSE
+
+/obj/item/clothing/neck/cloak/skill_reward/equipped(mob/user, slot)
+	if (!check_wearable(user))
+		unworthy_unequip(user)
+	return ..()
+
+/obj/item/clothing/neck/cloak/skill_reward/attack_hand(mob/user, list/modifiers)
+	if (!check_wearable(user))
+		unworthy_unequip(user)
+	return ..()
+
+/obj/item/clothing/neck/cloak/skill_reward/gaming
+	name = "legendary gamer's cloak"
+	desc = "Worn by the most skilled professional gamers on the station, this legendary cloak is only attainable by achieving true gaming enlightenment. This status symbol represents the awesome might of a being of focus, commitment, and sheer fucking will. Something casual gamers will never begin to understand."
+	icon_state = "gamercloak"
+	associated_skill_path = /datum/skill/gaming
+
+/obj/item/clothing/neck/cloak/skill_reward/cleaning
+	name = "legendary cleaner's cloak"
+	desc = "Worn by the most skilled custodians, this legendary cloak is only attainable by achieving janitorial enlightenment. This status symbol represents a being not only extensively trained in grime combat, but one who is willing to use an entire aresenal of cleaning supplies to its full extent to wipe grime's miserable ass off the face of the station."
+	icon_state = "cleanercloak"
+	associated_skill_path = /datum/skill/cleaning
+
+/obj/item/clothing/neck/cloak/skill_reward/mining
+	name = "legendary miner's cloak"
+	desc = "Worn by the most skilled miners, this legendary cloak is only attainable by achieving true mineral enlightenment. This status symbol represents a being who has forgotten more about rocks than most miners will ever know, a being who has moved mountains and filled valleys."
+	icon_state = "minercloak"
+	associated_skill_path = /datum/skill/mining
+
+/obj/item/clothing/neck/cloak/skill_reward/playing
+	name = "legendary veteran's cloak"
+	desc = "Worn by the wisest of veteran employees, this legendary cloak is only attainable by maintaining a living employment agreement with Nanotrasen for over <b>five thousand hours</b>. This status symbol represents a being is better than you in nearly every quantifiable way, simple as that."
+	icon_state = "playercloak"
+
+/obj/item/clothing/neck/cloak/skill_reward/playing/check_wearable(mob/user)
+	return user.client?.is_veteran()

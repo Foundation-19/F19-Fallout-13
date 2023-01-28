@@ -1,144 +1,121 @@
 /obj/item/ammo_casing/energy/laser
-	projectile_type = /obj/item/projectile/beam/laser
+	projectile_type = /obj/projectile/beam/laser
+	e_cost = 83
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/hellfire
+	projectile_type = /obj/projectile/beam/laser/hellfire
+	e_cost = 100
+	select_name = "maim"
+
+/obj/item/ammo_casing/energy/laser/hellfire/antique
+	e_cost = 100
+
 /obj/item/ammo_casing/energy/lasergun
-	projectile_type = /obj/item/projectile/beam/laser
-	e_cost = 50
+	projectile_type = /obj/projectile/beam/laser
+	e_cost = 62.5
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun/old
-	projectile_type = /obj/item/projectile/beam/laser
+	projectile_type = /obj/projectile/beam/laser
 	e_cost = 200
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hos
-	e_cost = 100
+	e_cost = 120
 
 /obj/item/ammo_casing/energy/laser/practice
-	projectile_type = /obj/item/projectile/beam/practice
+	projectile_type = /obj/projectile/beam/practice
 	select_name = "practice"
 	harmful = FALSE
 
+/obj/item/ammo_casing/energy/chameleon
+	projectile_type = /obj/projectile/energy/chameleon
+	e_cost = 0
+	var/projectile_vars = list()
+
+/obj/item/ammo_casing/energy/chameleon/ready_proj()
+	. = ..()
+
+	loaded_projectile.name = projectile_vars["name"]
+	loaded_projectile.icon = projectile_vars["icon"]
+	loaded_projectile.icon_state = projectile_vars["icon_state"]
+	loaded_projectile.speed = projectile_vars["speed"]
+	loaded_projectile.color = projectile_vars["color"]
+	loaded_projectile.hitsound = projectile_vars["hitsound"]
+	loaded_projectile.impact_effect_type = projectile_vars["impact_effect_type"]
+	loaded_projectile.range = projectile_vars["range"]
+	loaded_projectile.suppressed = projectile_vars["suppressed"]
+	loaded_projectile.hitsound_wall =	projectile_vars["hitsound_wall"]
+	loaded_projectile.pass_flags = projectile_vars["pass_flags"]
+
+	if(!loaded_projectile)
+		newshot()
+
+/obj/item/ammo_casing/energy/laser/scatter
+	projectile_type = /obj/projectile/beam/scatter
+	pellets = 5
+	variance = 25
+	select_name = "scatter"
+
 /obj/item/ammo_casing/energy/laser/scatter/disabler
-	projectile_type = /obj/item/projectile/beam/disabler
+	projectile_type = /obj/projectile/beam/disabler
 	pellets = 3
 	variance = 15
 	harmful = FALSE
 
-/obj/item/ammo_casing/energy/laser/scatter/disabler/expensive
-	projectile_type = /obj/item/projectile/beam/disabler/expensive
-	e_cost = 300
-
 /obj/item/ammo_casing/energy/laser/heavy
-	projectile_type = /obj/item/projectile/beam/laser/heavylaser
+	projectile_type = /obj/projectile/beam/laser/heavylaser
 	select_name = "anti-vehicle"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
 /obj/item/ammo_casing/energy/laser/pulse
-	projectile_type = /obj/item/projectile/beam/pulse
+	projectile_type = /obj/projectile/beam/pulse
 	e_cost = 200
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
 /obj/item/ammo_casing/energy/laser/bluetag
-	projectile_type = /obj/item/projectile/beam/lasertag/bluetag
+	projectile_type = /obj/projectile/beam/lasertag/bluetag
 	select_name = "bluetag"
 	harmful = FALSE
 
 /obj/item/ammo_casing/energy/laser/bluetag/hitscan
-	projectile_type = /obj/item/projectile/beam/lasertag/bluetag/hitscan
+	projectile_type = /obj/projectile/beam/lasertag/bluetag/hitscan
 
 /obj/item/ammo_casing/energy/laser/redtag
-	projectile_type = /obj/item/projectile/beam/lasertag/redtag
+	projectile_type = /obj/projectile/beam/lasertag/redtag
 	select_name = "redtag"
 	harmful = FALSE
 
 /obj/item/ammo_casing/energy/laser/redtag/hitscan
-	projectile_type = /obj/item/projectile/beam/lasertag/redtag/hitscan
+	projectile_type = /obj/projectile/beam/lasertag/redtag/hitscan
 
 /obj/item/ammo_casing/energy/xray
-	projectile_type = /obj/item/projectile/beam/xray
+	projectile_type = /obj/projectile/beam/xray
 	e_cost = 50
 	fire_sound = 'sound/weapons/laser3.ogg'
 
 /obj/item/ammo_casing/energy/mindflayer
-	projectile_type = /obj/item/projectile/beam/mindflayer
+	projectile_type = /obj/projectile/beam/mindflayer
 	select_name = "MINDFUCK"
 	fire_sound = 'sound/weapons/laser.ogg'
 
-/*
----Fallout 13---
-*/
+/obj/item/ammo_casing/energy/laser/minigun
+	select_name = "kill"
+	projectile_type = /obj/projectile/beam/weak/penetrator
+	variance = 0.8
 
-/obj/item/ammo_casing/energy/laser/scatter
-	projectile_type = /obj/item/projectile/beam/laser/tribeam
-	pellets = 3
-	variance = 14
-	select_name = "scatter"
-	e_cost = 180 //11 shots
-	fire_sound = 'sound/f13weapons/tribeamfire.ogg'
+/obj/item/ammo_casing/energy/nanite
+	projectile_type = /obj/projectile/bullet/c10mm //henk
+	select_name = "bullet"
+	e_cost = 120
+	fire_sound = 'sound/weapons/thermalpistol.ogg'
 
-/obj/item/ammo_casing/energy/laser/pistol
-	projectile_type = /obj/item/projectile/beam/laser/pistol
-	e_cost = 80 //20 shots
-	fire_sound = 'sound/f13weapons/aep7fire.ogg'
+/obj/item/ammo_casing/energy/nanite/inferno
+	projectile_type = /obj/projectile/energy/inferno
+	select_name = "inferno"
 
-/obj/item/ammo_casing/energy/laser/ultra_pistol
-	projectile_type = /obj/item/projectile/beam/laser/ultra_pistol
-	e_cost = 80 //20 shots
-	fire_sound = 'sound/f13weapons/aep7fire.ogg'
-
-/obj/item/ammo_casing/energy/laser/ultra_rifle
-	projectile_type = /obj/item/projectile/beam/laser/ultra_rifle
-	e_cost = 80 //20 shots
-	fire_sound = 'sound/f13weapons/aep7fire.ogg'
-
-
-/obj/item/ammo_casing/energy/laser/pistol/wattz
-	projectile_type = /obj/item/projectile/beam/laser/pistol/wattz
-	e_cost = 100 //16 shots
-
-/obj/item/ammo_casing/energy/laser/pistol/wattz/magneto
-	projectile_type = /obj/item/projectile/beam/laser/pistol/wattz/magneto
-
-/obj/item/ammo_casing/energy/laser/lasgun
-	projectile_type = /obj/item/projectile/beam/laser/lasgun
-	e_cost = 100 //20 shots
-	fire_sound = 'sound/f13weapons/aer9fire.ogg'
-
-/obj/item/ammo_casing/energy/laser/solar
-	projectile_type = /obj/item/projectile/beam/laser/solar
-	e_cost = 30 //10 shots, self-charges
-	fire_sound = 'sound/f13weapons/laser_pistol.ogg'
-
-/obj/item/ammo_casing/energy/laser/rcw
-	projectile_type = /obj/item/projectile/beam/laser/rcw
-	e_cost = 100 //24 shots
-	fire_sound = 'sound/f13weapons/rcwfire.ogg'
-
-/obj/item/ammo_casing/energy/laser/laer
-	projectile_type = /obj/item/projectile/beam/laser/laer
-	e_cost = 125 //16 shots
-	fire_sound = 'sound/f13weapons/laerfire.ogg'
-
-/obj/item/ammo_casing/energy/laser/aer14
-	projectile_type = /obj/item/projectile/beam/laser/aer14
-	e_cost = 80 //25 shots
-	fire_sound = 'sound/f13weapons/aer14fire.ogg'
-
-/obj/item/ammo_casing/energy/gammagun
-	projectile_type = /obj/item/projectile/beam/gamma
-	e_cost = 75
-	fire_sound = 'sound/weapons/laser3.ogg'
-
-/obj/item/ammo_casing/energy/laser/pistol/pewpew
-	projectile_type = /obj/item/projectile/beam/laser/pewpew
-	e_cost = 800 //2 shots
-
-//musket
-
-/obj/item/ammo_casing/energy/laser/musket
-	projectile_type = /obj/item/projectile/beam/laser/musket
-	e_cost = 250
-	fire_sound = 'sound/f13weapons/aer9fire.ogg'
+/obj/item/ammo_casing/energy/nanite/cryo
+	projectile_type = /obj/projectile/energy/cryo
+	select_name = "cryo"

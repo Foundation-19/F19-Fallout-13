@@ -3,13 +3,13 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 8
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_2)
 "c" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -21,56 +21,49 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered/shuttle/medium_2)
 "f" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 8
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_2)
 "g" = (
 /turf/closed/wall/mineral/titanium,
+/area/ruin/powered/shuttle/medium_2)
+"h" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "i" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/ruin/powered/shuttle/medium_2)
 "k" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "l" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_2)
 "m" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_2)
 "n" = (
 /obj/machinery/door/airlock/public/glass,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "o" = (
-/turf/open/floor/plasteel/darkblue,
-/area/ruin/powered/shuttle/medium_2)
-"p" = (
-/turf/open/floor/plasteel/darkyellow,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "r" = (
 /obj/structure/table,
-/turf/open/floor/plasteel,
-/area/ruin/powered/shuttle/medium_2)
-"s" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/plasteel/darkblue,
+/turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_2)
 "t" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper";
 	dir = 1
 	},
-/turf/open/floor/plasteel/darkblue,
-/area/ruin/powered/shuttle/medium_2)
-"u" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/darkyellow,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "v" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -81,17 +74,29 @@
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_2)
 "x" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/ruin/powered/shuttle/medium_2)
-"y" = (
-/obj/structure/chair/comfy{
-	dir = 4
-	},
-/turf/open/floor/plasteel/darkyellow,
 /area/ruin/powered/shuttle/medium_2)
 "B" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/shuttle/medium_2)
+"C" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_2)
+"H" = (
+/obj/structure/chair/comfy{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_2)
+"Z" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 
 (1,1,1) = {"
@@ -370,7 +375,7 @@ a
 a
 g
 o
-s
+C
 x
 k
 k
@@ -459,11 +464,11 @@ a
 a
 a
 g
-p
-p
-y
-p
-p
+h
+h
+H
+h
+h
 g
 a
 a
@@ -474,11 +479,11 @@ a
 a
 a
 g
-p
-u
-u
-u
-p
+h
+Z
+Z
+Z
+h
 g
 a
 a

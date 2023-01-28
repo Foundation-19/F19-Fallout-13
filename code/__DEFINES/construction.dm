@@ -8,6 +8,7 @@
 #define GIRDER_REINF 2
 #define GIRDER_DISPLACED 3
 #define GIRDER_DISASSEMBLED 4
+#define GIRDER_TRAM 5
 
 //rwall construction states
 #define INTACT 0
@@ -23,10 +24,23 @@
 #define WINDOW_IN_FRAME 1
 #define WINDOW_SCREWED_TO_FRAME 2
 
+//reinforced window construction states
+#define RWINDOW_FRAME_BOLTED 3
+#define RWINDOW_BARS_CUT 4
+#define RWINDOW_POPPED 5
+#define RWINDOW_BOLTS_OUT 6
+#define RWINDOW_BOLTS_HEATED 7
+#define RWINDOW_SECURE 8
+
 //airlock assembly construction states
 #define AIRLOCK_ASSEMBLY_NEEDS_WIRES 0
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
 #define AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER 2
+
+//blast door (de)construction states
+#define BLASTDOOR_NEEDS_WIRES 0
+#define BLASTDOOR_NEEDS_ELECTRONICS 1
+#define BLASTDOOR_FINISHED 2
 
 //default_unfasten_wrench() return defines
 #define CANT_UNFASTEN 0
@@ -49,29 +63,16 @@
 #define FLOODLIGHT_NEEDS_WIRES 0
 #define FLOODLIGHT_NEEDS_LIGHTS 1
 #define FLOODLIGHT_NEEDS_SECURING 2
-#define FLOODLIGHT_NEEDS_WRENCHING 3
+
+// Stationary gas tanks
+#define TANK_FRAME 0
+#define TANK_PLATING_UNSECURED 1
 
 //other construction-related things
 
-//windows affected by nar-sie turn this color.
+//windows affected by Nar'Sie turn this color.
 #define NARSIE_WINDOW_COLOUR "#7D1919"
 
-//let's just pretend fulltile windows being children of border windows is fine
-#define FULLTILE_WINDOW_DIR NORTHEAST
-
-//Material defines, for determining how much of a given material an item contains
-#define MAT_METAL		"$metal"
-#define MAT_GLASS		"$glass"
-#define MAT_SILVER		"$silver"
-#define MAT_GOLD		"$gold"
-#define MAT_DIAMOND		"$diamond"
-#define MAT_URANIUM		"$uranium"
-#define MAT_PLASMA		"$plasma"
-#define MAT_BLUESPACE	"$bluespace"
-#define MAT_BANANIUM	"$bananium"
-#define MAT_TITANIUM	"$titanium"
-#define MAT_BIOMASS		"$biomass"
-#define MAT_PLASTIC	"$plastic"
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The maximum size of a stack object.
@@ -80,79 +81,73 @@
 #define MAXCOIL 30
 
 //tablecrafting defines
-#define CAT_NONE	""
+#define CAT_FOOD "Foods"
+#define CAT_BREAD "Breads"
+#define CAT_BURGER "Burgers"
+#define CAT_CAKE "Cakes"
+#define CAT_EGG "Egg-Based Food"
+#define CAT_LIZARD "Lizard Food"
+#define CAT_MEAT "Meats"
+#define CAT_SEAFOOD "Seafood"
+#define CAT_MISCFOOD "Misc. Food"
+#define CAT_MEXICAN "Mexican Food"
+#define CAT_MOTH "Mothic Food"
+#define CAT_PASTRY "Pastries"
+#define CAT_PIE "Pies"
+#define CAT_PIZZA "Pizzas"
+#define CAT_SALAD "Salads"
+#define CAT_SANDWICH "Sandwiches"
+#define CAT_SOUP "Soups"
+#define CAT_SPAGHETTI "Spaghettis"
+#define CAT_ICE "Frozen"
+#define CAT_DRINK "Drinks"
 
-#define CAT_WEAPONRY				"Weaponry"
-#define CAT_WEAPON					"Weapons"
-#define CAT_AMMO_ONE				"Ammunition - Empty"
-#define CAT_AMMO_TWO				"Ammunition - Handguns"
-#define CAT_AMMO_THREE				"Ammunition - Rifles"
-#define CAT_AMMO_FOUR				"Ammunition - Energy"
-#define CAT_AMMO_FIVE				"Ammunition - Other"
+//crafting defines
+#define CAT_WEAPON_RANGED "Weapons Ranged"
+#define CAT_WEAPON_MELEE "Weapons Melee"
+#define CAT_WEAPON_AMMO "Weapon Ammo"
+#define CAT_ROBOT "Robotics"
+#define CAT_MISC "Misc"
+#define CAT_CLOTHING "Clothing"
+#define CAT_CHEMISTRY "Chemistry"
+#define CAT_ATMOSPHERIC "Atmospherics"
+#define CAT_STRUCTURE "Structures"
+#define CAT_TILES "Tiles"
+#define CAT_WINDOWS "Windows"
+#define CAT_DOORS "Doors"
+#define CAT_FURNITURE "Furniture"
+#define CAT_EQUIPMENT "Equipment"
+#define CAT_CONTAINERS "Containers"
+#define CAT_ENTERTAINMENT "Entertainment"
+#define CAT_TOOLS "Tools"
+#define CAT_CULT "Blood Cult"
 
-#define CAT_ROBOT					"Robots"
-#define CAT_MISC					"Misc"
-#define CAT_BOTTLE 					"Bottling"
-#define CAT_TOOLS 					"Tools"
-#define CAT_MACHINES 				"Machines/Objects"
+//rcd modes
+#define RCD_FLOORWALL 0
+#define RCD_AIRLOCK 1
+#define RCD_DECONSTRUCT 2
+#define RCD_WINDOWGRILLE 3
+#define RCD_MACHINE 4
+#define RCD_COMPUTER 5
+#define RCD_FURNISHING 6
 
-#define CAT_PRIMAL  				"Tribal"
-#define CAT_TRIBAL  				"Tribal"
-#define CAT_TRIBAL_WEAPONS			"Tribal - War"
+#define RCD_UPGRADE_FRAMES (1<<0)
+#define RCD_UPGRADE_SIMPLE_CIRCUITS (1<<1)
+#define RCD_UPGRADE_SILO_LINK (1<<2)
+#define RCD_UPGRADE_FURNISHING (1<<3)
 
-#define CAT_FORGE   				"Forge"
-#define CAT_FORGEWEAPON   			"Forge Weapon"
-#define CAT_FORGEARMOR   			"Forge Armor"
-#define CAT_FORGEMISC   			"Forge Misc"
-#define CAT_FORGEPARTS   			"Forge Parts"
+#define RPD_UPGRADE_UNWRENCH (1<<0)
 
-#define CAT_MEDICAL					"Ghetto Chemistry"
-#define CAT_MEDS 					"Medicine"
-#define CAT_ASSEM  					"Assembling"
-#define CAT_ASSEMBLIES  			"Assemblies"
-#define CAT_CLOTHING				"Clothing"
-#define CAT_SHOES 					"Shoes"
-#define CAT_MISCCLOTHING 			"Misc Clothing"
-#define CAT_ARMOR 					"Armor"
-#define CAT_HULKY 					"Hulky"
-#define CAT_WASTELAND				"Wasteland Clothing"
-#define CAT_FOOD					"Foods"
-#define CAT_BREAD					"Breads"
-#define CAT_BURGER					"Burgers"
-#define CAT_CAKE					"Cakes"
-#define CAT_EGG						"Egg-Based Food"
-#define CAT_MEAT					"Meats"
-#define CAT_MISCFOOD				"Misc. Food"
-#define CAT_PASTRY					"Pastries"
-#define CAT_PIE						"Pies"
-#define CAT_PIZZA					"Pizzas"
-#define CAT_SALAD					"Salads"
-#define CAT_SANDWICH				"Sandwiches"
-#define CAT_SOUP					"Soups"
-#define CAT_SPAGHETTI				"Spaghettis"
-#define CAT_DRUGS     				"Drugs"
-#define CAT_WASTEFOOD 				"Wasteland Food"
-#define CAT_BELTS					"Belts"
+#define RCD_WINDOW_FULLTILE "full tile"
+#define RCD_WINDOW_DIRECTIONAL "directional"
+#define RCD_WINDOW_NORMAL "glass"
+#define RCD_WINDOW_REINFORCED "reinforced glass"
 
-#define CAT_BLUEPRINTS				"Blueprints"
-#define CAT_BPWEAPON				"Weapons"
-#define CAT_BPWEAPON_ONEUSE			"Weapons - Damaged"
-#define CAT_BP_COPY					"Copy Blueprints"
+#define RCD_MEMORY_WALL 1
+#define RCD_MEMORY_WINDOWGRILLE 2
 
-#define CAT_MOULD 					"Moulds"
-#define CAT_MOULD_ACTION 			"Actions"
-#define CAT_MOULD_FRAME 			"Frames"
-#define CAT_MOULD_LOADER 			"Ammo loaders"
-#define CAT_MOULD_BARREL 			"Barrels"
-#define CAT_MOULD_MISC 				"Misc"
-#define CAT_MOULD_ATTACHMENT 		"Attachments"
+// How much faster to use the RCD when on a tile with memory
+#define RCD_MEMORY_SPEED_BUFF 5
 
-#define CAT_EXPERIMENTAL 			"Experimental"
-#define CAT_WEAPONS 				"Weapons"
-#define CAT_UNREFIENED 				"Unrefined"
-#define CAT_DEPLETED 				"Depleted"
-
-#define RCD_FLOORWALL 1
-#define RCD_AIRLOCK 2
-#define RCD_DECONSTRUCT 3
-#define RCD_WINDOWGRILLE 4
+/// How much less resources the RCD uses when reconstructing
+#define RCD_MEMORY_COST_BUFF 8

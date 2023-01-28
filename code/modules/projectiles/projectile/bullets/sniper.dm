@@ -1,70 +1,75 @@
 // .50 (Sniper)
 
-/obj/item/projectile/bullet/p50
+/obj/projectile/bullet/p50
 	name =".50 bullet"
 	speed = 0.4
-	damage = 55
-	knockdown = 100
-	dismemberment = 30
-	armour_penetration = 25
+	range = 400 // Enough to travel from one corner of the Z to the opposite corner and then some.
+	damage = 70
+	paralyze = 100
+	dismemberment = 50
+	armour_penetration = 50
 	var/breakthings = TRUE
-	penetrating = 75
 
-/obj/item/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
+/obj/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
 	if(isobj(target) && (blocked != 100) && breakthings)
 		var/obj/O = target
-		O.take_damage(80, BRUTE, "bullet", FALSE)
+		O.take_damage(80, BRUTE, BULLET, FALSE)
 	return ..()
 
-/obj/item/projectile/bullet/p50/soporific
+/obj/projectile/bullet/p50/soporific
 	name =".50 soporific bullet"
 	armour_penetration = 0
 	damage = 0
 	dismemberment = 0
-	knockdown = 0
+	paralyze = 0
 	breakthings = FALSE
 
-/obj/item/projectile/bullet/p50/soporific/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/p50/soporific/on_hit(atom/target, blocked = FALSE)
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.Sleeping(400)
 	return ..()
 
-/obj/item/projectile/bullet/p50/penetrator
-	name =".50 penetrator bullet"
-	icon_state = "gauss"
+/obj/projectile/bullet/p50/penetrator
 	name = "penetrator round"
+	icon_state = "gauss"
 	damage = 60
-	forcedodge = TRUE
+	range = 50
+	projectile_piercing = PASSMOB|PASSVEHICLE
+	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
+	phasing_ignore_direct_target = TRUE
 	dismemberment = 0 //It goes through you cleanly.
-	knockdown = 0
+	paralyze = 0
 	breakthings = FALSE
 
-/obj/item/projectile/bullet/a50MG
-	damage = 60
-	armour_penetration = 60
+/obj/projectile/bullet/p50/penetrator/shuttle //Nukeop Shuttle Variety
+	icon_state = "gaussstrong"
+	damage = 25
+	speed = 0.3
+	range = 16
 
-/obj/item/projectile/bullet/a50MG/incendiary
-	damage = 40
-	armour_penetration = 20
-	var/fire_stacks = 4
-
-/obj/item/projectile/bullet/a50MG/incendiary/on_hit(atom/target, blocked = FALSE)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(fire_stacks)
-		M.IgniteMob()
-
-/*
-	/obj/item/projectile/bullet/a50MG/AP
-	damage = 35
-	armour_penetration = 65 will punch through anything short of Enclave power armor*/
-
-/obj/item/projectile/bullet/a50MG/explosive
-	damage = 30
-	armour_penetration = 0
-
-/obj/item/projectile/bullet/a50MG/explosive/on_hit(atom/target, blocked = FALSE)
-	..()
-	explosion(target, 0, 1, 1, 1)
+/obj/projectile/bullet/p50/marksman
+	name = ".50 marksman round"
+	damage = 50
+	paralyze = 0
+	tracer_type = /obj/effect/projectile/tracer/sniper
+	impact_type = /obj/effect/projectile/impact/sniper
+	muzzle_type = /obj/effect/projectile/muzzle/sniper
+	hitscan = TRUE
+	impact_effect_type = null
+	hitscan_light_intensity = 3
+	hitscan_light_range = 0.75
+	hitscan_light_color_override = LIGHT_COLOR_YELLOW
+	muzzle_flash_intensity = 5
+	muzzle_flash_range = 1
+	muzzle_flash_color_override = LIGHT_COLOR_YELLOW
+	impact_light_intensity = 5
+	impact_light_range = 1
+	impact_light_color_override = LIGHT_COLOR_YELLOW
+	ricochets_max = 1
+	ricochet_chance = 100
+	ricochet_auto_aim_angle = 45
+	ricochet_auto_aim_range = 15
+	ricochet_incidence_leeway = 90
+	ricochet_decay_damage = 1
+	ricochet_shoots_firer = FALSE

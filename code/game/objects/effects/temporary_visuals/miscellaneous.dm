@@ -4,10 +4,11 @@
 	duration = 5
 	randomdir = FALSE
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	var/splatter_type = "splatter"
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
-	if(set_dir in GLOB.diagonals)
+	if(ISDIAGONALDIR(set_dir))
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
 		icon_state = "[splatter_type][pick(3, 4, 5)]"
@@ -20,6 +21,7 @@
 		if(SOUTH)
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 		if(EAST)
 			target_pixel_x = 16
 		if(WEST)
@@ -34,10 +36,12 @@
 			target_pixel_x = 16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 		if(SOUTHWEST)
 			target_pixel_x = -16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
@@ -47,6 +51,7 @@
 	name = "speedbike trails"
 	icon_state = "ion_fade"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	duration = 10
 	randomdir = 0
 
@@ -79,12 +84,8 @@
 
 /obj/effect/temp_visual/dir_setting/ninja
 	name = "ninja shadow"
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "uncloak"
-	duration = 9
-
-/obj/effect/temp_visual/dir_setting/ninja/disrupt
-	icon_state = "stealthdisrupt"
 	duration = 9
 
 /obj/effect/temp_visual/dir_setting/ninja/cloak
@@ -101,13 +102,25 @@
 	icon_state = "phaseout"
 
 /obj/effect/temp_visual/dir_setting/wraith
-	name = "blood"
-	icon = 'icons/mob/mob.dmi'
-	icon_state = "phase_shift2"
-	duration = 12
+	name = "shadow"
+	icon = 'icons/mob/nonhuman-player/cult.dmi'
+	icon_state = "phase_shift2_cult"
+	duration = 0.6 SECONDS
+
+/obj/effect/temp_visual/dir_setting/wraith/angelic
+	icon_state = "phase_shift2_holy"
+
+/obj/effect/temp_visual/dir_setting/wraith/mystic
+	icon_state = "phase_shift2_wizard"
 
 /obj/effect/temp_visual/dir_setting/wraith/out
-	icon_state = "phase_shift"
+	icon_state = "phase_shift_cult"
+
+/obj/effect/temp_visual/dir_setting/wraith/out/angelic
+	icon_state = "phase_shift_holy"
+
+/obj/effect/temp_visual/dir_setting/wraith/out/mystic
+	icon_state = "phase_shift_wizard"
 
 /obj/effect/temp_visual/dir_setting/tailsweep
 	icon_state = "tailsweep"
@@ -128,7 +141,8 @@
 
 /obj/effect/temp_visual/dir_setting/curse/grasp_portal
 	icon = 'icons/effects/64x64.dmi'
-	layer = LARGE_MOB_LAYER
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	pixel_y = -16
 	pixel_x = -16
 	duration = 32
@@ -139,18 +153,30 @@
 	fades = TRUE
 
 /obj/effect/temp_visual/dir_setting/curse/hand
-	icon_state = "cursehand"
+	icon_state = "cursehand1"
 
-/obj/effect/temp_visual/dir_setting/curse/hand/Initialize(mapload, set_dir, handedness)
+
+/obj/effect/temp_visual/bsa_splash
+	name = "\improper Bluespace energy wave"
+	desc = "A massive, rippling wave of bluepace energy, all rapidly exhausting itself the moment it leaves the concentrated beam of light."
+	icon = 'icons/effects/beam_splash.dmi'
+	icon_state = "beam_splash_e"
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
+	pixel_y = -16
+	duration = 50
+
+/obj/effect/temp_visual/bsa_splash/Initialize(mapload, dir)
 	. = ..()
-	update_icon()
-
-/obj/item/projectile/curse_hand/update_icon()
-	icon_state = "[icon_state][handedness]"
+	switch(dir)
+		if(WEST)
+			icon_state = "beam_splash_w"
+		if(EAST)
+			icon_state = "beam_splash_e"
 
 /obj/effect/temp_visual/wizard
 	name = "water"
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "reappear"
 	duration = 5
 
@@ -159,7 +185,7 @@
 	duration = 12
 
 /obj/effect/temp_visual/monkeyify
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "h2monkey"
 	duration = 22
 
@@ -167,7 +193,7 @@
 	icon_state = "monkey2h"
 
 /obj/effect/temp_visual/borgflash
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "blspell"
 	duration = 5
 
@@ -256,7 +282,7 @@
 	duration = 9
 
 /obj/effect/temp_visual/gib_animation
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	duration = 15
 
 /obj/effect/temp_visual/gib_animation/Initialize(mapload, gib_icon)
@@ -264,10 +290,10 @@
 	. = ..()
 
 /obj/effect/temp_visual/gib_animation/animal
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 
 /obj/effect/temp_visual/dust_animation
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	duration = 15
 
 /obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
@@ -275,7 +301,7 @@
 	. = ..()
 
 /obj/effect/temp_visual/mummy_animation
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "mummy_revive"
 	duration = 20
 
@@ -293,9 +319,10 @@
 
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	duration = 4
 
 /obj/effect/temp_visual/explosion
@@ -316,6 +343,11 @@
 	alpha = 140
 	randomdir = 0
 	duration = 6
+
+/obj/effect/temp_visual/desynchronizer
+	name = "desynchronizer field"
+	icon_state = "chronofield"
+	duration = 3
 
 /obj/effect/temp_visual/impact_effect
 	icon_state = "impact_bullet"
@@ -342,17 +374,32 @@
 	icon_state = "impact_laser_green"
 	duration = 4
 
+/obj/effect/temp_visual/impact_effect/yellow_laser
+	icon_state = "impact_laser_yellow"
+	duration = 4
+
 /obj/effect/temp_visual/impact_effect/purple_laser
 	icon_state = "impact_laser_purple"
 	duration = 4
+
+/obj/effect/temp_visual/impact_effect/shrink
+	icon_state = "m_shield"
+	duration = 10
 
 /obj/effect/temp_visual/impact_effect/ion
 	icon_state = "shieldsparkles"
 	duration = 6
 
+/obj/effect/temp_visual/impact_effect/energy
+	icon_state = "impact_energy"
+	duration = 6
+
+/obj/effect/temp_visual/impact_effect/neurotoxin
+	icon_state = "impact_neurotoxin"
+
 /obj/effect/temp_visual/heart
 	name = "heart"
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "heart"
 	duration = 25
 
@@ -362,28 +409,17 @@
 	pixel_y = rand(-4,4)
 	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
 
-/obj/effect/temp_visual/love_heart
-	name = "love heart"
+/obj/effect/temp_visual/annoyed
+	name = "annoyed"
 	icon = 'icons/effects/effects.dmi'
-	icon_state = "heart"
+	icon_state = "annoyed"
 	duration = 25
 
-/obj/effect/temp_visual/love_heart/Initialize(mapload)
+/obj/effect/temp_visual/annoyed/Initialize(mapload)
 	. = ..()
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
-	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = duration)
-
-/obj/effect/temp_visual/love_heart/invisible
-	icon_state = null
-
-/obj/effect/temp_visual/love_heart/invisible/Initialize(mapload, mob/seer)
-	. = ..()
-	var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "heart", layer = ABOVE_MOB_LAYER, loc = src)
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/onePerson, "heart", I, seer)
-	I.alpha = 255
-	I.appearance_flags = RESET_ALPHA
-	animate(I, alpha = 0, time = duration)
+	pixel_x = rand(-4,0)
+	pixel_y = rand(8,12)
+	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/bleed
 	name = "bleed"
@@ -439,3 +475,109 @@
 			animate(src, alpha = 0, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
+
+/obj/effect/temp_visual/cart_space
+	icon_state = "launchpad_launch"
+	duration = 2 SECONDS
+
+/obj/effect/temp_visual/cart_space/bad
+	icon_state = "launchpad_pull"
+	duration = 2 SECONDS
+
+/obj/effect/constructing_effect
+	icon = 'icons/effects/effects_rcd.dmi'
+	icon_state = ""
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/status = 0
+	var/delay = 0
+
+/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status)
+	. = ..()
+	status = rcd_status
+	delay = rcd_delay
+	if (status == RCD_DECONSTRUCT)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 1.1 SECONDS)
+		delay -= 11
+		icon_state = "rcd_end_reverse"
+	else
+		update_appearance()
+
+/obj/effect/constructing_effect/update_icon_state()
+	icon_state = "rcd"
+	if(delay < 10)
+		icon_state += "_shortest"
+		return ..()
+	if (delay < 20)
+		icon_state += "_shorter"
+		return ..()
+	if (delay < 37)
+		icon_state += "_short"
+		return ..()
+	if(status == RCD_DECONSTRUCT)
+		icon_state += "_reverse"
+	return ..()
+
+/obj/effect/constructing_effect/proc/end_animation()
+	if (status == RCD_DECONSTRUCT)
+		qdel(src)
+	else
+		icon_state = "rcd_end"
+		addtimer(CALLBACK(src, PROC_REF(end)), 15)
+
+/obj/effect/constructing_effect/proc/end()
+	qdel(src)
+
+/obj/effect/temp_visual/electricity
+	icon_state = "electricity3"
+	duration = 0.5 SECONDS
+
+/obj/effect/temp_visual/thunderbolt
+	icon_state = "thunderbolt"
+	icon = 'icons/effects/32x96.dmi'
+	duration = 0.6 SECONDS
+
+/obj/effect/temp_visual/light_ash
+	icon_state = "light_ash"
+	icon = 'icons/effects/weather_effects.dmi'
+	duration = 3.2 SECONDS
+
+/obj/effect/temp_visual/sonar_ping
+	duration = 3 SECONDS
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	anchored = TRUE
+	randomdir = FALSE
+	/// The image shown to modsuit users
+	var/image/modsuit_image
+	/// The person in the modsuit at the moment, really just used to remove this from their screen
+	var/datum/weakref/mod_man
+	/// The icon state applied to the image created for this ping.
+	var/real_icon_state = "sonar_ping"
+
+/obj/effect/temp_visual/sonar_ping/Initialize(mapload, mob/living/looker, mob/living/creature)
+	. = ..()
+	if(!looker || !creature)
+		return INITIALIZE_HINT_QDEL
+	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
+	modsuit_image.plane = ABOVE_LIGHTING_PLANE
+	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
+	mod_man = WEAKREF(looker)
+	add_mind(looker)
+
+/obj/effect/temp_visual/sonar_ping/Destroy()
+	var/mob/living/previous_user = mod_man?.resolve()
+	if(previous_user)
+		remove_mind(previous_user)
+	// Null so we don't shit the bed when we delete
+	modsuit_image = null
+	return ..()
+
+/// Add the image to the modsuit wearer's screen
+/obj/effect/temp_visual/sonar_ping/proc/add_mind(mob/living/looker)
+	looker?.client?.images |= modsuit_image
+
+/// Remove the image from the modsuit wearer's screen
+/obj/effect/temp_visual/sonar_ping/proc/remove_mind(mob/living/looker)
+	looker?.client?.images -= modsuit_image

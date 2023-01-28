@@ -12,45 +12,53 @@ Self-sustaining extracts:
 	name = "autoslime"
 	desc = "It resembles a normal slime extract, but seems filled with a strange, multi-colored fluid."
 	var/obj/item/slime_extract/extract
+	var/effect_desc = "A self-sustaining slime extract. When used, lets you choose which reaction you want."
 
 //Just divides into the actual item.
-/obj/item/slimecross/selfsustaining/Initialize()
-	. = ..()
-	visible_message("<span class='warning'>The [src] shudders, and splits into four smaller extracts.</span>")
-	for(var/i = 0, i < 4, i++)
+/obj/item/slimecross/selfsustaining/Initialize(mapload)
+	..()
+	visible_message(span_warning("The [src] shudders, and splits into four smaller extracts."))
+	for(var/i in 1 to 4)
 		var/obj/item/autoslime/A = new /obj/item/autoslime(src.loc)
 		var/obj/item/slime_extract/X = new extract_type(A)
 		A.extract = X
 		A.icon = icon
 		A.icon_state = icon_state
 		A.color = color
-	qdel(src)
+		A.name = "self-sustaining " + colour + " extract"
+	return INITIALIZE_HINT_QDEL
 
-/obj/item/autoslime/Initialize()
-	name = "self-sustaining " + extract.name
-	..()
+/obj/item/autoslime/Initialize(mapload)
+	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
-	var/reagentselect = input(user, "Choose the reagent the extract will produce.", "Self-sustaining Reaction") as null|anything in extract.activate_reagents
+	var/reagentselect = tgui_input_list(user, "Reagent the extract will produce.", "Self-sustaining Reaction", sort_list(extract.activate_reagents, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	if(isnull(reagentselect))
+		return
 	var/amount = 5
 	var/secondary
 
-	if ((user.get_active_held_item() != src || user.stat || user.restrained()))
+	if (user.get_active_held_item() != src || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 	if(!reagentselect)
 		return
 	if(reagentselect == "lesser plasma")
 		amount = 4
-		reagentselect = "plasma"
+		reagentselect = /datum/reagent/toxin/plasma
 	if(reagentselect == "holy water and uranium")
-		reagentselect = "holywater"
-		secondary = "uranium"
+		reagentselect = /datum/reagent/water/holywater
+		secondary = /datum/reagent/uranium
 	extract.forceMove(user.drop_location())
 	qdel(src)
 	user.put_in_active_hand(extract)
 	extract.reagents.add_reagent(reagentselect,amount)
 	if(secondary)
 		extract.reagents.add_reagent(secondary,amount)
+
+/obj/item/autoslime/examine(mob/user)
+	. = ..()
+	if(effect_desc)
+		. += span_notice("[effect_desc]")
 
 //Different types.
 

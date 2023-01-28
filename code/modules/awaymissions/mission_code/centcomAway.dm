@@ -1,46 +1,46 @@
 //centcomAway areas
 
-/area/awaymission/centcomAway
+/area/awaymission/centcom_away
 	name = "XCC-P5831"
 	icon_state = "away"
 	requires_power = FALSE
 
-/area/awaymission/centcomAway/general
+/area/awaymission/centcom_away/general
 	name = "XCC-P5831"
-	music = 'sound/ambience/ambigen3.ogg'
+	ambientsounds = list('sound/ambience/ambigen3.ogg')
 
-/area/awaymission/centcomAway/maint
+/area/awaymission/centcom_away/maint
 	name = "XCC-P5831 Maintenance"
 	icon_state = "away1"
-	music = 'sound/ambience/ambisin1.ogg'
+	ambientsounds = list('sound/ambience/ambisin1.ogg')
 
-/area/awaymission/centcomAway/thunderdome
+/area/awaymission/centcom_away/thunderdome
 	name = "XCC-P5831 Thunderdome"
 	icon_state = "away2"
-	music = 'sound/ambience/ambisin2.ogg'
+	ambientsounds = list('sound/ambience/ambisin2.ogg')
 
-/area/awaymission/centcomAway/cafe
+/area/awaymission/centcom_away/cafe
 	name = "XCC-P5831 Kitchen Arena"
 	icon_state = "away3"
-	music = 'sound/ambience/ambisin3.ogg'
+	ambientsounds = list('sound/ambience/ambisin3.ogg')
 
-/area/awaymission/centcomAway/courtroom
+/area/awaymission/centcom_away/courtroom
 	name = "XCC-P5831 Courtroom"
 	icon_state = "away4"
-	music = 'sound/ambience/ambisin4.ogg'
+	ambientsounds = list('sound/ambience/ambisin4.ogg')
 
-/area/awaymission/centcomAway/hangar
+/area/awaymission/centcom_away/hangar
 	name = "XCC-P5831 Hangars"
 	icon_state = "away4"
-	music = 'sound/ambience/ambigen5.ogg'
+	ambientsounds = list('sound/ambience/ambigen5.ogg')
 
 //centcomAway items
 
 /obj/item/paper/pamphlet/centcom/visitor_info
 	name = "Visitor Info Pamphlet"
-	info = "<b> XCC-P5831 Visitor Information </b><br>\
+	default_raw_text = "<b> XCC-P5831 Visitor Information </b><br>\
 	Greetings, visitor, to  XCC-P5831! As you may know, this outpost was once \
-	used as Vault-Tec's CENTRAL COMMAND STATION, organizing and coordinating company \
+	used as Nanotrasen's CENTRAL COMMAND STATION, organizing and coordinating company \
 	projects across the vastness of space. <br>\
 	Since the completion of the much more efficient CC-A5831 on March 8, 2553, XCC-P5831 no longer \
 	acts as NT's base of operations but still plays a very important role its corporate affairs; \
@@ -50,7 +50,7 @@
 
 /obj/item/paper/fluff/awaymissions/centcom/gateway_memo
 	name = "Memo to XCC-P5831 QM"
-	info = "<b>From: XCC-P5831 Management Office</b><br>\
+	default_raw_text = "<b>From: XCC-P5831 Management Office</b><br>\
 	<b>To: Rolf Ingram, XCC-P5831 Quartermaster</b><br>\
 	Hey, Rolf, once you pack that gateway into the ferry hangar, <i>make absolutely sure</i> \
 	to deactivate it! As you may know, SS13 has recently got its network up and running, \

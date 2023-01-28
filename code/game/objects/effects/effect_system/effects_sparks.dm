@@ -5,13 +5,9 @@
 // will always spawn at the items location.
 /////////////////////////////////////////////
 
-/proc/do_sparks(n, c, source)
-	// n - number of sparks
-	// c - cardinals, bool, do the sparks only move in cardinal directions?
-	// source - source of the sparks.
-
+/proc/do_sparks(number, cardinal_only, datum/source)
 	var/datum/effect_system/spark_spread/sparks = new
-	sparks.set_up(n, c, source)
+	sparks.set_up(number, cardinal_only, source)
 	sparks.autocleanup = TRUE
 	sparks.start()
 
@@ -23,30 +19,37 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 2
 	light_power = 0.5
+	light_color = LIGHT_COLOR_FIRE
 
-/obj/effect/particle_effect/sparks/Initialize()
-	. = ..()
-	flick("sparks", src) // replay the animation
-	playsound(src.loc, "sparks", 100, 1)
+/obj/effect/particle_effect/sparks/Initialize(mapload)
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/particle_effect/sparks/LateInitialize()
+	flick(icon_state, src)
+	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/turf/T = loc
 	if(isturf(T))
-		T.hotspot_expose(700,5)
+		T.hotspot_expose(1000,100)
 	QDEL_IN(src, 20)
 
 /obj/effect/particle_effect/sparks/Destroy()
 	var/turf/T = loc
 	if(isturf(T))
-		T.hotspot_expose(700,1)
+		T.hotspot_expose(1000,100)
 	return ..()
 
 /obj/effect/particle_effect/sparks/Move()
 	..()
 	var/turf/T = loc
 	if(isturf(T))
-		T.hotspot_expose(700,1)
+		T.hotspot_expose(1000,100)
 
 /datum/effect_system/spark_spread
 	effect_type = /obj/effect/particle_effect/sparks
+
+/datum/effect_system/spark_spread/quantum
+	effect_type = /obj/effect/particle_effect/sparks/quantum
 
 
 //electricity
@@ -54,6 +57,10 @@
 /obj/effect/particle_effect/sparks/electricity
 	name = "lightning"
 	icon_state = "electricity"
+
+/obj/effect/particle_effect/sparks/quantum
+	name = "quantum sparks"
+	icon_state = "quantum_sparks"
 
 /datum/effect_system/lightning_spread
 	effect_type = /obj/effect/particle_effect/sparks/electricity

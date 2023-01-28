@@ -1,307 +1,55 @@
-
 //Here are the procs used to modify status effects of a mob.
-//The effects include: paralyze, stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
-// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
-//TODO: Optimize, make everything a derivative of proc/Paralyze/whatever because why isn't it.
 
-////////////////////////////// Paralyze ////////////////////////////////////
-
-
-/mob/proc/IsParalyze() //non-living mobs SHOULD be paralyzable, and the stuff down below, they're just missing has_status_effect and apply_status effect. cleanup later - Nappist
-	return FALSE
-
-/mob/living/IsParalyze()
-	return has_status_effect(STATUS_EFFECT_PARALYZE)
-
-/mob/living/proc/AmountParalyze() //How many deciseconds remain in our unconsciousness
-	var/datum/status_effect/incapacitating/paralyze/P = IsParalyze()
-	if(P)
-		return P.duration - world.time
-	return 0
-
-/mob/living/proc/Paralyze(amount, updating = TRUE, ignore_canparalyze = FALSE) //Can't go below remaining duration
-	if(((status_flags & CANPARALYZE) && !has_trait(TRAIT_STUNIMMUNE))  || ignore_canparalyze)
-		var/datum/status_effect/incapacitating/paralyze/P = IsParalyze()
-		if(P)
-			P.duration = max(world.time + amount, P.duration)
-		else if(amount > 0)
-			P = apply_status_effect(STATUS_EFFECT_PARALYZE, amount, updating)
-		return P
-
-
-/mob/living/proc/SetParalyze(amount, updating = TRUE, ignore_canparalyze = FALSE) //Sets remaining duration
-	if(((status_flags & CANPARALYZE) && !has_trait(TRAIT_PARALYZEIMMUNE)) || ignore_canparalyze)
-		var/datum/status_effect/incapacitating/paralyze/P = IsParalyze()
-		if(amount <= 0)
-			if(P)
-				qdel(P)
-		else if(P)
-			P.duration = world.time + amount
-		else
-			P = apply_status_effect(STATUS_EFFECT_PARALYZE, amount, updating)
-		return P
-
-/mob/living/proc/AdjustParalyze(amount, updating = TRUE, ignore_canparalyze = FALSE) //Adds to remaining duration
-	if(((status_flags & CANPARALYZE) && !has_trait(TRAIT_PARALYZEIMMUNE)) || ignore_canparalyze)
-		var/datum/status_effect/incapacitating/paralyze/P = IsParalyze()
-		if(P)
-			P.duration += amount
-		else if(amount > 0)
-			P = apply_status_effect(STATUS_EFFECT_PARALYZE, amount, updating)
-		return P
-
-
-/////////////////////////////////// STUN ////////////////////////////////////
-
-/mob/proc/IsStun() //non-living mobs shouldn't be stunned
-	return FALSE
-
-/////////////////////////////////// FIRE DELAY ////////////////////////////////////
-
-/mob/proc/IsWeaponDrawDelayed() //non-living mobs shouldn't be stunned
-	return FALSE
-
-/////////////////////////////////// THROW DELAY ////////////////////////////////////
-
-/mob/proc/IsThrowDelayed() //non-living mobs shouldn't be stunned
-	return FALSE
-
-/////////////////////////////////// KNOCKDOWN ////////////////////////////////////
-
-/mob/proc/IsKnockdown() //non-living mobs shouldn't be knocked down
-	return FALSE
-
-/////////////////////////////////// UNCONSCIOUS ////////////////////////////////////
-
-/mob/proc/IsUnconscious() //non-living mobs shouldn't be unconscious
-	return FALSE
-
-/mob/living/IsUnconscious() //If we're unconscious
-	return has_status_effect(STATUS_EFFECT_UNCONSCIOUS)
-
-/mob/living/proc/AmountUnconscious() //How many deciseconds remain in our unconsciousness
-	var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
-	if(U)
-		return U.duration - world.time
-	return 0
-
-/mob/living/proc/Unconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Can't go below remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE))  || ignore_canunconscious)
-		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
-		if(U)
-			U.duration = max(world.time + amount, U.duration)
-		else if(amount > 0)
-			U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount, updating)
-		return U
-
-/mob/living/proc/SetUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Sets remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canunconscious)
-		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
-		if(amount <= 0)
-			if(U)
-				qdel(U)
-		else if(U)
-			U.duration = world.time + amount
-		else
-			U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount, updating)
-		return U
-
-/mob/living/proc/AdjustUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE) //Adds to remaining duration
-	if(((status_flags & CANUNCONSCIOUS) && !has_trait(TRAIT_STUNIMMUNE)) || ignore_canunconscious)
-		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
-		if(U)
-			U.duration += amount
-		else if(amount > 0)
-			U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount, updating)
-		return U
-
-/////////////////////////////////// SLEEPING ////////////////////////////////////
-
-/mob/proc/IsSleeping() //non-living mobs shouldn't be sleeping either
-	return FALSE
-
-/mob/living/IsSleeping() //If we're asleep
-	return has_status_effect(STATUS_EFFECT_SLEEPING)
-
-/mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
-	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-	if(S)
-		return S.duration - world.time
-	return 0
-
-/mob/living/proc/Sleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Can't go below remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
-		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-		if(S)
-			S.duration = max(world.time + amount, S.duration)
-		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
-		return S
-
-/mob/living/proc/SetSleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Sets remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
-		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-		if(amount <= 0)
-			if(S)
-				qdel(S)
-		else if(S)
-			S.duration = world.time + amount
-		else
-			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
-		return S
-
-/mob/living/proc/AdjustSleeping(amount, updating = TRUE, ignore_sleepimmune = FALSE) //Adds to remaining duration
-	if((!has_trait(TRAIT_SLEEPIMMUNE)) || ignore_sleepimmune)
-		var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-		if(S)
-			S.duration += amount
-		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
-		return S
-
-/////////////////////////////////// RESTING ////////////////////////////////////
-//why can mobs rest but not be stunned or Paralyze or any of those things
-
-/mob/proc/Resting(amount)
-	resting = max(max(resting,amount),0)
-
-/mob/living/Resting(amount)
-	..()
-	update_canmove()
-
-/mob/proc/SetResting(amount)
-	resting = max(amount,0)
-
-/mob/living/SetResting(amount)
-	..()
-	update_canmove()
-
-/mob/proc/AdjustResting(amount)
-	resting = max(resting + amount,0)
-
-/mob/living/AdjustResting(amount)
-	..()
-	update_canmove()
-
-/////////////////////////////////// JITTERINESS ////////////////////////////////////
-
-/mob/proc/Jitter(amount)
-	jitteriness = max(jitteriness,amount,0)
-
-/////////////////////////////////// DIZZINESS ////////////////////////////////////
-
-/mob/proc/Dizzy(amount)
-	dizziness = max(dizziness,amount,0)
-
-/////////////////////////////////// EYE DAMAGE ////////////////////////////////////
-
-/mob/proc/damage_eyes(amount)
-	return
-
-/mob/proc/adjust_eye_damage(amount)
-	return
-
-/mob/proc/set_eye_damage(amount)
-	return
-
-/////////////////////////////////// EYE_BLIND ////////////////////////////////////
-
-/mob/proc/blind_eyes(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind = max(eye_blind, amount)
-		if(!old_eye_blind)
-			if(stat == CONSCIOUS || stat == SOFT_CRIT)
-				throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-
-/mob/proc/adjust_blindness(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind += amount
-		if(!old_eye_blind)
-			if(stat == CONSCIOUS || stat == SOFT_CRIT)
-				throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else if(eye_blind)
-		var/blind_minimum = 0
-		if((stat != CONSCIOUS && stat != SOFT_CRIT))
-			blind_minimum = 1
-		if(isliving(src))
-			var/mob/living/L = src
-			if(L.has_trait(TRAIT_BLIND))
-				blind_minimum = 1
-		eye_blind = max(eye_blind+amount, blind_minimum)
-		if(!eye_blind)
-			clear_alert("blind")
-			clear_fullscreen("blind")
-
-/mob/proc/set_blindness(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind = amount
-		if(client && !old_eye_blind)
-			if(stat == CONSCIOUS || stat == SOFT_CRIT)
-				throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else if(eye_blind)
-		var/blind_minimum = 0
-		if(stat != CONSCIOUS && stat != SOFT_CRIT)
-			blind_minimum = 1
-		if(isliving(src))
-			var/mob/living/L = src
-			if(L.has_trait(TRAIT_BLIND))
-				blind_minimum = 1
-		eye_blind = blind_minimum
-		if(!eye_blind)
-			clear_alert("blind")
-			clear_fullscreen("blind")
-
-/////////////////////////////////// EYE_BLURRY ////////////////////////////////////
-
-/mob/proc/blur_eyes(amount)
-	if(amount>0)
-		var/old_eye_blurry = eye_blurry
-		eye_blurry = max(amount, eye_blurry)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-
-/mob/proc/adjust_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
-	eye_blurry = max(eye_blurry+amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry && !eye_blurry)
-		clear_fullscreen("blurry")
-
-/mob/proc/set_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
-	eye_blurry = max(amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry)
-		clear_fullscreen("blurry")
-
-/////////////////////////////////// DRUGGY ////////////////////////////////////
-
-/mob/proc/adjust_drugginess(amount)
-	return
-
-/mob/proc/set_drugginess(amount)
-	return
-
-/////////////////////////////////// GROSSED OUT ////////////////////////////////////
-
+///Adjust the disgust level of a mob
 /mob/proc/adjust_disgust(amount)
 	return
 
+///Set the disgust level of a mob
 /mob/proc/set_disgust(amount)
 	return
 
-/////////////////////////////////// TEMPERATURE ////////////////////////////////////
-
+///Adjust the body temperature of a mob, with min/max settings
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=INFINITY)
-	if(bodytemperature > min_temp && bodytemperature < max_temp)
-		bodytemperature = CLAMP(bodytemperature + amount,min_temp,max_temp)
+	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
+		bodytemperature = clamp(bodytemperature + amount,min_temp,max_temp)
+
+/// Sight here is the mob.sight var, which tells byond what to actually show to our client
+/// See [code\__DEFINES\sight.dm] for more details
+/mob/proc/set_sight(new_value)
+	SHOULD_CALL_PARENT(TRUE)
+	if(sight == new_value)
+		return
+	var/old_sight = sight
+	sight = new_value
+
+	SEND_SIGNAL(src, COMSIG_MOB_SIGHT_CHANGE, new_value, old_sight)
+
+/mob/proc/add_sight(new_value)
+	set_sight(sight | new_value)
+
+/mob/proc/clear_sight(new_value)
+	set_sight(sight & ~new_value)
+
+/// see invisibility is the mob's capability to see things that ought to be hidden from it
+/// Can think of it as a primitive version of changing the alpha of planes
+/// We mostly use it to hide ghosts, no real reason why
+/mob/proc/set_invis_see(new_sight)
+	SHOULD_CALL_PARENT(TRUE)
+	if(new_sight == see_invisible)
+		return
+	var/old_invis = see_invisible
+	see_invisible = new_sight
+	SEND_SIGNAL(src, COMSIG_MOB_SEE_INVIS_CHANGE, see_invisible, old_invis)
+
+/// see_in_dark is essentially just a range value
+/// Basically, if a tile has 0 luminosity affecting it, it will be counted as "dark"
+/// Then, if said tile is farther then see_in_dark from your mob, it will, rather then being rendered
+/// As a normal tile with contents, instead be covered by "darkness". This effectively means it gets masked away, we don't even try to draw it.
+/// You can see this effect by going somewhere dark, and cranking the alpha on the lighting plane to 0
+/mob/proc/set_see_in_dark(new_dark)
+	SHOULD_CALL_PARENT(TRUE)
+	if(new_dark == see_in_dark)
+		return
+	var/old_dark = see_in_dark
+	see_in_dark = new_dark
+	SEND_SIGNAL(src, COMSIG_MOB_SEE_IN_DARK_CHANGE, see_in_dark, old_dark)

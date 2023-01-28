@@ -1,0 +1,26 @@
+[2023-01-25 10:24:23.151] Starting up round ID .
+ - -------------------------
+[2023-01-25 10:24:28.040] lestatanderson in statbrowser/initialize
+[2023-01-25 10:24:31.907] lestatanderson in browseroutput/initialize
+[2023-01-25 10:24:39.942] lestatanderson in tgui_say/initialize
+[2023-01-25 10:25:54.741] lestatanderson (as Lestatanderson at 8,248,1)
+ - Using: /datum/preferences [0x21001b0e]
+ - new PreferencesMenu fancy 1
+[2023-01-25 10:25:54.741] lestatanderson in tgui-window-1/initialize
+ - Using: /datum/preferences [0x21001b0e]
+[2023-01-25 10:26:54.407] lestatanderson in tgui-window-1/close (suspending)
+[2023-01-25 10:26:54.467] lestatanderson in tgui-window-1/close (suspending)
+[2023-01-25 10:30:02.415] lestatanderson (as Lestatanderson at 8,248,1)
+ - Using: /datum/preferences [0x21001b0e]
+ - new PreferencesMenu fancy 1
+[2023-01-25 10:30:33.902] lestatanderson (as Lestatanderson at 8,248,1) in tgui-window-1
+ - Using: /datum/preferences [0x21001b0e]
+ - Action: set_preference {"preference":"prefered_security_department","value":"Science"}
+[2023-01-25 10:30:43.684] lestatanderson (as Lestatanderson at 8,248,1) in tgui-window-1
+ - Using: /datum/preferences [0x21001b0e]
+ - Action: set_preference {"preference":"prefered_security_department","value":"None"}
+[2023-01-25 10:30:48.027] lestatanderson (as Lestatanderson at 8,248,1) in tgui-window-1
+ - Using: /datum/preferences [0x21001b0e]
+ - Action: randomize_character {}
+[2023-01-25 10:36:03.782] lestatanderson in tgui-window-1/close (suspending)
+[2023-01-25 10:36:03.839] lestatanderson in tgui-window-1/close (suspending)

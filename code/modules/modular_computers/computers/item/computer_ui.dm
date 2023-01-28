@@ -3,21 +3,24 @@
 	ui_interact(user)
 
 // Operates TGUI
-/obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/item/modular_computer/ui_interact(mob/user, datum/tgui/ui)
 	if(!enabled)
 		if(ui)
 			ui.close()
-		return 0
+		return
 	if(!use_power())
 		if(ui)
 			ui.close()
-		return 0
+		return
+
+	if(!user.can_read(src, READING_CHECK_LITERACY))
+		return
 
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
 	if(!screen_on && !issilicon(user))
 		if(ui)
 			ui.close()
-		return 0
+		return
 
 	// If we have an active program switch to it now.
 	if(active_program)
@@ -26,62 +29,97 @@
 		active_program.ui_interact(user)
 		return
 
-	// We are still here, that means there is no program loaded. Load the BIOS/ROM/OS/whatever you want to call it.
-	// This screen simply lists available programs and user may select them.
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
-	if(!hard_drive || !hard_drive.stored_files || !hard_drive.stored_files.len)
-		to_chat(user, "<span class='danger'>\The [src] beeps three times, it's screen displaying a \"DISK ERROR\" warning.</span>")
-		return // No HDD, No HDD files list or no stored files. Something is very broken.
+	if(honkvirus_amount > 0) // EXTRA annoying, huh!
+		honkvirus_amount--
+		playsound(src, 'sound/items/bikehorn.ogg', 30, TRUE)
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
+		ui = new(user, src, "NtosMain")
+		ui.set_autoupdate(TRUE)
+		if(ui.open())
+			ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
-		ui = new(user, src, ui_key, "ntos_main", "NTOS Main menu", 400, 500, master_ui, state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
+/obj/item/modular_computer/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
 
+	data["show_imprint"] = istype(src, /obj/item/modular_computer/pda)
+
+	return data
 
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
-	data["programs"] = list()
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
-	for(var/datum/computer_file/program/P in hard_drive.stored_files)
-		var/running = 0
-		if(P in idle_threads)
-			running = 1
+	data["device_theme"] = device_theme
 
-		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc, "running" = running))
+	data["login"] = list(
+		IDName = saved_identification || "Unknown",
+		IDJob = saved_job || "Unknown",
+	)
+
+	data["proposed_login"] = list(
+		IDName = computer_id_slot?.registered_name,
+		IDJob = computer_id_slot?.assignment,
+	)
+
+
+	data["removable_media"] = list()
+	if(inserted_disk)
+		data["removable_media"] += "Eject Disk"
+	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
+	if(airestore_app?.stored_card)
+		data["removable_media"] += "intelliCard"
+
+	data["programs"] = list()
+	for(var/datum/computer_file/program/P in stored_files)
+		var/running = FALSE
+		if(P in idle_threads)
+			running = TRUE
+
+		data["programs"] += list(list(
+			"name" = P.filename,
+			"desc" = P.filedesc,
+			"running" = running,
+			"icon" = P.program_icon,
+			"alert" = P.alert_pending,
+		))
 
 	data["has_light"] = has_light
 	data["light_on"] = light_on
 	data["comp_light_color"] = comp_light_color
+	data["pai"] = inserted_pai
 	return data
 
 
 // Handles user's GUI input
 /obj/item/modular_computer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
+
+	if(ishuman(usr) && !allow_chunky) //in /datum/computer_file/program/ui_act() too
+		var/mob/living/carbon/human/human_user = usr
+		if(human_user.check_chunky_fingers())
+			balloon_alert(human_user, "fingers are too big!")
+			return TRUE
+
 	switch(action)
 		if("PC_exit")
 			kill_program()
-			return 1
+			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
-			return 1
+			return TRUE
 		if("PC_minimize")
 			var/mob/user = usr
-			if(!active_program || !all_components[MC_CPU])
+			if(!active_program)
 				return
 
 			idle_threads.Add(active_program)
 			active_program.program_state = PROGRAM_STATE_BACKGROUND // Should close any existing UIs
 
 			active_program = null
-			update_icon()
+			update_appearance()
 			if(user && istype(user))
 				ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
 
@@ -89,59 +127,19 @@
 			var/prog = params["name"]
 			var/datum/computer_file/program/P = null
 			var/mob/user = usr
-			if(hard_drive)
-				P = hard_drive.find_file_by_name(prog)
+			P = find_file_by_name(prog)
 
 			if(!istype(P) || P.program_state == PROGRAM_STATE_KILLED)
 				return
 
 			P.kill_program(forced = TRUE)
-			to_chat(user, "<span class='notice'>Program [P.filename].[P.filetype] with PID [rand(100,999)] has been killed.</span>")
+			to_chat(user, span_notice("Program [P.filename].[P.filetype] with PID [rand(100,999)] has been killed."))
 
 		if("PC_runprogram")
-			var/prog = params["name"]
-			var/datum/computer_file/program/P = null
-			var/mob/user = usr
-			if(hard_drive)
-				P = hard_drive.find_file_by_name(prog)
-
-			if(!P || !istype(P)) // Program not found or it's not executable program.
-				to_chat(user, "<span class='danger'>\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning.</span>")
-				return
-
-			P.computer = src
-
-			if(!P.is_supported_by_hardware(hardware_flag, 1, user))
-				return
-
-			// The program is already running. Resume it.
-			if(P in idle_threads)
-				P.program_state = PROGRAM_STATE_ACTIVE
-				active_program = P
-				idle_threads.Remove(P)
-				update_icon()
-				return
-
-			var/obj/item/computer_hardware/processor_unit/PU = all_components[MC_CPU]
-
-			if(idle_threads.len > PU.max_idle_programs)
-				to_chat(user, "<span class='danger'>\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error.</span>")
-				return
-
-			if(P.requires_ntnet && !get_ntnet_status(P.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
-				to_chat(user, "<span class='danger'>\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning.</span>")
-				return
-			if(P.run_program(user))
-				active_program = P
-				update_icon()
-			return 1
+			open_program(usr, find_file_by_name(params["name"]))
 
 		if("PC_toggle_light")
-			light_on = !light_on
-			if(light_on)
-				set_light(comp_light_luminosity, 1, comp_light_color)
-			else
-				set_light(0)
+			return toggle_flashlight()
 
 		if("PC_light_color")
 			var/mob/user = usr
@@ -150,12 +148,54 @@
 				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color",light_color) as color|null
 				if(!new_color)
 					return
-				if(color_hex2num(new_color) < 200) //Colors too dark are rejected
-					to_chat(user, "<span class='warning'>That color is too dark! Choose a lighter one.</span>")
+				if(is_color_dark(new_color, 50) ) //Colors too dark are rejected
+					to_chat(user, span_warning("That color is too dark! Choose a lighter one."))
 					new_color = null
-			comp_light_color = new_color
-			light_color = new_color
-			update_light()
+			return set_flashlight_color(new_color)
+
+		if("PC_Eject_Disk")
+			var/param = params["name"]
+			var/mob/user = usr
+			switch(param)
+				if("Eject Disk")
+					if(!inserted_disk)
+						return
+
+					user.put_in_hands(inserted_disk)
+					inserted_disk = null
+					playsound(src, 'sound/machines/card_slide.ogg', 50)
+					return TRUE
+
+				if("intelliCard")
+					var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
+					if(!airestore_app)
+						return
+
+					if(airestore_app.try_eject(user))
+						playsound(src, 'sound/machines/card_slide.ogg', 50)
+						return TRUE
+
+				if("ID")
+					if(RemoveID())
+						playsound(src, 'sound/machines/card_slide.ogg', 50)
+						return TRUE
+
+		if("PC_Imprint_ID")
+			saved_identification = computer_id_slot.registered_name
+			saved_job = computer_id_slot.assignment
+			UpdateDisplay()
+			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
+
+		if("PC_Pai_Interact")
+			switch(params["option"])
+				if("eject")
+					usr.put_in_hands(inserted_pai)
+					to_chat(usr, span_notice("You remove [inserted_pai] from the [name]."))
+					inserted_pai = null
+					update_appearance(UPDATE_ICON)
+				if("interact")
+					inserted_pai.attack_self(usr)
+			return UI_UPDATE
 		else
 			return
 

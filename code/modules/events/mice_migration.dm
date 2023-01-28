@@ -2,6 +2,8 @@
 	name = "Mice Migration"
 	typepath = /datum/round_event/mice_migration
 	weight = 10
+	category = EVENT_CATEGORY_ENTITIES
+	description = "A horde of mice arrives, and perhaps even the Rat King themselves."
 
 /datum/round_event/mice_migration
 	var/minimum_mice = 5
@@ -24,4 +26,4 @@
 		'sound/effects/mousesqueek.ogg')
 
 /datum/round_event/mice_migration/start()
-	SSsqueak.trigger_migration(rand(minimum_mice, maximum_mice))
+	SSminor_mapping.trigger_migration(rand(minimum_mice, maximum_mice))

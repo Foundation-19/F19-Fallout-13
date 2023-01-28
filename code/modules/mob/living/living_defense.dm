@@ -1,26 +1,32 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, armour_penetration, penetrated_text)
-	var/armor = getarmor(def_zone, attack_flag)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE, weak_against_armour = FALSE)
+	var/our_armor = getarmor(def_zone, attack_flag)
+
+	if(our_armor <= 0)
+		return our_armor
+	if(weak_against_armour && our_armor >= 0)
+		our_armor *= ARMOR_WEAKENED_MULTIPLIER
+	if(silent)
+		return max(0, our_armor - armour_penetration)
 
 	//the if "armor" check is because this is used for everything on /living, including humans
-	if(armor && armour_penetration)
-		armor = max(0, armor - armour_penetration)
+	if(armour_penetration)
+		our_armor = max(0, our_armor - armour_penetration)
 		if(penetrated_text)
-			to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
+			to_chat(src, span_userdanger("[penetrated_text]"))
 		else
-			to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
-	else if(armor >= 100)
+			to_chat(src, span_userdanger("Your armor was penetrated!"))
+	else if(our_armor >= 100)
 		if(absorb_text)
-			to_chat(src, "<span class='userdanger'>[absorb_text]</span>")
+			to_chat(src, span_notice("[absorb_text]"))
 		else
-			to_chat(src, "<span class='userdanger'>Your armor absorbs the blow!</span>")
-	else if(armor > 0)
+			to_chat(src, span_notice("Your armor absorbs the blow!"))
+	else
 		if(soften_text)
-			to_chat(src, "<span class='userdanger'>[soften_text]</span>")
+			to_chat(src, span_warning("[soften_text]"))
 		else
-			to_chat(src, "<span class='userdanger'>Your armor softens the blow!</span>")
-	return armor
-
+			to_chat(src, span_warning("Your armor softens the blow!"))
+	return our_armor
 
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
@@ -31,163 +37,213 @@
 
 //this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
 /mob/living/proc/get_ear_protection()
+	var/turf/current_turf = get_turf(src)
+	var/datum/gas_mixture/environment = current_turf.return_air()
+	var/pressure = environment ? environment.return_pressure() : 0
+	if(pressure < SOUND_MINIMUM_PRESSURE) //space is empty
+		return 1
 	return 0
 
-/mob/living/proc/is_mouth_covered(head_only = 0, mask_only = 0)
-	return FALSE
+/**
+ * Checks if our mob has their mouth covered.
+ *
+ * Note that we only care about [ITEM_SLOT_HEAD] and [ITEM_SLOT_MASK].
+ *  (so if you check all slots, it'll return head, then mask)
+ *That is also the priority order
+ * Arguments
+ * * check_flags: What item slots should we check?
+ *
+ * Retuns a truthy value (a ref to what is covering mouth), or a falsy value (null)
+ */
+/mob/living/proc/is_mouth_covered(check_flags = ALL)
+	return null
 
-/mob/living/proc/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
-	return FALSE
+/**
+ * Checks if our mob has their eyes covered.
+ *
+ * Note that we only care about [ITEM_SLOT_HEAD], [ITEM_SLOT_MASK], and [ITEM_SLOT_GLASSES].
+ * That is also the priority order (so if you check all slots, it'll return head, then mask, then glasses)
+ *
+ * Arguments
+ * * check_flags: What item slots should we check?
+ *
+ * Retuns a truthy value (a ref to what is covering eyes), or a falsy value (null)
+ */
+/mob/living/proc/is_eyes_covered(check_flags = ALL)
+	return null
 
-/mob/living/proc/on_hit(obj/item/projectile/P)
-	return
+/**
+ * Checks if our mob is protected from pepper spray.
+ *
+ * Note that we only care about [ITEM_SLOT_HEAD] and [ITEM_SLOT_MASK].
+ * That is also the priority order (so if you check all slots, it'll return head, then mask)
+ *
+ * Arguments
+ * * check_flags: What item slots should we check?
+ *
+ * Retuns a truthy value (a ref to what is protecting us), or a falsy value (null)
+ */
+/mob/living/proc/is_pepper_proof(check_flags = ALL)
+	return null
 
-/mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
-	if(!P.nodamage)
-		apply_damage(P.damage, P.damage_type, def_zone, armor)
+/mob/living/proc/on_hit(obj/projectile/P)
+	return BULLET_ACT_HIT
+
+/mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+	. = ..()
+	if(!P.nodamage && (. != BULLET_ACT_BLOCK))
+		var/attack_direction = get_dir(P.starting, src)
+		// we need a second, silent armor check to actually know how much to reduce damage taken, as opposed to
+		// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
+		var/armor_check = check_projectile_armor(def_zone, P, is_silent = TRUE)
+		armor_check = min(ARMOR_MAX_BLOCK, armor_check) //cap damage reduction at 90%
+		apply_damage(P.damage, P.damage_type, def_zone, armor_check, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness, attack_direction = attack_direction)
+		apply_effects(P.stun, P.knockdown, P.unconscious, P.slur, P.stutter, P.eyeblur, P.drowsy, armor_check, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
-	return P.on_hit(src, armor)
+	return . ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
-/mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
+/mob/living/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
+	return run_armor_check(def_zone, impacting_projectile.armor_flag, "","",impacting_projectile.armour_penetration, "", is_silent, impacting_projectile.weak_against_armour)
+
+/mob/living/proc/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	return 0
 
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
 		if(throwforce && w_class)
-				return CLAMP((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
+				return clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
 		else if(w_class)
-				return CLAMP(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
+				return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
 		else
 				return 0
 
-/mob/living/proc/crit_modifier()
-	return HEALTH_THRESHOLD_CRIT
+/mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
+	if(combat_mode == new_mode)
+		return
+	. = combat_mode
+	combat_mode = new_mode
+	if(hud_used?.action_intent)
+		hud_used.action_intent.update_appearance()
+	if(silent || !(client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode)))
+		return
+	if(combat_mode)
+		SEND_SOUND(src, sound('sound/misc/ui_togglecombat.ogg', volume = 25)) //Sound from interbay!
+	else
+		SEND_SOUND(src, sound('sound/misc/ui_toggleoffcombat.ogg', volume = 25)) //Slightly modified version of the above
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(AM, /obj/item))
-		var/obj/item/I = AM
-		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-		var/dtype = BRUTE
-		var/volume = I.get_volume_by_throwforce_and_or_w_class()
-		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone)
-		dtype = I.damtype
+	if(isitem(AM))
+		var/obj/item/thrown_item = AM
+		var/zone = get_random_valid_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
+		var/nosell_hit = SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+		if(nosell_hit)
+			skipcatch = TRUE
+			hitpush = FALSE
 
-		if (I.throwforce > 0) //If the weapon's throwforce is greater than zero...
-			if (I.throwhitsound) //...and throwhitsound is defined...
-				playsound(loc, I.throwhitsound, volume, 1, -1) //...play the weapon's throwhitsound.
-			else if(I.hitsound) //Otherwise, if the weapon's hitsound is defined...
-				playsound(loc, I.hitsound, volume, 1, -1) //...play the weapon's hitsound.
-			else if(!I.throwhitsound) //Otherwise, if throwhitsound isn't defined...
-				playsound(loc, 'sound/weapons/genhit.ogg',volume, 1, -1) //...play genhit.ogg.
+		if(blocked)
+			return TRUE
 
-		else if(!I.throwhitsound && I.throwforce > 0) //Otherwise, if the item doesn't have a throwhitsound and has a throwforce greater than zero...
-			playsound(loc, 'sound/weapons/genhit.ogg', volume, 1, -1)//...play genhit.ogg
-		if(!I.throwforce)// Otherwise, if the item's throwforce is 0...
-			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
-		if(!blocked)
-			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
-							"<span class='userdanger'>[src] has been hit by [I].</span>")
-			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-			apply_damage(I.throwforce, dtype, zone, armor)
-			if(I.thrownby)
-				add_logs(I.thrownby, src, "threw and hit", I)
-		else
-			return 1
-	else
-		playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
-	..()
+		var/mob/thrown_by = thrown_item.thrownby?.resolve()
+		if(thrown_by)
+			log_combat(thrown_by, src, "threw and hit", thrown_item)
+		if(nosell_hit)
+			return ..()
+		visible_message(span_danger("[src] is hit by [thrown_item]!"), \
+						span_userdanger("You're hit by [thrown_item]!"))
+		if(!thrown_item.throwforce)
+			return
+		var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
+		apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
+		if(QDELETED(src)) //Damage can delete the mob.
+			return
+		if(body_position == LYING_DOWN) // physics says it's significantly harder to push someone by constantly chucking random furniture at them if they are down on the floor.
+			hitpush = FALSE
+		return ..()
 
-
-/mob/living/mech_melee_attack(obj/mecha/M)
-	if(M.occupant.a_intent == INTENT_HARM)
-		M.do_attack_animation(src)
-		if(M.damtype == "brute")
-			step_away(src,M,15)
-		switch(M.damtype)
-			if(BRUTE)
-				Unconscious(20)
-				take_overall_damage(rand(M.force/2, M.force))
-				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-			if(BURN)
-				take_overall_damage(0, rand(M.force/2, M.force))
-				playsound(src, 'sound/items/welder.ogg', 50, 1)
-			if(TOX)
-				M.mech_toxin_damage(src)
-			else
-				return
-		updatehealth()
-		visible_message("<span class='danger'>[M.name] has hit [src]!</span>", \
-						"<span class='userdanger'>[M.name] has hit [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-		add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
-	else
-		step_away(src,M)
-		add_logs(M.occupant, src, "pushed", M)
-		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>", null, null, 5)
+	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
+	return ..()
 
 /mob/living/fire_act()
 	adjust_fire_stacks(3)
-	IgniteMob()
+	ignite_mob()
 
-/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
+/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
 		return FALSE
 	if(!user.pulling || user.pulling != src)
-		user.start_pulling(src, supress_message)
+		user.start_pulling(src, supress_message = supress_message)
 		return
 
-	if(!(status_flags & CANPUSH) || has_trait(TRAIT_PUSHIMMUNE))
-		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
+	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
+		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
 		return FALSE
 
-	if(user.has_trait(TRAIT_PACIFISM))
-		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
+	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("You don't want to risk hurting [src]!"))
 		return FALSE
-
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
-/mob/living/proc/grippedby(mob/living/carbon/user)
-	if(user.grab_state < GRAB_KILL)
-		user.changeNext_move(CLICK_CD_GRABBING)
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+/mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
+	if(user.grab_state >= user.max_grab)
+		return
+	user.changeNext_move(CLICK_CD_GRABBING)
+	var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.grab_sound)
+			sound_to_play = H.dna.species.grab_sound
+	playsound(src.loc, sound_to_play, 50, TRUE, -1)
 
-		if(user.grab_state) //only the first upgrade is instantaneous
-			var/old_grab_state = user.grab_state
-			var/grab_upgrade_time = 30
-			visible_message("<span class='danger'>[user] starts to tighten [user.p_their()] grip on [src]!</span>", \
-				"<span class='userdanger'>[user] starts to tighten [user.p_their()] grip on you!</span>")
-			add_logs(user, src, "attempted to strangle", addition="grab")
-			if(!do_mob(user, src, grab_upgrade_time))
-				return 0
-			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != INTENT_GRAB)
-				return 0
-		user.grab_state++
+	if(user.grab_state) //only the first upgrade is instantaneous
+		var/old_grab_state = user.grab_state
+		var/grab_upgrade_time = instant ? 0 : 30
+		visible_message(span_danger("[user] starts to tighten [user.p_their()] grip on [src]!"), \
+						span_userdanger("[user] starts to tighten [user.p_their()] grip on you!"), span_hear("You hear aggressive shuffling!"), null, user)
+		to_chat(user, span_danger("You start to tighten your grip on [src]!"))
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
-				add_logs(user, src, "grabbed", addition="aggressive grab")
-				visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
-								"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
-				drop_all_held_items()
-				stop_pulling()
+				log_combat(user, src, "attempted to neck grab", addition="neck grab")
 			if(GRAB_NECK)
-				add_logs(user, src, "grabbed", addition="neck grab")
-				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
-								"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
-				update_canmove() //we fall down
-				if(!buckled && !density)
-					Move(user.loc)
-			if(GRAB_KILL)
-				add_logs(user, src, "strangled", addition="grab")
-				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
-								"<span class='userdanger'>[user] is strangling you!</span>")
-				update_canmove() //we fall down
-				if(!buckled && !density)
-					Move(user.loc)
-		return 1
+				log_combat(user, src, "attempted to strangle", addition="kill grab")
+		if(!do_mob(user, src, grab_upgrade_time))
+			return FALSE
+		if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state)
+			return FALSE
+	user.setGrabState(user.grab_state + 1)
+	switch(user.grab_state)
+		if(GRAB_AGGRESSIVE)
+			var/add_log = ""
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				visible_message(span_danger("[user] firmly grips [src]!"),
+								span_danger("[user] firmly grips you!"), span_hear("You hear aggressive shuffling!"), null, user)
+				to_chat(user, span_danger("You firmly grip [src]!"))
+				add_log = " (pacifist)"
+			else
+				visible_message(span_danger("[user] grabs [src] aggressively!"), \
+								span_userdanger("[user] grabs you aggressively!"), span_hear("You hear aggressive shuffling!"), null, user)
+				to_chat(user, span_danger("You grab [src] aggressively!"))
+			stop_pulling()
+			log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
+		if(GRAB_NECK)
+			log_combat(user, src, "grabbed", addition="neck grab")
+			visible_message(span_danger("[user] grabs [src] by the neck!"),\
+							span_userdanger("[user] grabs you by the neck!"), span_hear("You hear aggressive shuffling!"), null, user)
+			to_chat(user, span_danger("You grab [src] by the neck!"))
+			if(!buckled && !density)
+				Move(user.loc)
+		if(GRAB_KILL)
+			log_combat(user, src, "strangled", addition="kill grab")
+			visible_message(span_danger("[user] is strangling [src]!"), \
+							span_userdanger("[user] is strangling you!"), span_hear("You hear aggressive shuffling!"), null, user)
+			to_chat(user, span_danger("You're strangling [src]!"))
+			if(!buckled && !density)
+				Move(user.loc)
+	user.set_pull_offsets(src, grab_state)
+	return TRUE
 
 
-/mob/living/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
 	if(!SSticker.HasRoundStarted())
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
@@ -197,127 +253,162 @@
 			M.Feedstop()
 		return // can't attack while eating!
 
-	if(has_trait(TRAIT_PACIFISM))
-		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
+	if(HAS_TRAIT(src, TRAIT_PACIFISM))
+		to_chat(M, span_warning("You don't want to hurt anyone!"))
 		return FALSE
 
 	if (stat != DEAD)
-		add_logs(M, src, "attacked")
+		log_combat(M, src, "attacked")
 		M.do_attack_animation(src)
-		visible_message("<span class='danger'>The [M.name] glomps [src]!</span>", \
-				"<span class='userdanger'>The [M.name] glomps [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message(span_danger("\The [M.name] glomps [src]!"), \
+						span_userdanger("\The [M.name] glomps you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, M)
+		to_chat(M, span_danger("You glomp [src]!"))
 		return TRUE
 
-/mob/living/attack_animal(mob/living/simple_animal/M)
-	M.face_atom(src)
-	if(M.melee_damage_upper == 0)
-		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
+/mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	. = ..()
+	user.face_atom(src)
+	if(user.melee_damage_upper == 0)
+		if(user != src)
+			visible_message(span_notice("\The [user] [user.friendly_verb_continuous] [src]!"), \
+							span_notice("\The [user] [user.friendly_verb_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_notice("You [user.friendly_verb_simple] [src]!"))
 		return FALSE
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("You don't want to hurt anyone!"))
+		return FALSE
+
+	if(user.attack_sound)
+		playsound(loc, user.attack_sound, 50, TRUE, TRUE)
+	user.do_attack_animation(src)
+	visible_message(span_danger("\The [user] [user.attack_verb_continuous] [src]!"), \
+					span_userdanger("\The [user] [user.attack_verb_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger("You [user.attack_verb_simple] [src]!"))
+	log_combat(user, src, "attacked")
+	return TRUE
+
+/mob/living/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	. = ..()
+	var/martial_result = user.apply_martial_art(src, modifiers)
+	if (martial_result != MARTIAL_ATTACK_INVALID)
+		return martial_result
+
+/mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
+	if(isturf(loc) && istype(loc.loc, /area/misc/start))
+		to_chat(user, "No attacking people at spawn, you jackass.")
+		return FALSE
+
+	var/martial_result = user.apply_martial_art(src, modifiers)
+	if (martial_result != MARTIAL_ATTACK_INVALID)
+		return martial_result
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if (user != src && iscarbon(src))
+			user.disarm(src)
+			return TRUE
+	if (!user.combat_mode)
+		return FALSE
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("You don't want to hurt anyone!"))
+		return FALSE
+
+	if(user.is_muzzled() || user.is_mouth_covered(ITEM_SLOT_MASK))
+		to_chat(user, span_warning("You can't bite with your mouth covered!"))
+		return FALSE
+	user.do_attack_animation(src, ATTACK_EFFECT_BITE)
+	if (prob(75))
+		log_combat(user, src, "attacked")
+		playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+		visible_message(span_danger("[user.name] bites [src]!"), \
+						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger("You bite [src]!"))
+		return TRUE
 	else
-		if(M.has_trait(TRAIT_PACIFISM))
-			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
-			return FALSE
+		visible_message(span_danger("[user.name]'s bite misses [src]!"), \
+						span_danger("You avoid [user.name]'s bite!"), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_warning("Your bite misses [src]!"))
 
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
-						"<span class='userdanger'>\The [M] [M.attacktext] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-		add_logs(M, src, "attacked")
+	return FALSE
+
+/mob/living/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)
+	if(L.combat_mode)
+		if(HAS_TRAIT(L, TRAIT_PACIFISM))
+			to_chat(L, span_warning("You don't want to hurt anyone!"))
+			return
+
+		L.do_attack_animation(src)
+		if(prob(90))
+			log_combat(L, src, "attacked")
+			visible_message(span_danger("[L.name] bites [src]!"), \
+							span_userdanger("[L.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, L)
+			to_chat(L, span_danger("You bite [src]!"))
+			playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+			return TRUE
+		else
+			visible_message(span_danger("[L.name]'s bite misses [src]!"), \
+							span_danger("You avoid [L.name]'s bite!"), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, L)
+			to_chat(L, span_warning("Your bite misses [src]!"))
+	else
+		visible_message(span_notice("[L.name] rubs its head against [src]."), \
+						span_notice("[L.name] rubs its head against you."), null, null, L)
+		to_chat(L, span_notice("You rub your head against [src]."))
+		return FALSE
+	return FALSE
+
+/mob/living/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_ALIEN, user, modifiers)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		return TRUE
-
-
-/mob/living/attack_paw(mob/living/carbon/monkey/M)
-	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
+	if(user.combat_mode)
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			to_chat(user, span_warning("You don't want to hurt anyone!"))
+			return FALSE
+		user.do_attack_animation(src)
+		return TRUE
+	else
+		visible_message(span_notice("[user] caresses [src] with its scythe-like arm."), \
+						span_notice("[user] caresses you with its scythe-like arm."), null, null, user)
+		to_chat(user, span_notice("You caress [src] with your scythe-like arm."))
 		return FALSE
 
-	if (M.a_intent == INTENT_HARM)
-		if(M.has_trait(TRAIT_PACIFISM))
-			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
-			return FALSE
-
-		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
-			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
-			return FALSE
-		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-		if (prob(75))
-			add_logs(M, src, "attacked")
-			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-					"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-			return TRUE
-		else
-			visible_message("<span class='danger'>[M.name] has attempted to bite [src]!</span>", \
-				"<span class='userdanger'>[M.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return FALSE
-
-/mob/living/attack_larva(mob/living/carbon/alien/larva/L)
-	switch(L.a_intent)
-		if("help")
-			visible_message("<span class='notice'>[L.name] rubs its head against [src].</span>")
-			return FALSE
-
-		else
-			if(L.has_trait(TRAIT_PACIFISM))
-				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
-				return
-
-			L.do_attack_animation(src)
-			if(prob(90))
-				add_logs(L, src, "attacked")
-				visible_message("<span class='danger'>[L.name] bites [src]!</span>", \
-					"<span class='userdanger'>[L.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				return TRUE
-			else
-				visible_message("<span class='danger'>[L.name] has attempted to bite [src]!</span>", \
-					"<span class='userdanger'>[L.name] has attempted to bite [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	return FALSE
-
-/mob/living/attack_alien(mob/living/carbon/alien/humanoid/M)
-	switch(M.a_intent)
-		if ("help")
-			visible_message("<span class='notice'>[M] caresses [src] with its scythe like arm.</span>")
-			return FALSE
-		if ("grab")
-			grabbedby(M)
-			return FALSE
-		if("harm")
-			if(M.has_trait(TRAIT_PACIFISM))
-				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
-				return FALSE
-			M.do_attack_animation(src)
-			return TRUE
-		if("disarm")
-			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			return TRUE
+/mob/living/attack_hulk(mob/living/carbon/human/user)
+	..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, span_warning("You don't want to hurt [src]!"))
+		return FALSE
+	return TRUE
 
 /mob/living/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
-		return
-	..()
-
-//Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
+		return FALSE
+	return ..()
 
 /mob/living/acid_act(acidpwr, acid_volume)
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
-	return 1
+	return TRUE
 
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
+///As the name suggests, this should be called to apply electric shocks.
+/mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, flags)
+	shock_damage *= siemens_coeff
+	if((flags & SHOCK_TESLA) && HAS_TRAIT(src, TRAIT_TESLA_SHOCKIMMUNE))
 		return FALSE
-	if(has_trait(TRAIT_SHOCKIMMUNE))
+	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
-	if(shock_damage > 0)
-		if(!illusion)
-			adjustFireLoss(shock_damage)
+	if(shock_damage < 1)
+		return FALSE
+	if(!(flags & SHOCK_ILLUSION))
+		adjustFireLoss(shock_damage)
+	else
+		adjustStaminaLoss(shock_damage)
+	if(!(flags & SHOCK_SUPPRESS_MESSAGE))
 		visible_message(
-			"<span class='danger'>[src] was shocked by \the [source]!</span>", \
-			"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-			"<span class='italics'>You hear a heavy electrical crack.</span>" \
+			span_danger("[src] was shocked by \the [source]!"), \
+			span_userdanger("You feel a powerful shock coursing through your body!"), \
+			span_hear("You hear a heavy electrical crack.") \
 		)
-		return shock_damage
+	return shock_damage
 
 /mob/living/emp_act(severity)
 	. = ..()
@@ -326,66 +417,65 @@
 	for(var/obj/O in contents)
 		O.emp_act(severity)
 
+///Logs, gibs and returns point values of whatever mob is unfortunate enough to get eaten.
 /mob/living/singularity_act()
-	var/gain = 20
-	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
+	investigate_log("has been consumed by the singularity.", INVESTIGATE_ENGINE) //Oh that's where the clown ended up!
+	investigate_log("has been gibbed by the singularity.", INVESTIGATE_DEATHS)
 	gib()
-	return(gain)
+	return 20
 
 /mob/living/narsie_act()
-	if(status_flags & GODMODE)
+	if(status_flags & GODMODE || QDELETED(src))
 		return
 
-	if(is_servant_of_ratvar(src) && !stat)
-		to_chat(src, "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>")
-		adjustBruteLoss(35)
-		if(src && reagents)
-			reagents.add_reagent("heparin", 5)
-		return FALSE
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
 		GLOB.cult_narsie.souls_needed -= src
 		GLOB.cult_narsie.souls += 1
 		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))
 			GLOB.cult_narsie.resolved = TRUE
 			sound_to_playing_players('sound/machines/alarm.ogg')
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 1), 120)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 270)
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_VICTORY_MASS_CONVERSION), 120)
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)), 270)
 	if(client)
 		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
 	else
-		switch(rand(1, 6))
+		switch(rand(1, 4))
 			if(1)
-				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
+				new /mob/living/simple_animal/hostile/construct/juggernaut/hostile(get_turf(src))
 			if(2)
 				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
-			if(3 to 6)
-				new /mob/living/simple_animal/hostile/construct/builder/hostile(get_turf(src))
+			if(3)
+				new /mob/living/simple_animal/hostile/construct/artificer/hostile(get_turf(src))
+			if(4)
+				new /mob/living/simple_animal/hostile/construct/proteon/hostile(get_turf(src))
 	spawn_dust()
+	investigate_log("has been gibbed by Nar'Sie.", INVESTIGATE_DEATHS)
 	gib()
 	return TRUE
 
-
-/mob/living/ratvar_act()
-	if(status_flags & GODMODE)
-		return
-	if(stat != DEAD && !is_servant_of_ratvar(src))
-		to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
-		adjust_fire_stacks(20)
-		IgniteMob()
+//called when the mob receives a bright flash
+/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 2.5 SECONDS)
+	if(HAS_TRAIT(src, TRAIT_NOFLASH))
+		return FALSE
+	if(get_eye_protection() >= intensity)
+		return FALSE
+	if(is_blind() && !(override_blindness_check || affect_silicon))
 		return FALSE
 
+	// this forces any kind of flash (namely normal and static) to use a black screen for photosensitive players
+	// it absolutely isn't an ideal solution since sudden flashes to black can apparently still trigger epilepsy, but byond apparently doesn't let you freeze screens
+	// and this is apparently at least less likely to trigger issues than a full white/static flash
+	if(client?.prefs?.read_preference(/datum/preference/toggle/darkened_flash))
+		type = /atom/movable/screen/fullscreen/flash/black
 
-//called when the mob receives a bright flash
-/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
-	if(get_eye_protection() < intensity && (override_blindness_check || !(has_trait(TRAIT_BLIND))))
-		overlay_fullscreen("flash", type)
-		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
-		return TRUE
-	return FALSE
+	overlay_fullscreen("flash", type)
+	addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", length), length)
+	SEND_SIGNAL(src, COMSIG_MOB_FLASHED, intensity, override_blindness_check, affect_silicon, visual, type, length)
+	return TRUE
 
 //called when the mob receives a loud bang
 /mob/living/proc/soundbang_act()
-	return 0
+	return FALSE
 
 //to damage the clothes worn by a mob
 /mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
@@ -396,4 +486,42 @@
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+
+/**
+ * Does a slap animation on an atom
+ *
+ * Uses do_attack_animation to animate the attacker attacking
+ * then draws a hand moving across the top half of the target(where a mobs head would usually be) to look like a slap
+ * Arguments:
+ * * atom/A - atom being slapped
+ */
+/mob/living/proc/do_slap_animation(atom/slapped)
+	do_attack_animation(slapped, no_effect=TRUE)
+	var/image/gloveimg = image('icons/effects/effects.dmi', slapped, "slapglove", slapped.layer + 0.1)
+	gloveimg.pixel_y = 10 // should line up with head
+	gloveimg.pixel_x = 10
+	flick_overlay_global(gloveimg, GLOB.clients, 10)
+
+	// And animate the attack!
+	animate(gloveimg, alpha = 175, transform = matrix() * 0.75, pixel_x = 0, pixel_y = 10, pixel_z = 0, time = 3)
+	animate(time = 1)
+	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
+
+/** Handles exposing a mob to reagents.
+ *
+ * If the methods include INGEST the mob tastes the reagents.
+ * If the methods include VAPOR it incorporates permiability protection.
+ */
+/mob/living/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
+	. = ..()
+	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	if(methods & INGEST)
+		taste(source)
+
+	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
+	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
+	for(var/reagent in reagents)
+		var/datum/reagent/R = reagent
+		. |= R.expose_mob(src, methods, reagents[R], show_message, touch_protection)

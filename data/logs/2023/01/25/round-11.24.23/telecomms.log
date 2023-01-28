@@ -1,0 +1,462 @@
+[2023-01-25 10:24:23.155] Starting up round ID .
+ - -------------------------
+[2023-01-25 10:24:46.750] TCOMMS: create_network_simple:  created final CARGO.BOTS
+[2023-01-25 10:24:46.750] TCOMMS: The device {7a2fa536} is jumping networks from 'CARGO.BOTS' to 'CARGO.BOTS'
+[2023-01-25 10:24:46.751] TCOMMS: The device {7a2fa536} is trying to leave a 'CARGO.BOTS'' when its on 'CARGO.BOTS'
+[2023-01-25 10:24:48.436] TCOMMS: Created the assistant PDA([0x2000beb] in nullspace, assuming network to be in station
+[2023-01-25 10:24:48.436] TCOMMS: create_network_simple:  created final SS13.COMPUTER.TABLETS
+[2023-01-25 10:24:48.436] TCOMMS: The device {92c19cae} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:48.437] TCOMMS: The device {92c19cae} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:48.607] TCOMMS: Created the clown PDA([0x2000beb] in nullspace, assuming network to be in station
+[2023-01-25 10:24:48.607] TCOMMS: The device {2d23b2bb} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:48.607] TCOMMS: The device {2d23b2bb} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:48.768] TCOMMS: Created the mime PDA([0x2000bdf] in nullspace, assuming network to be in station
+[2023-01-25 10:24:48.768] TCOMMS: The device {8d568eef} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:48.768] TCOMMS: The device {8d568eef} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:50.273] TCOMMS: create_network_simple:  created final CENTCOM.COMPUTER.TABLETS
+[2023-01-25 10:24:50.273] TCOMMS: The device {6a1dd437} is jumping networks from 'CENTCOM.COMPUTER.TABLETS' to 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:50.273] TCOMMS: The device {6a1dd437} is trying to leave a 'CENTCOM.COMPUTER.TABLETS'' when its on 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:50.538] TCOMMS: The device {08dbffe4} is jumping networks from 'CENTCOM.COMPUTER.TABLETS' to 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:50.538] TCOMMS: The device {08dbffe4} is trying to leave a 'CENTCOM.COMPUTER.TABLETS'' when its on 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:50.803] TCOMMS: The device {8bf3b2cc} is jumping networks from 'CENTCOM.COMPUTER.TABLETS' to 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:50.803] TCOMMS: The device {8bf3b2cc} is trying to leave a 'CENTCOM.COMPUTER.TABLETS'' when its on 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:51.021] TCOMMS: The device {9273a5f8} is jumping networks from 'CENTCOM.COMPUTER.TABLETS' to 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:51.021] TCOMMS: The device {9273a5f8} is trying to leave a 'CENTCOM.COMPUTER.TABLETS'' when its on 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:51.261] TCOMMS: The device {6aa75a30} is jumping networks from 'CENTCOM.COMPUTER.TABLETS' to 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:51.261] TCOMMS: The device {6aa75a30} is trying to leave a 'CENTCOM.COMPUTER.TABLETS'' when its on 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:51.280] TCOMMS: The device {6d4fcaf9} is jumping networks from 'CENTCOM.COMPUTER.TABLETS' to 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:51.280] TCOMMS: The device {6d4fcaf9} is trying to leave a 'CENTCOM.COMPUTER.TABLETS'' when its on 'CENTCOM.COMPUTER.TABLETS'
+[2023-01-25 10:24:52.292] TCOMMS: The device {c6543bd1} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:52.292] TCOMMS: The device {c6543bd1} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:53.239] TCOMMS: The device {498eef33} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:53.239] TCOMMS: The device {498eef33} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:54.611] TCOMMS: The device {7b911696} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:54.612] TCOMMS: The device {7b911696} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:54.631] TCOMMS: The device {31291511} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:54.631] TCOMMS: The device {31291511} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:54.708] TCOMMS: The device {05e4fedb} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:54.708] TCOMMS: The device {05e4fedb} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.458] TCOMMS: The device {9de648b0} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.458] TCOMMS: The device {9de648b0} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.695] TCOMMS: The device {6a32dc80} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.695] TCOMMS: The device {6a32dc80} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.884] TCOMMS: The device {81f8981a} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.884] TCOMMS: The device {81f8981a} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.886] TCOMMS: The device {8f0d6541} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.886] TCOMMS: The device {8f0d6541} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.887] TCOMMS: The device {97c3ce6d} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.887] TCOMMS: The device {97c3ce6d} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.888] TCOMMS: The device {6f25ab1e} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:55.888] TCOMMS: The device {6f25ab1e} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:56.119] TCOMMS: The device {b705b720} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:56.119] TCOMMS: The device {b705b720} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:56.695] TCOMMS: The device {dbe91d8a} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:56.695] TCOMMS: The device {dbe91d8a} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:56.870] TCOMMS: The device {e114c26f} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:56.870] TCOMMS: The device {e114c26f} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:56.972] TCOMMS: The device {e214943b} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:56.972] TCOMMS: The device {e214943b} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:58.062] TCOMMS: The device {3732c279} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:58.062] TCOMMS: The device {3732c279} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:58.119] TCOMMS: The device {d9b85b7a} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:58.119] TCOMMS: The device {d9b85b7a} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:59.077] TCOMMS: The device {d4667f0a} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:59.077] TCOMMS: The device {d4667f0a} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:59.194] TCOMMS: The device {516f3a3b} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:59.194] TCOMMS: The device {516f3a3b} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:59.813] TCOMMS: The device {8db48588} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:59.813] TCOMMS: The device {8db48588} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:59.867] TCOMMS: The device {31f2d873} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:59.867] TCOMMS: The device {31f2d873} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:59.968] TCOMMS: The device {10287ec2} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:24:59.968] TCOMMS: The device {10287ec2} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:00.766] TCOMMS: The device {f7b53dfb} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:00.766] TCOMMS: The device {f7b53dfb} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:02.311] TCOMMS: The device {0a514543} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:02.311] TCOMMS: The device {0a514543} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:02.387] TCOMMS: The device {d4ab5d1e} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:02.388] TCOMMS: The device {d4ab5d1e} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:02.437] TCOMMS: The device {914a2689} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:02.437] TCOMMS: The device {914a2689} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:02.918] TCOMMS: The device {eac6445c} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:02.918] TCOMMS: The device {eac6445c} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:03.033] TCOMMS: The device {f1ca20b8} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:03.033] TCOMMS: The device {f1ca20b8} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:03.098] TCOMMS: The device {e8b1980f} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:03.098] TCOMMS: The device {e8b1980f} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:05.820] TCOMMS: create_network_simple:  created final BLOODDRUNK.COMPUTER.TABLETS
+[2023-01-25 10:25:05.820] TCOMMS: The device {3e695841} is jumping networks from 'BLOODDRUNK.COMPUTER.TABLETS' to 'BLOODDRUNK.COMPUTER.TABLETS'
+[2023-01-25 10:25:05.820] TCOMMS: The device {3e695841} is trying to leave a 'BLOODDRUNK.COMPUTER.TABLETS'' when its on 'BLOODDRUNK.COMPUTER.TABLETS'
+[2023-01-25 10:25:06.988] TCOMMS: create_network_simple:  created final HELLFACTORY.COMPUTER.TABLETS
+[2023-01-25 10:25:06.988] TCOMMS: The device {bb16dcaf} is jumping networks from 'HELLFACTORY.COMPUTER.TABLETS' to 'HELLFACTORY.COMPUTER.TABLETS'
+[2023-01-25 10:25:06.988] TCOMMS: The device {bb16dcaf} is trying to leave a 'HELLFACTORY.COMPUTER.TABLETS'' when its on 'HELLFACTORY.COMPUTER.TABLETS'
+[2023-01-25 10:25:07.160] TCOMMS: create_network_simple:  created final ASTEROID5.COMPUTER.TABLETS
+[2023-01-25 10:25:07.160] TCOMMS: The device {54a793ec} is jumping networks from 'ASTEROID5.COMPUTER.TABLETS' to 'ASTEROID5.COMPUTER.TABLETS'
+[2023-01-25 10:25:07.160] TCOMMS: The device {54a793ec} is trying to leave a 'ASTEROID5.COMPUTER.TABLETS'' when its on 'ASTEROID5.COMPUTER.TABLETS'
+[2023-01-25 10:25:07.222] TCOMMS: The device {7c69fa1f} is jumping networks from 'ASTEROID5.COMPUTER.TABLETS' to 'ASTEROID5.COMPUTER.TABLETS'
+[2023-01-25 10:25:07.222] TCOMMS: The device {7c69fa1f} is trying to leave a 'ASTEROID5.COMPUTER.TABLETS'' when its on 'ASTEROID5.COMPUTER.TABLETS'
+[2023-01-25 10:25:07.256] TCOMMS: The device {5ce2f6cd} is jumping networks from 'ASTEROID5.COMPUTER.TABLETS' to 'ASTEROID5.COMPUTER.TABLETS'
+[2023-01-25 10:25:07.256] TCOMMS: The device {5ce2f6cd} is trying to leave a 'ASTEROID5.COMPUTER.TABLETS'' when its on 'ASTEROID5.COMPUTER.TABLETS'
+[2023-01-25 10:25:07.291] TCOMMS: The device {18f1b577} is jumping networks from 'ASTEROID5.COMPUTER.TABLETS' to 'ASTEROID5.COMPUTER.TABLETS'
+[2023-01-25 10:25:07.291] TCOMMS: The device {18f1b577} is trying to leave a 'ASTEROID5.COMPUTER.TABLETS'' when its on 'ASTEROID5.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.233] TCOMMS: Created the nuclear pda([0x200ed71] in nullspace, assuming network to be in station
+[2023-01-25 10:25:08.233] TCOMMS: The device {78f2a807} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.233] TCOMMS: The device {78f2a807} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.258] TCOMMS: Created the shaft miner PDA([0x200ede3] in nullspace, assuming network to be in station
+[2023-01-25 10:25:08.258] TCOMMS: The device {9802a459} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.258] TCOMMS: The device {9802a459} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.263] TCOMMS: Created the assistant PDA([0x200ee07] in nullspace, assuming network to be in station
+[2023-01-25 10:25:08.263] TCOMMS: The device {ae082d72} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.263] TCOMMS: The device {ae082d72} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.267] TCOMMS: Created the assistant PDA([0x200ee1b] in nullspace, assuming network to be in station
+[2023-01-25 10:25:08.267] TCOMMS: The device {c95a579f} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.267] TCOMMS: The device {c95a579f} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.271] TCOMMS: Created the assistant PDA([0x200ee25] in nullspace, assuming network to be in station
+[2023-01-25 10:25:08.271] TCOMMS: The device {9948d95a} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.271] TCOMMS: The device {9948d95a} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.276] TCOMMS: Created the assistant PDA([0x200ee40] in nullspace, assuming network to be in station
+[2023-01-25 10:25:08.276] TCOMMS: The device {c5386dd0} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.276] TCOMMS: The device {c5386dd0} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.279] TCOMMS: Created the assistant PDA([0x200ee4c] in nullspace, assuming network to be in station
+[2023-01-25 10:25:08.279] TCOMMS: The device {d851efec} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.279] TCOMMS: The device {d851efec} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.284] TCOMMS: Created the assistant PDA([0x200ee5b] in nullspace, assuming network to be in station
+[2023-01-25 10:25:08.284] TCOMMS: The device {f1ce40e8} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:08.284] TCOMMS: The device {f1ce40e8} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:33.311] TCOMMS: Created the ntnet receiver component([0x200ee59] in nullspace, assuming network to be in station
+[2023-01-25 10:25:33.311] TCOMMS: create_network_simple:  created final SS13.CIRCUITS
+[2023-01-25 10:25:33.311] TCOMMS: The device {bf00140f} is jumping networks from 'SS13.CIRCUITS' to 'SS13.CIRCUITS'
+[2023-01-25 10:25:33.311] TCOMMS: The device {bf00140f} is trying to leave a 'SS13.CIRCUITS'' when its on 'SS13.CIRCUITS'
+[2023-01-25 10:25:33.312] TCOMMS: Created the ntnet transmitter component([0x200ee57] in nullspace, assuming network to be in station
+[2023-01-25 10:25:33.312] TCOMMS: The device {0008d280} is jumping networks from 'SS13.CIRCUITS' to 'SS13.CIRCUITS'
+[2023-01-25 10:25:33.312] TCOMMS: The device {0008d280} is trying to leave a 'SS13.CIRCUITS'' when its on 'SS13.CIRCUITS'
+[2023-01-25 10:25:46.278] TCOMMS: create_network_simple:  created final WHITESHIP_TRAM.COMPUTER.TABLETS
+[2023-01-25 10:25:46.278] TCOMMS: The device {0a752836} is jumping networks from 'WHITESHIP_TRAM.COMPUTER.TABLETS' to 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:46.278] TCOMMS: The device {0a752836} is trying to leave a 'WHITESHIP_TRAM.COMPUTER.TABLETS'' when its on 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:46.533] TCOMMS: The device {ed3ffc0e} is jumping networks from 'WHITESHIP_TRAM.COMPUTER.TABLETS' to 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:46.533] TCOMMS: The device {ed3ffc0e} is trying to leave a 'WHITESHIP_TRAM.COMPUTER.TABLETS'' when its on 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:46.618] TCOMMS: The device {b0d7a1ca} is jumping networks from 'WHITESHIP_TRAM.COMPUTER.TABLETS' to 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:46.618] TCOMMS: The device {b0d7a1ca} is trying to leave a 'WHITESHIP_TRAM.COMPUTER.TABLETS'' when its on 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:46.698] TCOMMS: The device {e90e5e63} is jumping networks from 'WHITESHIP_TRAM.COMPUTER.TABLETS' to 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:46.698] TCOMMS: The device {e90e5e63} is trying to leave a 'WHITESHIP_TRAM.COMPUTER.TABLETS'' when its on 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:46.746] TCOMMS: The device {379c999c} is jumping networks from 'WHITESHIP_TRAM.COMPUTER.TABLETS' to 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:46.746] TCOMMS: The device {379c999c} is trying to leave a 'WHITESHIP_TRAM.COMPUTER.TABLETS'' when its on 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:46.773] TCOMMS: The device {ac8c89f1} is jumping networks from 'WHITESHIP_TRAM.COMPUTER.TABLETS' to 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:46.773] TCOMMS: The device {ac8c89f1} is trying to leave a 'WHITESHIP_TRAM.COMPUTER.TABLETS'' when its on 'WHITESHIP_TRAM.COMPUTER.TABLETS'
+[2023-01-25 10:25:50.826] TCOMMS: Created the pda([0x20108bb] in nullspace, assuming network to be in station
+[2023-01-25 10:25:50.826] TCOMMS: The device {237f3e56} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:50.826] TCOMMS: The device {237f3e56} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:50.875] TCOMMS: Created the pda([0x2010e71] in nullspace, assuming network to be in station
+[2023-01-25 10:25:50.876] TCOMMS: The device {f3c44d45} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:50.876] TCOMMS: The device {f3c44d45} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.109] TCOMMS: Created the assistant PDA([0x20111b8] in nullspace, assuming network to be in station
+[2023-01-25 10:25:53.109] TCOMMS: The device {0c73cae2} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.109] TCOMMS: The device {0c73cae2} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.111] TCOMMS: Created the assistant PDA([0x20111bb] in nullspace, assuming network to be in station
+[2023-01-25 10:25:53.111] TCOMMS: The device {bf0e3815} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.111] TCOMMS: The device {bf0e3815} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.112] TCOMMS: Created the assistant PDA([0x20111be] in nullspace, assuming network to be in station
+[2023-01-25 10:25:53.112] TCOMMS: The device {4ce3d42d} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.112] TCOMMS: The device {4ce3d42d} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.224] TCOMMS: Created the assistant PDA([0x20111c1] in nullspace, assuming network to be in station
+[2023-01-25 10:25:53.224] TCOMMS: The device {236d276e} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.224] TCOMMS: The device {236d276e} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.367] TCOMMS: Created the atmospherics PDA([0x2011204] in nullspace, assuming network to be in station
+[2023-01-25 10:25:53.367] TCOMMS: The device {53afbe70} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.367] TCOMMS: The device {53afbe70} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.415] TCOMMS: Created the atmospherics PDA([0x2011207] in nullspace, assuming network to be in station
+[2023-01-25 10:25:53.415] TCOMMS: The device {9b3bf5f4} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.415] TCOMMS: The device {9b3bf5f4} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.416] TCOMMS: Created the atmospherics PDA([0x201120a] in nullspace, assuming network to be in station
+[2023-01-25 10:25:53.416] TCOMMS: The device {f49b5115} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.416] TCOMMS: The device {f49b5115} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.418] TCOMMS: Created the atmospherics PDA([0x201120d] in nullspace, assuming network to be in station
+[2023-01-25 10:25:53.418] TCOMMS: The device {a1cd514f} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.418] TCOMMS: The device {a1cd514f} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.979] TCOMMS: Created the bartender PDA([0x2011334] in nullspace, assuming network to be in station
+[2023-01-25 10:25:53.979] TCOMMS: The device {28471b07} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:53.979] TCOMMS: The device {28471b07} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.083] TCOMMS: Created the bartender PDA([0x2011337] in nullspace, assuming network to be in station
+[2023-01-25 10:25:54.083] TCOMMS: The device {ec6a9665} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.083] TCOMMS: The device {ec6a9665} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.221] TCOMMS: Created the botanist PDA([0x2011378] in nullspace, assuming network to be in station
+[2023-01-25 10:25:54.221] TCOMMS: The device {1b4ef2d9} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.221] TCOMMS: The device {1b4ef2d9} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.454] TCOMMS: Created the botanist PDA([0x201137b] in nullspace, assuming network to be in station
+[2023-01-25 10:25:54.454] TCOMMS: The device {149ff759} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.454] TCOMMS: The device {149ff759} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.487] TCOMMS: Created the captain PDA([0x201139e] in nullspace, assuming network to be in station
+[2023-01-25 10:25:54.487] TCOMMS: The device {d243fc71} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.487] TCOMMS: The device {d243fc71} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.627] TCOMMS: Created the captain PDA([0x20113a1] in nullspace, assuming network to be in station
+[2023-01-25 10:25:54.627] TCOMMS: The device {5ca37243} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.627] TCOMMS: The device {5ca37243} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.629] TCOMMS: Created the captain PDA([0x20113a4] in nullspace, assuming network to be in station
+[2023-01-25 10:25:54.629] TCOMMS: The device {608c32b8} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.630] TCOMMS: The device {608c32b8} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.631] TCOMMS: Created the captain PDA([0x20113a7] in nullspace, assuming network to be in station
+[2023-01-25 10:25:54.631] TCOMMS: The device {7c738898} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:25:54.631] TCOMMS: The device {7c738898} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:10.841] TCOMMS: Created the cargo technician PDA([0x2011482] in nullspace, assuming network to be in station
+[2023-01-25 10:26:10.841] TCOMMS: The device {4f5d8647} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:10.841] TCOMMS: The device {4f5d8647} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:10.844] TCOMMS: Created the cargo technician PDA([0x2011485] in nullspace, assuming network to be in station
+[2023-01-25 10:26:10.845] TCOMMS: The device {4953e9eb} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:10.845] TCOMMS: The device {4953e9eb} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:10.846] TCOMMS: Created the cargo technician PDA([0x2011488] in nullspace, assuming network to be in station
+[2023-01-25 10:26:10.846] TCOMMS: The device {7b29ecb0} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:10.846] TCOMMS: The device {7b29ecb0} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:10.848] TCOMMS: Created the cargo technician PDA([0x201148b] in nullspace, assuming network to be in station
+[2023-01-25 10:26:10.848] TCOMMS: The device {8dc4d1b6} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:10.848] TCOMMS: The device {8dc4d1b6} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:10.971] TCOMMS: Created the chaplain PDA([0x20114c6] in nullspace, assuming network to be in station
+[2023-01-25 10:26:10.971] TCOMMS: The device {265d9e03} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:10.971] TCOMMS: The device {265d9e03} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:11.013] TCOMMS: Created the chaplain PDA([0x20114c9] in nullspace, assuming network to be in station
+[2023-01-25 10:26:11.013] TCOMMS: The device {17bd98f1} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:11.013] TCOMMS: The device {17bd98f1} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:11.061] TCOMMS: Created the chemist PDA([0x20114e8] in nullspace, assuming network to be in station
+[2023-01-25 10:26:11.061] TCOMMS: The device {208ac301} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:11.061] TCOMMS: The device {208ac301} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:11.063] TCOMMS: Created the chemist PDA([0x20114eb] in nullspace, assuming network to be in station
+[2023-01-25 10:26:11.063] TCOMMS: The device {18565a7e} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:11.063] TCOMMS: The device {18565a7e} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.254] TCOMMS: Created the chief engineer PDA([0x20115e2] in nullspace, assuming network to be in station
+[2023-01-25 10:26:12.254] TCOMMS: The device {ac0d7dee} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.254] TCOMMS: The device {ac0d7dee} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.311] TCOMMS: Created the chief engineer PDA([0x20115e5] in nullspace, assuming network to be in station
+[2023-01-25 10:26:12.311] TCOMMS: The device {75810f02} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.311] TCOMMS: The device {75810f02} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.349] TCOMMS: Created the chief engineer PDA([0x20115e8] in nullspace, assuming network to be in station
+[2023-01-25 10:26:12.349] TCOMMS: The device {b1cf3326} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.349] TCOMMS: The device {b1cf3326} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.352] TCOMMS: Created the chief engineer PDA([0x20115eb] in nullspace, assuming network to be in station
+[2023-01-25 10:26:12.352] TCOMMS: The device {f33f6a5e} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.352] TCOMMS: The device {f33f6a5e} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.489] TCOMMS: Created the chief medical officer PDA([0x2011638] in nullspace, assuming network to be in station
+[2023-01-25 10:26:12.489] TCOMMS: The device {c4f4617a} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.489] TCOMMS: The device {c4f4617a} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.605] TCOMMS: Created the chief medical officer PDA([0x201163b] in nullspace, assuming network to be in station
+[2023-01-25 10:26:12.606] TCOMMS: The device {75f60549} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.606] TCOMMS: The device {75f60549} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.609] TCOMMS: Created the chief medical officer PDA([0x201163e] in nullspace, assuming network to be in station
+[2023-01-25 10:26:12.609] TCOMMS: The device {9425c891} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.609] TCOMMS: The device {9425c891} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.669] TCOMMS: Created the chief medical officer PDA([0x2011641] in nullspace, assuming network to be in station
+[2023-01-25 10:26:12.669] TCOMMS: The device {92d342f8} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:12.669] TCOMMS: The device {92d342f8} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.138] TCOMMS: Created the clown PDA([0x201176e] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.138] TCOMMS: The device {e1f24658} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.139] TCOMMS: The device {e1f24658} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.140] TCOMMS: Created the clown PDA([0x2011772] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.140] TCOMMS: The device {b999caf9} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.140] TCOMMS: The device {b999caf9} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.239] TCOMMS: Created the clown PDA([0x2011776] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.239] TCOMMS: The device {0e676358} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.239] TCOMMS: The device {0e676358} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.241] TCOMMS: Created the clown PDA([0x201177a] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.241] TCOMMS: The device {239303f3} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.241] TCOMMS: The device {239303f3} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.482] TCOMMS: Created the cook PDA([0x20117f2] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.482] TCOMMS: The device {8e517150} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.482] TCOMMS: The device {8e517150} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.535] TCOMMS: Created the cook PDA([0x20117f5] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.535] TCOMMS: The device {d91e8041} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.535] TCOMMS: The device {d91e8041} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.576] TCOMMS: Created the curator PDA([0x201180a] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.577] TCOMMS: The device {c8417415} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.577] TCOMMS: The device {c8417415} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.579] TCOMMS: Created the curator PDA([0x201180e] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.579] TCOMMS: The device {eb1f4558} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.579] TCOMMS: The device {eb1f4558} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.691] TCOMMS: Created the detective PDA([0x2011830] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.692] TCOMMS: The device {6a2babf5} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.692] TCOMMS: The device {6a2babf5} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.749] TCOMMS: Created the detective PDA([0x2011833] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.749] TCOMMS: The device {dd0ec2c2} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.749] TCOMMS: The device {dd0ec2c2} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.941] TCOMMS: Created the geneticist PDA([0x2011864] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.941] TCOMMS: The device {aaef5a9d} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.941] TCOMMS: The device {aaef5a9d} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.998] TCOMMS: Created the geneticist PDA([0x2011867] in nullspace, assuming network to be in station
+[2023-01-25 10:26:13.999] TCOMMS: The device {59e2ebcb} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:13.999] TCOMMS: The device {59e2ebcb} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.077] TCOMMS: Created the head of personnel PDA([0x2011898] in nullspace, assuming network to be in station
+[2023-01-25 10:26:14.077] TCOMMS: The device {d14aaf07} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.077] TCOMMS: The device {d14aaf07} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.185] TCOMMS: Created the head of personnel PDA([0x201189b] in nullspace, assuming network to be in station
+[2023-01-25 10:26:14.186] TCOMMS: The device {241597b0} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.186] TCOMMS: The device {241597b0} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.315] TCOMMS: Created the head of security PDA([0x20118ba] in nullspace, assuming network to be in station
+[2023-01-25 10:26:14.315] TCOMMS: The device {bfd2bae5} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.315] TCOMMS: The device {bfd2bae5} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.368] TCOMMS: Created the head of security PDA([0x20118bd] in nullspace, assuming network to be in station
+[2023-01-25 10:26:14.368] TCOMMS: The device {bcf70371} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.368] TCOMMS: The device {bcf70371} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.370] TCOMMS: Created the head of security PDA([0x20118c0] in nullspace, assuming network to be in station
+[2023-01-25 10:26:14.370] TCOMMS: The device {a16d5bfa} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.370] TCOMMS: The device {a16d5bfa} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.402] TCOMMS: Created the head of security PDA([0x20118c3] in nullspace, assuming network to be in station
+[2023-01-25 10:26:14.402] TCOMMS: The device {9f082f2d} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.403] TCOMMS: The device {9f082f2d} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.950] TCOMMS: Created the janitor PDA([0x20119da] in nullspace, assuming network to be in station
+[2023-01-25 10:26:14.950] TCOMMS: The device {ded7a5ab} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:14.950] TCOMMS: The device {ded7a5ab} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.005] TCOMMS: Created the janitor PDA([0x20119dd] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.005] TCOMMS: The device {441c6e3f} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.005] TCOMMS: The device {441c6e3f} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.042] TCOMMS: Created the lawyer PDA([0x20119e6] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.042] TCOMMS: The device {cba492b3} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.042] TCOMMS: The device {cba492b3} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.044] TCOMMS: Created the lawyer PDA([0x20119e9] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.044] TCOMMS: The device {a4f3e725} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.044] TCOMMS: The device {a4f3e725} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.117] TCOMMS: Created the medical PDA([0x2011a1a] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.117] TCOMMS: The device {dd904f36} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.117] TCOMMS: The device {dd904f36} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.156] TCOMMS: Created the medical PDA([0x2011a1d] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.156] TCOMMS: The device {0303dbc2} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.156] TCOMMS: The device {0303dbc2} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.158] TCOMMS: Created the medical PDA([0x2011a20] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.158] TCOMMS: The device {8143efcd} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.158] TCOMMS: The device {8143efcd} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.159] TCOMMS: Created the medical PDA([0x2011a23] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.160] TCOMMS: The device {cc58195c} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.160] TCOMMS: The device {cc58195c} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.161] TCOMMS: Created the medical PDA([0x2011a26] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.161] TCOMMS: The device {671c72c1} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.161] TCOMMS: The device {671c72c1} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.162] TCOMMS: Created the medical PDA([0x2011a29] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.162] TCOMMS: The device {18baf9be} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.162] TCOMMS: The device {18baf9be} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.546] TCOMMS: Created the mime PDA([0x2011a54] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.546] TCOMMS: The device {c3ddc62e} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.546] TCOMMS: The device {c3ddc62e} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.549] TCOMMS: Created the mime PDA([0x2011a58] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.549] TCOMMS: The device {8b61330c} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.549] TCOMMS: The device {8b61330c} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.666] TCOMMS: Created the paramedic PDA([0x2011a98] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.666] TCOMMS: The device {d3236e79} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.666] TCOMMS: The device {d3236e79} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.667] TCOMMS: Created the paramedic PDA([0x2011a9b] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.668] TCOMMS: The device {824e7389} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.668] TCOMMS: The device {824e7389} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.735] TCOMMS: Created the quartermaster PDA([0x2011abe] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.735] TCOMMS: The device {173507e0} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.735] TCOMMS: The device {173507e0} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.785] TCOMMS: Created the quartermaster PDA([0x2011ac1] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.785] TCOMMS: The device {ef33ccbe} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.785] TCOMMS: The device {ef33ccbe} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.833] TCOMMS: Created the research director PDA([0x2011ad0] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.833] TCOMMS: The device {3963f398} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.833] TCOMMS: The device {3963f398} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.835] TCOMMS: Created the research director PDA([0x2011ad3] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.835] TCOMMS: The device {48fddfab} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.835] TCOMMS: The device {48fddfab} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.836] TCOMMS: Created the research director PDA([0x2011ad6] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.837] TCOMMS: The device {5f49b7a4} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.837] TCOMMS: The device {5f49b7a4} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.838] TCOMMS: Created the research director PDA([0x2011ad9] in nullspace, assuming network to be in station
+[2023-01-25 10:26:15.838] TCOMMS: The device {cff9a555} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:15.838] TCOMMS: The device {cff9a555} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.532] TCOMMS: Created the roboticist PDA([0x2011bc2] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.532] TCOMMS: The device {e7cb99cf} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.533] TCOMMS: The device {e7cb99cf} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.558] TCOMMS: Created the roboticist PDA([0x2011bc5] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.558] TCOMMS: The device {4014a9a1} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.558] TCOMMS: The device {4014a9a1} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.560] TCOMMS: Created the roboticist PDA([0x2011bc8] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.560] TCOMMS: The device {18517d19} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.560] TCOMMS: The device {18517d19} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.562] TCOMMS: Created the roboticist PDA([0x2011bcb] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.562] TCOMMS: The device {8579d022} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.562] TCOMMS: The device {8579d022} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.594] TCOMMS: Created the scientist PDA([0x2011bfa] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.594] TCOMMS: The device {2b0a333d} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.594] TCOMMS: The device {2b0a333d} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.630] TCOMMS: Created the scientist PDA([0x2011bfd] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.630] TCOMMS: The device {f37b83a5} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.630] TCOMMS: The device {f37b83a5} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.633] TCOMMS: Created the scientist PDA([0x2011c00] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.633] TCOMMS: The device {1c1583a0} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.633] TCOMMS: The device {1c1583a0} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.636] TCOMMS: Created the scientist PDA([0x2011c03] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.636] TCOMMS: The device {0ad1f863} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.636] TCOMMS: The device {0ad1f863} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.675] TCOMMS: Created the security PDA([0x2011c28] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.675] TCOMMS: The device {e7978cc4} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.675] TCOMMS: The device {e7978cc4} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.677] TCOMMS: Created the security PDA([0x2011c2b] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.677] TCOMMS: The device {2713f45e} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.677] TCOMMS: The device {2713f45e} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.679] TCOMMS: Created the security PDA([0x2011c2e] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.679] TCOMMS: The device {62782819} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.679] TCOMMS: The device {62782819} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.681] TCOMMS: Created the security PDA([0x2011c31] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.681] TCOMMS: The device {2b334301} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.681] TCOMMS: The device {2b334301} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.851] TCOMMS: Created the shaft miner PDA([0x2011c64] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.851] TCOMMS: The device {58b47cc3} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.851] TCOMMS: The device {58b47cc3} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.853] TCOMMS: Created the shaft miner PDA([0x2011c67] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.853] TCOMMS: The device {503b44f2} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.853] TCOMMS: The device {503b44f2} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.855] TCOMMS: Created the shaft miner PDA([0x2011c6a] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.855] TCOMMS: The device {ae5f3a0d} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.856] TCOMMS: The device {ae5f3a0d} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.857] TCOMMS: Created the shaft miner PDA([0x2011c6d] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.857] TCOMMS: The device {bd08b0b1} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.857] TCOMMS: The device {bd08b0b1} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.858] TCOMMS: Created the shaft miner PDA([0x2011c70] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.859] TCOMMS: The device {4bce62cb} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.859] TCOMMS: The device {4bce62cb} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.860] TCOMMS: Created the shaft miner PDA([0x2011c73] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.860] TCOMMS: The device {06ed6d6c} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.860] TCOMMS: The device {06ed6d6c} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.862] TCOMMS: Created the shaft miner PDA([0x2011c76] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.862] TCOMMS: The device {26e7300d} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.862] TCOMMS: The device {26e7300d} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.863] TCOMMS: Created the shaft miner PDA([0x2011c79] in nullspace, assuming network to be in station
+[2023-01-25 10:26:16.863] TCOMMS: The device {6933336c} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:16.863] TCOMMS: The device {6933336c} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.413] TCOMMS: Created the engineering PDA([0x2011df2] in nullspace, assuming network to be in station
+[2023-01-25 10:26:17.413] TCOMMS: The device {4a6f8414} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.413] TCOMMS: The device {4a6f8414} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.455] TCOMMS: Created the engineering PDA([0x2011df5] in nullspace, assuming network to be in station
+[2023-01-25 10:26:17.455] TCOMMS: The device {bbc47692} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.455] TCOMMS: The device {bbc47692} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.457] TCOMMS: Created the engineering PDA([0x2011df8] in nullspace, assuming network to be in station
+[2023-01-25 10:26:17.457] TCOMMS: The device {f4e677b0} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.458] TCOMMS: The device {f4e677b0} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.460] TCOMMS: Created the engineering PDA([0x2011dfb] in nullspace, assuming network to be in station
+[2023-01-25 10:26:17.460] TCOMMS: The device {6f42d5a6} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.460] TCOMMS: The device {6f42d5a6} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.462] TCOMMS: Created the engineering PDA([0x2011dfe] in nullspace, assuming network to be in station
+[2023-01-25 10:26:17.462] TCOMMS: The device {bd0ddaed} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.462] TCOMMS: The device {bd0ddaed} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.499] TCOMMS: Created the engineering PDA([0x2011e01] in nullspace, assuming network to be in station
+[2023-01-25 10:26:17.499] TCOMMS: The device {d204df9f} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.499] TCOMMS: The device {d204df9f} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.565] TCOMMS: Created the virology PDA([0x2011e34] in nullspace, assuming network to be in station
+[2023-01-25 10:26:17.565] TCOMMS: The device {64cf5f59} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.565] TCOMMS: The device {64cf5f59} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.593] TCOMMS: Created the virology PDA([0x2011e37] in nullspace, assuming network to be in station
+[2023-01-25 10:26:17.594] TCOMMS: The device {0623d91b} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.594] TCOMMS: The device {0623d91b} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.664] TCOMMS: Created the warden PDA([0x2011e54] in nullspace, assuming network to be in station
+[2023-01-25 10:26:17.664] TCOMMS: The device {8312a83d} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.664] TCOMMS: The device {8312a83d} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.667] TCOMMS: Created the warden PDA([0x2011e57] in nullspace, assuming network to be in station
+[2023-01-25 10:26:17.667] TCOMMS: The device {c44b2d12} is jumping networks from 'SS13.COMPUTER.TABLETS' to 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:26:17.667] TCOMMS: The device {c44b2d12} is trying to leave a 'SS13.COMPUTER.TABLETS'' when its on 'SS13.COMPUTER.TABLETS'
+[2023-01-25 10:27:44.225] TCOMMS: *no key*/(Poly) [Engineering] (spans:  ) "Check the crystal, you chucklefucks!" (language: Galactic Common) (Chief Engineer's Office (155,141,2))
+[2023-01-25 10:27:58.231] TCOMMS: *no key*/(Poly) [Engineering] (spans:  ) "OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE" (language: Galactic Common) (Chief Engineer's Office (155,143,2))
+[2023-01-25 10:28:14.388] TCOMMS: *no key*/(Poly) [Engineering] (spans:  ) "OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE" (language: Galactic Common) (Chief Engineer's Office (155,141,2))
+[2023-01-25 10:28:26.415] TCOMMS: *no key*/(Poly) [Engineering] (spans:  ) "WHO TOOK THE DAMN MODSUITS?" (language: Galactic Common) (Chief Engineer's Office (153,141,2))
+[2023-01-25 10:28:32.446] TCOMMS: *no key*/(Poly) [Engineering] (spans:  ) "Check the crystal, you chucklefucks!" (language: Galactic Common) (Chief Engineer's Office (153,141,2))
+[2023-01-25 10:28:41.950] TCOMMS: The newscaster [AI Private] (spans: robot ) "Breaking news from Station Announcements!" (language: Galactic Common) (AI Chamber (217,140,2))
+[2023-01-25 10:29:43.081] TCOMMS: *no key*/(Poly) [Engineering] (spans:  ) "Breaking news from Station Announcements!" (language: Galactic Common) (Chief Engineer's Office (153,141,2))
+[2023-01-25 10:31:21.139] TCOMMS: *no key*/(Poly) [Engineering] (spans:  ) "Breaking news from Station Announcements!" (language: Galactic Common) (Chief Engineer's Office (153,141,2))
+[2023-01-25 10:33:15.360] TCOMMS: *no key*/(Poly) [Engineering] (spans:  ) "Breaking news from Station Announcements!" (language: Galactic Common) (Chief Engineer's Office (153,141,2))
+[2023-01-25 10:35:09.652] TCOMMS: *no key*/(Poly) [Engineering] (spans:  ) "Breaking news from Station Announcements!" (language: Galactic Common) (Chief Engineer's Office (153,141,2))
+[2023-01-25 10:35:37.653] TCOMMS: *no key*/(Poly) [Engineering] (spans:  ) "Breaking news from Station Announcements!" (language: Galactic Common) (Chief Engineer's Office (153,141,2))

@@ -1,185 +1,92 @@
-/obj/item/organ
+/obj/item/organ/internal
 	name = "organ"
-	icon = 'icons/obj/surgery.dmi'
-	var/mob/living/carbon/owner = null
-	var/status = ORGAN_ORGANIC
-	w_class = WEIGHT_CLASS_SMALL
-	throwforce = 0
-	var/zone = BODY_ZONE_CHEST
-	var/slot
-	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
-	var/vital = 0
-	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
-	var/external = FALSE
-	var/synthetic = FALSE // To distinguish between organic and synthetic organs
 
-
-
-/obj/item/organ/Initialize()
+/obj/item/organ/internal/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
-	if(!iscarbon(M) || owner == M)
-		return
-
-	var/obj/item/organ/replaced = M.getorganslot(slot)
-	if(replaced)
-		replaced.Remove(M, special = 1)
-		if(drop_if_replaced)
-			replaced.forceMove(get_turf(M))
-		else
-			qdel(replaced)
-
-	owner = M
-	M.internal_organs |= src
-	M.internal_organs_slot[slot] = src
-	moveToNullspace()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.Grant(M)
-
-//Special is for instant replacement like autosurgeons
-/obj/item/organ/proc/Remove(special = FALSE)
-	if(owner)
-		owner.internal_organs -= src
-		if(owner.internal_organs_slot[slot] == src)
-			owner.internal_organs_slot.Remove(slot)
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.Remove(owner)
-		. = owner //for possible subtypes specific post-removal code.
-	owner = null
-	START_PROCESSING(SSobj, src)
-
-
-/obj/item/organ/proc/on_find(mob/living/finder)
-	return
-
-/obj/item/organ/proc/on_life()
-	return
-
-/obj/item/organ/examine(mob/user)
-	..()
-	if(status == ORGAN_ROBOTIC && crit_fail)
-		to_chat(user, "<span class='warning'>[src] seems to be broken!</span>")
-
-
-/obj/item/organ/proc/prepare_eat()
-	var/obj/item/reagent_containers/food/snacks/organ/S = new
-	S.name = name
-	S.desc = desc
-	S.icon = icon
-	S.icon_state = icon_state
-	S.w_class = w_class
-
-	return S
-
-/obj/item/reagent_containers/food/snacks/organ
-	name = "appendix"
-	icon_state = "appendix"
-	icon = 'icons/obj/surgery.dmi'
-	list_reagents = list("nutriment" = 5)
-	foodtype = RAW | MEAT | GROSS
-
-
-/obj/item/organ/Destroy()
+/obj/item/organ/internal/Destroy()
 	if(owner)
 		// The special flag is important, because otherwise mobs can die
 		// while undergoing transformation into different mobs.
 		Remove(owner, special=TRUE)
+	else
+		STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/organ/attack(mob/living/carbon/M, mob/user)
-	if(M == user && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(status == ORGAN_ORGANIC)
-			var/obj/item/reagent_containers/food/snacks/S = prepare_eat()
-			if(S)
-				qdel(src)
-				if(H.put_in_active_hand(S))
-					S.attack(H, H)
-	else
-		..()
+/obj/item/organ/internal/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(!.)
+		return
 
-/obj/item/organ/item_action_slot_check(slot,mob/user)
-	return //so we don't grant the organ's action to mobs who pick up the organ.
+	owner.internal_organs |= src
+	owner.internal_organs_slot[slot] = src
+	// internal_organs_slot must ALWAYS be ordered in the same way as organ_process_order
+	// Otherwise life processing breaks down
+	sortTim(owner.internal_organs_slot, GLOBAL_PROC_REF(cmp_organ_slot_asc))
 
-//Looking for brains?
-//Try code/modules/mob/living/carbon/brain/brain_item.dm
+	STOP_PROCESSING(SSobj, src)
 
-/mob/living/proc/regenerate_organs()
-	return 0
+/obj/item/organ/internal/Remove(mob/living/carbon/organ_owner, special = FALSE)
+	. = ..()
 
-/mob/living/carbon/regenerate_organs()
-	var/breathes = TRUE
-	var/blooded = TRUE
-	if(dna && dna.species)
-		if(has_trait(TRAIT_NOBREATH, SPECIES_TRAIT))
-			breathes = FALSE
-		if(NOBLOOD in dna.species.species_traits)
-			blooded = FALSE
-		var/has_liver = (!(NOLIVER in dna.species.species_traits))
-		var/has_stomach = (!(NOSTOMACH in dna.species.species_traits))
+	if(organ_owner)
+		organ_owner.internal_organs -= src
+		if(organ_owner.internal_organs_slot[slot] == src)
+			organ_owner.internal_organs_slot.Remove(slot)
+		if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
+			if(organ_owner.stat != DEAD)
+				organ_owner.investigate_log("has been killed by losing a vital organ ([src]).", INVESTIGATE_DEATHS)
+			organ_owner.death()
 
-		if(has_liver && !getorganslot(ORGAN_SLOT_LIVER))
-			var/obj/item/organ/liver/LI
+	START_PROCESSING(SSobj, src)
 
-			if(dna.species.mutantliver)
-				LI = new dna.species.mutantliver()
-			else
-				LI = new()
-			LI.Insert(src)
 
-		if(has_stomach && !getorganslot(ORGAN_SLOT_STOMACH))
-			var/obj/item/organ/stomach/S
+/obj/item/organ/internal/process(delta_time, times_fired)
+	on_death(delta_time, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
 
-			if(dna.species.mutantstomach)
-				S = new dna.species.mutantstomach()
-			else
-				S = new()
-			S.Insert(src)
+/obj/item/organ/internal/on_death(delta_time, times_fired) //runs decay when outside of a person
+	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
+		return
+	applyOrganDamage(decay_factor * maxHealth * delta_time)
 
-	if(breathes && !getorganslot(ORGAN_SLOT_LUNGS))
-		var/obj/item/organ/lungs/L = new()
-		L.Insert(src)
+/// Called once every life tick on every organ in a carbon's body
+/// NOTE: THIS IS VERY HOT. Be careful what you put in here
+/// To give you some scale, if there's 100 carbons in the game, they each have maybe 9 organs
+/// So that's 900 calls to this proc every life process. Please don't be dumb
+/obj/item/organ/internal/on_life(delta_time, times_fired) //repair organ damage if the organ is not failing
+	if(organ_flags & ORGAN_FAILING)
+		handle_failing_organs(delta_time)
+		return
 
-	if(blooded && !getorganslot(ORGAN_SLOT_HEART))
-		var/obj/item/organ/heart/H = new()
-		H.Insert(src)
+	if(failure_time > 0)
+		failure_time--
 
-	if(!getorganslot(ORGAN_SLOT_TONGUE))
-		var/obj/item/organ/tongue/T
+	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
+		applyOrganDamage(decay_factor * maxHealth * delta_time)
+		return
 
-		if(dna && dna.species && dna.species.mutanttongue)
-			T = new dna.species.mutanttongue()
-		else
-			T = new()
+	if(!damage) // No sense healing if you're not even hurt bro
+		return
 
-		// if they have no mutant tongues, give them a regular one
-		T.Insert(src)
+	///Damage decrements by a percent of its maxhealth
+	var/healing_amount = healing_factor
+	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
+	healing_amount += (owner.satiety > 0) ? (4 * healing_factor * owner.satiety / MAX_SATIETY) : 0
+	applyOrganDamage(-healing_amount * maxHealth * delta_time, damage) // pass curent damage incase we are over cap
 
-	if(!getorganslot(ORGAN_SLOT_EYES))
-		var/obj/item/organ/eyes/E
+///Used as callbacks by object pooling
+/obj/item/organ/internal/exit_wardrobe()
+	START_PROCESSING(SSobj, src)
 
-		if(dna && dna.species && dna.species.mutanteyes)
-			E = new dna.species.mutanteyes()
+//See above
+/obj/item/organ/internal/enter_wardrobe()
+	STOP_PROCESSING(SSobj, src)
 
-		else
-			E = new()
-		E.Insert(src)
+///Organs don't die instantly, and neither should you when you get fucked up
+/obj/item/organ/internal/handle_failing_organs(delta_time)
+	if(owner.stat == DEAD)
+		return
 
-	if(!getorganslot(ORGAN_SLOT_EARS))
-		var/obj/item/organ/ears/ears
-		if(dna && dna.species && dna.species.mutantears)
-			ears = new dna.species.mutantears
-		else
-			ears = new
-
-		ears.Insert(src)
-
-	if(!getorganslot(ORGAN_SLOT_TAIL))
-		var/obj/item/organ/tail/tail
-		if(dna && dna.species && dna.species.mutanttail)
-			tail = new dna.species.mutanttail
-			tail.Insert(src)
+	failure_time += delta_time
+	organ_failure(delta_time)

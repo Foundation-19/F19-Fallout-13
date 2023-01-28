@@ -1,39 +1,84 @@
+#define BEAM_FADE_TIME (1 SECONDS)
+
 /obj/machinery/launchpad
 	name = "bluespace launchpad"
 	desc = "A bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "lpad-idle"
-	use_power = TRUE
-	idle_power_usage = 200
-	active_power_usage = 2500
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
+	hud_possible = list(DIAG_LAUNCHPAD_HUD)
 	circuit = /obj/item/circuitboard/machine/launchpad
 	var/icon_teleport = "lpad-beam"
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
 	var/display_name = "Launchpad"
 	var/teleport_speed = 35
-	var/range = 5
+	var/range = 10
 	var/teleporting = FALSE //if it's in the process of teleporting
 	var/power_efficiency = 1
 	var/x_offset = 0
 	var/y_offset = 0
+	var/indicator_icon = "launchpad_target"
+	/// Determines if the bluespace launchpad is blatantly obvious on teleportation.
+	var/hidden = FALSE
+	/// The beam on teleportation
+	var/teleport_beam = "sm_arc_supercharged"
 
 /obj/machinery/launchpad/RefreshParts()
-	var/E = -1 //to make default parts have the base value
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		E += M.rating
+	. = ..()
+	var/max_range_multiplier = 0
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		max_range_multiplier += manipulator.tier
 	range = initial(range)
-	range += E
+	range *= max_range_multiplier
+
+/obj/machinery/launchpad/Initialize(mapload)
+	. = ..()
+	prepare_huds()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_atom_to_hud(src)
+
+	update_hud()
+
+/obj/machinery/launchpad/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer && !QDELETED(src))
+		update_hud()
+	return ..()
+
+/obj/machinery/launchpad/proc/update_hud()
+	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
+	var/mutable_appearance/target = mutable_appearance('icons/effects/effects.dmi', "launchpad_target", ABOVE_OPEN_TURF_LAYER, src, GAME_PLANE)
+	holder.appearance = target
+
+	update_indicator()
+
+	if(stationary)
+		AddComponent(/datum/component/usb_port, list(
+			/obj/item/circuit_component/bluespace_launchpad,
+		))
+
+/obj/machinery/launchpad/Destroy()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.remove_atom_from_hud(src)
+	return ..()
+
+/obj/machinery/launchpad/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
 
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)
-		if(default_deconstruction_screwdriver(user, "lpad-idle-o", "lpad-idle", I))
+		if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", I))
+			update_indicator()
 			return
 
 		if(panel_open)
-			if(istype(I, /obj/item/multitool))
+			if(I.tool_behaviour == TOOL_MULTITOOL)
+				if(!multitool_check_buffer(user, I))
+					return
 				var/obj/item/multitool/M = I
 				M.buffer = src
-				to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
+				to_chat(user, span_notice("You save the data in the [I.name]'s buffer."))
 				return 1
 
 		if(default_deconstruction_crowbar(I))
@@ -41,23 +86,69 @@
 
 	return ..()
 
+/obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)
+	. = ..()
+	if(.)
+		return
+	var/target_x = x + x_offset
+	var/target_y = y + y_offset
+	var/turf/target = locate(target_x, target_y, z)
+	ghost.forceMove(target)
+
 /obj/machinery/launchpad/proc/isAvailable()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return FALSE
 	if(panel_open)
 		return FALSE
 	return TRUE
 
-/obj/machinery/launchpad/proc/doteleport(mob/user, sending)
+/obj/machinery/launchpad/proc/update_indicator()
+	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
+	var/turf/target_turf
+	if(isAvailable())
+		target_turf = locate(x + x_offset, y + y_offset, z)
+	if(target_turf)
+		holder.icon_state = indicator_icon
+		holder.loc = target_turf
+	else
+		holder.icon_state = null
+
+/obj/machinery/launchpad/proc/set_offset(x, y)
 	if(teleporting)
-		to_chat(user, "<span class='warning'>ERROR: Launchpad busy.</span>")
 		return
+	if(!isnull(x) && !isnull(y))
+		x_offset = clamp(x, -range, range)
+		y_offset = clamp(y, -range, range)
+		log_message("changed the launchpad's x and y-offset parameters to X: [x] Y: [y].", LOG_GAME, log_globally = FALSE)
+	else if(!isnull(x))
+		x_offset = clamp(x, -range, range)
+		log_message("changed the launchpad's x-offset parameter to X: [x].", LOG_GAME, log_globally = FALSE)
+	else if(!isnull(y))
+		y_offset = clamp(y, -range, range)
+		log_message("changed the launchpad's y-offset parameter to Y: [y].", LOG_GAME, log_globally = FALSE)
+	update_indicator()
+
+/obj/effect/ebeam/launchpad/Initialize(mapload)
+	. = ..()
+	animate(src, alpha = 0, flags = ANIMATION_PARALLEL, time = BEAM_FADE_TIME)
+
+
+/obj/machinery/launchpad/proc/teleport_checks()
+	if(!isAvailable())
+		return "ERROR: Launchpad not operative. Make sure the launchpad is ready and powered."
+	if(teleporting)
+		return "ERROR: Launchpad busy."
+	var/turf/pad_turf = get_turf(src)
+	if(pad_turf && is_centcom_level(pad_turf.z))
+		return "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
+	return null
+
+/// Performs the teleport.
+/// sending - TRUE/FALSE depending on if the launch pad is teleporting *to* or *from* the target.
+/// alternate_log_name - An alternative name to use in logs, if `user` is not present..
+/obj/machinery/launchpad/proc/doteleport(mob/user, sending, alternate_log_name = null)
 
 	var/turf/dest = get_turf(src)
-
-	if(dest && is_centcom_level(dest.z))
-		to_chat(user, "<span class='warning'>ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible.</span>")
-		return
 
 	var/target_x = x + x_offset
 	var/target_y = y + y_offset
@@ -65,47 +156,68 @@
 	var/area/A = get_area(target)
 
 	flick(icon_teleport, src)
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
+
+	//Change the indicator's icon to show that we're teleporting
+	if(sending)
+		indicator_icon = "launchpad_launch"
+	else
+		indicator_icon = "launchpad_pull"
+	update_indicator()
+
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
 	teleporting = TRUE
 
+	if(!hidden)
+		playsound(target, 'sound/weapons/flash.ogg', 25, TRUE)
+		var/datum/effect_system/spark_spread/quantum/spark_system = new /datum/effect_system/spark_spread/quantum()
+		spark_system.set_up(5, TRUE, target)
+		spark_system.start()
 
 	sleep(teleport_speed)
+
+	//Set the indicator icon back to normal
+	indicator_icon = "launchpad_target"
+	update_indicator()
 
 	if(QDELETED(src) || !isAvailable())
 		return
 
 	teleporting = FALSE
+	if(!hidden)
+		// Takes twice as long to make sure it properly fades out.
+		Beam(target, icon_state = teleport_beam, time = BEAM_FADE_TIME*2, beam_type = /obj/effect/ebeam/launchpad)
+		playsound(target, 'sound/weapons/emitter2.ogg', 25, TRUE)
 
 	// use a lot of power
-	use_power(1000)
+	use_power(active_power_usage)
 
 	var/turf/source = target
 	var/list/log_msg = list()
-	log_msg += ": [key_name(user)] has teleported "
+	log_msg += "[alternate_log_name || key_name(user)] triggered a teleport "
 
 	if(sending)
 		source = dest
 		dest = target
 
-	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1)
+	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
 	var/first = TRUE
 	for(var/atom/movable/ROI in source)
 		if(ROI == src)
 			continue
-		// if it's anchored, don't teleport
+		if(!istype(ROI) || isdead(ROI) || iscameramob(ROI) || istype(ROI, /obj/effect/dummy/phased_mob))
+			continue//don't teleport these
 		var/on_chair = ""
-		if(ROI.anchored)
+		if(ROI.anchored)// if it's anchored, don't teleport
 			if(isliving(ROI))
 				var/mob/living/L = ROI
 				if(L.buckled)
 					// TP people on office chairs
 					if(L.buckled.anchored)
 						continue
-
 					on_chair = " (on a chair)"
 				else
 					continue
-			else if(!isobserver(ROI))
+			else
 				continue
 		if(!first)
 			log_msg += ", "
@@ -128,14 +240,13 @@
 				if(first_inner)
 					log_msg += "empty"
 				log_msg += ")"
-		do_teleport(ROI, dest, no_effects = !first)
+		do_teleport(ROI, dest, no_effects = !first, channel = TELEPORT_CHANNEL_BLUESPACE)
 		first = FALSE
 
 	if (first)
 		log_msg += "nothing"
 	log_msg += " [sending ? "to" : "from"] [target_x], [target_y], [z] ([A ? A.name : "null area"])"
-	investigate_log(log_msg.Join(), INVESTIGATE_TELESCI)
-	updateDialog()
+	log_game(log_msg.Join())
 
 //Starts in the briefcase. Don't spawn this directly, or it will runtime when closing.
 /obj/machinery/launchpad/briefcase
@@ -144,218 +255,266 @@
 	icon_state = "blpad-idle"
 	icon_teleport = "blpad-beam"
 	anchored = FALSE
-	use_power = FALSE
-	idle_power_usage = 0
+	use_power = NO_POWER_USE
 	active_power_usage = 0
 	teleport_speed = 20
-	range = 3
+	range = 8
 	stationary = FALSE
+	hidden = TRUE
 	var/closed = TRUE
-	var/obj/item/briefcase_launchpad/briefcase
+	var/obj/item/storage/briefcase/launchpad/briefcase
 
-/obj/machinery/launchpad/briefcase/Initialize()
+/obj/machinery/launchpad/briefcase/Initialize(mapload, _briefcase)
 	. = ..()
-	if(istype(loc, /obj/item/briefcase_launchpad))
-		briefcase = loc
-	else
-		log_game("[src] has been spawned without a briefcase.")
+	if(!_briefcase)
+		stack_trace("[src] spawned without a briefcase.")
 		return INITIALIZE_HINT_QDEL
+	briefcase = _briefcase
 
 /obj/machinery/launchpad/briefcase/Destroy()
-	QDEL_NULL(briefcase)
+	if(!QDELETED(briefcase))
+		qdel(briefcase)
+	briefcase = null
 	return ..()
 
 /obj/machinery/launchpad/briefcase/isAvailable()
 	if(closed)
 		return FALSE
-	return ..()
+	if(panel_open)
+		return FALSE
+	return TRUE
 
 /obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr)
-		if(!briefcase || !usr.can_hold_items())
+		if(!briefcase || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 			return
-		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
-			return
-		usr.visible_message("<span class='notice'>[usr] starts closing [src]...</span>", "<span class='notice'>You start closing [src]...</span>")
+		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
 		if(do_after(usr, 30, target = usr))
 			usr.put_in_hands(briefcase)
-			forceMove(briefcase)
+			moveToNullspace() //hides it from suitcase contents
 			closed = TRUE
+			update_indicator()
 
 /obj/machinery/launchpad/briefcase/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/launchpad_remote))
 		var/obj/item/launchpad_remote/L = I
-		L.pad = src
-		to_chat(user, "<span class='notice'>You link [src] to [L].</span>")
+		if(L.pad == WEAKREF(src)) //do not attempt to link when already linked
+			return ..()
+		L.pad = WEAKREF(src)
+		to_chat(user, span_notice("You link [src] to [L]."))
 	else
 		return ..()
 
 //Briefcase item that contains the launchpad.
-/obj/item/briefcase_launchpad
-	name = "briefcase"
-	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "briefcase"
-	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	flags_1 = CONDUCT_1
-	force = 8
-	hitsound = "swing_hit"
-	throw_speed = 2
-	throw_range = 4
-	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
-	resistance_flags = FLAMMABLE
-	max_integrity = 150
+/obj/item/storage/briefcase/launchpad
 	var/obj/machinery/launchpad/briefcase/pad
 
-/obj/item/briefcase_launchpad/Initialize()
+/obj/item/storage/briefcase/launchpad/Initialize(mapload)
+	pad = new(null, src) //spawns pad in nullspace to hide it from briefcase contents
 	. = ..()
-	pad = new(src)
 
-/obj/item/briefcase_launchpad/Destroy()
+/obj/item/storage/briefcase/launchpad/Destroy()
 	if(!QDELETED(pad))
 		qdel(pad)
 	pad = null
 	return ..()
 
-/obj/item/briefcase_launchpad/attack_self(mob/user)
+/obj/item/storage/briefcase/launchpad/PopulateContents()
+	new /obj/item/pen(src)
+	new /obj/item/launchpad_remote(src, pad)
+
+/obj/item/storage/briefcase/launchpad/attack_self(mob/user)
 	if(!isturf(user.loc)) //no setting up in a locker
 		return
 	add_fingerprint(user)
-	user.visible_message("<span class='notice'>[user] starts setting down [src]...", "You start setting up [pad]...</span>")
+	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
 	if(do_after(user, 30, target = user))
 		pad.forceMove(get_turf(src))
+		pad.update_indicator()
 		pad.closed = FALSE
 		user.transferItemToLoc(src, pad, TRUE)
+		atom_storage.close_all()
 
-/obj/item/briefcase_launchpad/attackby(obj/item/I, mob/user, params)
+/obj/item/storage/briefcase/launchpad/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/launchpad_remote))
 		var/obj/item/launchpad_remote/L = I
-		L.pad = src.pad
-		to_chat(user, "<span class='notice'>You link [pad] to [L].</span>")
+		if(L.pad == WEAKREF(src.pad)) //do not attempt to link when already linked
+			return ..()
+		L.pad = WEAKREF(src.pad)
+		to_chat(user, span_notice("You link [pad] to [L]."))
 	else
 		return ..()
 
 /obj/item/launchpad_remote
-	name = "\improper Launchpad Control Remote"
-	desc = "Used to teleport objects to and from a portable launchpad."
-	icon = 'icons/obj/telescience.dmi'
-	icon_state = "blpad-remote"
+	name = "folder"
+	desc = "A folder."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "folder"
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = ITEM_SLOT_BELT
 	var/sending = TRUE
-	var/obj/machinery/launchpad/briefcase/pad
+	//A weakref to our linked pad
+	var/datum/weakref/pad
 
-/obj/item/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/launchpad_remote/Initialize(mapload, pad) //remote spawns linked to the briefcase pad
+	. = ..()
+	src.pad = WEAKREF(pad)
+
+/obj/item/launchpad_remote/attack_self(mob/user)
+	. = ..()
+	ui_interact(user)
+	to_chat(user, span_notice("[src] projects a display onto your retina."))
+
+
+/obj/item/launchpad_remote/ui_state(mob/user)
+	return GLOB.inventory_state
+
+/obj/item/launchpad_remote/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 550, 400, master_ui, state) //width, height
-		ui.set_style("syndicate")
+		ui = new(user, src, "LaunchpadRemote")
 		ui.open()
-
 	ui.set_autoupdate(TRUE)
 
 /obj/item/launchpad_remote/ui_data(mob/user)
 	var/list/data = list()
-	data["has_pad"] = pad ? TRUE : FALSE
-	if(pad)
-		data["pad_closed"] = pad.closed
-	if(!pad || pad.closed)
+	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
+	data["has_pad"] = our_pad ? TRUE : FALSE
+	if(our_pad)
+		data["pad_closed"] = our_pad.closed
+	if(!our_pad || our_pad.closed)
 		return data
 
-	data["pad_name"] = pad.display_name
-	data["abs_x"] = abs(pad.x_offset)
-	data["abs_y"] = abs(pad.y_offset)
-	data["north_south"] = pad.y_offset > 0 ? "N":"S"
-	data["east_west"] = pad.x_offset > 0 ? "E":"W"
+	data["pad_name"] = our_pad.display_name
+	data["range"] = our_pad.range
+	data["x"] = our_pad.x_offset
+	data["y"] = our_pad.y_offset
 	return data
 
 /obj/item/launchpad_remote/proc/teleport(mob/user, obj/machinery/launchpad/pad)
 	if(QDELETED(pad))
-		to_chat(user, "<span class='warning'>ERROR: Launchpad not responding. Check launchpad integrity.</span>")
+		to_chat(user, span_warning("ERROR: Launchpad not responding. Check launchpad integrity."))
 		return
-	if(!pad.isAvailable())
-		to_chat(user, "<span class='warning'>ERROR: Launchpad not operative. Make sure the launchpad is ready and powered.</span>")
+	var/error_reason = pad.teleport_checks()
+	if(error_reason)
+		to_chat(user, span_warning(error_reason))
 		return
 	pad.doteleport(user, sending)
 
 /obj/item/launchpad_remote/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+	var/obj/machinery/launchpad/briefcase/our_pad = pad.resolve()
+	if(!our_pad)
+		pad = null
+		return TRUE
 	switch(action)
-		if("right")
-			if(pad.x_offset < pad.range)
-				pad.x_offset++
+		if("set_pos")
+			var/new_x = text2num(params["x"])
+			var/new_y = text2num(params["y"])
+			our_pad.set_offset(new_x, new_y)
 			. = TRUE
-
-		if("left")
-			if(pad.x_offset > (pad.range * -1))
-				pad.x_offset--
+		if("move_pos")
+			var/plus_x = text2num(params["x"])
+			var/plus_y = text2num(params["y"])
+			our_pad.set_offset(
+				x = our_pad.x_offset + plus_x,
+				y = our_pad.y_offset + plus_y
+			)
 			. = TRUE
-
-		if("up")
-			if(pad.y_offset < pad.range)
-				pad.y_offset++
-			. = TRUE
-
-		if("down")
-			if(pad.y_offset > (pad.range * -1))
-				pad.y_offset--
-			. = TRUE
-
-		if("up-right")
-			if(pad.y_offset < pad.range)
-				pad.y_offset++
-			if(pad.x_offset < pad.range)
-				pad.x_offset++
-			. = TRUE
-
-		if("up-left")
-			if(pad.y_offset < pad.range)
-				pad.y_offset++
-			if(pad.x_offset > (pad.range * -1))
-				pad.x_offset--
-			. = TRUE
-
-		if("down-right")
-			if(pad.y_offset > (pad.range * -1))
-				pad.y_offset--
-			if(pad.x_offset < pad.range)
-				pad.x_offset++
-			. = TRUE
-
-		if("down-left")
-			if(pad.y_offset > (pad.range * -1))
-				pad.y_offset--
-			if(pad.x_offset > (pad.range * -1))
-				pad.x_offset--
-			. = TRUE
-
-		if("reset")
-			pad.y_offset = 0
-			pad.x_offset = 0
-			. = TRUE
-
 		if("rename")
 			. = TRUE
-			var/new_name = stripped_input(usr, "How do you want to rename the launchpad?", "Launchpad", pad.display_name, 15)
+			var/new_name = params["name"]
 			if(!new_name)
 				return
-			pad.display_name = new_name
-
+			our_pad.display_name = new_name
 		if("remove")
 			. = TRUE
-			if(usr && alert(usr, "Are you sure?", "Unlink Launchpad", "I'm Sure", "Abort") != "Abort")
-				pad = null
-
+			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("Confirm", "Abort")) == "I'm Sure")
+				our_pad = null
 		if("launch")
 			sending = TRUE
-			teleport(usr, pad)
+			teleport(usr, our_pad)
 			. = TRUE
-
 		if("pull")
 			sending = FALSE
-			teleport(usr, pad)
+			teleport(usr, our_pad)
 			. = TRUE
+
+#undef BEAM_FADE_TIME
+
+/obj/item/circuit_component/bluespace_launchpad
+	display_name = "Bluespace Launchpad"
+	desc = "Teleports anything to and from any location on the station. Doesn't use actual GPS coordinates, but rather offsets from the launchpad itself. Can only go as far as the launchpad can go, which depends on its parts."
+
+	var/datum/port/input/x_pos
+	var/datum/port/input/y_pos
+	var/datum/port/input/send_trigger
+	var/datum/port/input/retrieve_trigger
+
+	var/datum/port/output/sent
+	var/datum/port/output/retrieved
+	var/datum/port/output/on_fail
+	var/datum/port/output/why_fail
+
+	var/obj/machinery/launchpad/attached_launchpad
+
+/obj/item/circuit_component/bluespace_launchpad/get_ui_notices()
+	. = ..()
+
+	if(isnull(attached_launchpad))
+		return
+
+	. += create_ui_notice("Minimum Range: [-attached_launchpad.range]", "orange", "minus")
+	. += create_ui_notice("Maximum Range: [attached_launchpad.range]", "orange", "plus")
+
+/obj/item/circuit_component/bluespace_launchpad/populate_ports()
+	x_pos = add_input_port("X offset", PORT_TYPE_NUMBER)
+	y_pos = add_input_port("Y offset", PORT_TYPE_NUMBER)
+	send_trigger = add_input_port("Send", PORT_TYPE_SIGNAL)
+	retrieve_trigger = add_input_port("Retrieve", PORT_TYPE_SIGNAL)
+
+	sent = add_output_port("Sent", PORT_TYPE_SIGNAL)
+	retrieved = add_output_port("Retrieved", PORT_TYPE_SIGNAL)
+	why_fail = add_output_port("Fail reason", PORT_TYPE_STRING)
+	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
+
+/obj/item/circuit_component/bluespace_launchpad/register_usb_parent(atom/movable/shell)
+	. = ..()
+	if(istype(shell, /obj/machinery/launchpad))
+		attached_launchpad = shell
+
+/obj/item/circuit_component/bluespace_launchpad/unregister_usb_parent(atom/movable/shell)
+	attached_launchpad = null
+	return ..()
+
+/obj/item/circuit_component/bluespace_launchpad/input_received(datum/port/input/port)
+	if(!attached_launchpad)
+		why_fail.set_output("Not connected!")
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	attached_launchpad.set_offset(x_pos.value, y_pos.value)
+
+	if(COMPONENT_TRIGGERED_BY(port, x_pos))
+		x_pos.set_value(attached_launchpad.x_offset)
+		return
+
+	if(COMPONENT_TRIGGERED_BY(port, y_pos))
+		y_pos.set_value(attached_launchpad.y_offset)
+		return
+
+	var/checks = attached_launchpad.teleport_checks()
+	if(!isnull(checks))
+		why_fail.set_output(checks)
+		on_fail.set_output(COMPONENT_SIGNAL)
+		return
+
+	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
+		INVOKE_ASYNC(attached_launchpad, TYPE_PROC_REF(/obj/machinery/launchpad, doteleport), null, TRUE, parent.get_creator())
+		sent.set_output(COMPONENT_SIGNAL)
+
+	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
+		INVOKE_ASYNC(attached_launchpad, TYPE_PROC_REF(/obj/machinery/launchpad, doteleport), null, FALSE, parent.get_creator())
+		retrieved.set_output(COMPONENT_SIGNAL)

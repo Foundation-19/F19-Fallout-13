@@ -12,9 +12,9 @@
 	name = "bus mainframe"
 	icon_state = "bus"
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
+	telecomms_type = /obj/machinery/telecomms/bus
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 50
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/bus
 	var/change_frequency = 0
@@ -35,7 +35,7 @@
 		signal.data["slow"] += rand(1, 5) // slow the signal down only slightly
 
 	// Try sending it!
-	var/list/try_send = list(signal.server_type, /obj/machinery/telecomms/hub, /obj/machinery/telecomms/broadcaster, /obj/machinery/telecomms/bus)
+	var/list/try_send = list(signal.server_type, /obj/machinery/telecomms/hub, /obj/machinery/telecomms/broadcaster)
 
 	var/i = 0
 	for(var/send in try_send)
@@ -44,6 +44,8 @@
 		i++
 		if(relay_information(signal, send))
 			break
+
+	use_power(idle_power_usage)
 
 //Preset Buses
 
@@ -62,21 +64,21 @@
 /obj/machinery/telecomms/bus/preset_three
 	id = "Bus 3"
 	network = "tcommsat"
-	freq_listening = list(FREQ_SECURITY, FREQ_COMMAND, FREQ_VAULT, FREQ_NCR, FREQ_BOS, FREQ_ENCLAVE, FREQ_DEN, FREQ_LEGION)
-	autolinkers = list("processor3", "security", "command", "vault", "ncr", "bos", "enclave", "town", "legion")
+	freq_listening = list(FREQ_SECURITY, FREQ_COMMAND)
+	autolinkers = list("processor3", "security", "command")
 
 /obj/machinery/telecomms/bus/preset_four
 	id = "Bus 4"
 	network = "tcommsat"
 	freq_listening = list(FREQ_ENGINEERING)
-	autolinkers = list("processor4", "engineering", "common")
+	autolinkers = list("processor4", "engineering", "common", "messaging")
 
-/obj/machinery/telecomms/bus/preset_four/Initialize()
+/obj/machinery/telecomms/bus/preset_four/Initialize(mapload)
 	. = ..()
 	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i
 
 /obj/machinery/telecomms/bus/preset_one/birdstation
 	name = "Bus"
-	autolinkers = list("processor1", "common")
+	autolinkers = list("processor1", "common", "messaging")
 	freq_listening = list()

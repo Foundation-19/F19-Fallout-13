@@ -9,7 +9,7 @@
 		cut_overlay(I)
 		gorilla_overlays[cache_index] = null
 
-/mob/living/simple_animal/hostile/gorilla/update_inv_hands()
+/mob/living/simple_animal/hostile/gorilla/update_held_items()
 	cut_overlays("standing_overlay")
 	remove_overlay(GORILLA_HANDS_LAYER)
 
@@ -21,11 +21,11 @@
 	if(!standing)
 		if(stat != DEAD)
 			icon_state = "crawling"
-			speed = 1
+			set_varspeed(0.5)
 		return ..()
 	if(stat != DEAD)
 		icon_state = "standing"
-		speed = 3 // Gorillas are slow when standing up.
+		set_varspeed(1) // Gorillas are slow when standing up.
 
 	var/list/hands_overlays = list()
 
@@ -33,14 +33,12 @@
 	var/obj/item/r_hand = get_item_for_held_index(2)
 
 	if(r_hand)
-		var/r_state = r_hand.item_state ? r_hand.item_state : r_hand.icon_state
-		var/mutable_appearance/r_hand_overlay = r_hand.build_worn_icon(state = r_state, default_layer = GORILLA_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
+		var/mutable_appearance/r_hand_overlay = r_hand.build_worn_icon(default_layer = GORILLA_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
 		r_hand_overlay.pixel_y -= 1
 		hands_overlays += r_hand_overlay
 
 	if(l_hand)
-		var/l_state = l_hand.item_state ? l_hand.item_state : l_hand.icon_state
-		var/mutable_appearance/l_hand_overlay = l_hand.build_worn_icon(state = l_state, default_layer = GORILLA_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+		var/mutable_appearance/l_hand_overlay = l_hand.build_worn_icon(default_layer = GORILLA_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 		l_hand_overlay.pixel_y -= 1
 		hands_overlays += l_hand_overlay
 
@@ -51,5 +49,5 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/gorilla/regenerate_icons()
-	update_inv_hands()
+	update_held_items()
 
