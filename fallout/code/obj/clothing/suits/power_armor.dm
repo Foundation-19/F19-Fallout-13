@@ -57,16 +57,16 @@
 	var/mob/living/carbon/human/H = user
 	if(src == H.wear_suit) //Suit is already equipped
 		return ..()
-	if (!HAS_TRAIT(H, TRAIT_PA_WEAR) && slot == SLOT_WEAR_SUIT && requires_training)
+	if (!HAS_TRAIT(H, TRAIT_PA_WEAR) && slot == FULL_BODY  && requires_training)
 		to_chat(user, span_warning("You don't have the proper training to operate the power armor!"))
 		return FALSE
-	if(slot == SLOT_WEAR_SUIT)
+	if(slot == FULL_BODY )
 		return ..()
 	return
 
 /obj/item/clothing/suit/armor/power_armor/equipped(mob/user, slot)
 	..()
-	if(slot == SLOT_WEAR_SUIT && powered)
+	if(slot == FULL_BODY  && powered)
 		START_PROCESSING(SSobj, src)
 		assign_traits(user)
 

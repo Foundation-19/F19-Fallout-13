@@ -136,8 +136,6 @@
 			magazine = new init_mag_type(src)
 		else
 			magazine = new mag_type(src)
-		if(magazine.fixed_mag)
-			gun_tags |= GUN_INTERNAL_MAG
 	if(bolt_type == BOLT_TYPE_STANDARD || internal_magazine) //Internal magazines shouldn't get magazine + 1.
 		chamber_round()
 	else

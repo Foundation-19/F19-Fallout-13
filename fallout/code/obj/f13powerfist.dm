@@ -71,7 +71,7 @@
 /obj/item/gun/ballistic/revolver/ballisticfist
 	name = "ballistic fist"
 	desc = "This powerfist has been modified to have two shotgun barrels welded to it, with the trigger integrated into the knuckle guard. For those times when you want to punch someone and shoot them in the face at the same time."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'fallout/icons/obj/items_and_weapons.dmi'
 	icon_state = "ballisticfist"
 	inhand_icon_state = "powerfist"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'

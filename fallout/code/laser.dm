@@ -44,7 +44,7 @@
 /obj/item/gun/energy/laser/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"
-	item_state = "caplaser"
+	inhand_icon_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
 	ammo_x_offset = 3
@@ -62,7 +62,7 @@
 	desc = "An energy-based laser gun that draws power from the Handy's internal energy cell directly. So this is what freedom looks like?"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/lasgun/hitscan)
 	icon_state = "laser"
-	item_state = "laser-rifle9"
+	inhand_icon_state = "laser-rifle9"
 	selfcharge = EGUN_SELFCHARGE_BORG
 	cell_type = /obj/item/stock_parts/cell/secborg
 	charge_delay = 3
@@ -94,7 +94,7 @@
 	name = "accelerator laser cannon"
 	desc = "An advanced laser cannon that does more damage the farther away the target is."
 	icon_state = "lasercannon"
-	item_state = "laser"
+	inhand_icon_state = "laser"
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
@@ -127,7 +127,7 @@
 	name = "\improper X-ray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated X-ray blasts that pass through multiple soft targets and heavier materials."
 	icon_state = "xray"
-	item_state = null
+	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 	pin = null
 	ammo_x_offset = 3
@@ -188,7 +188,7 @@
 	name = "energy weapon template"
 	desc = "Should not exists. Bugreport."
 	icon_state = "laser"
-	item_state = "laser"
+	inhand_icon_state = "laser"
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=2000)
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
@@ -238,11 +238,11 @@
 /obj/item/gun/energy/laser/wattz
 	name = "Wattz 1000 laser pistol"
 	desc = "A Wattz 1000 Laser Pistol. Civilian model, so the wattage is lower than military or police versions. Uses small energy cells."
-	icon = 'icons/fallout/objects/guns/energy.dmi'
-	lefthand_file = 'icons/fallout/onmob/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/fallout/onmob/weapons/guns_righthand.dmi'
+	icon = 'fallout/icons/objects/guns/energy.dmi'
+	lefthand_file = 'fallout/icons/onmob/weapons/guns_lefthand.dmi'
+	righthand_file = 'fallout/icons/onmob/weapons/guns_righthand.dmi'
 	icon_state = "wattz1000"
-	item_state = "laser-pistol"
+	inhand_icon_state = "laser-pistol"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pistol/wattz/hitscan)
@@ -259,7 +259,7 @@
 	name = "Wattz 1000 magneto-laser pistol"
 	desc = "This Wattz 1000 laser pistol has been upgraded with a magnetic field targeting system that tightens the laser emission, giving this pistol extra penetrating power."
 	icon_state = "magnetowattz"
-	item_state = "laser-pistol"
+	inhand_icon_state = "laser-pistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pistol/wattz/magneto/hitscan)
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -278,7 +278,7 @@
 	can_remove = 0
 	can_charge = 0
 	selfcharge = 1
-	icon = 'icons/fallout/objects/guns/energy.dmi'
+	icon = 'fallout/icons/objects/guns/energy.dmi'
 	icon_state = "rechargerpistol"
 	w_class = WEIGHT_CLASS_NORMAL //not a holdout weapon
 	slot_flags = ITEM_SLOT_BELT
@@ -298,7 +298,7 @@
 	name = "\improper AEP7 laser pistol"
 	desc = "A basic energy-based laser gun that fires concentrated beams of light."
 	icon_state = "AEP7"
-	item_state = "laser-pistol"
+	inhand_icon_state = "laser-pistol"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pistol/hitscan)
@@ -342,11 +342,11 @@
 	name = "AEP5-CR Disabling Beam Pistol"
 	desc = "A laser pistol that has been modified for less-than-lethal work."
 	slowdown = 0.2
-	icon = 'icons/fallout/objects/guns/energy.dmi'
-	lefthand_file = 'icons/fallout/onmob/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/fallout/onmob/weapons/guns_righthand.dmi'
+	icon = 'fallout/icons/objects/guns/energy.dmi'
+	lefthand_file = 'fallout/icons/onmob/weapons/guns_lefthand.dmi'
+	righthand_file = 'fallout/icons/onmob/weapons/guns_righthand.dmi'
 	icon_state = "AEP5CR"
-	item_state = "AEP5CR"
+	inhand_icon_state = "AEP5CR"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/stun)
@@ -369,7 +369,7 @@
 	slowdown = 0.2
 	desc = "This modified AEP7 laser pistol takes its power from the sun, recharging slowly using stored solar energy. However, it cannot be recharged manually as a result."
 	icon_state = "solarscorcher"
-	item_state = "solarscorcher"
+	inhand_icon_state = "solarscorcher"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/solar/hitscan) //27 dmg, .15 AP
@@ -388,7 +388,7 @@
 	name = "\improper Ultracite laser pistol"
 	desc = "An ultracite enhanced energy-based laser gun that fires concentrated beams of light."
 	icon_state = "ultra_pistol"
-	item_state = "laser-pistol"
+	inhand_icon_state = "laser-pistol"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	scope_x_offset = 7
@@ -412,11 +412,11 @@
 /obj/item/gun/energy/laser/wattz2k
 	name = "wattz 2000"
 	desc = "Wattz 2000 Laser Rifle. Uses micro fusion cells for more powerful lasers, and an extended barrel for additional range."
-	icon = 'icons/fallout/objects/guns/energy.dmi'
-	lefthand_file = 'icons/fallout/onmob/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/fallout/onmob/weapons/guns_righthand.dmi'
+	icon = 'fallout/icons/objects/guns/energy.dmi'
+	lefthand_file = 'fallout/icons/onmob/weapons/guns_lefthand.dmi'
+	righthand_file = 'fallout/icons/onmob/weapons/guns_righthand.dmi'
 	icon_state = "wattz2k"
-	item_state = "sniper_rifle"
+	inhand_icon_state = "sniper_rifle"
 	ammo_type = list(/obj/item/ammo_casing/energy/wattz2k/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
 	can_scope = FALSE
@@ -433,9 +433,9 @@
 	name = "wattz 2000e"
 	desc = "This Wattz 2000 laser rifle has had its recharging system upgraded and a special recycling chip installed that reduces the drain on the micro fusion cell by 50%."
 	icon_state = "wattz2k_ext"
-	lefthand_file = 'icons/fallout/onmob/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/fallout/onmob/weapons/guns_righthand.dmi'
-	item_state = "sniper_rifle"
+	lefthand_file = 'fallout/icons/onmob/weapons/guns_lefthand.dmi'
+	righthand_file = 'fallout/icons/onmob/weapons/guns_righthand.dmi'
+	inhand_icon_state = "sniper_rifle"
 	ammo_type = list(/obj/item/ammo_casing/energy/wattz2k/extended/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
 	can_scope = FALSE
@@ -454,7 +454,7 @@
 	name = "\improper AER9 laser rifle"
 	desc = "A sturdy pre-war laser rifle. Emits beams of concentrated light to kill targets. Fast firing, but not very powerful."
 	icon_state = "laser"
-	item_state = "laser-rifle9"
+	inhand_icon_state = "laser-rifle9"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/lasgun/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
 	fire_delay = 1
@@ -476,7 +476,7 @@
 	name = "\improper Ultracite laser rifle"
 	desc = "A sturdy and advanced military grade pre-war service laser rifle, now enhanced with ultracite"
 	icon_state = "ultra_rifle"
-	item_state = "laser-rifle9"
+	inhand_icon_state = "laser-rifle9"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/lasgun)
 	cell_type = /obj/item/stock_parts/cell/ammo/ultracite
 	can_scope = FALSE
@@ -494,7 +494,7 @@
 	name = "tribeam laser rifle"
 	desc = "A modified AER9 equipped with a refraction kit that divides the laser shot into three separate beams. While powerful, it has a reputation for friendly fire."
 	icon_state = "tribeam"
-	item_state = "laser-rifle9"
+	inhand_icon_state = "laser-rifle9"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/tribeam/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
 	equipsound = 'fallout/sound/f13weapons/equipsounds/tribeamequip.ogg'
@@ -509,9 +509,9 @@
 /obj/item/gun/energy/laser/aer12
 	name = "\improper AER12 laser rifle"
 	desc = "A cutting-edge, pre-war laser rifle. Its focusing crystal array is housed in gold alloy, making it difficult to maintain."
-	icon = 'icons/fallout/objects/guns/longguns.dmi'
+	icon = 'fallout/icons/objects/guns/longguns.dmi'
 	icon_state = "aer12new"
-	item_state = "aer12new"
+	inhand_icon_state = "aer12new"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/aer12/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
 	scope_state = "AEP7_scope"
@@ -532,7 +532,7 @@
 	name = "\improper AER14 laser rifle"
 	desc = "A bleeding-edge, pre-war laser rifle. Extremely powerful, but eats MFCs like nothing else."
 	icon_state = "aer14"
-	item_state = "laser-rifle9"
+	inhand_icon_state = "laser-rifle9"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/aer14/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
 	scope_state = "AEP7_scope"
@@ -553,7 +553,7 @@
 	name = "\improper LAER"
 	desc = "The Laser Assister Energy Rifle is a powerful pre-war weapon developed just before the turn of the Great War. Due to its incredible rarity and unprecedented firepower, the weapon is coveted and nearly solely possesed by the Brotherhood of Steel; typically held by an Elder as a status symbol."
 	icon_state = "laer"
-	item_state = "laer"
+	inhand_icon_state = "laer"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/laer/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
 	equipsound = 'fallout/sound/f13weapons/equipsounds/laerequip.ogg'
@@ -569,7 +569,7 @@
 	name = "laser RCW"
 	desc = "A rapid-fire laser rifle modeled after the familiar \"Thompson\" SMG. It features high-accuracy burst fire that will whittle down targets in a matter of seconds."
 	icon_state = "lasercw"
-	item_state = "rcw"
+	inhand_icon_state = "rcw"
 	automatic = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/rcw/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/ecp
@@ -589,11 +589,11 @@
 /obj/item/gun/energy/laser/rechargerrifle
 	name = "recharger rifle"
 	desc = "A locally produced copy of the recharger rifle. It's a bulky first-generation weapon designed to replenish its energy using radioactive decay."
-	icon = 'icons/fallout/objects/guns/longguns.dmi'
-	lefthand_file = 'icons/fallout/onmob/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/fallout/onmob/weapons/guns_righthand.dmi'
+	icon = 'fallout/icons/objects/guns/longguns.dmi'
+	lefthand_file = 'fallout/icons/onmob/weapons/guns_lefthand.dmi'
+	righthand_file = 'fallout/icons/onmob/weapons/guns_righthand.dmi'
 	icon_state = "rechargerrifle"
-	item_state = "rechargerrifle"
+	inhand_icon_state = "rechargerrifle"
 	icon_prefix = "rechargerrifle"
 	gun_tags = list()
 	can_remove = 0
@@ -616,7 +616,7 @@
 //Alien Blaster - UNIQUE; loot spawn
 /obj/item/gun/energy/laser/plasma/pistol/alien
 	name = "alien blaster"
-	item_state = "alienblaster"
+	inhand_icon_state = "alienblaster"
 	icon_state = "alienblaster"
 	desc = "This weapon is unlike any other you've ever seen before, and appears to be made out of metals not usually found on Earth. It certainly packs a punch, though."
 	w_class = WEIGHT_CLASS_NORMAL
@@ -635,7 +635,7 @@
 	name = "Gamma gun"
 	desc = "An advanced radiation weapon commonly utilized by people who have passionate hatred for their fellow man. Fires slow velocity, low damage radiation beams."
 	icon_state = "ultra_pistol"
-	item_state = "laser-pistol"
+	inhand_icon_state = "laser-pistol"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	ammo_type = list(/obj/item/ammo_casing/energy/gammagun)
@@ -657,7 +657,7 @@
 	desc = "The massive external power source for the laser gatling gun."
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "holstered"
-	item_state = "backpack"
+	inhand_icon_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
@@ -739,9 +739,9 @@
 /obj/item/gun/energy/minigun
 	name = "laser gatling gun"
 	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source to use."
-	icon = 'icons/obj/guns/minigun.dmi'
+	icon = 'fallout/icons/obj/guns/minigun.dmi'
 	icon_state = "minigun_spin"
-	item_state = "minigun"
+	inhand_icon_state = "minigun"
 	flags_1 = CONDUCT_1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
@@ -751,8 +751,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/gatling/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/ecp
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
-	var/obj/item/minigunpack/ammo_pack
-
 	slowdown = GUN_SLOWDOWN_RIFLE_LMG
 	force = GUN_MELEE_FORCE_RIFLE_HEAVY
 	weapon_weight = GUN_TWO_HAND_ONLY

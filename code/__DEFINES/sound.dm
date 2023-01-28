@@ -386,13 +386,13 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define PLASMA_RANGE_DISTANT (PLASMA_RANGE * 7)
 
 /// distant sounds
-#define PISTOL_LIGHT_DISTANT_SOUND 'sound/f13weapons/distant_pistol_light.ogg'
-#define PISTOL_MEDIUM_DISTANT_SOUND 'sound/f13weapons/distant_pistol_medium.ogg'
-#define PISTOL_HEAVY_DISTANT_SOUND 'sound/f13weapons/distant_pistol_heavy.ogg'
-#define RIFLE_LIGHT_DISTANT_SOUND 'sound/f13weapons/distant_rifle_light.ogg'
-#define RIFLE_MEDIUM_DISTANT_SOUND 'sound/f13weapons/distant_rifle_medium.ogg'
-#define RIFLE_HEAVY_DISTANT_SOUND 'sound/f13weapons/distant_rifle_heavy.ogg'
-#define SHOTGUN_DISTANT_SOUND 'sound/f13weapons/distant_shotgun.ogg'
-#define GAUSS_DISTANT_SOUND 'sound/f13weapons/distant_gauss.ogg'
-#define LASER_DISTANT_SOUND 'sound/f13weapons/distant_laser.ogg'
-#define PLASMA_DISTANT_SOUND 'sound/f13weapons/distant_plasma.ogg'
+#define PISTOL_LIGHT_DISTANT_SOUND 'fallout/sound/f13weapons/distant_pistol_light.ogg'
+#define PISTOL_MEDIUM_DISTANT_SOUND 'fallout/sound/f13weapons/distant_pistol_medium.ogg'
+#define PISTOL_HEAVY_DISTANT_SOUND 'fallout/sound/f13weapons/distant_pistol_heavy.ogg'
+#define RIFLE_LIGHT_DISTANT_SOUND 'fallout/sound/f13weapons/distant_rifle_light.ogg'
+#define RIFLE_MEDIUM_DISTANT_SOUND 'fallout/sound/f13weapons/distant_rifle_medium.ogg'
+#define RIFLE_HEAVY_DISTANT_SOUND 'fallout/sound/f13weapons/distant_rifle_heavy.ogg'
+#define SHOTGUN_DISTANT_SOUND 'fallout/sound/f13weapons/distant_shotgun.ogg'
+#define GAUSS_DISTANT_SOUND 'fallout/sound/f13weapons/distant_gauss.ogg'
+#define LASER_DISTANT_SOUND 'fallout/sound/f13weapons/distant_laser.ogg'
+#define PLASMA_DISTANT_SOUND 'fallout/sound/f13weapons/distant_plasma.ogg'

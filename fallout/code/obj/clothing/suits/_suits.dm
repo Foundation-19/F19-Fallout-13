@@ -13,6 +13,10 @@
 	var/obj/item/clothing/armoraccessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
 	var/dummy_thick = FALSE // is able to hold accessories on its item
+	var/deflection_chance = null //Chance for the armor to redirect a blocked projectile
+	var/armor_block_chance = null //Chance for the armor to block a low penetration projectile
+	var/list/protected_zones = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+
 
 /obj/item/clothing/suit/Initialize()
 	. = ..()

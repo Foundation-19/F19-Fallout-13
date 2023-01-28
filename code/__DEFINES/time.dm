@@ -167,3 +167,5 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 
 /// Anywhere on Earth
 #define TIMEZONE_ANYWHERE_ON_EARTH -12
+
+#define STATION_TIME(display_only, wtime) ((((wtime - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - (display_only? GLOB.timezoneOffset : 0)

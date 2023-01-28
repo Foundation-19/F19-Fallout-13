@@ -2,7 +2,7 @@
 	name = "back sheath"
 	desc = "A sheath that allows you to hold a sword on your back. It even has a pouch for your basic storage needs, how cool is that?"
 	icon_state = "sheathback"
-	inhand_icon_state = "sheathback"
+	item_state = "sheathback"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 
@@ -20,10 +20,10 @@
 
 /obj/item/storage/backpack/backsheath/update_icon()
 	icon_state = "sheathback"
-	inhand_icon_state = "sheathback"
+	item_state = "sheathback"
 	if(contents.len == 2)
 		icon_state += "-full"
-		inhand_icon_state += "-full"
+		item_state += "-full"
 	if(loc && isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
@@ -76,7 +76,7 @@
 /obj/item/storage/box/ration
 	name = "c-ration box"
 	desc = "A box containing canned rations, issued to New California Republic Army personnel."
-	icon = 'fallout/icons/obj/storage.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "c-ration"
 	illustration = null
 
@@ -309,7 +309,7 @@
 
 /obj/item/storage/box/medicine
 	name = "empty cardboard box for medicine"
-	icon = 'fallout/icons/objects/storage.dmi'
+	icon = 'icons/fallout/objects/storage.dmi'
 	icon_state = "medicinebox"
 	illustration = "overlay_stim"
 
@@ -368,7 +368,7 @@
 /obj/item/storage/box/medicine/bitterdrink5
 	name = "box of bitter drinks"
 	desc = "A box full of bitter drinks."
-	icon = 'fallout/icons/objects/storage.dmi'
+	icon = 'icons/fallout/objects/storage.dmi'
 	icon_state = "medicinebox_simple"
 	illustration = "overlay_bitter"
 

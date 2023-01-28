@@ -13,7 +13,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/pistol)
 	cell_type = /obj/item/stock_parts/cell/ammo/ec
-	equipsound = 'sound/f13weapons/equipsounds/pistolplasequip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/pistolplasequip.ogg'
 
 	slowdown = GUN_SLOWDOWN_PISTOL_HEAVY
 	force = GUN_MELEE_FORCE_PISTOL_LIGHT
@@ -51,7 +51,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/pistol/glock)
-	equipsound = 'sound/f13weapons/equipsounds/pistolplasequip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/pistolplasequip.ogg'
 	cell_type = /obj/item/stock_parts/cell/ammo/ec
 
 	slowdown = GUN_SLOWDOWN_PISTOL_HEAVY
@@ -81,7 +81,7 @@
 	desc = "A miniaturized plasmacaster that fires bolts of magnetically accelerated toroidal plasma towards an unlucky target."
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/urban)
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
-	equipsound = 'sound/f13weapons/equipsounds/plasequip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/plasequip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_MEDIUM_SEMI
 	force = GUN_MELEE_FORCE_PISTOL_LIGHT
@@ -95,7 +95,7 @@
 	inhand_icon_state = "multiplas"
 	icon_state = "multiplas"
 	desc = "A modified A3-20 plasma caster built by REPCONN equipped with a multicasting kit that creates multiple weaker clots."
-	equipsound = 'sound/f13weapons/equipsounds/plasequip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/plasequip.ogg'
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/scatter)
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
 
@@ -121,7 +121,7 @@
 	sharpness = SHARP_EDGED
 	max_reach = 2
 	scope_y_offset = 16
-	equipsound = 'sound/f13weapons/equipsounds/plasequip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/plasequip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_LIGHT_SEMI
 	force = GUN_MELEE_FORCE_RIFLE_LIGHT

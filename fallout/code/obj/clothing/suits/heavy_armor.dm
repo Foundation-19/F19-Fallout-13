@@ -41,7 +41,6 @@
 	icon_state = "bulletproof"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/magpouch // 4 slots for ammo!
 	slowdown = ARMOR_SLOWDOWN_HEAVY * ARMOR_SLOWDOWN_LESS_T3 * ARMOR_SLOWDOWN_GLOBAL_MULT
 	armor = ARMOR_VALUE_BULLETPROOF_ARMOR
@@ -144,10 +143,8 @@
 	blood_overlay_type = "armor"
 	worn_icon = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	var/hit_reflect_chance = 40
 	protected_zones = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN)
-	mutantrace_variation = NONE
 	armor = list(
 		"melee" = 0,
 		"bullet" = 0,
@@ -176,7 +173,6 @@
 	resistance_flags = FIRE_PROOF
 	var/hit_reflect_chance = 20
 	protected_zones = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	mutantrace_variation = NONE
 	armor = list(
 		"melee" = 5,
 		"bullet" = 5,
@@ -202,7 +198,6 @@
 	inhand_icon_state = "metal_chestplate2"
 	slowdown = ARMOR_SLOWDOWN_HEAVY * ARMOR_SLOWDOWN_MORE_T1 * ARMOR_SLOWDOWN_GLOBAL_MULT
 	armor = ARMOR_VALUE_REINFORCED_METAL_ARMOR
-	mutantrace_variation = STYLE_PAW_TAURIC
 
 /obj/item/clothing/suit/armor/heavy/metal/mutant
 	name = "mutant armour"
@@ -210,15 +205,12 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "mutie_metal_armour"
 	inhand_icon_state = "mutie_metal_armour"
-	mutantrace_variation = NONE
-
 /obj/item/clothing/suit/armor/heavy/metal/mutant/reinforced
 	name = "mutant armour"
 	desc = "An oversized boiler plate, hammered to fit the frame of a super mutant. Maybe he's the big iron with a ranger on his hip?"
 	icon_state = "mutie_metal_armour_mk2"
 	inhand_icon_state = "mutie_metal_armour_mk2"
 	slowdown = ARMOR_SLOWDOWN_HEAVY * ARMOR_SLOWDOWN_MORE_T1 * ARMOR_SLOWDOWN_GLOBAL_MULT
-	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/armor/heavy/metal/sulphite
 	name = "sulphite armor"
@@ -230,7 +222,6 @@
 	inhand_icon_state = "sulphite"
 	slowdown = ARMOR_SLOWDOWN_HEAVY * ARMOR_SLOWDOWN_MORE_T1 * ARMOR_SLOWDOWN_GLOBAL_MULT
 	armor_tokens = list(ARMOR_MODIFIER_UP_ENV_T2, ARMOR_MODIFIER_UP_FIRE_T3)
-	mutantrace_variation = NONE
 
 ////////////////////
 //// RIOT ARMOR ////
@@ -423,7 +414,7 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
 	equip_delay_other = 50
 	max_integrity = 200
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/duster/armored

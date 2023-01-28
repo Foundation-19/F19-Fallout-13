@@ -627,3 +627,21 @@
 	icon_state = "bone_dancer_helmet"
 	inhand_icon_state = "bone_dancer_helmet"
 	strip_delay = 100
+
+/obj/item/clothing/head/helmet/armyhelmet
+	name = "steel helmet"
+	desc = "A steel helmet, inspired by several pre-war designs. It provides some protection against impacts, cuts, and medium-velocity bullets."
+	icon = 'fallout/icons/clothing/hats.dmi'
+	worn_icon = 'fallout/icons/onmob/clothes/head.dmi'
+	icon_state = "armyhelmet"
+	inhand_icon_state = "armyhelmet"
+	armor = ARMOR_VALUE_METAL_ARMOR
+	armor_tokens = list(ARMOR_MODIFIER_UP_DT_T3,ARMOR_MODIFIER_DOWN_MELEE_T1,ARMOR_MODIFIER_DOWN_LASER_T1)
+
+/obj/item/clothing/head/helmet/armyhelmet/heavy
+	name = "heavy steel helmet"
+	desc = "a steel helmet, inspired by several pre-war designs. This one has been modified by Eastwood roadies to provide more protection to the face and neck."
+	icon_state = "armyhelmetheavy"
+	inhand_icon_state = "armyhelmetheavy"
+	armor = ARMOR_VALUE_REINFORCED_METAL_ARMOR
+	armor_tokens = list(ARMOR_MODIFIER_UP_DT_T3,ARMOR_MODIFIER_DOWN_MELEE_T1,ARMOR_MODIFIER_DOWN_LASER_T1)
