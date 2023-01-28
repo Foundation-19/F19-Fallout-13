@@ -247,7 +247,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pistol/wattz/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/ec
-	equipsound = 'sound/f13weapons/equipsounds/aep7equip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/aep7equip.ogg'
 
 	slowdown = GUN_SLOWDOWN_PISTOL_LIGHT
 	force = GUN_MELEE_FORCE_PISTOL_LIGHT
@@ -285,7 +285,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pistol/recharger/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/breeder
 	gun_tags = list()
-	equipsound = 'sound/f13weapons/equipsounds/aep7equip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/aep7equip.ogg'
 
 	slowdown = GUN_SLOWDOWN_PISTOL_LIGHT
 	force = GUN_MELEE_FORCE_PISTOL_LIGHT
@@ -308,7 +308,7 @@
 	scope_state = "AEP7_scope"
 	scope_x_offset = 7
 	scope_y_offset = 22
-	equipsound = 'sound/f13weapons/equipsounds/aep7equip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/aep7equip.ogg'
 
 	slowdown = GUN_SLOWDOWN_PISTOL_LIGHT
 	force = GUN_MELEE_FORCE_PISTOL_LIGHT
@@ -356,7 +356,7 @@
 	scope_state = "AEP7_scope"
 	scope_x_offset = 7
 	scope_y_offset = 22
-	equipsound = 'sound/f13weapons/equipsounds/aep7equip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/aep7equip.ogg'
 
 	slowdown = GUN_SLOWDOWN_PISTOL_LIGHT
 	force = GUN_MELEE_FORCE_PISTOL_LIGHT
@@ -376,7 +376,7 @@
 	cell_type = /obj/item/stock_parts/cell/ammo/ec //16 shots, self-charges
 	can_charge = 0
 	selfcharge = 1 //selfcharging adds 100 a shot
-	equipsound = 'sound/f13weapons/equipsounds/aep7equip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/aep7equip.ogg'
 
 	slowdown = GUN_SLOWDOWN_PISTOL_LIGHT
 	force = GUN_MELEE_FORCE_PISTOL_LIGHT
@@ -395,7 +395,7 @@
 	scope_y_offset = 22
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/ultra_pistol)
 	cell_type = /obj/item/stock_parts/cell/ammo/ec
-	equipsound = 'sound/f13weapons/equipsounds/aep7equip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/aep7equip.ogg'
 
 	slowdown = GUN_SLOWDOWN_PISTOL_LIGHT
 	force = GUN_MELEE_FORCE_PISTOL_LIGHT
@@ -421,7 +421,7 @@
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
 	can_scope = FALSE
 	zoom_factor = 1
-	equipsound = 'sound/f13weapons/equipsounds/aer14equip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/aer14equip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_LIGHT_SEMI
 	force = GUN_MELEE_FORCE_RIFLE_LIGHT
@@ -440,7 +440,7 @@
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
 	can_scope = FALSE
 	zoom_factor = 1
-	equipsound = 'sound/f13weapons/equipsounds/aer14equip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/aer14equip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_LIGHT_SEMI
 	force = GUN_MELEE_FORCE_RIFLE_LIGHT
@@ -461,7 +461,7 @@
 	scope_state = "AEP7_scope"
 	scope_x_offset = 12
 	scope_y_offset = 20
-	equipsound = 'sound/f13weapons/equipsounds/aer9equip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/aer9equip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_MEDIUM_SEMI
 	force = GUN_MELEE_FORCE_RIFLE_HEAVY
@@ -481,7 +481,7 @@
 	cell_type = /obj/item/stock_parts/cell/ammo/ultracite
 	can_scope = FALSE
 	zoom_factor = 1
-	equipsound = 'sound/f13weapons/equipsounds/aer9equip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/aer9equip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_MEDIUM_SEMI
 	force = GUN_MELEE_FORCE_RIFLE_HEAVY
@@ -497,7 +497,7 @@
 	item_state = "laser-rifle9"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/tribeam/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
-	equipsound = 'sound/f13weapons/equipsounds/tribeamequip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/tribeamequip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_MEDIUM_SEMI
 	force = GUN_MELEE_FORCE_RIFLE_HEAVY
@@ -517,7 +517,7 @@
 	scope_state = "AEP7_scope"
 	scope_x_offset = 12
 	scope_y_offset = 20
-	equipsound = 'sound/f13weapons/equipsounds/tribeamequip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/tribeamequip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_MEDIUM_SEMI
 	force = GUN_MELEE_FORCE_RIFLE_HEAVY
@@ -538,7 +538,7 @@
 	scope_state = "AEP7_scope"
 	scope_x_offset = 12
 	scope_y_offset = 20
-	equipsound = 'sound/f13weapons/equipsounds/aer14equip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/aer14equip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_MEDIUM_SEMI
 	force = GUN_MELEE_FORCE_RIFLE_HEAVY
@@ -556,7 +556,7 @@
 	item_state = "laer"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/laer/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/mfc
-	equipsound = 'sound/f13weapons/equipsounds/laerequip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/laerequip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_MEDIUM_SEMI
 	force = GUN_MELEE_FORCE_RIFLE_HEAVY
@@ -573,7 +573,7 @@
 	automatic = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/rcw/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/ecp
-	equipsound = 'sound/f13weapons/equipsounds/RCWequip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/RCWequip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_MEDIUM_SEMI
 	force = GUN_MELEE_FORCE_RIFLE_HEAVY
@@ -601,7 +601,7 @@
 	selfcharge = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/rechargerrifle/hitscan)
 	cell_type = /obj/item/stock_parts/cell/ammo/breeder/rifle
-	equipsound = 'sound/f13weapons/equipsounds/RCWequip.ogg'
+	equipsound = 'fallout/sound/f13weapons/equipsounds/RCWequip.ogg'
 
 	slowdown = GUN_SLOWDOWN_RIFLE_LIGHT_SEMI
 	force = GUN_MELEE_FORCE_RIFLE_HEAVY

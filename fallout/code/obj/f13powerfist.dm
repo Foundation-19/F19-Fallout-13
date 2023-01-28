@@ -79,7 +79,7 @@
 	force = 30
 	armour_penetration = 0.45
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
-	fire_sound = 'sound/f13weapons/caravan_shotgun.ogg'
+	fire_sound = 'fallout/sound/f13weapons/caravan_shotgun.ogg'
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
 	w_class = WEIGHT_CLASS_NORMAL
 	item_flags = NEEDS_PERMIT //doesn't slow you down
