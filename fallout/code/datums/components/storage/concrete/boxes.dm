@@ -17,7 +17,6 @@
 
 /datum/component/storage/concrete/box/monkey/Initialize()
 	. = ..()
-	can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/cube/monkey))
 
 /datum/component/storage/concrete/box/big
 	max_items = STORAGE_BIG_BOX_DEFAULT_MAX_ITEMS

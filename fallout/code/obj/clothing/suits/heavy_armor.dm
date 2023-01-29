@@ -137,7 +137,7 @@
 /obj/item/clothing/suit/armor/heavy/metal/polished/actually_laserproof // also actually_unobtainable
 	name = "reflector vest"
 	desc = "A vest that excels in protecting the wearer against energy projectiles, as well as occasionally reflecting them."
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'fallout/icons/obj/clothing/suits.dmi'
 	icon_state = "armor_reflec"
 	inhand_icon_state = "armor_reflec"
 	blood_overlay_type = "armor"
@@ -165,7 +165,7 @@
 /obj/item/clothing/suit/armor/heavy/metal/tesla //changed from armor/laserproof
 	name = "tesla armor"
 	desc = "A prewar armor design by Nikola Tesla before being confinscated by the U.S. government. Has a chance to deflect energy projectiles."
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'fallout/icons/obj/clothing/suits.dmi'
 	icon_state = "tesla_armor"
 	inhand_icon_state = "tesla_armor"
 	blood_overlay_type = "armor"
@@ -202,7 +202,7 @@
 /obj/item/clothing/suit/armor/heavy/metal/mutant
 	name = "mutant armour"
 	desc = "An oversized set of metal armour, made to fit the frame of a super mutant. Maybe he's the big iron with a ranger on his hip?"
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'fallout/icons/obj/clothing/suits.dmi'
 	icon_state = "mutie_metal_armour"
 	inhand_icon_state = "mutie_metal_armour"
 /obj/item/clothing/suit/armor/heavy/metal/mutant/reinforced

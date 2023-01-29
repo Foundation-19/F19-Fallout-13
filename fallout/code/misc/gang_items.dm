@@ -262,7 +262,6 @@
 	desc = "Rule the underworld like the Den Mob of old."
 
 /obj/item/storage/box/bundledenboss/PopulateContents()
-	new /obj/item/gun/ballistic/automatic/assault_carbine/policerifle(src)
 	new /obj/item/reagent_containers/hypospray/medipen/medx(src)
 	new /obj/item/reagent_containers/hypospray/medipen/medx(src)
 	new /obj/item/reagent_containers/hypospray/medipen/medx(src)
@@ -287,7 +286,6 @@
 	new /obj/item/grenade/plastic/c4(src)
 	new /obj/item/grenade/plastic/c4(src)
 	new /obj/item/grenade/f13/explosive(src)
-	new /obj/item/clothing/suit/bomb_suit(src)
 
 /datum/gang_item/equipment/bundlegunner
 	name = "Old Soldier Bundle"
@@ -319,8 +317,6 @@
 	desc = "You burned the Village, raped the horses, and rode off on their women. It was a long time ago, so the details got mixed up, but you get the point. "
 
 /obj/item/storage/box/bundleelguapo/PopulateContents()
-	new /obj/item/gun/ballistic/rifle/repeater/cowboy(src)
-	new /obj/item/ammo_box/a357box/ricochet(src)
 	new /obj/item/gun/ballistic/revolver/colt357(src)
 	new /obj/item/clothing/head/f13/ranger_hat(src)
 	new /obj/item/clothing/suit/armor/light/leather/leathercoat(src)

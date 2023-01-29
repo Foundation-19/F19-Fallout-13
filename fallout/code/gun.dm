@@ -122,3 +122,42 @@
 		SP_NORMAL_RANGE_SILENCED(SOUND_RANGE - 15),
 		SP_IGNORE_WALLS(TRUE)
 	)
+
+/obj/item/gun/refresh_upgrades()
+	//First of all, lets reset any var that could possibly be altered by an upgrade
+	damage_multiplier = initial(damage_multiplier)
+	penetration_multiplier = initial(penetration_multiplier)
+	//pierce_multiplier = initial(pierce_multiplier)
+	//ricochet_multiplier = initial(ricochet_multiplier)
+	projectile_speed_multiplier = initial(projectile_speed_multiplier)
+	//proj_agony_multiplier = initial(proj_agony_multiplier)
+	fire_delay = initial(fire_delay)
+	burst_shot_delay = initial(burst_shot_delay)
+	//move_delay = initial(move_delay)
+	//muzzle_flash = initial(muzzle_flash)
+	silenced = initial(silenced)
+	restrict_safety = initial(restrict_safety)
+	init_offset = initial(init_offset)
+	//proj_damage_adjust = list()
+	//fire_sound = initial(fire_sound)
+	restrict_safety = initial(restrict_safety)
+	rigged = initial(rigged)
+	zoom_factor = initial(zoom_factor)
+	//darkness_view = initial(darkness_view)
+	vision_flags = initial(vision_flags)
+	force = initial(force)
+	armour_penetration = initial(armour_penetration)
+	sharpness = initial(sharpness)
+	braced = initial(braced)
+	recoil_dat = getRecoil(init_recoil[1], init_recoil[2], init_recoil[3])
+
+	//attack_verb = list()
+
+	//Now lets have each upgrade reapply its modifications
+	SEND_SIGNAL(src, COMSIG_UPGRADE_ADDVAL, src)
+	SEND_SIGNAL(src, COMSIG_UPGRADE_APPVAL, src)
+
+
+
+	update_icon()
+	//then update any UIs with the new stats

@@ -491,8 +491,7 @@
 	if(M.hud_used)
 		if(current_cycle >= 20 && current_cycle%20 == 0)
 			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[OBJITEM_PLANE]"],
-									M.hud_used.plane_masters["[LIGHTING_PLANE]"], M.hud_used.plane_masters["[WALL_PLANE]"],
-									M.hud_used.plane_masters["[ABOVE_WALL_PLANE]"])
+									M.hud_used.plane_masters["[LIGHTING_PLANE]"], M.hud_used.plane_masters["[WALL_PLANE]"])
 			var/rotation = min(round(current_cycle/20), 89) // By this point the player is probably puking and quitting anyway
 			for(var/whole_screen in screens)
 				animate(whole_screen, transform = matrix(rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING, loop = -1)
@@ -869,7 +868,6 @@
 	name = "Strong sludge"
 	description = "An incredibly vile mixture made by submerging fissile materials in sugar. Good for ghouls. Not so good for people."
 	ghoulfriendly = TRUE
-	species_required = "ghoul"
 
 /datum/reagent/consumable/ethanol/species_drink/strongsludge/on_mob_life(mob/living/carbon/M)
 	if(isghoul(M))

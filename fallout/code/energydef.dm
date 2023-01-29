@@ -243,13 +243,13 @@
 		return
 	..()
 	var/ratio = get_charge_ratio()
-	var/new_item_state = ""
-	new_item_state = initial(icon_state)
+	var/new_inhand_icon_state = ""
+	new_inhand_icon_state = initial(icon_state)
 	if(modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
-		new_item_state += "[shot.select_name]"
-	new_item_state += "[ratio]"
-	inhand_icon_state = new_item_state
+		new_inhand_icon_state += "[shot.select_name]"
+	new_inhand_icon_state += "[ratio]"
+	inhand_icon_state = new_inhand_icon_state
 
 /obj/item/gun/energy/update_overlays()
 	. = ..()
@@ -287,7 +287,7 @@
 		if(user.is_holding(src))
 			user.visible_message(span_suicide("[user] melts [user.p_their()] face off with [src]!"))
 			playsound(loc, fire_sound, 50, 1, -1)
-			playsound(src, 'sound/weapons/dink.ogg', 30, 1)
+			playsound(src, 'fallout/sound/weapons/dink.ogg', 30, 1)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 			cell.use(shot.e_cost * charge_cost_multiplier)
 			update_icon()
