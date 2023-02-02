@@ -261,7 +261,7 @@
 	desc = "A heavily reinforced set of military grade armor."
 	icon_state = "elite_riot"
 	inhand_icon_state = "elite_riot"
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'fallout/icons/obj/clothing/suits.dmi'
 
 //////////////////////////
 // Salvaged Power Armor //

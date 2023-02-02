@@ -1,7 +1,7 @@
 /obj/item/cosmetics
-	icon = 'modular_atom/fashion/icons/cosmetics.dmi'
-	righthand_file = 'modular_atom/fashion/icons/onmobright.dmi'
-	lefthand_file = 'modular_atom/fashion/icons/onmobleft.dmi'
+	icon = 'fallout/code/modular_atom/fashion/icons/cosmetics.dmi'
+	righthand_file = 'fallout/code/modular_atom/fashion/icons/onmobright.dmi'
+	lefthand_file = 'fallout/code/modular_atom/fashion/icons/onmobleft.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	gender = PLURAL
 	var/datum/sprite_accessory/hair/hair_style = null
@@ -241,9 +241,9 @@
 /obj/item/melee/onehanded/straight_razor
 	name = "straight razor"
 	desc = "For those smooth close shaves. Better aim for the mouth or the head, or else things might get messy. Could be used as a scalpel in a pinch."
-	icon = 'modular_atom/fashion/icons/cosmetics.dmi'
-	righthand_file = 'modular_atom/fashion/icons/onmobright.dmi'
-	lefthand_file = 'modular_atom/fashion/icons/onmobleft.dmi'
+	icon = 'fallout/code/modular_atom/fashion/icons/cosmetics.dmi'
+	righthand_file = 'fallout/code/modular_atom/fashion/icons/onmobright.dmi'
+	lefthand_file = 'fallout/code/modular_atom/fashion/icons/onmobleft.dmi'
 	icon_state = "straight_razor"
 	force = WEAPON_FORCE_BIG_TOOL
 	throwforce = THROWING_PATHETIC
@@ -282,7 +282,7 @@
 				return
 
 			if(H == user) //shaving yourself
-				playsound(loc, 'modular_atom/fashion/sound/shaving.ogg', 100, 1) // added
+				playsound(loc, 'fallout/code/modular_atom/fashion/sound/shaving.ogg', 100, 1) // added
 				user.visible_message("[user] starts to shave [user.p_their()] facial hair with [src].", \
 									span_notice("You take a moment to shave your facial hair with [src]..."))
 				if(do_after(user, 150, target = H))
@@ -291,7 +291,7 @@
 					manual_shave(H, location)
 			else
 				var/turf/H_loc = H.loc
-				playsound(loc, 'modular_atom/fashion/sound/shaving.ogg', 100, 1) // added
+				playsound(loc, 'fallout/code/modular_atom/fashion/sound/shaving.ogg', 100, 1) // added
 				user.visible_message(span_warning("[user] tries to shave [H]'s facial hair with [src]."), \
 									span_notice("You start shaving [H]'s facial hair..."))
 				if(do_after(user, 100, target = H))
@@ -312,7 +312,7 @@
 				return
 
 			if(H == user) //shaving yourself
-				playsound(loc, 'modular_atom/fashion/sound/shaving.ogg', 100, 1) // added
+				playsound(loc, 'fallout/code/modular_atom/fashion/sound/shaving.ogg', 100, 1) // added
 				user.visible_message("[user] starts to shave [user.p_their()] head with [src].", \
 									span_notice("You start to shave your head with [src]..."))
 				if(do_after(user, 150, target = H)) //edited time
@@ -321,7 +321,7 @@
 					manual_shave(H, location)
 			else
 				var/turf/H_loc = H.loc
-				playsound(loc, 'modular_atom/fashion/sound/shaving.ogg', 100, 1) // added
+				playsound(loc, 'fallout/code/modular_atom/fashion/sound/shaving.ogg', 100, 1) // added
 				user.visible_message(span_warning("[user] tries to shave [H]'s head with [src]!"), \
 									span_notice("You start shaving [H]'s head..."))
 				if(do_after(user, 150, target = H)) //edited time

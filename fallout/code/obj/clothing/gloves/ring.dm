@@ -5,7 +5,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'fallout/icons/obj/ring.dmi'
 	icon_state = "ringgold"
-	item_state = "gring"
+	inhand_icon_state = "gring"
 	body_parts_covered = 0
 	attack_verb = list("proposed")
 	transfer_prints = TRUE
@@ -32,7 +32,7 @@
 	name = "diamond ring"
 	desc = "An expensive ring, studded with a diamond. Cultures have used these rings in courtship for a millenia."
 	icon_state = "ringdiamond"
-	item_state = "dring"
+	inhand_icon_state = "dring"
 	mood_event_on_equip = /datum/mood_event/equipped_ring/diamond
 
 /obj/item/clothing/gloves/ring/diamond/attack_self(mob/user)
@@ -42,5 +42,5 @@
 	name = "silver ring"
 	desc = "A tiny silver ring, sized to wrap around a finger."
 	icon_state = "ringsilver"
-	item_state = "sring"
+	inhand_icon_state = "sring"
 	mood_event_on_equip = /datum/mood_event/equipped_ring
