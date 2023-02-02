@@ -3,7 +3,7 @@
 	desc = "A tiny gold ring, sized to wrap around a finger."
 	gender = NEUTER
 	w_class = WEIGHT_CLASS_TINY
-	icon = 'icons/obj/ring.dmi'
+	icon = 'fallout/icons/obj/ring.dmi'
 	icon_state = "ringgold"
 	item_state = "gring"
 	body_parts_covered = 0

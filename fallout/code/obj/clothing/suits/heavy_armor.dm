@@ -65,7 +65,7 @@
 /obj/item/clothing/suit/armor/heavy/tribal/bone
 	name = "Heavy Bone armor"
 	desc = "A tribal full armor plate, crafted from animal bone, metal and leather. Usually worn by the Bone Dancers"
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'fallout/icons/obj/clothing/suits.dmi'
 	worn_icon = null
 	icon_state = "bone_dancer_armor_heavy"
 	inhand_icon_state = "bone_dancer_armor_heavy"
@@ -75,7 +75,7 @@
 /obj/item/clothing/suit/armor/heavy/tribal/metal
 	name = "metal armor suit"
 	desc = "A suit of welded, fused metal plates. Bulky, but with great protection."
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'fallout/icons/obj/clothing/suits.dmi'
 	worn_icon = null
 	icon_state = "raider_metal"
 	inhand_icon_state = "raider_metal"

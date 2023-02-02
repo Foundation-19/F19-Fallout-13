@@ -55,7 +55,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	var/empty = FALSE
 
 /obj/item/storage/medical/ancientfirstaid/PopulateContents()
 	if(empty)

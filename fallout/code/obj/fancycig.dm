@@ -76,28 +76,6 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donut))
-
-/*
- * Egg Box
- */
-
-/obj/item/storage/fancy/egg_box
-	icon = 'icons/obj/food/containers.dmi'
-	inhand_icon_state = "eggbox"
-	icon_state = "eggbox"
-	icon_type = "egg"
-	lefthand_file = 'fallout/icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'fallout/icons/mob/inhands/misc/food_righthand.dmi'
-	name = "egg box"
-	desc = "A carton for containing eggs."
-	spawn_type = /obj/item/reagent_containers/food/snacks/egg
-
-/obj/item/storage/fancy/egg_box/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 12
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/egg))
-
 /*
  * Candle Box
  */
@@ -426,20 +404,6 @@
 		/obj/item/reagent_containers/food/snacks/bonbon/peanut_butter_cup
 		))
 
-/obj/item/storage/fancy/nugget_box
-	name = "nugget box"
-	desc = "A cardboard box used for holding chicken nuggies."
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "nuggetbox"
-	icon_type = "nugget"
-	spawn_type = /obj/item/reagent_containers/food/snacks/nugget
-
-/obj/item/storage/fancy/nugget_box/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/nugget))
-
 /obj/item/storage/fancy/cracker_pack
 	name = "cracker pack"
 	desc = "A pack of delicious crackers. Keep away from parrots!"
@@ -453,25 +417,6 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/cracker))
-
-/*
- * Jar of pickles
- */
-
-/obj/item/storage/fancy/pickles_jar
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "pickles"
-	icon_type = "pickles"
-	name = "pickles"
-	desc = "A jar for containing pickles."
-	spawn_type = /obj/item/reagent_containers/food/snacks/pickle
-
-/obj/item/storage/fancy/pickle_jar/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/pickle))
-
 /*
  * Ring Box
  */

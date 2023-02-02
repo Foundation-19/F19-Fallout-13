@@ -133,47 +133,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				to_chat(user, span_notice("[src] is full."))
 
-/obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
-	if(lit)
-		return
-	if(!(flags_1 & INITIALIZED_1))
-		icon_state = icon_on
-		inhand_icon_state = icon_on
-		return
-
-	lit = TRUE
-	name = "lit [name]"
-	attack_verb = list("burnt", "singed")
-	hitsound = 'sound/items/welder.ogg'
-	damtype = "fire"
-	force = 4
-	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
-		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
-		e.start()
-		qdel(src)
-		return
-	if(reagents.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
-		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/fuel) / 5, 1), get_turf(src), 0, 0)
-		e.start()
-		qdel(src)
-		return
-	// allowing reagents to react after being lit
-	DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
-	reagents.handle_reactions()
-	icon_state = icon_on
-	inhand_icon_state = icon_on
-	if(flavor_text)
-		var/turf/T = get_turf(src)
-		T.visible_message(flavor_text)
-	START_PROCESSING(SSobj, src)
-
-	//can't think of any other way to update the overlays :<
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_wear_mask()
-		M.update_inv_hands()
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit)
