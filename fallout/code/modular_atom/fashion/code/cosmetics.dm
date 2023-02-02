@@ -4,7 +4,7 @@
 	lefthand_file = 'fallout/code/modular_atom/fashion/icons/onmobleft.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	gender = PLURAL
-	var/datum/sprite_accessory/hair/hair_style = null
+	var/datum/sprite_accessory/hair/hairstyle = null
 
 // ------------------------ LIPSTICK ------------------------------- //  -AffectedArc07
 /obj/item/cosmetics/lipstick
@@ -162,9 +162,9 @@
 
 /obj/item/cosmetics/razor/proc/shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
 	if(location == BODY_ZONE_PRECISE_MOUTH)
-		H.facial_hair_style = "Clean shave (Hairless)"
+		H.facial_hairstyle = "Clean shave (Hairless)"
 	else
-		H.hair_style = "Skinhead"
+		H.hairstyle = "Skinhead"
 
 	H.update_hair()
 	playsound(loc, 'sound/items/welder2.ogg', 20, 1)
@@ -184,7 +184,7 @@
 			if(!get_location_accessible(H, location))
 				to_chat(user, span_warning("The mask is in the way!"))
 				return
-			if(H.facial_hair_style == "Clean shave (Hairless)")
+			if(H.facial_hairstyle == "Clean shave (Hairless)")
 				to_chat(user, span_warning("Already clean-shaven!"))
 				return
 
@@ -212,7 +212,7 @@
 			if(!get_location_accessible(H, location))
 				to_chat(user, span_warning("The headgear is in the way!"))
 				return
-			if(H.hair_style == "Bald" || H.hair_style == "Mature (Balding)" || H.hair_style == "Clean shave (Hairless)")
+			if(H.hairstyle == "Bald" || H.hairstyle == "Mature (Balding)" || H.hairstyle == "Clean shave (Hairless)")
 				to_chat(user, span_warning("There is not enough hair left to shave!"))
 				return
 
@@ -257,9 +257,9 @@
 
 /obj/item/melee/onehanded/straight_razor/proc/manual_shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
 	if(location == BODY_ZONE_PRECISE_MOUTH)
-		H.facial_hair_style = "Clean shave (Hairless)"
+		H.facial_hairstyle = "Clean shave (Hairless)"
 	else
-		H.hair_style = "Skinhead"
+		H.hairstyle = "Skinhead"
 
 	H.update_hair()
 
@@ -277,7 +277,7 @@
 			if(!get_location_accessible(H, location))
 				to_chat(user, span_warning("The mask is in the way!"))
 				return
-			if(H.facial_hair_style == "Clean shave (Hairless)")
+			if(H.facial_hairstyle == "Clean shave (Hairless)")
 				to_chat(user, span_warning("Already clean-shaven!"))
 				return
 
@@ -307,7 +307,7 @@
 			if(!get_location_accessible(H, location))
 				to_chat(user, span_warning("The headgear is in the way!"))
 				return
-			if(H.hair_style == "Bald" || H.hair_style == "Mature (Balding)" || H.hair_style == "Clean shave (Hairless)")
+			if(H.hairstyle == "Bald" || H.hairstyle == "Mature (Balding)" || H.hairstyle == "Clean shave (Hairless)")
 				to_chat(user, span_warning("There is not enough hair left to shave!"))
 				return
 
@@ -357,8 +357,8 @@
 
 	if(ishuman(M))
 		if(H == user)
-//			var/datum/sprite_accessory/hair/hair_style = GLOB.hair_styles_list[H.hair_style]
-//			if(hair_style.flags & VERY_SHORT_HAIR)
+//			var/datum/sprite_accessory/hair/hairstyle = GLOB.hairstyles_list[H.hairstyle]
+//			if(hairstyle.flags & VERY_SHORT_HAIR)
 //				to_chat(user, span_warning("[user] scrapes the scalp in a futile attempt to comb the hair."))
 			user.visible_message(span_notice("[user] combs [user.p_their()] hair with \the [src]. What a tidy[user.gender == FEMALE ? "gal" : "guy"]"), \
 			span_notice("You comb your hair for a moment, getting rid of dust and grime. Perfect!"))
@@ -408,10 +408,10 @@
 /* REASON THIS ISNT USED: works by clicking the brush itself, instead of slapping the mob with it. If the way stuff works isnt systematic I dont want it, so its just here for now, taunting me.
 /obj/item/cosmetics/haircomb/brush/attack_self(mob/living/carbon/human/user)
 	if(!user.incapacitated())
-		var/datum/sprite_accessory/hair/hair_style = GLOB.hair_styles_list[user.hair_style]
-		if(hair_style.flags & VERY_SHORT_HAIR)
+		var/datum/sprite_accessory/hair/hairstyle = GLOB.hairstyles_list[user.hairstyle]
+		if(hairstyle.flags & VERY_SHORT_HAIR)
 			user.visible_message("<span class='notice'>\The [user] just sort of runs \the [src] over their scalp.</span>")
-		if(hair_style.flags & VERY_LONG_HAIR)
+		if(hairstyle.flags & VERY_LONG_HAIR)
 			user.visible_message("<span class='notice'>\The [user] feels a lot better after carefully brushing their long hair with \the [src].</span>")
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "oblivious", /datum/mood_event/oblivious)
 		else

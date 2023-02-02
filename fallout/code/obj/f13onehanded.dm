@@ -19,7 +19,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = SHARP_NONE
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb_simple = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	resistance_flags = FIRE_PROOF
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -36,10 +36,10 @@
 /obj/item/melee/onehanded/machete					//	[ Damage SWORD, Wounding] --------------
 	name = "lawnmower machete"
 	desc = "A makeshift machete made of a lawn mower blade."
-	icon = 'modular_atom/legio_invicta/icons/icons_legion.dmi'
-	worn_icon = 'modular_atom/legio_invicta/icons/beltslot.dmi'
-	righthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
-	lefthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
+	icon = 'fallout/code/modular_atom/legio_invicta/icons/icons_legion.dmi'
+	worn_icon = 'fallout/code/modular_atom/legio_invicta/icons/beltslot.dmi'
+	righthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
+	lefthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
 	icon_state = "machete_lawnmower"
 	inhand_icon_state = "machete_lawnmower"
 //	icon_state = "machete_imp"
@@ -125,7 +125,7 @@
 	custom_materials = list(/datum/material/iron=6000)
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb_simple = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/bayonet = FALSE	//Can this be attached to a gun?
 
 /obj/item/melee/onehanded/knife/Initialize()
@@ -151,7 +151,7 @@
 	desc = "Dependable hunting knife."
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
 	throwforce = THROWING_EFFECTIVE
-	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
+	attack_verb_simple = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 
 /obj/item/melee/onehanded/knife/survival		//	[ Damage KNIFE, Minor AP, Fast attack, Embed ok ] ----------------
 	name = "survival knife"
@@ -183,7 +183,7 @@
 	desc = "A large clip point fighting knife."
 	force = WEAPON_FORCE_BIG_KNIFE
 	throwforce = THROWING_EFFECTIVE
-	attack_verb = list("slashed", "stabbed", "sliced", "shanked", "ripped", "lacerated")
+	attack_verb_simple = list("slashed", "stabbed", "sliced", "shanked", "ripped", "lacerated")
 
 /obj/item/melee/onehanded/knife/trench			//	[ Damage BIG KNIFE + 1, Minor AP, Fast attack ] ------------------
 	name = "trench knife"
@@ -193,7 +193,7 @@
 	force = WEAPON_FORCE_BIG_KNIFE+1
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=8000)
-	attack_verb = list("slashed", "stabbed", "sliced", "shanked", "ripped", "lacerated")
+	attack_verb_simple = list("slashed", "stabbed", "sliced", "shanked", "ripped", "lacerated")
 
 /obj/item/melee/onehanded/knife/ritualdagger	//	[ Damage BIG KNIFE + 1, Minor AP, Fast attack ] ------------------
 	name = "ritual dagger"
@@ -210,7 +210,7 @@
 	force = 3
 	throwforce = THROWING_PATHETIC
 	hitsound = 'sound/weapons/genhit.ogg'
-	attack_verb = list("stubbed", "poked")
+	attack_verb_simple = list("stubbed", "poked")
 	var/extended = 0
 	var/extended_force = WEAPON_FORCE_KNIFE
 	var/extended_throwforce = THROWING_DECENT
@@ -229,7 +229,7 @@
 		w_class = WEIGHT_CLASS_NORMAL
 		throwforce = extended_throwforce
 		icon_state = extended_icon_state
-		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+		attack_verb_simple = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
 		sharpness = SHARP_EDGED
 	else
@@ -237,7 +237,7 @@
 		w_class = WEIGHT_CLASS_SMALL
 		throwforce = initial(throwforce)
 		icon_state = retracted_icon_state
-		attack_verb = list("stubbed", "poked")
+		attack_verb_simple = list("stubbed", "poked")
 		hitsound = 'sound/weapons/genhit.ogg'
 		sharpness = SHARP_NONE
 
@@ -353,7 +353,7 @@
 	inhand_icon_state = "pipe"
 	force = WEAPON_FORCE_CLUB
 	throw_speed = 3
-	attack_verb = list("mashed", "bashed", "piped", "hit", "bludgeoned", "whacked", "bonked")
+	attack_verb_simple = list("mashed", "bashed", "piped", "hit", "bludgeoned", "whacked", "bonked")
 
 /obj/item/melee/onehanded/club/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -371,7 +371,7 @@
 	force = WEAPON_FORCE_CLUB+1
 	throwforce = THROWING_EFFECTIVE
 	block_chance = 5
-	attack_verb = list("mashed", "bashed", "hit", "bludgeoned", "whacked")
+	attack_verb_simple = list("mashed", "bashed", "hit", "bludgeoned", "whacked")
 
 /obj/item/melee/onehanded/club/warclub/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -400,14 +400,14 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = null
 	block_chance = 30
-	attack_verb = list("smacked", "thwacked", "democratized", "freedomed")
+	attack_verb_simple = list("smacked", "thwacked", "democratized", "freedomed")
 
 
 // Classic Baton
 /obj/item/melee/classic_baton
 	name = "wooden baton"
 	desc = "A wooden truncheon for beating criminal scum."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'fallout/icons/obj/items_and_weapons.dmi'
 	icon_state = "baton"
 	inhand_icon_state = "classic_baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -585,7 +585,7 @@
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
-	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
+	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/internal/brain)
 
 	user.visible_message(span_suicide("[user] stuffs [src] up [user.p_their()] nose and presses the 'extend' button! It looks like [user.p_theyre()] trying to clear [user.p_their()] mind."))
 	if(!on)
@@ -610,7 +610,7 @@
 		inhand_icon_state = on_inhand_icon_state
 		w_class = weight_class_on
 		force = force_on
-		attack_verb = list("smacked", "struck", "cracked", "beaten")
+		attack_verb_simple = list("smacked", "struck", "cracked", "beaten")
 	else
 		to_chat(user, desc["local_off"])
 		icon_state = off_icon_state
@@ -618,7 +618,7 @@
 		slot_flags = ITEM_SLOT_BELT
 		w_class = WEIGHT_CLASS_SMALL
 		force = force_off
-		attack_verb = list("hit", "poked")
+		attack_verb_simple = list("hit", "poked")
 	playsound(loc, on_sound, 50, TRUE)
 	add_fingerprint(user)
 
@@ -644,7 +644,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	sharpness = SHARP_NONE
-	attack_verb = list("punched", "jabbed", "whacked")
+	attack_verb_simple = list("punched", "jabbed", "whacked")
 	var/can_adjust_unarmed = TRUE
 	var/unarmed_adjusted = TRUE
 
@@ -662,9 +662,9 @@
 			H.dna.species.punchdamagelow = force
 			H.dna.species.attack_sound = hitsound
 			if(sharpness == SHARP_POINTY || sharpness ==  SHARP_EDGED)
-				H.dna.species.attack_verb = pick("slash","slice","rip","tear","cut","dice")
+				H.dna.species.attack_verb_simple = pick("slash","slice","rip","tear","cut","dice")
 			if(sharpness == SHARP_NONE)
-				H.dna.species.attack_verb = pick("punch","jab","whack")
+				H.dna.species.attack_verb_simple = pick("punch","jab","whack")
 	if(ishuman(user) && slot != SLOT_GLOVES && !H.gloves)
 		REMOVE_TRAIT(user, TRAIT_UNARMED_WEAPON, "glove")
 		if(!HAS_TRAIT(user, TRAIT_UNARMED_WEAPON))
@@ -674,7 +674,7 @@
 			H.dna.species.punchdamagehigh = 11
 			H.dna.species.punchdamagelow = 4
 		H.dna.species.attack_sound = 'sound/weapons/punch1.ogg'
-		H.dna.species.attack_verb = "punch"
+		H.dna.species.attack_verb_simple = "punch"
 
 /obj/item/melee/unarmed/examine(mob/user)
 	. = ..()
@@ -702,7 +702,7 @@
 	desc = "Hardened knuckle grip that is actually made out of steel. They protect your hand, and do more damage, in unarmed combat."
 	icon_state = "brass"
 	inhand_icon_state = "brass"
-	attack_verb = list("punched", "jabbed", "whacked")
+	attack_verb_simple = list("punched", "jabbed", "whacked")
 	custom_materials = list(/datum/material/iron = 2000)
 
 
@@ -741,7 +741,7 @@
 	inhand_icon_state = "tiger_claw"
 	force = WEAPON_FORCE_FIST_WEAPON+4
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb_simple = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = SHARP_POINTY
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
@@ -757,7 +757,7 @@
 	bare_wound_bonus = WOUNDING_BONUS_SMALL
 	armour_penetration = 0 //my brother in christ it is razor blades on tape
 	sharpness = SHARP_EDGED
-	attack_verb = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb_simple = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 
@@ -781,7 +781,7 @@
 	force = WEAPON_FORCE_FIST_WEAPON+1
 	armour_penetration = PIERCING_MINOR
 	sharpness = SHARP_POINTY
-	attack_verb = list("stabbed", "sliced", "pierced", "diced", "cut")
+	attack_verb_simple = list("stabbed", "sliced", "pierced", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/melee/unarmed/punchdagger/cyborg
@@ -802,7 +802,7 @@
 	armour_penetration = 0.6
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = SHARP_EDGED
-	attack_verb = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb_simple = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 
@@ -816,7 +816,7 @@
 	force = WEAPON_FORCE_FIST_WEAPON-4
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = SHARP_EDGED
-	attack_verb = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb_simple = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/melee/unarmed/yaoguaigauntlet/attack(mob/living/target, mob/living/user)
@@ -843,7 +843,7 @@
 	force = 1
 	bare_wound_bonus = WOUNDING_BONUS_TINY
 	sharpness = SHARP_EDGED
-	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
+	attack_verb_simple = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/whip.ogg'
 
 /obj/item/melee/onehanded/slavewhip/attack(mob/living/M, mob/living/user)
@@ -873,7 +873,7 @@
 	throwforce = THROWING_POOR
 	throw_speed = 1
 	throw_range = THROWRANGE_BAD
-	hitsound = 'sound/f13weapons/pan.ogg'
+	hitsound = 'fallout/sound/f13weapons/pan.ogg'
 	custom_materials = list(/datum/material/iron = 4000)
 
 // Entrenching tool P81
@@ -890,7 +890,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	sharpness = SHARP_EDGED
-	attack_verb = list("cleaved", "chopped", "sliced", "slashed")
+	attack_verb_simple = list("cleaved", "chopped", "sliced", "slashed")
 
 
 // Hatchet				Force 24
@@ -913,7 +913,7 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb_simple = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	armor = ARMOR_VALUE_GENERIC_ITEM

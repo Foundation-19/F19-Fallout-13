@@ -700,9 +700,6 @@
 		src.inhand_icon_state = "[initial(icon_state)]_t"
 		src.uniformtoggled = TRUE
 	usr.update_inv_w_uniform()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 
 //WAYFARER TRIBAL

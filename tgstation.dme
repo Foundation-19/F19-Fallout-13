@@ -5055,6 +5055,7 @@
 #include "fallout\code\buffs.dm"
 #include "fallout\code\cell.dm"
 #include "fallout\code\cigs.dm"
+#include "fallout\code\clickdelay.dm"
 #include "fallout\code\condiments.dm"
 #include "fallout\code\configentries.dm"
 #include "fallout\code\crafting.dm"
