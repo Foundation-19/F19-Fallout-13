@@ -7,14 +7,13 @@
 	icon_state = "ringgold"
 	inhand_icon_state = "gring"
 	body_parts_covered = 0
-	attack_verb = list("proposed")
-	transfer_prints = TRUE
+	attack_verb_simple = list("proposed")
 	strip_delay = 40
 	var/mood_event_on_equip = /datum/mood_event/equipped_ring/gold
 
 /obj/item/clothing/gloves/ring/equipped(mob/user, slot)
 	. = ..()
-	if (slot == SLOT_GLOVES && istype(user))
+	if (slot == ITEM_SLOT_GLOVES && istype(user))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "ringbuff", mood_event_on_equip)
 	else
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "ringbuff")

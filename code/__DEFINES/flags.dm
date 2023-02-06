@@ -339,3 +339,15 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNSTOPPABLE			(1<<4)
 ///Applied if you're crawling around on the ground/resting.
 #define CRAWLING			(1<<5)
+
+
+
+
+// /datum/element flags
+/// Causes the detach proc to be called when the host object is being deleted
+#define ELEMENT_DETACH		(1 << 0)
+/**
+ * Only elements created with the same arguments given after `id_arg_index` share an element instance
+ * The arguments are the same when the text and number values are the same and all other values have the same ref
+ */
+#define ELEMENT_BESPOKE		(1 << 1)

@@ -49,3 +49,8 @@
 		else
 			user.swap_hand(held_index)
 	return TRUE
+
+/obj/screen/mood
+	name = "mood"
+	icon_state = "mood5"
+	screen_loc = ui_mood

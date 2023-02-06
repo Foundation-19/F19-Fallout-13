@@ -57,14 +57,14 @@ Problem children are Jet and Turbo, obviously theyre some kind of vape stuff you
 /obj/item/reagent_containers/pill/patch/styptic
 	name = "brute patch"
 	desc = "Helps with brute injuries."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'fallout/icons/obj/chemical.dmi'
 	list_reagents = list(/datum/reagent/medicine/styptic_powder = 20)
 	icon_state = "bandaid_brute"
 
 /obj/item/reagent_containers/pill/patch/silver_sulf
 	name = "burn patch"
 	desc = "Helps with burn injuries."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'fallout/icons/obj/chemical.dmi'
 	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 20)
 	icon_state = "bandaid_burn"
 
@@ -79,7 +79,7 @@ Problem children are Jet and Turbo, obviously theyre some kind of vape stuff you
 	name = "Jet"
 	desc = "A highly addictive meta-amphetamine that produces a fast-acting, intense euphoric high on the user."
 	list_reagents = list(/datum/reagent/drug/jet = 10)
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	icon_state = "patch_jet"
 
 
@@ -89,7 +89,7 @@ Problem children are Jet and Turbo, obviously theyre some kind of vape stuff you
 /obj/item/reagent_containers/pill/patch/turbo
 	name = "Turbo"
 	desc = "A chem that vastly increases the user's reflexes and slows their perception of time."
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	icon_state = "patch_turbo"
 	list_reagents = list(/datum/reagent/drug/turbo = 5)
 
@@ -100,7 +100,7 @@ Problem children are Jet and Turbo, obviously theyre some kind of vape stuff you
 /obj/item/reagent_containers/pill/patch/healingpowder // 50hp over 50 seconds.
 	name = "Healing powder"
 	desc = "A powder used to heal physical wounds derived from ground broc flowers and xander roots, commonly used by tribals."
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	icon_state = "patch_healingpowder"
 	list_reagents = list(/datum/reagent/medicine/healing_powder = 10)
 	self_delay = 5
@@ -112,7 +112,7 @@ Problem children are Jet and Turbo, obviously theyre some kind of vape stuff you
 	name = "Homebrew powder"
 	desc = "A mysterious mix of powders."
 	list_reagents = null
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	icon_state = "patch_healingpowder"
 	self_delay = 5
 	color = COLOR_PALE_GREEN_GRAY
@@ -123,7 +123,7 @@ Problem children are Jet and Turbo, obviously theyre some kind of vape stuff you
 /obj/item/reagent_containers/pill/patch/healpoultice // 100hp over 50 seconds. a bit more potent than just bitters.
 	name = "Healing poultice"
 	desc = "A concoction of broc flower, cave fungus, agrave fruit and xander root."
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	list_reagents = list(/datum/reagent/medicine/healing_powder/poultice = 10, /datum/reagent/medicine/healing_powder = 10, /datum/reagent/medicine/bicaridine = 5, /datum/reagent/medicine/kelotane = 5)
 	icon_state = "patch_healingpoultice"
 	self_delay = 5
@@ -134,7 +134,7 @@ Problem children are Jet and Turbo, obviously theyre some kind of vape stuff you
 /obj/item/reagent_containers/pill/bitterdrink  // 50hp over 25 seconds
 	name = "Bitter drink"
 	desc = "A strong herbal healing concoction invented and created by the Twin Mothers tribe."
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	icon_state = "patch_bitterdrink"
 	list_reagents = list(/datum/reagent/medicine/bitter_drink = 10, /datum/reagent/medicine/bicaridine = 5, /datum/reagent/medicine/kelotane = 5)
 	self_delay = 5
@@ -145,7 +145,7 @@ Problem children are Jet and Turbo, obviously theyre some kind of vape stuff you
 /obj/item/reagent_containers/pill/consumable/hydra
 	name = "Hydra"
 	desc = "Hydra is a vile medicine made from fermented fungus and rad-scorpion venom mostly. For dislocated limbs rubbing it directly on the joint works best, but if one drinks it instead it will just boost the natural healing process of the body, curiously enough the effect is more noticeable the worse the trauma, requiring serious wounds to be useful."
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	icon_state = "patch_hydra"
 	list_reagents = list(/datum/reagent/medicine/hydra = 10)
 

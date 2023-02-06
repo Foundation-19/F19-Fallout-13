@@ -563,7 +563,7 @@
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'fallout/icons/obj/items_and_weapons.dmi'
 	icon_state = "telebaton_0"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -655,7 +655,7 @@
 		worn_icon = righthand_file
 	if(!unarmed_adjusted)
 		worn_icon = lefthand_file
-	if(ishuman(user) && slot == SLOT_GLOVES)
+	if(ishuman(user) && slot == ITEM_SLOT_GLOVES)
 		ADD_TRAIT(user, TRAIT_UNARMED_WEAPON, "glove")
 		if(HAS_TRAIT(user, TRAIT_UNARMED_WEAPON))
 			H.dna.species.punchdamagehigh = force
@@ -665,7 +665,7 @@
 				H.dna.species.attack_verb_simple = pick("slash","slice","rip","tear","cut","dice")
 			if(sharpness == SHARP_NONE)
 				H.dna.species.attack_verb_simple = pick("punch","jab","whack")
-	if(ishuman(user) && slot != SLOT_GLOVES && !H.gloves)
+	if(ishuman(user) && slot != ITEM_SLOT_GLOVES && !H.gloves)
 		REMOVE_TRAIT(user, TRAIT_UNARMED_WEAPON, "glove")
 		if(!HAS_TRAIT(user, TRAIT_UNARMED_WEAPON))
 			H.dna.species.punchdamagehigh = 10

@@ -24,8 +24,8 @@
 	return src.attack_hand(user)
 
 /turf/open/indestructible/ground/attackby(obj/item/C, mob/user, params)
-	if(istype(C,/obj/item/stack/tile/plasteel))
-		var/obj/item/stack/tile/plasteel/S = C
+	if(istype(C,/obj/item/stack/sheet/plasteel))
+		var/obj/item/stack/sheet/plasteel/S = C
 		if(S.use(1))
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			to_chat(user, span_notice("You build a floor."))

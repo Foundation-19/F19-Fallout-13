@@ -68,7 +68,7 @@
 	worn_icon = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion.dmi'
 	icon_state = "brand_slave"
 	assignment = "Slave brand"
-	uses_overlays = FALSE
+
 
 /obj/item/card/id/legion_slave/Initialize()
 	. = ..()
@@ -366,7 +366,6 @@
 /obj/item/storage/survivalkit/medical/legion/PopulateContents()
 	new /obj/item/stack/medical/gauze/improvised(src)
 	new /obj/item/stack/medical/suture(src)
-	new /obj/item/stack/medical/mesh/aloe(src)
 	new /obj/item/reagent_containers/pill/patch/healpoultice(src)
 
 // proc to make the quiver look empty when empty

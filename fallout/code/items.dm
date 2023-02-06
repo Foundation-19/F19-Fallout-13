@@ -6,7 +6,7 @@
 	var/min_reach = 0
 
 	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
-
+	var/stiffness = 0 // How much recoil is caused by moving
 
 /obj/item/proc/refresh_upgrades()
 	return

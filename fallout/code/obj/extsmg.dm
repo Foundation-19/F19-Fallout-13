@@ -1,6 +1,6 @@
 /obj/item/ammo_box/magazine/greasegun
 	name = "Grease gun magazine (.45ACP)"
-	icon = 'icons/fallout/objects/guns/ammo.dmi'
+	icon = 'fallout/icons/objects/guns/ammo.dmi'
 	icon_state = "grease"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = list(CALIBER_45ACP)
