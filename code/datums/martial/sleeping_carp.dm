@@ -200,7 +200,7 @@
 	icon_state = "[base_icon_state]0"
 	return ..()
 
-/obj/item/staff/bostaff/attack(mob/target, mob/living/user, params)
+/obj/item/staff/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, span_warning("You club yourself over the head with [src]."))
@@ -219,8 +219,7 @@
 	if(C.stat)
 		to_chat(user, span_warning("It would be dishonorable to attack a foe while they cannot retaliate."))
 		return
-	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(user.a_intent == INTENT_DISARM)
 		if(!HAS_TRAIT(src, TRAIT_WIELDED))
 			return ..()
 		if(!ishuman(target))

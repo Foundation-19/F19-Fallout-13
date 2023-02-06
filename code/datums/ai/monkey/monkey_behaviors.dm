@@ -166,9 +166,11 @@
 
 		// if the target has a weapon, chance to disarm them
 		if(W && DT_PROB(MONKEY_ATTACK_DISARM_PROB, delta_time))
-			monkey_attack(controller, target, delta_time, TRUE)
+			living_pawn.a_intent = INTENT_DISARM
+			monkey_attack(controller, target, delta_time)
 		else
-			monkey_attack(controller, target, delta_time, FALSE)
+			living_pawn.a_intent = INTENT_DISARM
+			monkey_attack(controller, target, delta_time)
 
 
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded, target_key)
@@ -190,8 +192,6 @@
 
 	living_pawn.face_atom(target)
 
-	living_pawn.set_combat_mode(TRUE)
-
 	if(isnull(controller.blackboard[BB_MONKEY_GUN_WORKED]))
 		controller.blackboard[BB_MONKEY_GUN_WORKED] = TRUE
 
@@ -200,7 +200,7 @@
 		if(weapon)
 			weapon.melee_attack_chain(living_pawn, target)
 		else
-			living_pawn.UnarmedAttack(target, null, disarm ? list("right" = TRUE) : null) //Fake a right click if we're disarmin
+			living_pawn.UnarmedAttack(target) //Fake a right click if we're disarmin
 		controller.blackboard[BB_MONKEY_GUN_WORKED] = TRUE // We reset their memory of the gun being 'broken' if they accomplish some other attack
 	else if(weapon)
 		var/atom/real_target = target
@@ -267,7 +267,7 @@
 
 	if(target.pulledby != living_pawn && !HAS_AI_CONTROLLER_TYPE(target.pulledby, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
 		if(living_pawn.Adjacent(target) && isturf(target.loc))
-			target.grabbedby(living_pawn)
+			living_pawn.a_intent = INTENT_GRAB
 		return //Do the rest next turn
 
 	var/datum/weakref/disposal_ref = controller.blackboard[disposal_target_key]

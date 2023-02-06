@@ -62,5 +62,6 @@
 	if(.)
 		return
 	var/mob/living/silicon/robot/R = user.mob
+
 	R.uneq_active()
 	return TRUE

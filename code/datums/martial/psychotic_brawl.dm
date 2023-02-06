@@ -6,12 +6,12 @@
 	return psycho_attack(A,D)
 
 /datum/martial_art/psychotic_brawling/grab_act(mob/living/A, mob/living/D)
-	return psycho_attack(A,D, TRUE)
+	return psycho_attack(A,D)
 
 /datum/martial_art/psychotic_brawling/harm_act(mob/living/A, mob/living/D)
 	return psycho_attack(A,D)
 
-/datum/martial_art/psychotic_brawling/proc/psycho_attack(mob/living/A, mob/living/D, grab_attack)
+/datum/martial_art/psychotic_brawling/proc/psycho_attack(mob/living/A, mob/living/D)
 	var/atk_verb
 	switch(rand(1,8))
 		if(1)
@@ -31,7 +31,7 @@
 				if(A.pulling)
 					D.drop_all_held_items()
 					D.stop_pulling()
-					if(grab_attack)
+					if(A.a_intent == INTENT_GRAB)
 						log_combat(A, D, "grabbed", addition="aggressively")
 						D.visible_message(span_warning("[A] violently grabs [D]!"), \
 										span_userdanger("You're violently grabbed by [A]!"), span_hear("You hear sounds of aggressive fondling!"), null, A)
