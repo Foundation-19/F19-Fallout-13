@@ -48,7 +48,6 @@
 /client/proc/staff_setup()
 	if(is_staff())
 		GLOB.staff |= src
-		add_staff_verbs()
 
 /client/verb/togglerightclickstuff()
 	set category = "OOC"

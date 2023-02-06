@@ -92,7 +92,8 @@
 /datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T, datum/martial_art/attacker_style, modifiers)
 	SIGNAL_HANDLER
 
-	if(T != target || LAZYACCESS(modifiers, RIGHT_CLICK))
+
+	if(T != target || shooter.a_intent == INTENT_DISARM || shooter.a_intent == INTENT_GRAB)
 		return
 	shooter.visible_message(span_danger("[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!"), \
 		span_danger("You bump into [target] and fumble your aim!"), ignored_mobs = target)

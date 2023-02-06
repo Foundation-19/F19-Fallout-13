@@ -392,7 +392,6 @@ matchbox proc updated in boxes.dm
 /datum/crafting_recipe/food/steak_plated
 	name = "Plated steak"
 	reqs = list(
-		/datum/reagent/consumable/sodiumchloride = 1,
 		/obj/item/reagent_containers/food/snacks/meat/steak = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/meat/steak/plated

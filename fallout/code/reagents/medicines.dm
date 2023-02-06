@@ -16,7 +16,6 @@
 	taste_description = "numbness"
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	overdose_threshold = 30
-	value = REAGENT_VALUE_COMMON
 	ghoulfriendly = TRUE
 
 // insta-heal on inject, 1 of each brute and burn per volume

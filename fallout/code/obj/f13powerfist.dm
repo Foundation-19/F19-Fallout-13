@@ -21,7 +21,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_GLOVES
 	flags_1 = CONDUCT_1
-	attack_verb = list("whacked", "fisted", "power-punched")
+	attack_verb_simple = list("whacked", "fisted", "power-punched")
 	var/transfer_prints = TRUE //prevents runtimes with forensics when held in glove slot
 	var/throw_distance = 1
 	var/power = 1
@@ -53,10 +53,10 @@
 /obj/item/melee/unarmed/powerfist/goliath
 	name = "Goliath"
 	desc = "A massive, experimental metal gauntlet crafted by some poor bastard in Redwater that since outlived their usefulness. The piston-powered ram on top is designed to throw targets very, very far."
-	icon = 'modular_atom/legio_invicta/icons/icons_legion.dmi'
-	worn_icon = 'modular_atom/legio_invicta/icons/onmob_legion.dmi'
-	righthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
-	lefthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
+	icon = 'fallout/code/modular_atom/legio_invicta/icons/icons_legion.dmi'
+	worn_icon = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion.dmi'
+	righthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
+	lefthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
 //	icon = 'fallout/icons/objects/melee/melee.dmi'
 //	lefthand_file = 'fallout/icons/onmob/weapons/melee1h_lefthand.dmi'
 //	righthand_file = 'fallout/icons/onmob/weapons/melee1h_righthand.dmi'
@@ -71,15 +71,15 @@
 /obj/item/gun/ballistic/revolver/ballisticfist
 	name = "ballistic fist"
 	desc = "This powerfist has been modified to have two shotgun barrels welded to it, with the trigger integrated into the knuckle guard. For those times when you want to punch someone and shoot them in the face at the same time."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'fallout/icons/obj/items_and_weapons.dmi'
 	icon_state = "ballisticfist"
 	inhand_icon_state = "powerfist"
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	lefthand_file = 'fallout/icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'fallout/icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 30
 	armour_penetration = 0.45
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
-	fire_sound = 'sound/f13weapons/caravan_shotgun.ogg'
+	fire_sound = 'fallout/sound/f13weapons/caravan_shotgun.ogg'
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
 	w_class = WEIGHT_CLASS_NORMAL
 	item_flags = NEEDS_PERMIT //doesn't slow you down
@@ -100,7 +100,7 @@
 	throw_distance = 5
 	throwforce = THROWING_POOR
 	throw_range = 7
-	attack_verb = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb_simple = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
 	tool_behaviour = TOOL_MINING
 	var/digrange = 0
 	toolspeed = 0.4
@@ -152,10 +152,10 @@
 /obj/item/melee/powered/ripper
 	name = "ripper"
 	desc = "The Ripper™ vibroblade is powered by a small energy cell which allows it to easily cut through flesh and bone."
-	icon = 'modular_atom/legio_invicta/icons/icons_legion.dmi'
-	worn_icon = 'modular_atom/legio_invicta/icons/beltslot.dmi'
-	righthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
-	lefthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
+	icon = 'fallout/code/modular_atom/legio_invicta/icons/icons_legion.dmi'
+	worn_icon = 'fallout/code/modular_atom/legio_invicta/icons/beltslot.dmi'
+	righthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
+	lefthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
 	icon_state = "ripper"
 //	icon = 'fallout/icons/objects/melee/melee.dmi'
 //	lefthand_file = 'fallout/icons/onmob/weapons/melee1h_lefthand.dmi'
@@ -196,7 +196,7 @@
 		w_class = weight_class_on
 		force = force_on
 		slot_flags = null
-		attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+		attack_verb_simple = list("sawed", "torn", "cut", "chopped", "diced")
 		playsound(loc, on_sound, 50, TRUE)
 	else
 		to_chat(user, description_off)
@@ -205,7 +205,7 @@
 		w_class = WEIGHT_CLASS_NORMAL
 		force = force_off
 		slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BELT
-		attack_verb = list("poked", "scraped")
+		attack_verb_simple = list("poked", "scraped")
 	add_fingerprint(user)
 
 
@@ -342,11 +342,11 @@
 /obj/item/weapon/melee/shishkebab //This should never exist without the backpack.
 	name = "shishkebab"
 	desc = "A deadly flaming sword covered in fuel. You're not sure this is entirely safe."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'fallout/icons/obj/items_and_weapons.dmi'
 	icon_state = "shishkebab"
 	inhand_icon_state = "shishkebab"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	lefthand_file = 'fallout/icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'fallout/icons/mob/inhands/weapons/swords_righthand.dmi'
 	force =  WEAPON_FORCE_MASSIVE
 	damtype = "fire"
 	w_class = WEIGHT_CLASS_BULKY

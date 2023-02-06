@@ -57,8 +57,7 @@
 	. = ..()
 	can_hold = typecacheof(list(
 	/obj/item/reagent_containers/food/snacks/cookie,
-	/obj/item/reagent_containers/food/snacks/sugarcookie,
-	/obj/item/key/collar))
+	/obj/item/reagent_containers/food/snacks/sugarcookie))
 
 /datum/component/storage/concrete/pockets/small/four
 	max_items = STORAGE_SMALL_POCKET_MAX_ITEMS * 4

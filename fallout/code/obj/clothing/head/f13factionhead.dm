@@ -771,9 +771,6 @@
 		src.inhand_icon_state = "[initial(icon_state)]_t"
 		src.helmettoggled = TRUE
 	usr.update_inv_head()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 /obj/item/clothing/head/helmet/f13/khan/fullhelm
 	name = "Great Khan full helmet"

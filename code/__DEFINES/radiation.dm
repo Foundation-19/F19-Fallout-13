@@ -3,7 +3,7 @@ These defines are the balancing points of various parts of the radiation system.
 Changes here can have widespread effects: make sure you test well.
 Ask Mothblocks if they're around
 */
-
+#define RAD_BACKGROUND_RADIATION 9 					// How much radiation is harmless to a mob, this is also when radiation waves stop spreading
 /// How much stored radiation to check for hair loss
 #define RAD_MOB_HAIRLOSS (1 MINUTES)
 /// Chance of you hair starting to fall out every second when over threshold
@@ -57,3 +57,5 @@ Ask Mothblocks if they're around
 #define RAD_CONTAMINATION_CHANCE_COEFFICIENT 0.005	// Higher means higher strength scaling contamination chance
 #define RAD_CONTAMINATION_STR_COEFFICIENT 0.99		// Higher means higher strength scaling contamination strength
 #define RAD_DISTANCE_COEFFICIENT 1					// Lower means further rad spread
+
+#define RAD_HALF_LIFE 90							// The half-life of contaminated objects

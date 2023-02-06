@@ -105,11 +105,15 @@
 	/// A list to keep track of which books a person has read (to prevent people from reading the same book again and again for positive mood events)
 	var/list/book_titles_read
 
+	/// Our skill holder.
+	var/datum/skill_holder/skill_holder
+
 /datum/mind/New(_key)
 	key = _key
 	martial_art = default_martial_art
 	init_known_skills()
 	set_assigned_role(SSjob.GetJobType(/datum/job/unassigned)) // Unassigned by default.
+	skill_holder = new(src)
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
@@ -119,6 +123,7 @@
 	QDEL_LIST(antag_datums)
 	QDEL_NULL(language_holder)
 	set_current(null)
+	QDEL_NULL(skill_holder)
 	return ..()
 
 

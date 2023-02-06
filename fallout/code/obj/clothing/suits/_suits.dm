@@ -1,5 +1,5 @@
 /obj/item/clothing/suit
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'fallout/icons/obj/clothing/suits.dmi'
 	name = "suit"
 	block_priority = BLOCK_PRIORITY_WEAR_SUIT
 	slot_flags = ITEM_SLOT_OCLOTHING
@@ -13,26 +13,9 @@
 	var/obj/item/clothing/armoraccessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
 	var/dummy_thick = FALSE // is able to hold accessories on its item
-
-/obj/item/clothing/suit/Initialize()
-	. = ..()
-	allowed |= GLOB.default_all_armor_slot_allowed
-
-/obj/item/clothing/suit/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
-	. = ..()
-	if(!isinhands)
-		if(damaged_clothes)
-			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
-		if(blood_DNA)
-			var/file2use = (style_flags) ? 'fallout/code/modular_citadel/icons/mob/64x32_effects.dmi' : 'icons/effects/blood.dmi'
-			. += mutable_appearance(file2use, "[blood_overlay_type]blood", color = blood_DNA_to_color())
-		var/mob/living/carbon/human/M = loc
-		if(ishuman(M) && M.w_uniform)
-			var/obj/item/clothing/under/U = M.w_uniform
-			if(istype(U) && U.attached_accessory)
-				var/obj/item/clothing/accessory/A = U.attached_accessory
-				if(A.above_suit)
-					. += U.accessory_overlay
+	var/deflection_chance = null //Chance for the armor to redirect a blocked projectile
+	var/armor_block_chance = null //Chance for the armor to block a low penetration projectile
+	var/list/protected_zones = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 /obj/item/clothing/suit/update_clothes_damaged_state()
 	..()

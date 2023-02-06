@@ -22,7 +22,6 @@
 	attack_verb_simple = list("strike", "hit", "bash")
 
 	var/gun_flags = NONE
-	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
 	var/dry_fire_sound = 'sound/weapons/gun/general/dry_fire.ogg'
@@ -32,7 +31,6 @@
 	var/suppressed_volume = 60
 	var/can_unsuppress = TRUE
 	var/recoil = 0 //boom boom shake the room
-	var/clumsy_check = TRUE
 	var/obj/item/ammo_casing/chambered = null
 	trigger_guard = TRIGGER_GUARD_NORMAL //trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null //description change if weapon is sawn-off

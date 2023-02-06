@@ -132,7 +132,10 @@
 		update_appearance()
 		return
 	if (!magazine)
-		magazine = new mag_type(src)
+		if(init_mag_type)
+			magazine = new init_mag_type(src)
+		else
+			magazine = new mag_type(src)
 	if(bolt_type == BOLT_TYPE_STANDARD || internal_magazine) //Internal magazines shouldn't get magazine + 1.
 		chamber_round()
 	else

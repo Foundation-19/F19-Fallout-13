@@ -20,7 +20,7 @@
 	suppressor_state = "uzi_suppressor"
 	suppressor_x_offset = 26
 	suppressor_y_offset = 19
-	fire_sound = 'sound/f13weapons/greasegun.ogg'
+	fire_sound = 'fallout/sound/f13weapons/greasegun.ogg'
 	gun_sound_properties = list(
 		SP_VARY(FALSE),
 		SP_VOLUME(PISTOL_MEDIUM_VOLUME),

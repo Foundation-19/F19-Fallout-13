@@ -6,16 +6,16 @@
 /obj/item/toy/darksabre
 	name = "Kiara's Sabre"
 	desc = "This blade looks as dangerous as its owner."
-	icon = 'icons/obj/custom.dmi'
+	icon = 'fallout/icons/obj/custom.dmi'
 	worn_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "darksabre"
 	inhand_icon_state = "darksabre"
-	lefthand_file = 'modular_citadel/icons/mob/inhands/stunsword_left.dmi'
-	righthand_file = 'modular_citadel/icons/mob/inhands/stunsword_right.dmi'
+	lefthand_file = 'fallout/code/modular_citadel/icons/mob/inhands/stunsword_left.dmi'
+	righthand_file = 'fallout/code/modular_citadel/icons/mob/inhands/stunsword_right.dmi'
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/toy/darksabre/get_belt_overlay()
-	return mutable_appearance('icons/obj/custom.dmi', "darksheath-darksabre")
+	return mutable_appearance('fallout/icons/obj/custom.dmi', "darksheath-darksabre")
 
 /obj/item/toy/darksabre/get_worn_belt_overlay(icon_file)
 	return mutable_appearance(icon_file, "darksheath-darksabre")
@@ -23,17 +23,15 @@
 /obj/item/storage/belt/sabre/darksabre
 	name = "Ornate Sheathe"
 	desc = "An ornate and rather sinister looking sabre sheathe."
-	icon = 'icons/obj/custom.dmi'
-	worn_icon = 'icons/mob/clothing/custom_w.dmi'
+	icon = 'fallout/icons/obj/custom.dmi'
+	worn_icon = 'fallout/icons/mob/clothing/custom_w.dmi'
 	icon_state = "darksheath"
 	inhand_icon_state = "darksheath"
-	fitting_swords = list(/obj/item/toy/darksabre)
-	starting_sword = /obj/item/toy/darksabre
 
 /obj/item/lighter/gold
 	name = "engraved zippo"
 	desc = "A shiny and relatively expensive zippo lighter. There's a small etched in verse on the bottom that reads, 'No Gods, No Masters, Only Man.'"
-	icon = 'icons/obj/custom.dmi'
+	icon = 'fallout/icons/obj/custom.dmi'
 	icon_state = "gold_zippo"
 	inhand_icon_state = "gold_zippo"
 	w_class = WEIGHT_CLASS_TINY
@@ -46,7 +44,7 @@
 /obj/item/toy/plush/tree
 	name = "christmass tree plushie"
 	desc = "A festive plush that squeeks when you squeeze it!"
-	icon = 'icons/obj/custom.dmi'
+	icon = 'fallout/icons/obj/custom.dmi'
 	icon_state = "pine_c"
 	inhand_icon_state = "pine_c"
 	w_class = WEIGHT_CLASS_SMALL

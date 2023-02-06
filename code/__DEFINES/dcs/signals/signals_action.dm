@@ -39,3 +39,8 @@
 #define COMSIG_SWOOP_INVULNERABILITY_STARTED "mob_swoop_invulnerability_started"
 /// From base of /datum/action/cooldown/mob_cooldown/lava_swoop/proc/swoop_attack(): ()
 #define COMSIG_LAVA_ARENA_FAILED "mob_lava_arena_failed"
+
+#define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"				//from base of obj/item/pre_attack(): (atom/target, mob/user, params)
+	#define COMPONENT_NO_ATTACK 1
+
+#define COMSIG_ITEM_ALT_AFTERATTACK "item_alt_afterattack"		//from base of obj/item/altafterattack(): (atom/target, mob/user, proximity, params)

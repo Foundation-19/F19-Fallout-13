@@ -76,7 +76,7 @@
 /obj/item/storage/box/ration
 	name = "c-ration box"
 	desc = "A box containing canned rations, issued to New California Republic Army personnel."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'fallout/icons/obj/storage.dmi'
 	icon_state = "c-ration"
 	illustration = null
 

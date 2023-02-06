@@ -171,3 +171,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /// Orders heretic knowledge by priority
 /proc/cmp_heretic_knowledge(datum/heretic_knowledge/knowledge_a, datum/heretic_knowledge/knowledge_b)
 	return initial(knowledge_b.priority) - initial(knowledge_a.priority)
+
+/proc/cmp_numbered_displays_name_asc(datum/numbered_display/A, datum/numbered_display/B)
+	return sorttext(A.sample_object.name, B.sample_object.name)

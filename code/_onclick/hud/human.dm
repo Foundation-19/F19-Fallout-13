@@ -73,10 +73,9 @@
 	using.hud = src
 	static_inventory += using
 
-	action_intent = new /atom/movable/screen/combattoggle/flashy()
+	action_intent = new /atom/movable/screen/act_intent/segmented
+	action_intent.icon_state = mymob.a_inten
 	action_intent.hud = src
-	action_intent.icon = ui_style
-	action_intent.screen_loc = ui_combat_toggle
 	static_inventory += action_intent
 
 

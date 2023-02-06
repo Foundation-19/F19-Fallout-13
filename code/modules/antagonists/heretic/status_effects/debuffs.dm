@@ -49,8 +49,8 @@
 	return TRUE
 
 /datum/status_effect/amok/tick()
-	var/prev_combat_mode = owner.combat_mode
-	owner.set_combat_mode(TRUE)
+	var/prev_intent = owner.a_intent
+	owner.a_intent = INTENT_HARM
 
 	// If we're holding a gun, expand the range a bit.
 	// Otherwise, just look for adjacent targets
@@ -66,7 +66,7 @@
 		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
 		owner.ClickOn(pick(targets))
 
-	owner.set_combat_mode(prev_combat_mode)
+	owner.a_intent = prev_intent
 
 /datum/status_effect/cloudstruck
 	id = "cloudstruck"

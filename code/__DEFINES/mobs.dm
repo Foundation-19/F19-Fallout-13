@@ -847,3 +847,14 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// In dynamic human icon gen we don't replace the held item.
 #define NO_REPLACE 0
+
+//F19 Edit
+
+//Sanity levels for humans
+#define SANITY_AMAZING 150
+#define SANITY_GREAT 125
+#define SANITY_NEUTRAL 100
+#define SANITY_DISTURBED 75
+#define SANITY_UNSTABLE 50
+#define SANITY_CRAZY 25
+#define SANITY_INSANE 0

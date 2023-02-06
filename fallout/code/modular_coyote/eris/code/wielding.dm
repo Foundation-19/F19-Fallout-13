@@ -47,8 +47,6 @@
 /obj/item/proc/wield(mob/living/user)
 	if(wielded)
 		return
-	if(user.get_num_arms() < 2)
-		return
 
 	var/obj/item/other_item = user.get_inactive_held_item()
 

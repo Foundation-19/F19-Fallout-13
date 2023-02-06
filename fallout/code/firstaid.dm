@@ -18,7 +18,7 @@
 
 /obj/item/storage/pill_bottle/chem_tin/mentats
 	name = "Mentats tin"
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	icon_state = "pill_canister_mentats"
 	desc = "Contains pills used to increase intelligence and perception."
 
@@ -31,7 +31,7 @@
 
 /obj/item/storage/pill_bottle/chem_tin/fixer
 	name = "Fixer tin"
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	icon_state = "pill_canister_fixer"
 	desc = "Contains pills used to treat addiction and overdose on other chems."
 
@@ -44,7 +44,7 @@
 
 /obj/item/storage/pill_bottle/chem_tin/radx
 	name = "Rad-X bottle"
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	icon_state = "pill_canister_radx"
 	desc = "Contains pills that prevent radiation buildup, totally shielding the user at high doses. Does not treat radiation sickness, best taken before exposure."
 
@@ -57,7 +57,7 @@
 
 /obj/item/storage/pill_bottle/chem_tin/buffout
 	name = "Buffout bottle"
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	icon_state = "pill_canister_buffout"
 	desc = "Contains pills used to increase muscle mass."
 
@@ -71,7 +71,7 @@
 
 /obj/item/storage/pill_bottle/chem_tin/waterpurification
 	name = "bottle of water purifying pills"
-	icon = 'icons/fallout/objects/medicine/drugs.dmi'
+	icon = 'fallout/icons/objects/medicine/drugs.dmi'
 	icon_state = "pill_canister_purify"
 	desc = "Contains pills to treat water."
 
