@@ -94,7 +94,7 @@
 	return TRUE
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, params)
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(istype(W, /obj/item/tank/internals))
 		if(!tank)
@@ -156,7 +156,7 @@
 
 /obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
-	if(flag && user.combat_mode)//melee attack
+	if(flag && user.a_intent == INTENT_HARM)//melee attack
 		return
 	if(!istype(user))
 		return
