@@ -58,7 +58,7 @@
 		icon_state = "[initial(icon_state)]-open"
 		sleep(0.5 SECONDS)
 		icon_state = initial(icon_state)
-	else if(!user.combat_mode)
+	else if(user.a_intent != INTENT_HARM)
 		to_chat(user, span_warning("You can't put [P] in [src]!"))
 	else
 		return ..()

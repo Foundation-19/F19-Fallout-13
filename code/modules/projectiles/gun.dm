@@ -221,7 +221,7 @@
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
-		if(!ismob(target) || user.combat_mode) //melee attack
+		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return
@@ -256,7 +256,7 @@
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
-	if(ishuman(user) && user.combat_mode)
+	if(ishuman(user) && user.a_intent == INTENT_HARM)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/gun in H.held_items)
 			if(gun == src || gun.weapon_weight >= WEAPON_MEDIUM)
@@ -407,7 +407,7 @@
 	semicd = FALSE
 
 /obj/item/gun/attack(mob/M, mob/living/user)
-	if(user.combat_mode) //Flogging
+	if(user.a_intent == INTENT_HARM) //Flogging
 		if(bayonet)
 			M.attackby(bayonet, user)
 			return
@@ -416,14 +416,14 @@
 	return
 
 /obj/item/gun/attack_atom(obj/O, mob/living/user, params)
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		if(bayonet)
 			O.attackby(bayonet, user)
 			return
 	return ..()
 
 /obj/item/gun/attackby(obj/item/I, mob/living/user, params)
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 	else if(istype(I, /obj/item/knife))

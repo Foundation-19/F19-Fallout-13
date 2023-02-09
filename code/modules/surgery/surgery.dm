@@ -106,7 +106,7 @@
 /datum/surgery/proc/next_step(mob/living/user, modifiers)
 	if(location != user.zone_selected)
 		return FALSE
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return FALSE
 	if(step_in_progress)
 		return TRUE

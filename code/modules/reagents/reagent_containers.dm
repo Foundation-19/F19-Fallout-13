@@ -54,7 +54,7 @@
 	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
 
 /obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, params)
-	if (!user.combat_mode)
+	if (user.a_intent != INTENT_HARM)
 		return
 	return ..()
 
@@ -94,7 +94,7 @@
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
 	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
 		return ..()
-	if(!user.combat_mode)
+	if(user.a_intent != INTENT_HARM)
 		return ..()
 	if (try_splash(user, target))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

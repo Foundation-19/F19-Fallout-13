@@ -105,7 +105,7 @@
 
 /obj/structure/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return FALSE
 	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This sign is already in perfect condition."))
@@ -123,7 +123,7 @@
 
 /obj/item/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return FALSE
 	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This sign is already in perfect condition."))

@@ -287,7 +287,7 @@
 	if(!user.a_intent != INTENT_HARM && istype(I, /obj/item/fireaxe))
 		try_to_crowbar(I, user, FALSE)
 		return TRUE
-	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
+	else if(I.item_flags & NOBLUDGEON || user.a_intent == INTENT_HARM)
 		return ..()
 	else if(!user.a_intent != INTENT_HARM && istype(I, /obj/item/stack/sheet/mineral/wood))
 		return ..() // we need this so our can_barricade element can be called using COMSIG_PARENT_ATTACKBY

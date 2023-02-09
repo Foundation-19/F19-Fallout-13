@@ -235,7 +235,7 @@
 	if(is_special_character(user))
 		return ..()
 
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return FALSE
 
 	balloon_alert(user, "you can't find an obvious maintenance hatch!")
@@ -262,7 +262,7 @@
 	return ..()
 
 /obj/machinery/rnd/server/master/screwdriver_act(mob/living/user, obj/item/tool)
-	if(deconstruction_state != HDD_PANEL_CLOSED || user.combat_mode)
+	if(deconstruction_state != HDD_PANEL_CLOSED || user.a_intent == INTENT_HARM)
 		return FALSE
 
 	to_chat(user, span_notice("You can see [front_panel_screws] screw\s. You start unscrewing [front_panel_screws == 1 ? "it" : "them"]..."))
@@ -278,7 +278,7 @@
 	return TRUE
 
 /obj/machinery/rnd/server/master/crowbar_act(mob/living/user, obj/item/tool)
-	if(deconstruction_state != HDD_PANEL_OPEN || user.combat_mode)
+	if(deconstruction_state != HDD_PANEL_OPEN || user.a_intent == INTENT_HARM)
 		return FALSE
 
 	to_chat(user, span_notice("You can see [source_code_hdd] in a secure housing behind the front panel. You begin to pry it loose..."))
@@ -288,7 +288,7 @@
 	return TRUE
 
 /obj/machinery/rnd/server/master/wirecutter_act(mob/living/user, obj/item/tool)
-	if(deconstruction_state != HDD_PRIED || user.combat_mode)
+	if(deconstruction_state != HDD_PRIED || user.a_intent == INTENT_HARM)
 		return FALSE
 
 	to_chat(user, span_notice("There are [hdd_wires] wire\s connected to [source_code_hdd]. You start cutting [hdd_wires == 1 ? "it" : "them"]..."))

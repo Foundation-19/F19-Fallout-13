@@ -152,7 +152,7 @@
 	update_appearance()
 
 /mob/living/simple_animal/bot/mulebot/crowbar_act(mob/living/user, obj/item/tool)
-	if(!(bot_cover_flags & BOT_COVER_OPEN) || user.combat_mode)
+	if(!(bot_cover_flags & BOT_COVER_OPEN) || user.a_intent == INTENT_HARM)
 		return
 	if(!cell)
 		to_chat(user, span_warning("[src] doesn't have a power cell!"))

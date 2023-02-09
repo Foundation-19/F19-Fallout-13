@@ -124,7 +124,7 @@
 				deconstruct()
 			return
 
-	if(!user.combat_mode)
+	if(user.a_intent != INTENT_HARM)
 		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
 			return
 		place_item_in_disposal(I, user)

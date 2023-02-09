@@ -267,7 +267,7 @@
 
 	if(panel_open)
 
-		if(tool.tool_behaviour == TOOL_WELDER && !user.combat_mode)
+		if(tool.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 			if(atom_integrity < max_integrity)
 				if(!tool.tool_start_check(user, amount=0))
 					return
