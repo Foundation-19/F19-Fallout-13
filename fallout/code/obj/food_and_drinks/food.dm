@@ -625,7 +625,7 @@
 	desc = "A piece of military food ration.<br>Faded label on the front says: \"Dehydrated peas. Chew well, take with water. 60g.\""
 	icon_state = "galette"
 	bonus_reagents = list(
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 		/datum/reagent/consumable/sugar = 2,
 		/datum/reagent/medicine/tricordrazine = 2
 	)

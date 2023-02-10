@@ -8,7 +8,6 @@
 	icon = 'fallout/icons/turfs/ground.dmi'
 	name = "\proper ground"
 	icon_state = "wasteland1"
-	intact = 0
 	planetary_atmos = TRUE
 	tiled_dirt = FALSE
 

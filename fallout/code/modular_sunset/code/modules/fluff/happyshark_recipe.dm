@@ -15,7 +15,7 @@
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
 		/obj/item/reagent_containers/food/snacks/grown/coyotetobacco = 1,
 		/obj/item/reagent_containers/food/snacks/grown/mesquite =1,
-		/datum/reagent/consumable/sodiumchloride = 1
+		/datum/reagent/consumable/salt = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/sunset/happyshark/jerky
 	subcategory = CAT_MISCFOOD

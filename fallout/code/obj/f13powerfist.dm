@@ -134,15 +134,6 @@
 	click_cooldown = CLICK_CD_RANGE
 	force = 25
 
-/obj/item/melee/unarmed/powerfist/saturnite/Touch(atom/target, proximity = TRUE) // Stealing this from the Bands of the North Star, probably wont work since these aren't a glove subtype
-	if(!isliving(target))
-		return
-
-	var/mob/living/M = loc
-	M.SetNextAction(CLICK_CD_RANGE) // 0.5 seconds?? a 40% increase i think
-
-	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION
-
 
 /////////////////////
 // ADVANCED SWORDS //

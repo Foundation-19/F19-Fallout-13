@@ -1024,3 +1024,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TASED_RESISTANCE	"tased_resistance" //prevents you from suffering most of the effects of being tased
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_NOMARROW			"nomarrow"		// You don't make blood, with chemicals or nanites.
+#define TRAIT_NEARSIGHT			"nearsighted"

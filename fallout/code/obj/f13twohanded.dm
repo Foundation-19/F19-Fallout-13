@@ -85,10 +85,10 @@
 /obj/item/twohanded/fireaxe
 	name = "fire axe"
 	desc = "Heavy fireman axe from the old world, with its distinctive red colour and excellent quality steel. Excellent for smashing doors."
-	icon = 'modular_atom/legio_invicta/icons/icons_legion.dmi'
-	worn_icon = 'modular_atom/legio_invicta/icons/backslot.dmi'
-	righthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
-	lefthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
+	icon = 'fallout/code/modular_atom/legio_invicta/icons/icons_legion.dmi'
+	worn_icon = 'fallout/code/modular_atom/legio_invicta/icons/backslot.dmi'
+	righthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
+	lefthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
 	icon_state = "fireaxe"
 	icon_prefix = "fireaxe"
 	wielded_icon = "fireaxe2"
@@ -303,9 +303,9 @@
 /obj/item/twohanded/spear/lance
 	name = "legion lance"
 	desc = "A long spear made in the Legions war foundries. Useful for fighting tribals and hunting when ammunition is scarce."
-	icon = 'modular_atom/legio_invicta/icons/icons_legion.dmi'
-	righthand_file = 'modular_atom/legio_invicta/icons/64x64_righthand.dmi'
-	lefthand_file = 'modular_atom/legio_invicta/icons/64x64_lefthand.dmi'
+	icon = 'fallout/code/modular_atom/legio_invicta/icons/icons_legion.dmi'
+	righthand_file = 'fallout/code/modular_atom/legio_invicta/icons/64x64_righthand.dmi'
+	lefthand_file = 'fallout/code/modular_atom/legio_invicta/icons/64x64_lefthand.dmi'
 	icon_state = "lance"
 	icon_prefix = "lance"
 	wielded_icon = "lance_wield"
@@ -502,10 +502,10 @@
 /obj/item/twohanded/sledgehammer/simple
 	name = "sledgehammer"
 	desc = "A heavy sledgehammer useful for blacksmithing as well as caving in heads and barricades. Swings incredibly slowly, but with deadly power."
-	icon = 'modular_atom/blacksmith/icons/blacksmith.dmi'
-	worn_icon = 'modular_atom/blacksmith/icons/onmob/slot.dmi'
-	lefthand_file = 'modular_atom/blacksmith/icons/onmob/lefthand.dmi'
-	righthand_file = 'modular_atom/blacksmith/icons/onmob/righthand.dmi'
+	icon = 'fallout/code/modular_atom/blacksmith/icons/blacksmith.dmi'
+	worn_icon = 'fallout/code/modular_atom/blacksmith/icons/onmob/slot.dmi'
+	lefthand_file = 'fallout/code/modular_atom/blacksmith/icons/onmob/lefthand.dmi'
+	righthand_file = 'fallout/code/modular_atom/blacksmith/icons/onmob/righthand.dmi'
 	icon_state = "sledgehammer"
 	icon_prefix = "sledgehammer"
 	wielded_icon = "sledgehammer2"
@@ -605,10 +605,10 @@
 /obj/item/twohanded/thermic_lance
 	name = "thermic lance"
 	desc = "A versatile power-welding tool. Useful for cutting apart metal things like airlocks, bars, and probably limbs."
-	icon = 'modular_atom/legio_invicta/icons/icons_legion.dmi'
-	worn_icon = 'modular_atom/legio_invicta/icons/backslot.dmi'
-	righthand_file = 'modular_atom/legio_invicta/icons/64x64_righthand.dmi'
-	lefthand_file = 'modular_atom/legio_invicta/icons/64x64_lefthand.dmi'
+	icon = 'fallout/code/modular_atom/legio_invicta/icons/icons_legion.dmi'
+	worn_icon = 'fallout/code/modular_atom/legio_invicta/icons/backslot.dmi'
+	righthand_file = 'fallout/code/modular_atom/legio_invicta/icons/64x64_righthand.dmi'
+	lefthand_file = 'fallout/code/modular_atom/legio_invicta/icons/64x64_lefthand.dmi'
 	icon_state = "thermiclance"
 	icon_prefix = "thermiclance"
 	wielded_icon = "thermiclance2"
@@ -652,38 +652,14 @@
 		playsound(loc, hitsound, 70, TRUE)
 
 
-// Proton axe						[ Damage SPEAR, Reach, huge AP ]  -------------------------------------
-/obj/item/melee/transforming/energy/axe/protonaxe
-	name = "proton axe"
-	desc = "The experimental proton axe resembles a futuristic war-axe with a glowing blue blade of electrical energy at its head. Cuts effortlessly through anything."
-	icon = 'fallout/icons/objects/melee/twohanded.dmi'
-	lefthand_file = 'fallout/icons/onmob/weapons/melee2h_lefthand.dmi'
-	righthand_file = 'fallout/icons/onmob/weapons/melee2h_righthand.dmi'
-	icon_state = "protonaxe"
-	icon_state_on = "protonaxe_on"
-	force = WEAPON_FORCE_SPEAR
-	force_on = WEAPON_FORCE_SPEAR_WIELDED
-	armour_penetration = 0.7
-	damage_threshold_penetration = 5 //unique penetration into threshold
-	throwforce = THROWING_POOR
-	throwforce_on = THROWING_GOOD
-	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK //why cant you put an axe on your back?
-
-/obj/item/melee/transforming/energy/axe/protonaxe/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
-	AddElement(/datum/element/update_icon_updates_onmob)
-
-
 // Super Sledge						[ Damage MASSIVE + 5, Structure bonus damage ]  ------------------------
 /obj/item/twohanded/sledgehammer/supersledge
 	name = "super sledge"
 	desc = "A heavy sledgehammer manufacted from ultra-dense materials, developed by the Brotherhood of Steel. It looks like it could crush someone's skull with ease."
-	icon = 'modular_atom/legio_invicta/icons/icons_legion.dmi'
-	worn_icon = 'modular_atom/legio_invicta/icons/backslot.dmi'
-	righthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
-	lefthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
+	icon = 'fallout/code/modular_atom/legio_invicta/icons/icons_legion.dmi'
+	worn_icon = 'fallout/code/modular_atom/legio_invicta/icons/backslot.dmi'
+	righthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
+	lefthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
 	icon_state = "hammer-super"
 	icon_prefix = "hammer-super"
 	wielded_icon = "hammer-super2"
@@ -713,10 +689,10 @@
 	desc = "This pre-War model was originally used by construction crews for demolition. Fitted with a rocket booster at the head, \
 	the sledgehammer would behave like a normal tool until it reached a certain acceleration point, when the booster would activate  \
 	and deliver a tremendously powerful impact, easily crushing concrete."
-	icon = 'modular_atom/legio_invicta/icons/icons_legion.dmi'
-	worn_icon = 'modular_atom/legio_invicta/icons/backslot.dmi'
-	righthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
-	lefthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
+	icon = 'fallout/code/modular_atom/legio_invicta/icons/icons_legion.dmi'
+	worn_icon = 'fallout/code/modular_atom/legio_invicta/icons/backslot.dmi'
+	righthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'
+	lefthand_file = 'fallout/code/modular_atom/legio_invicta/icons/onmob_legion_lefthand.dmi'
 	icon_state = "hammer-rocket"
 	icon_prefix = "hammer-rocket"
 	wielded_icon = "hammer-rocket2"
@@ -798,7 +774,7 @@
 /obj/item/twohanded/chainsaw
 	name = "chainsaw"
 	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
-	worn_icon = 'modular_atom/legio_invicta/icons/backslot.dmi' // added with Invicta
+	worn_icon = 'fallout/code/modular_atom/legio_invicta/icons/backslot.dmi' // added with Invicta
 	icon_state = "chainsaw"
 	icon_prefix = "chainsaw"
 	wielded_icon = "chainsaw2"

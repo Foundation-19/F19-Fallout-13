@@ -67,7 +67,7 @@
 	icon_state = "donutbox6"
 	icon_type = "donut"
 	name = "donut box"
-	spawn_type = /obj/item/reagent_containers/food/snacks/donut
+	spawn_type = /obj/item/food/donut
 	fancy_open = TRUE
 	custom_price = PRICE_NORMAL
 
@@ -75,7 +75,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donut))
+	STR.can_hold = typecacheof(list(/obj/item/food/donut))
 /*
  * Candle Box
  */

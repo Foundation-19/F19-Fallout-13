@@ -329,7 +329,7 @@
 
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(H.a_intent == INTENT_HELP)
+	if(user.a_intent == INTENT_HELP)
 		ui_interact(user)
 	else
 		return ..()
