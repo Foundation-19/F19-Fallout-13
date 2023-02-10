@@ -591,7 +591,7 @@
 				else
 					to_chat(user, span_warning("There's nothing to restock!"))
 			return
-	if(compartmentLoadAccessCheck(user) && !user.combat_mode)
+	if(compartmentLoadAccessCheck(user) && user.a_intent != INTENT_HARM)
 		if(canLoadItem(I))
 			loadingAttempt(I,user)
 

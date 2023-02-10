@@ -208,7 +208,7 @@
 	return
 
 /mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		retaliate(user)
 		if(special_retaliate_after_attack(user))
 			return
@@ -228,7 +228,7 @@
 	..()
 	if(!(bot_mode_flags & BOT_MODE_ON)) // Bots won't remember if you hit them while they're off.
 		return
-	if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode) // Any intent but harm will heal, so we shouldn't get angry.
+	if(attacking_item.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
 		return
 	if(attacking_item.tool_behaviour != TOOL_SCREWDRIVER && (attacking_item.force) && (!target) && (attacking_item.damtype != STAMINA)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		retaliate(user)

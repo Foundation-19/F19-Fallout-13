@@ -15,7 +15,7 @@
 	to_chat(user, span_danger("You [hitverb] [src]!"))
 
 /mob/living/carbon/alien/adult/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(!..() || !user.combat_mode)
+	if(!..() || user.a_intent != INTENT_HARM)
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if (body_position == STANDING_UP)

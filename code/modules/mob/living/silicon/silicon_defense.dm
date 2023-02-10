@@ -64,10 +64,10 @@
 	. = FALSE
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
-	if(has_buckled_mobs() && !user.combat_mode)
+	if(has_buckled_mobs() && user.a_intent != INTENT_HARM)
 		user_unbuckle_mob(buckled_mobs[1], user)
 	else
-		if(user.combat_mode)
+		if(user.a_intent == INTENT_HARM)
 			user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
 			visible_message(span_danger("[user] punches [src], but doesn't leave a dent!"), \

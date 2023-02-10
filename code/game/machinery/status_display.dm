@@ -60,7 +60,7 @@
 		return TRUE
 
 /obj/machinery/status_display/welder_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it doesn't need repairs!")
@@ -285,7 +285,7 @@
 
 		maptext = generate_text(marquee_message, center = FALSE, text_color = text_color)
 		maptext_width = full_marquee_width
-		maptext_x = 0 
+		maptext_x = 0
 
 		// Mask off to fit in screen.
 		add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "outline")))

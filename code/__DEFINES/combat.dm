@@ -342,6 +342,16 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// Attack was from a parry counterattack. Do not attempt to parry-this!
 #define ATTACK_TYPE_PARRY_COUNTERATTACK			(1<<5)
 
+//intent defines
+#define INTENT_HELP   "help"
+#define INTENT_GRAB   "grab"
+#define INTENT_DISARM "disarm"
+#define INTENT_HARM   "harm"
+//NOTE: INTENT_HOTKEY_* defines are not actual intents!
+//they are here to support hotkeys
+#define INTENT_HOTKEY_LEFT  "left"
+#define INTENT_HOTKEY_RIGHT "right"
+
 // Requires for datum definitions to not error with must be a constant statement when used in lists as text associative keys.
 // KEEP IN SYNC WITH ABOVE!
 

@@ -294,7 +294,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	..()
 	if(client)
 		return
-	if(!stat && user.combat_mode)
+	if(!stat && user.a_intent == INTENT_HARM)
 
 		icon_state = icon_living //It is going to be flying regardless of whether it flees or attacks
 
@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		else
 			parrot_state |= PARROT_FLEE //Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(stat != DEAD && !user.combat_mode)
+	if(stat != DEAD && user.a_intent != INTENT_HARM)
 		handle_automated_speech(1) //assured speak/emote
 	return
 

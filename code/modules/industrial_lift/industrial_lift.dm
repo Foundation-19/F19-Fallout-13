@@ -566,7 +566,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(user.incapacitated())
 		return FALSE
 	// Maintain the god given right to fight an elevator
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return FALSE
 	// Gotta be by the lift
 	if(!user.Adjacent(src))

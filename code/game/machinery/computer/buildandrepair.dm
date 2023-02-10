@@ -162,7 +162,7 @@
 
 				qdel(src)
 				return
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 /obj/structure/frame/computer/AltClick(mob/user)

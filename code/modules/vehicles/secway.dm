@@ -35,7 +35,7 @@
 	smoke.start()
 
 /obj/vehicle/ridden/secway/welder_act(mob/living/user, obj/item/W)
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return
 	. = TRUE
 	if(DOING_INTERACTION(user, src))

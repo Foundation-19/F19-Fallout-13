@@ -308,7 +308,7 @@
 			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
 		return
 
-	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && !user.combat_mode)
+	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && user.a_intent != INTENT_HARM)
 		if(ingredients.len >= max_n_of_items)
 			balloon_alert(user, "it's full!")
 			return TRUE

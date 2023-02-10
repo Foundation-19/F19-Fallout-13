@@ -127,7 +127,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!user.combat_mode)
+	if(user.a_intent != INTENT_HARM)
 		toggle_mode()
 		switch(mode)
 			if(MINEDRONE_COLLECT)

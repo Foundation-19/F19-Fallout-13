@@ -71,7 +71,7 @@
 
 /mob/living/carbon/attackby(obj/item/I, mob/living/user, params)
 	for(var/datum/surgery/operations as anything in surgeries)
-		if(user.combat_mode)
+		if(user.a_intent == INTENT_HARM)
 			break
 		if(body_position != LYING_DOWN && (operations.surgery_flags & SURGERY_REQUIRE_RESTING))
 			continue
@@ -81,7 +81,7 @@
 		if(operations.next_step(user, modifiers))
 			return TRUE
 
-	if(!all_wounds || !(!user.combat_mode || user == src))
+	if(!all_wounds || !(user.a_intent != INTENT_HARM || user == src))
 		return ..()
 
 	for(var/i in shuffle(all_wounds))

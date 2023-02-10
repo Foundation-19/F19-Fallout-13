@@ -273,7 +273,7 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/crowbar_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
+	if(user.a_intent != INTENT_HARM)
 		return
 
 	var/forced_open = FALSE
@@ -284,12 +284,12 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
-	if(!user.combat_mode && istype(I, /obj/item/fireaxe))
+	if(!user.a_intent != INTENT_HARM && istype(I, /obj/item/fireaxe))
 		try_to_crowbar(I, user, FALSE)
 		return TRUE
-	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
+	else if(I.item_flags & NOBLUDGEON || user.a_intent == INTENT_HARM)
 		return ..()
-	else if(!user.combat_mode && istype(I, /obj/item/stack/sheet/mineral/wood))
+	else if(!user.a_intent != INTENT_HARM && istype(I, /obj/item/stack/sheet/mineral/wood))
 		return ..() // we need this so our can_barricade element can be called using COMSIG_PARENT_ATTACKBY
 	else if(try_to_activate_door(user))
 		return TRUE
