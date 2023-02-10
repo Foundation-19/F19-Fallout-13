@@ -1122,6 +1122,16 @@
 			return
 		M.mind_initialize()
 
+	else if(href_list["toggle_build"])
+		if(!check_rights(R_SPAWN))
+			return
+		usr.client.togglebuildmodeself()
+
+	else if(href_list["toggle_invis"])
+		if(!check_rights(R_SPAWN))
+			return
+		usr.client.invisimin()
+
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
 			return
