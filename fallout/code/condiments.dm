@@ -19,7 +19,7 @@
 		/datum/reagent/consumable/enzyme = list("enzyme", "universal enzyme bottle", "Used in cooking various dishes"),
 		/datum/reagent/consumable/soysauce = list("soysauce", "soy sauce bottle", "A salty soy-based flavoring"),
 		/datum/reagent/consumable/frostoil = list("coldsauce", "coldsauce bottle", "Leaves the tongue numb in its passage"),
-		/datum/reagent/consumable/sodiumchloride = list("saltshakersmall", "salt shaker", "Salt. From the West Coast, presumably"),
+		/datum/reagent/consumable/salt = list("saltshakersmall", "salt shaker", "Salt. From the West Coast, presumably"),
 		/datum/reagent/consumable/blackpepper = list("peppermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
 		/datum/reagent/consumable/cornoil = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
 		/datum/reagent/consumable/sugar = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"),
@@ -129,7 +129,7 @@
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
-	list_reagents = list(/datum/reagent/consumable/sodiumchloride = 20)
+	list_reagents = list(/datum/reagent/consumable/salt = 20)
 	possible_states = list()
 
 /obj/item/reagent_containers/food/condiment/saltshaker/on_reagent_change(changetype)
@@ -152,11 +152,11 @@
 	if(!proximity)
 		return
 	if(isturf(target))
-		if(!reagents.has_reagent(/datum/reagent/consumable/sodiumchloride, 2))
+		if(!reagents.has_reagent(/datum/reagent/consumable/salt, 2))
 			to_chat(user, span_warning("You don't have enough salt to make a pile!"))
 			return
 		user.visible_message(span_notice("[user] shakes some salt onto [target]."), span_notice("You shake some salt onto [target]."))
-		reagents.remove_reagent(/datum/reagent/consumable/sodiumchloride, 2)
+		reagents.remove_reagent(/datum/reagent/consumable/salt, 2)
 		new/obj/effect/decal/cleanable/salt(target)
 		return
 
@@ -261,6 +261,13 @@
 	list_reagents = list(/datum/reagent/consumable/mustard = 50)
 	possible_states = list()
 
+/datum/reagent/consumable/mustard
+	name = "Mustard"
+	description = "Mustard, mostly used on hotdogs, corndogs and burgers."
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+	color = "#DDED26" // rgb: 221, 237, 38
+	taste_description = "mustard"
+
 /obj/item/reagent_containers/food/condiment/honey
 	name = "honey bear"
 	desc = "A jar of honey shaped in a bear."
@@ -295,7 +302,7 @@
 						/datum/reagent/consumable/capsaicin = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"),
 						/datum/reagent/consumable/soysauce = list("condi_soysauce", "Soy Sauce", "A salty soy-based flavoring"),
 						/datum/reagent/consumable/frostoil = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in it's passage"),
-						/datum/reagent/consumable/sodiumchloride = list("condi_salt", "Salt Shaker", "Salt. From the West Coast, presumably"),
+						/datum/reagent/consumable/salt = list("condi_salt", "Salt Shaker", "Salt. From the West Coast, presumably"),
 						/datum/reagent/consumable/blackpepper = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"),
 						/datum/reagent/consumable/cornoil = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"),
 						/datum/reagent/consumable/sugar = list("condi_sugar", "Sugar", "Tasty spacey sugar!"),

@@ -39,6 +39,7 @@
 	var/replaced_by
 	/// Organ being directly manipulated, used for checking if the organ is still in the body after surgery has begun
 	var/organ_to_manipulate
+	var/success_multiplier = 0
 
 /datum/surgery/New(atom/surgery_target, surgery_location, surgery_bodypart)
 	. = ..()

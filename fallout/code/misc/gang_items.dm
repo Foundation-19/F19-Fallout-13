@@ -319,4 +319,3 @@
 /obj/item/storage/box/bundleelguapo/PopulateContents()
 	new /obj/item/gun/ballistic/revolver/colt357(src)
 	new /obj/item/clothing/head/f13/ranger_hat(src)
-	new /obj/item/clothing/suit/armor/light/leather/leathercoat(src)

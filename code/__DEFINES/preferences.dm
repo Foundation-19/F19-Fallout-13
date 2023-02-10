@@ -4,6 +4,7 @@
 // Use `/datum/preference/toggle` instead.
 #define SOUND_ADMINHELP (1<<0)
 #define MEMBER_PUBLIC (1<<4)
+#define INTENT_STYLE			(1<<5)
 #define SOUND_PRAYERS (1<<9)
 #define ANNOUNCE_LOGIN (1<<10)
 #define DISABLE_DEATHRATTLE (1<<12)

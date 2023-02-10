@@ -9,7 +9,7 @@
 /obj/item/chopping_block
 	name = "chopping block"
 	desc = "When used with the right kitchen tools it can process many kinds of food. Start with adding a rolling pin."
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 	icon_state = "choppingblock"
 
 /obj/item/chopping_block/attackby(obj/item/W, mob/user, params)
@@ -25,7 +25,7 @@
 /obj/structure/chopping_block // Edited to add overlay for filling, allow regular kitchen knife to be used as well, and various descriptions to suit the difference from a machine. Also removes shaking and replaces the machine grinding sound.
 	name = "chopping block"
 	desc = "A bowl seems like it would be useful."
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 	icon_state = "choppingpin"
 
 	build_stage = 1
@@ -73,7 +73,7 @@
 /obj/machinery/processor/chopping_block
 	name = "chopping block"
 	desc = "Used to process many sorts of food."
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 	icon_state = "chopibobut"
 	density = FALSE
 	circuit = null
@@ -117,7 +117,7 @@
 		user.visible_message("[user] put [O] on the [src].", \
 			"You put [O] on the [src].")
 		user.transferItemToLoc(O, src, TRUE)
-		add_overlay(image(icon= 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi',icon_state="chopping_loaded"))
+		add_overlay(image(icon= 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi',icon_state="chopping_loaded"))
 		return 1
 	else
 		if(user.a_intent != INTENT_HARM)
@@ -147,7 +147,7 @@
 	user.visible_message("[user] starts using the [src].", \
 		span_notice("You start using the [src]."), \
 		span_italic("You hear food being chopped."))
-	playsound(src.loc, 'modular_atom/kitchen_50s/sound/chopping_block.ogg', 120, 1)
+	playsound(src.loc, 'fallout/code/modular_atom/kitchen_50s/sound/chopping_block.ogg', 120, 1)
 	var/total_time = 0
 	for(var/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
@@ -163,7 +163,7 @@
 			continue
 		process_food(P, O)
 	processing = FALSE
-	cut_overlay(image(icon= 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi',icon_state="chopping_loaded"))
+	cut_overlay(image(icon= 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi',icon_state="chopping_loaded"))
 	visible_message("\The processing with the [src] is now finished.")
 
 
@@ -172,7 +172,7 @@
 /obj/machinery/reagentgrinder
 	name = "all-in-one grinder"
 	desc = "Rugged old kitchen blender, can grind or juice most things on this Earth with a bit of patience."
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 
 
 // -------------- MICROWAVE & STOVE -----------------
@@ -180,7 +180,7 @@
 /obj/machinery/microwave
 	name = "microwave oven"
 	desc = "Cooks and boils food in a futuristic way."
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 	icon_state = "microwave"
 
 /obj/machinery/microwave/update_icon_state()
@@ -208,9 +208,9 @@
 /obj/item/kitchen/knife
 	name = "kitchen knife"
 	desc = "A simple knife, best suited to cut stuff that doesn't cut back."
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
-	lefthand_file = 'modular_atom/kitchen_50s/icons/onmob_lefthand.dmi'
-	righthand_file = 'modular_atom/kitchen_50s/icons/onmob_righthand.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	lefthand_file = 'fallout/code/modular_atom/kitchen_50s/icons/onmob_lefthand.dmi'
+	righthand_file = 'fallout/code/modular_atom/kitchen_50s/icons/onmob_righthand.dmi'
 	icon_state = "knife_kitchen"
 	inhand_icon_state = "knife_kitchen"
 
@@ -221,19 +221,19 @@
 
 /obj/item/kitchen/rollingpin
 	desc = "A model housewife can use this to bake great bread, or to bludgeon marauding raiders, probably."
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
-	lefthand_file = 'modular_atom/kitchen_50s/icons/onmob_lefthand.dmi'
-	righthand_file = 'modular_atom/kitchen_50s/icons/onmob_righthand.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	lefthand_file = 'fallout/code/modular_atom/kitchen_50s/icons/onmob_lefthand.dmi'
+	righthand_file = 'fallout/code/modular_atom/kitchen_50s/icons/onmob_righthand.dmi'
 
 
 // -------------- BOWL -----------------
 
 /obj/item/reagent_containers/glass/bowl
 	name = "bowl"
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
-	lefthand_file = 'modular_atom/kitchen_50s/icons/onmob_lefthand.dmi'
-	righthand_file = 'modular_atom/kitchen_50s/icons/onmob_righthand.dmi'
-	fill_icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	lefthand_file = 'fallout/code/modular_atom/kitchen_50s/icons/onmob_lefthand.dmi'
+	righthand_file = 'fallout/code/modular_atom/kitchen_50s/icons/onmob_righthand.dmi'
+	fill_icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 	fill_state = "bowl_full"
 
 
@@ -242,7 +242,7 @@
 /obj/structure/closet/fridge/good
 	name = "fridge"
 	desc = "A pre-War refrigerator.<br>Despite its age it has been maintained quite well, and keeps its contents mostly chilled."
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 	icon_state = "fridge_good"
 
 /obj/structure/closet/fridge/good/New()
@@ -262,7 +262,7 @@
 /obj/machinery/washing_machine // Included code changes - feedback text edited, sound added
 	name = "washing machine"
 	desc = "Makes your clothes clean, at least if you manage to find a working one that has not been used as a Radroach nest."
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 
 /obj/machinery/washing_machine/attackby(obj/item/W, mob/user, params)
 	if(panel_open && !busy && default_unfasten_wrench(user, W))
@@ -314,7 +314,7 @@
 		to_chat(user, span_warning("[src] must be cleaned up first."))
 		return TRUE
 	busy = TRUE
-	playsound(src, 'modular_atom/kitchen_50s/sound/washing.ogg', 85, 0)
+	playsound(src, 'fallout/code/modular_atom/kitchen_50s/sound/washing.ogg', 85, 0)
 	update_icon()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
 	START_PROCESSING(SSfastprocess, src)
@@ -325,13 +325,13 @@
 
 /obj/structure/kitchenspike_frame
 	name = "meatspike frame"
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 	icon_state = "spikeframe"
 	desc = "The frame of a meat spike. To assemble, wrench it in place and add four iron rods."
 
 /obj/structure/kitchenspike
 	name = "meat spike"
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 	icon_state = "spike"
 	desc = "This allows more efficient butchery. Grab the animal by the neck and drag it up on the spike before cutting them up. Its polite to kill them before, but optional."
 
@@ -340,13 +340,13 @@
 // /area/crew_quarters/kitchen  replace in butchering with with ------>
 /area/f13/food_preparation
 	name = "food preparation area"
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 	icon_state = "area_food_preparation"
 	grow_chance = 0
 
 /* Commented out since edite basefile anyways
 /obj/structure/closet/crate/bin/trashbin
-	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 */
 
 /obj/structure/bonfire/heater
@@ -365,7 +365,7 @@
 /*
 GRILL TAKES COAL, COKE, NEW ANIMATION. See grill.dm
 /obj/machinery/grill
-	icon = 'modular_atom/kitchen_50s/icons/kitchen32x64.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/kitchen32x64.dmi'
 	plane = MOB_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -374,7 +374,7 @@ CAMPFIRE POTBELLU STOVE NOW TAKES COAL, COKE; NEW ANIMATION, SOUNDS, GAUZE STERI
 	var/datum/looping_sound/campfire/campfire_loop
 
 /obj/structure/campfire/stove
-	icon = 'modular_atom/kitchen_50s/icons/kitchen32x64.dmi'
+	icon = 'fallout/code/modular_atom/kitchen_50s/icons/kitchen32x64.dmi'
 	plane = MOB_PLANE // so the smoke covers mobs
 	layer = ABOVE_MOB_LAYER // so the smoke covers mobs
 
