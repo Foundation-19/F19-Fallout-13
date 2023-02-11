@@ -187,7 +187,7 @@
 	var/show_status_bar = TRUE
 
 	/// datum wrapper for client view
-	var/datum/view_data/view_size
+	var/datum/viewData/view_size
 
 	/// our current tab
 	var/stat_tab

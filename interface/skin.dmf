@@ -64,6 +64,7 @@ window "mainwindow"
 		anchor2 = -1,-1
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Fallout 13"
 		statusbar = false
 		icon = 'icons\\ui_icons\\common\\tg_32.png'
 		macro = "default"
