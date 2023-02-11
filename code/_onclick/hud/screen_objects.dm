@@ -637,7 +637,7 @@
 
 /atom/movable/screen/healths/guardian
 	name = "summoner health"
-	icon = 'icons/mob/guardian.dmi'
+	icon = 'fallout/icons/mob/guardian.dmi'
 	icon_state = "base"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
@@ -648,7 +648,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/healths/construct
-	icon = 'icons/hud/screen_construct.dmi'
+	icon = 'fallout/icons/hud/screen_construct.dmi'
 	icon_state = "artificer_health0"
 	screen_loc = ui_construct_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -676,7 +676,7 @@
 	return
 
 /atom/movable/screen/splash
-	icon = 'icons/blank_title.png'
+	icon = 'fallout/icons/blank_title.png'
 	icon_state = ""
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER

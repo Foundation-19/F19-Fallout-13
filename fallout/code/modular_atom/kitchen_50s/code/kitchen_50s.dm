@@ -102,7 +102,7 @@
 	if(istype(O, /obj/item/storage/bag/tray))
 		var/obj/item/storage/T = O
 		var/loaded = 0
-		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
+		for(var/obj/item/food/snacks/S in T.contents)
 			var/datum/food_processor_process/P = select_recipe(S)
 			if(P)
 				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
@@ -234,7 +234,6 @@
 	lefthand_file = 'fallout/code/modular_atom/kitchen_50s/icons/onmob_lefthand.dmi'
 	righthand_file = 'fallout/code/modular_atom/kitchen_50s/icons/onmob_righthand.dmi'
 	fill_icon = 'fallout/code/modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
-	fill_state = "bowl_full"
 
 
 // -------------- FRIDGES -----------------
@@ -248,13 +247,13 @@
 /obj/structure/closet/fridge/good/New()
 	..()
 	for(var/i = 0, i < 4, i++)
-		new /obj/item/reagent_containers/food/drinks/bottle/sunset(src)
+		new /obj/item/food/drinks/bottle/sunset(src)
 	for(var/i = 0, i < 3, i++)
-		new /obj/item/reagent_containers/food/snacks/f13/mirelurkcake(src)
+		new /obj/item/food/snacks/f13/mirelurkcake(src)
 	for(var/i = 0, i < 2, i++)
-		new /obj/item/reagent_containers/food/snacks/meat/steak/gecko(src)
+		new /obj/item/food/snacks/meat/steak/gecko(src)
 	for(var/i = 0, i < 1, i++)
-		new /obj/item/reagent_containers/food/snacks/f13/crispysquirrel(src)
+		new /obj/item/food/snacks/f13/crispysquirrel(src)
 
 
 // -------------- WASHING MACHINE -----------------
@@ -381,7 +380,7 @@ CAMPFIRE POTBELLU STOVE NOW TAKES COAL, COKE; NEW ANIMATION, SOUNDS, GAUZE STERI
 matchbox proc updated in boxes.dm
 */
 
-/obj/item/reagent_containers/food/snacks/meat/steak/plated
+/obj/item/food/snacks/meat/steak/plated
 	name = "steak"
 	desc = "A plate with seasoned cooked meat."
 	icon_state = "meatsteak_plated"
@@ -392,7 +391,7 @@ matchbox proc updated in boxes.dm
 /datum/crafting_recipe/food/steak_plated
 	name = "Plated steak"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/meat/steak = 1,
+		/obj/item/food/snacks/meat/steak = 1,
 	)
-	result = /obj/item/reagent_containers/food/snacks/meat/steak/plated
+	result = /obj/item/food/snacks/meat/steak/plated
 	subcategory = CAT_MEAT

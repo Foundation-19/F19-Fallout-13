@@ -1,6 +1,6 @@
 //Krotchy doll, hail Postal. by WalterJe
 
-/obj/item/weapon/krotchy
+/obj/item/krotchy
 	name = "krotchy doll"
 	desc = "The Bad Touch - Krotchy Doll."
 	icon = 'fallout/icons/objects/items.dmi'
@@ -29,12 +29,12 @@
 
 //Krotchy's original packaging
 
-/obj/item/weapon/storage/fancy/krotchy_box
+/obj/item/storage/fancy/krotchy_box
 	icon = 'fallout/icons/objects/items.dmi'
 	icon_state = "krotchybox1"
 	name = "krotchy doll box"
 
-/obj/item/weapon/storage/fancy/krotchy_box/ComponentInitialize()
+/obj/item/storage/fancy/krotchy_box/ComponentInitialize()
 	. = ..()
 	AddComponent(component_type)
 	STR.can_hold = typecacheof(list(/obj/item/weapon/krotchy))

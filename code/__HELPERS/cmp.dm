@@ -174,3 +174,8 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_numbered_displays_name_asc(datum/numbered_display/A, datum/numbered_display/B)
 	return sorttext(A.sample_object.name, B.sample_object.name)
+
+/proc/cmp_skill_categories(datum/skill/A, datum/skill/B)
+	if(A.ui_category == B.ui_category)
+		return sorttext(A.name, B.name)
+	return sorttext(A.ui_category, B.ui_category)

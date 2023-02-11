@@ -10,7 +10,7 @@
 
 /datum/component/storage/concrete/box/donk/Initialize()
 	. = ..()
-	can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks))
+	can_hold = typecacheof(list(/obj/item/food/snacks))
 
 /datum/component/storage/concrete/box/monkey
 	quickdraw = TRUE

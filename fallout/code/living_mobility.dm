@@ -104,7 +104,7 @@
 		if(buckled.buckle_lying != -1)
 			should_be_resting = buckled.buckle_lying
 
-	if(should_be_lying)
+	if(holder.body_position == LYING_DOWN)
 		mobility_flags &= ~MOBILITY_STAND
 		setMovetype(movement_type | CRAWLING)
 		if(!resting) //force them on the ground
@@ -122,7 +122,7 @@
 		mobility_flags |= MOBILITY_STAND
 		resting = 0
 
-	if(should_be_lying || restrained || incapacitated())
+	if(holder.body_position == LYING_DOWN || restrained || incapacitated())
 		mobility_flags &= ~(MOBILITY_UI|MOBILITY_PULL)
 	else
 		mobility_flags |= MOBILITY_UI|MOBILITY_PULL

@@ -1,7 +1,7 @@
 /obj/item/grenade/f13
 	name = "testing grenade"
 	desc = "If you are seeing this something went wrong."
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'fallout/icons/obj/grenade.dmi'
 	icon_state = "syndicate"
 	inhand_icon_state = "flashbang"
 	ex_dev = 0
@@ -126,7 +126,7 @@
 //Ghetto
 /obj/item/grenade/f13/anarchist
 	icon = 'fallout/icons/objects/guns/explosives.dmi'
-	activation_sound = 'sound/items/Welder2.ogg'
+//	activation_sound = 'sound/items/Welder2.ogg'
 	throw_speed = 3
 	throw_range = 4
 
