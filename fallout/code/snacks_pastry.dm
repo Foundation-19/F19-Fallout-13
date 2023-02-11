@@ -15,11 +15,8 @@ bj/item/reagent_containers/food/snacks/cracker
 
 /obj/item/reagent_containers/food/snacks/cracker/c_ration
 	name = "army cracker"
-	bitesize = 2
 	icon_state = "c_ration_cracker"
 
 /obj/item/reagent_containers/food/snacks/cracker/k_ration
 	name = "ranger biscuit"
-	bitesize = 2
 	icon_state = "k_ration_cracker"
-	tastes = list("biscuit" = 1, "brahmin butter" = 1)

@@ -143,12 +143,12 @@
 	isGlass = TRUE
 
 /obj/item/food/drinks/bottle/f13nukacola/Initialize()
-	list_reagents = list(/datum/reagent/consumable/nuka_cola = 24, /datum/reagent/radium = rand(1, 6))
+	list_reagents = list(/datum/reagent/consumable/nuka_cola = 24, /datum/reagent/uranium/radium = rand(1, 6))
 	. = ..()
 
 /obj/item/food/drinks/bottle/f13nukacola/radioactive
 	desc = "The most popular flavored soft drink in the United States before the Great War.<br>It was preserved in a fairly pristine state.<br>The bottle is slightly glowing."
-	list_reagents = list(/datum/reagent/consumable/nuka_cola = 15, /datum/reagent/radium = 5)
+	list_reagents = list(/datum/reagent/consumable/nuka_cola = 15, /datum/reagent/uranium/radium = 5)
 
 /obj/item/food/drinks/bottle/sunset
 	name = "Sunset Sarsparilla"
@@ -487,7 +487,7 @@
 	name = "Silician Instatea"
 	desc = "Pre-war powerdered canned tea powder."
 	icon_state = "instatea"
-	list_reagents = list(/datum/reagent/toxin/teapowder = 98, /datum/reagent/radium = 2)
+	list_reagents = list(/datum/reagent/toxin/teapowder = 98, /datum/reagent/uranium/radium = 2)
 
 /obj/item/food/drinks/soda_cans/cream
 	name = "canned cream"
@@ -503,13 +503,13 @@
 	name = "Silician Instacocoa"
 	desc = "Pre-war powerdered canned dried chocolate mix."
 	icon_state = "instachoc"
-	list_reagents = list(/datum/reagent/consumable/coco = 98, /datum/reagent/radium = 2)
+	list_reagents = list(/datum/reagent/consumable/coco = 98, /datum/reagent/uranium/radium = 2)
 
 /obj/item/food/drinks/bottle/instacoffee
 	name = "Silician Instacoffee"
 	desc = "Pre-war powerdered canned coffee."
 	icon_state = "instacoffee"
-	list_reagents = list(/datum/reagent/toxin/coffeepowder = 98, /datum/reagent/radium = 2)
+	list_reagents = list(/datum/reagent/toxin/coffeepowder = 98, /datum/reagent/uranium/radium = 2)
 
 /obj/item/food/drinks/bottle/vim
 	name = "Vim"

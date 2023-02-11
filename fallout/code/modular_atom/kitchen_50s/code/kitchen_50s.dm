@@ -385,7 +385,7 @@ matchbox proc updated in boxes.dm
 	desc = "A plate with seasoned cooked meat."
 	icon_state = "meatsteak_plated"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6) // +1 when plated
-	foodtype = MEAT
+	foodtypes = MEAT
 	tastes = list("meat" = 2, "salt" = 1)
 
 /datum/crafting_recipe/food/steak_plated

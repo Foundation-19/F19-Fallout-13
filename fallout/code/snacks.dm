@@ -7,4 +7,4 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1
 	)
 	junkiness = 0
-	foodtype = MEAT
+	foodtypes = MEAT
