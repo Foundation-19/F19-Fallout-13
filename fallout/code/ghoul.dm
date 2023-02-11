@@ -6,7 +6,7 @@
 /datum/species/ghoul
 	name = "Ghoul"
 	id = "ghoul"
-	say_mod = "rasps"
+//	say_mod = "rasps"
 	examine_limb_id = SPECIES_HUMAN
 	species_traits = list(HAIR,FACEHAIR, MUTCOLORS, EYECOLOR,LIPS)
 	inherent_traits = list(TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE, TRAIT_NOBREATH, TRAIT_GHOULMELEE, TRAIT_FAKEDEATH)

@@ -101,7 +101,7 @@
 			F.hotspot_expose(700,50,1)
 			for(var/mob/living/carbon/C in T)
 				C.adjust_fire_stacks(fire_stacks)
-				C.IgniteMob()
+				C.ignite_mob()
 				to_chat(C, span_userdanger("The incendiary grenade sets you ablaze!"))
 				C.emote("scream")
 	qdel(src)

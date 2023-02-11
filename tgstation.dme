@@ -5122,6 +5122,7 @@
 #include "fallout\code\typing_indicator.dm"
 #include "fallout\code\update_icons.dm"
 #include "fallout\code\areas\area.dm"
+#include "fallout\code\controllers\configuration\policy.dm"
 #include "fallout\code\datums\radiation_wave.dm"
 #include "fallout\code\datums\components\knockback.dm"
 #include "fallout\code\datums\components\mood.dm"

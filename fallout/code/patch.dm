@@ -44,9 +44,9 @@ Problem children are Jet and Turbo, obviously theyre some kind of vape stuff you
 			return
 		//if(!L.can_inject(user, TRUE, user.zone_selected, FALSE, TRUE)) //stopped by clothing, not by species immunity.
 			//return
-		if(affecting.status != BODYPART_ORGANIC)
+/*		if(affecting.status != BODYPART_ORGANIC)
 			to_chat(user, span_notice("Medicine won't work on a robotic limb!"))
-			return
+			return*/
 	..()
 
 /obj/item/reagent_containers/pill/patch/canconsume(mob/eater, mob/user)

@@ -123,7 +123,6 @@
 	attack_verb_simple = list("barked", "boofed", "shotgun'd")
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Goodboye" = "fritz", "Badboye" = "fritz_bad")
-	mutantrace_variation = NONE
 
 
 
