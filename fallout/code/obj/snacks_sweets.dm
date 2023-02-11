@@ -1,4 +1,4 @@
-/obj/item/reagent_containers/food/snacks/candy_corn
+/obj/item/food/snacks/candy_corn
 	name = "candy corn"
 	desc = "It's a handful of candy corn."
 	icon_state = "candy_corn"
@@ -10,7 +10,7 @@
 	tastes = list("candy corn" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/chocolatebar
+/obj/item/food/snacks/chocolatebar
 	name = "chocolate bar"
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolatebar"
@@ -24,7 +24,7 @@
 	foodtype = JUNKFOOD | SUGAR
 	dunkable = TRUE
 
-/obj/item/reagent_containers/food/snacks/mint
+/obj/item/food/snacks/mint
 	name = "mint"
 	desc = "It is only wafer thin."
 	icon_state = "mint"
@@ -35,7 +35,7 @@
 	filling_color = "#800000"
 	foodtype = TOXIC | SUGAR
 
-/obj/item/reagent_containers/food/snacks/chococoin
+/obj/item/food/snacks/chococoin
 	name = "chocolate coin"
 	desc = "A completely edible festive coin."
 	icon_state = "chococoin"
@@ -49,7 +49,7 @@
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/fudgedice
+/obj/item/food/snacks/fudgedice
 	name = "fudge dice"
 	desc = "A little cube of chocolate that tends to have a less intense taste if you eat too many at once."
 	icon_state = "chocodice"
@@ -65,7 +65,7 @@
 	tastes = list("fudge" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/chocoorange
+/obj/item/food/snacks/chocoorange
 	name = "chocolate orange"
 	desc = "A festive chocolate orange."
 	icon_state = "chocoorange"
@@ -81,7 +81,7 @@
 	tastes = list("chocolate" = 3, "oranges" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/tinychocolate
+/obj/item/food/snacks/tinychocolate
 	name = "chocolate"
 	desc = "A tiny and sweet chocolate. Has a 'strawberry' filling!"
 	icon_state = "tiny_chocolate"
@@ -94,7 +94,7 @@
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/bonbon
+/obj/item/food/snacks/bonbon
 	name = "bon bon"
 	desc = "A tiny and sweet chocolate."
 	icon_state = "tiny_chocolate"
@@ -107,7 +107,7 @@
 	foodtype = JUNKFOOD | SUGAR
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/reagent_containers/food/snacks/bonbon/caramel_truffle
+/obj/item/food/snacks/bonbon/caramel_truffle
 	name = "caramel truffle"
 	desc = "A bite-sized chocolate truffle with a chewy caramel filling."
 	icon_state = "caramel_truffle"
@@ -117,7 +117,7 @@
 	)
 	tastes = list("chocolate" = 1, "chewy caramel" = 1)
 
-/obj/item/reagent_containers/food/snacks/bonbon/chocolate_truffle
+/obj/item/food/snacks/bonbon/chocolate_truffle
 	name = "chocolate truffle"
 	desc = "A bite-sized chocolate truffle with a rich chocolate mousse filling."
 	icon_state = "chocolate_truffle"
@@ -126,7 +126,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3
 	)
 
-/obj/item/reagent_containers/food/snacks/bonbon/peanut_truffle
+/obj/item/food/snacks/bonbon/peanut_truffle
 	name = "peanut truffle"
 	desc = "A bite-sized chocolate truffle with crunchy peanuts mixed in."
 	icon_state = "peanut_truffle"
@@ -137,7 +137,7 @@
 	tastes = list("chocolate" = 1, "peanuts" = 1)
 	foodtype = DAIRY | SUGAR | JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/bonbon/peanut_butter_cup
+/obj/item/food/snacks/bonbon/peanut_butter_cup
 	name = "peanut butter cup"
 	desc = "An ultra-sweet chocolate treat with a savory peanut butter filling."
 	icon_state = "peanut_butter_cup"
@@ -148,7 +148,7 @@
 	tastes = list("chocolate" = 1, "peanut butter" = 1)
 	foodtype = DAIRY | SUGAR | JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/lollipop
+/obj/item/food/snacks/lollipop
 	name = "lollipop"
 	desc = "A delicious lollipop. Makes for a great Valentine's present."
 	icon = 'icons/obj/lollipop.dmi'
@@ -165,38 +165,38 @@
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR | ANTITOXIC
 
-/obj/item/reagent_containers/food/snacks/lollipop/Initialize()
+/obj/item/food/snacks/lollipop/Initialize()
 	. = ..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
 
-/obj/item/reagent_containers/food/snacks/lollipop/proc/change_head_color(C)
+/obj/item/food/snacks/lollipop/proc/change_head_color(C)
 	headcolor = C
 	cut_overlay(head)
 	head.color = C
 	add_overlay(head)
 
-/obj/item/reagent_containers/food/snacks/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/food/snacks/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..(hit_atom)
 	throw_speed = 1
 	throwforce = 0
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg
+/obj/item/food/snacks/lollipop/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/Initialize()
+/obj/item/food/snacks/lollipop/cyborg/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
+/obj/item/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
 	. = ..(user, slot)
 	spamchecking = FALSE
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/proc/spamcheck()
+/obj/item/food/snacks/lollipop/cyborg/proc/spamcheck()
 	if(spamchecking)
 		qdel(src)
 
-/obj/item/reagent_containers/food/snacks/gumball
+/obj/item/food/snacks/gumball
 	name = "gumball"
 	desc = "A colorful, sugary gumball."
 	icon = 'icons/obj/lollipop.dmi'
@@ -209,26 +209,26 @@
 	tastes = list("candy")
 	foodtype = JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/gumball/Initialize()
+/obj/item/food/snacks/gumball/Initialize()
 	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg
+/obj/item/food/snacks/gumball/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/Initialize()
+/obj/item/food/snacks/gumball/cyborg/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)
+/obj/item/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)
 	. = ..(user, slot)
 	spamchecking = FALSE
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/proc/spamcheck()
+/obj/item/food/snacks/gumball/cyborg/proc/spamcheck()
 	if(spamchecking)
 		qdel(src)
 
-/obj/item/reagent_containers/food/snacks/spiderlollipop
+/obj/item/food/snacks/spiderlollipop
 	name = "spider lollipop"
 	desc = "Still gross, but at least it has a mountain of sugar on it."
 	icon_state = "spiderlollipop"
@@ -243,7 +243,7 @@
 	tastes = list("cobwebs" = 1, "sugar" = 2)
 	foodtype = JUNKFOOD | SUGAR | ANTITOXIC
 
-/obj/item/reagent_containers/food/snacks/candiedapple
+/obj/item/food/snacks/candiedapple
 	name = "candied apple"
 	desc = "An apple coated in sugary sweetness."
 	icon_state = "candiedapple"

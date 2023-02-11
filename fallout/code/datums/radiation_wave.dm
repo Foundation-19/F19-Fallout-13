@@ -62,7 +62,7 @@
 	if(cmove_dir == NORTH || cmove_dir == SOUTH)
 		distance-- //otherwise corners overlap
 
-	atoms += get_rad_contents(cmaster_turf)
+//	atoms += get_rad_contents(cmaster_turf)
 
 	var/turf/place
 	for(var/dir in __dirs) //There should be just 2 dirs in here, left and right of the direction of movement
@@ -71,7 +71,7 @@
 			place = get_step(place, dir)
 			if(!place)
 				break
-			atoms += get_rad_contents(place)
+//			atoms += get_rad_contents(place)
 
 	return atoms
 

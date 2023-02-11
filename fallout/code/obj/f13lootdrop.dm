@@ -1784,7 +1784,7 @@
 				/obj/item/toy/dummy,
 				/obj/item/toy/eightball,
 				/obj/item/toy/cards/deck,
-				/obj/item/toy/xmas_cracker,
+				/obj/item/toy/xmas_/obj/item/reagent_containers/condiment,
 				/obj/item/toy/tennis,
 				/obj/item/reagent_containers/glass/bowl,
 				/obj/item/reagent_containers/spray/cleaner,

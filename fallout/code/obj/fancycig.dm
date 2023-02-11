@@ -383,12 +383,12 @@
 	lefthand_file = 'fallout/icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'fallout/icons/mob/inhands/misc/food_righthand.dmi'
 	spawn_type = list(
-		/obj/item/reagent_containers/food/snacks/tinychocolate,
-		/obj/item/reagent_containers/food/snacks/bonbon,
-		/obj/item/reagent_containers/food/snacks/bonbon/chocolate_truffle,
-		/obj/item/reagent_containers/food/snacks/bonbon/caramel_truffle,
-		/obj/item/reagent_containers/food/snacks/bonbon/peanut_truffle,
-		/obj/item/reagent_containers/food/snacks/bonbon/peanut_butter_cup
+		/obj/item/food/snacks/tinychocolate,
+		/obj/item/food/snacks/bonbon,
+		/obj/item/food/snacks/bonbon/chocolate_truffle,
+		/obj/item/food/snacks/bonbon/caramel_truffle,
+		/obj/item/food/snacks/bonbon/peanut_truffle,
+		/obj/item/food/snacks/bonbon/peanut_butter_cup
 	)
 
 /obj/item/storage/fancy/heart_box/ComponentInitialize()
@@ -396,27 +396,13 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 8
 	STR.can_hold = typecacheof(list(
-		/obj/item/reagent_containers/food/snacks/tinychocolate,
-		/obj/item/reagent_containers/food/snacks/bonbon,
-		/obj/item/reagent_containers/food/snacks/bonbon/chocolate_truffle,
-		/obj/item/reagent_containers/food/snacks/bonbon/caramel_truffle,
-		/obj/item/reagent_containers/food/snacks/bonbon/peanut_truffle,
-		/obj/item/reagent_containers/food/snacks/bonbon/peanut_butter_cup
+		/obj/item/food/snacks/tinychocolate,
+		/obj/item/food/snacks/bonbon,
+		/obj/item/food/snacks/bonbon/chocolate_truffle,
+		/obj/item/food/snacks/bonbon/caramel_truffle,
+		/obj/item/food/snacks/bonbon/peanut_truffle,
+		/obj/item/food/snacks/bonbon/peanut_butter_cup
 		))
-
-/obj/item/storage/fancy/cracker_pack
-	name = "cracker pack"
-	desc = "A pack of delicious crackers. Keep away from parrots!"
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "crackerbox"
-	icon_type = "cracker"
-	spawn_type = /obj/item/reagent_containers/food/snacks/cracker
-
-/obj/item/storage/fancy/cracker_pack/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/cracker))
 /*
  * Ring Box
  */
