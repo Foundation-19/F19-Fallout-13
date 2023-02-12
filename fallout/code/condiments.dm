@@ -32,32 +32,6 @@
 	user.visible_message(span_suicide("[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!"))
 	return OXYLOSS
 
-/obj/item/reagent_containers/condiment/attack(mob/M, mob/user, def_zone)
-
-	if(!reagents || !reagents.total_volume)
-		to_chat(user, span_warning("None of [src] left, oh no!"))
-		return 0
-
-	if(!canconsume(M, user))
-		return 0
-
-	if(M == user)
-		user.visible_message(span_notice("[user] swallows some of contents of \the [src]."), span_notice("You swallow some of contents of \the [src]."))
-	else
-		user.visible_message(span_warning("[user] attempts to feed [M] from [src]."))
-		if(!do_mob(user, M))
-			return
-		if(!reagents || !reagents.total_volume)
-			return // The condiment might be empty after the delay.
-		user.visible_message(span_warning("[user] feeds [M] from [src]."))
-		log_combat(user, M, "fed", reagents.log_list())
-
-	var/fraction = min(10/reagents.total_volume, 1)
-	reagents.reaction(M, INGEST, fraction)
-	reagents.trans_to(M, 10, log = TRUE)
-	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-	return 1
-
 /obj/item/reagent_containers/condiment/afterattack(obj/target, mob/user , proximity)
 	. = ..()
 	if(!proximity)

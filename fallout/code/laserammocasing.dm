@@ -18,7 +18,7 @@ also: most hitscan weapons have more charge than their normal projectile counter
 	variance = 5
 	select_name = "scatter"
 	e_cost = 180 //11 shots
-	fire_sound = 'sound/f13weapons/tribeamfire.ogg'
+	fire_sound = 'fallout/sound/f13weapons/tribeamfire.ogg'
 
 /obj/item/ammo_casing/energy/laser/scatter/tribeam/hitscan
 	projectile_type = /obj/item/projectile/beam/laser/tribeam/hitscan
@@ -30,7 +30,7 @@ also: most hitscan weapons have more charge than their normal projectile counter
 /obj/item/ammo_casing/energy/laser/pistol
 	projectile_type = /obj/item/projectile/beam/laser/pistol
 	e_cost = 80 //20 shots
-	fire_sound = 'sound/f13weapons/aep7fire.ogg'
+	fire_sound = 'fallout/sound/f13weapons/aep7fire.ogg'
 
 /obj/item/ammo_casing/energy/laser/pistol/hitscan //25 damage per, with 0 near 0 AP-4 shot crit on unarmored target, significantly less useful against armored
 	projectile_type = /obj/item/projectile/beam/laser/pistol/hitscan
@@ -39,17 +39,17 @@ also: most hitscan weapons have more charge than their normal projectile counter
 /obj/item/ammo_casing/energy/laser/ultra_pistol
 	projectile_type = /obj/item/projectile/beam/laser/ultra_pistol
 	e_cost = 80 //20 shots
-	fire_sound = 'sound/f13weapons/aep7fire.ogg'
+	fire_sound = 'fallout/sound/f13weapons/aep7fire.ogg'
 
 /obj/item/ammo_casing/energy/laser/ultra_rifle
 	projectile_type = /obj/item/projectile/beam/laser/ultra_rifle
 	e_cost = 80 //20 shots
-	fire_sound = 'sound/f13weapons/aep7fire.ogg'
+	fire_sound = 'fallout/sound/f13weapons/aep7fire.ogg'
 
 /obj/item/ammo_casing/energy/laser/pistol/recharger/hitscan //recharger pistol
 	projectile_type = /obj/item/projectile/beam/laser/recharger/hitscan
 	e_cost = 70 //20 shots
-	fire_sound = 'sound/f13weapons/aep7fire.ogg'
+	fire_sound = 'fallout/sound/f13weapons/aep7fire.ogg'
 
 /obj/item/ammo_casing/energy/laser/stun  //compliance regulator
 	projectile_type = /obj/item/projectile/beam/laser/pistol/hitscan/stun
@@ -75,7 +75,7 @@ also: most hitscan weapons have more charge than their normal projectile counter
 /obj/item/ammo_casing/energy/laser/lasgun
 	projectile_type = /obj/item/projectile/beam/laser/lasgun
 	e_cost = 100 //20 shots
-	fire_sound = 'sound/f13weapons/aer9fire.ogg'
+	fire_sound = 'fallout/sound/f13weapons/aer9fire.ogg'
 
 /obj/item/ammo_casing/energy/laser/lasgun/hitscan
 	projectile_type = /obj/item/projectile/beam/laser/lasgun/hitscan
@@ -88,7 +88,7 @@ also: most hitscan weapons have more charge than their normal projectile counter
 /obj/item/ammo_casing/energy/laser/solar
 	projectile_type = /obj/item/projectile/beam/laser/solar
 	e_cost = 30 //basically infinite shots
-	fire_sound = 'sound/f13weapons/laser_pistol.ogg'
+	fire_sound = 'fallout/sound/f13weapons/laser_pistol.ogg'
 
 /obj/item/ammo_casing/energy/laser/solar/hitscan
 	projectile_type = /obj/item/projectile/beam/laser/solar/hitscan
@@ -97,7 +97,7 @@ also: most hitscan weapons have more charge than their normal projectile counter
 /obj/item/ammo_casing/energy/laser/rcw
 	projectile_type = /obj/item/projectile/beam/laser/rcw
 	e_cost = 100 //11 shots
-	fire_sound = 'sound/f13weapons/rcwfire.ogg'
+	fire_sound = 'fallout/sound/f13weapons/rcwfire.ogg'
 
 /obj/item/ammo_casing/energy/laser/rcw/hitscan
 	projectile_type = /obj/item/projectile/beam/laser/rcw/hitscan
@@ -114,7 +114,7 @@ also: most hitscan weapons have more charge than their normal projectile counter
 /obj/item/ammo_casing/energy/laser/laer
 	projectile_type = /obj/item/projectile/beam/laser/laer
 	e_cost = 125 //16 shots
-	fire_sound = 'sound/f13weapons/laerfire.ogg'
+	fire_sound = 'fallout/sound/f13weapons/laerfire.ogg'
 
 /obj/item/ammo_casing/energy/laser/laer/hitscan
 	projectile_type = /obj/item/projectile/beam/laser/laer/hitscan
@@ -122,7 +122,7 @@ also: most hitscan weapons have more charge than their normal projectile counter
 /obj/item/ammo_casing/energy/laser/aer14
 	projectile_type = /obj/item/projectile/beam/laser/aer14
 	e_cost = 80 //25 shots
-	fire_sound = 'sound/f13weapons/aer14fire.ogg'
+	fire_sound = 'fallout/sound/f13weapons/aer14fire.ogg'
 
 /obj/item/ammo_casing/energy/laser/aer14/hitscan
 	projectile_type = /obj/item/projectile/beam/laser/aer14/hitscan
@@ -131,12 +131,12 @@ also: most hitscan weapons have more charge than their normal projectile counter
 /obj/item/ammo_casing/energy/laser/aer12
 	projectile_type = /obj/item/projectile/beam/laser/aer12
 	e_cost = 100 //20 shots
-	fire_sound = 'sound/f13weapons/aer9fire.ogg'
+	fire_sound = 'fallout/sound/f13weapons/aer9fire.ogg'
 
 /obj/item/ammo_casing/energy/laser/aer12/hitscan
 	projectile_type = /obj/item/projectile/beam/laser/aer12/hitscan
 	e_cost = 100 //20 shots
-	fire_sound = 'sound/f13weapons/aer9fire.ogg'
+	fire_sound = 'fallout/sound/f13weapons/aer9fire.ogg'
 
 /obj/item/ammo_casing/energy/gammagun
 	projectile_type = /obj/item/projectile/beam/gamma

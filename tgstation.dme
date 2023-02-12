@@ -5099,6 +5099,7 @@
 #include "fallout\code\pills.dm"
 #include "fallout\code\plasma.dm"
 #include "fallout\code\plasmaammo.dm"
+#include "fallout\code\plasmaprojectile.dm"
 #include "fallout\code\projectile.dm"
 #include "fallout\code\reach.dm"
 #include "fallout\code\reagentdef.dm"

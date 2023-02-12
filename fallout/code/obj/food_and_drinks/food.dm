@@ -758,12 +758,11 @@
 
 //WASTELAND SOUPS
 
-/obj/item/food/snacks/soup/moleratstew
+/obj/item/food/soup/moleratstew
 	name = "molerat stew"
 	desc = "A nice and warm stew. Healthy and strong."
 	icon = 'fallout/icons/objects/food&drinks/soupsalad.dmi'
 	icon_state = "molerat_stew"
-	volume = 35
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 		/datum/reagent/medicine/oculine = 5,
@@ -776,12 +775,12 @@
 	tastes = list("gamey meat" = 1, "filling stew" = 1)
 	foodtypes = VEGETABLES | MEAT
 
-/obj/item/food/snacks/soup/buffalogourd
+/obj/item/food/soup/buffalogourd
 	name = "buffalo gourd soup"
 	desc = "A tasty soup made with roasted gourd."
 	icon = 'fallout/icons/objects/food&drinks/soupsalad.dmi'
 	icon_state = "buffalo_soup"
-	volume = 40
+
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 6
@@ -789,13 +788,12 @@
 	tastes = list("buttery flesh" = 1, "creamy soup" = 1)
 	foodtypes = VEGETABLES
 
-/obj/item/food/snacks/soup/squirrelstew
+/obj/item/food/soup/squirrelstew
 	name = "squirrel stew"
 	desc = "Stewed squirrel meat with veggies. There's more vegetable than meat."
 	icon = 'fallout/icons/objects/food&drinks/soupsalad.dmi'
 	icon_state = "squrrielsoup"
 	//bitesize = 4
-	volume = 25
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 6
 	)
@@ -805,13 +803,12 @@
 	//filling_color = "B#22222"
 	foodtypes = MEAT | VEGETABLES
 
-/obj/item/food/snacks/soup/longpork_stew
+/obj/item/food/soup/longpork_stew
 	name = "longpork stew"
 	desc = "A thick, oily stew that tastes and smells weird. Has small pieces of raw, chewy meat."
 	icon = 'fallout/icons/objects/food&drinks/soupsalad.dmi'
 	icon_state = "molerat_stew"
 	//bitesize = 4
-	volume = 30
 	food_reagents = list(
 		/datum/reagent/medicine/longpork_stew = 30
 	)
@@ -823,13 +820,12 @@
 	tastes = list("oily broth" = 5, "chewy meat" = 1)
 	foodtypes = MEAT | LONGPORK
 
-/obj/item/food/snacks/soup/mirelurkstew
+/obj/item/food/soup/mirelurkstew
 	name = "mirelurk stew"
 	desc = "A hearty stew made from de-shelled mirelurk meat, onions, butter, and other such delights."
 	icon = 'fallout/icons/objects/food&drinks/soupsalad.dmi'
 	icon_state = "mirelurk_stew"
 	//bitesize = 6
-	volume = 50
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 20
 	)
@@ -841,13 +837,12 @@
 	//filling_color = "#406618"
 	foodtypes = MEAT | VEGETABLES
 
-/obj/item/food/snacks/soup/rubycasserole
+/obj/item/food/soup/rubycasserole
 	name = "ruby's radscorpion casserole"
 	desc = "A flavorsome casserole made from from radscorpion meat, chillipeppers, molerat meat, and love."
 	icon = 'fallout/icons/objects/food&drinks/soupsalad.dmi'
 	icon_state = "radscorpion_casserole"
 	//bitesize = 6
-	volume = 50
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 20
 	)
@@ -1001,7 +996,7 @@
 	tastes = list("molerat" = 4, "stewed vegetables" = 2)
 	foodtypes = MEAT | VEGETABLES
 	//filling_color = "#38230d"
-	//cooked_type = /obj/item/food/snacks/soup/moleratstew
+	//cooked_type = /obj/item/food/soup/moleratstew
 
 /obj/item/food/snacks/f13/canned/ncr/ham_and_eggs
 	name = "c-ration entree - 'Brahmin Ham and Mirelurk Eggs'"
@@ -1021,7 +1016,7 @@
 	desc = "A canned food product containing the entree portion of a military combat ration."
 	tastes = list("crunchy vegetables" = 4, "stewed vegetables" = 2)
 	foodtypes = VEGETABLES
-	//cooked_type = /obj/item/food/snacks/soup/vegetable
+	//cooked_type = /obj/item/food/soup/vegetable
 
 /obj/item/food/snacks/f13/canned/ncr/mirelurk_filets
 	name = "c-ration entree - 'Smoked Mirelurk Filets'"
@@ -1048,7 +1043,6 @@
 	tastes = list("/obj/item/reagent_containers/condiment" = 4)
 	foodtypes = GRAIN
 	//slice_path = /obj/item/food/snacks//obj/item/reagent_containers/condiment/c_ration
-	slices_num = 4
 
 /obj/item/food/snacks/f13/canned/ncr/candied_mutfruit
 	name = "c-ration dessert - 'Candied Mutfruit'"

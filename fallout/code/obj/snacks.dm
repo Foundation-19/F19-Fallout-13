@@ -4,7 +4,7 @@
 	icon_state = "BrahminTongue"
 	//bitesize = 3
 	//filling_color = "#CD853F"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	//cooked_type = /obj/item/food/snacks/cookedbrahmintongue
 	tastes = list("beef" = 4, "tender meat" = 1)
 //	foodtype = MEAT
@@ -16,7 +16,7 @@
 	//bitesize = 3
 	//filling_color = "#CD853F"
 	//bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	//cooked_type = /obj/item/food/snacks/cookedbrahmintongue
 	tastes = list("top quality beef" = 4, "tender meat" = 1, "tasty gravy" = 1)
 //	foodtype = MEAT
@@ -28,7 +28,7 @@
 	icon_state = "Brahmin Liver"
 	//bitesize = 3
 	//filling_color = "#CD853F"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	//cooked_type = /obj/item/food/snacks/cookedbrahminliver
 	tastes = list("beef" = 4, "tender meat" = 1)
 //	foodtype = MEAT
@@ -40,7 +40,7 @@
 	//bitesize = 3
 	//filling_color = "#CD853F"
 	//bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("slow cooked liver" = 4, "delicious crunch" = 1)
 //	foodtype = MEAT
 
@@ -50,6 +50,6 @@
 	icon_state = "AntBrain"
 	//bitesize = 3
 	//filling_color = "#CD853F"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("fat" = 4, "bitter meat" = 1)
 //	foodtype = MEAT
