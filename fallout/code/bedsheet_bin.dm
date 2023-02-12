@@ -45,7 +45,6 @@ LINEN BINS
 	dying_key = DYE_REGISTRY_BEDSHEET
 
 	dog_fashion = /datum/dog_fashion/head/ghost
-	var/list/dream_messages = list("white")
 
 /obj/item/bedsheet/attack(mob/living/M, mob/user)
 	if(!attempt_initiate_surgery(src, M, user))

@@ -21,6 +21,13 @@
 //									//
 //////////////////////////////////////
 
+
+/obj/item/book
+	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	var/dat				//Actual page content
+	var/title			//The real name of the book.
+
+
 /obj/structure/blacksmith/quenching
 	name = "quenching trough"
 	desc = "Water in a open box, for tempering hot metal in."

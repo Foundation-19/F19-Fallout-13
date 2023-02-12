@@ -280,7 +280,7 @@ Possible solution: Only add the minimum weight class of a stack (which is basica
 							span_danger("You fire \the [src]!"))
 	log_combat(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
-	playsound(src, 'sound/f13weapons/rockitlauncher_fire.ogg', 50, 1)
+	playsound(src, 'fallout/sound/f13weapons/rockitlauncher_fire.ogg', 50, 1)
 	fire_items(T, user)
 	if(ammo_pack.pressureSetting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user

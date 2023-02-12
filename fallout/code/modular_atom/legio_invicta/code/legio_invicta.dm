@@ -345,7 +345,6 @@
 	new /obj/item/storage/box/matches(src)
 	new /obj/item/food/snacks/meatsalted(src)
 	new /obj/item/food/snacks/breadhard(src)
-	new /obj/item/food/drinks/flask/survival(src)
 
 // proc to make the quiver look empty when empty
 /obj/item/storage/survivalkit/legion_rations/update_icon_state()
@@ -1085,7 +1084,7 @@
 	toolspeed = 1.2
 	wound_bonus = 0
 	bare_wound_bonus = 10
-	attack_verb = list("sawed", "scratched")
+	attack_verb_simple = list("sawed", "scratched")
 
 /obj/item/stack/medical/bone_gel/superglue
 	name = "superglue (bonegel)"

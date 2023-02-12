@@ -602,8 +602,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(target, /obj/item/food/snacks/grown))
-		var/obj/item/food/snacks/grown/O = target
+	if(istype(target, /obj/item/food/grown))
+		var/obj/item/food/grown/O = target
 		if(O.dry)
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
 			R.chem_volume = target.reagents.total_volume
