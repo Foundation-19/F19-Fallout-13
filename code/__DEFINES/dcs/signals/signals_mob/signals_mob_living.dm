@@ -139,3 +139,11 @@
 
 /// From /mob/living/unfriend() : (mob/living/old_friend)
 #define COMSIG_LIVING_UNFRIENDED "living_unfriended"
+
+//Combat mode
+#define COMSIG_TOGGLE_COMBAT_MODE "toggle_combat_mode"				//safely toggles combat mode.
+#define COMSIG_DISABLE_COMBAT_MODE "disable_combat_mode"			//safely disables combat mode.
+#define COMSIG_ENABLE_COMBAT_MODE "enable_combat_mode"				//safely enables combat mode.
+#define COMSIG_LIVING_COMBAT_ENABLED "combatmode_enabled"			//from base of datum/component/combat_mode/enable_combat_mode() (was_forced)
+#define COMSIG_LIVING_COMBAT_DISABLED "combatmode_disabled"			//from base of datum/component/combat_mode/disable_combat_mode() (was_forced)
+#define COMSIG_COMBAT_MODE_CHECK "combatmode_check"					//called when checking the combat mode flags (enabled/disabled/forced)

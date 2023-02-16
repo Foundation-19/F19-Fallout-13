@@ -199,3 +199,5 @@
 #define GRENADE_WIRED 2
 /// Grenade is ready to be finished
 #define GRENADE_READY 3
+
+#define THRESHOLD_UNHUSK 50 // health threshold for synthflesh/rezadone to unhusk someone
