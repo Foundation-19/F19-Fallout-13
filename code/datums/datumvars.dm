@@ -34,6 +34,10 @@
 	VV_DROPDOWN_OPTION(VV_HK_REMOVECOMPONENT, "Remove Component/Element")
 	VV_DROPDOWN_OPTION(VV_HK_MASS_REMOVECOMPONENT, "Mass Remove Component/Element")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRAITS, "Modify Traits")
+	VV_DROPDOWN_OPTION(VV_HK_MODIFY_RECIPES, "Modify Recipes")
+	#ifdef REFERENCE_TRACKING
+	VV_DROPDOWN_OPTION(VV_HK_VIEW_REFERENCES, "View References")
+	#endif
 
 //This proc is only called if everything topic-wise is verified. The only verifications that should happen here is things like permission checks!
 //href_list is a reference, modifying it in these procs WILL change the rest of the proc in topic.dm of admin/view_variables!
@@ -45,6 +49,8 @@
 		return FALSE
 	if(href_list[VV_HK_MODIFY_TRAITS])
 		usr.client.holder.modify_traits(src)
+	if(href_list[VV_HK_MODIFY_RECIPES])
+		usr.client.modify_recipes(src)
 	return TRUE
 
 /datum/proc/vv_get_header()
