@@ -52,7 +52,7 @@
 	minimum_distance = 2
 	extra_projectiles = 2
 	ranged_cooldown_time = 10
-	projectiletype = /obj/item/projectile/bullet/c10mm/simple
+	projectiletype = /obj/projectile/bullet/c10mm/simple
 	projectilefallout/sound = 'fallout/sound/f13weapons/10mm_fire_01.ogg'
 	loot = list(/obj/effect/spawner/bundle/f13/m1911)
 	robust_searching = TRUE
@@ -87,7 +87,7 @@
 	retreat_distance = 4
 	minimum_distance = 1
 	ranged_cooldown_time = 4
-	projectiletype = /obj/item/projectile/bullet/pellet/shotgun_buckshot
+	projectiletype = /obj/projectile/bullet/pellet/shotgun_buckshot
 	projectilefallout/sound = 'fallout/sound/f13weapons/shotgun.ogg'
 	casingtype = /obj/item/ammo_casing/shotgun
 	loot = list(/obj/item/stack/f13Cash/random/med, /obj/effect/spawner/lootdrop/f13/bomb/tier1, /obj/effect/spawner/lootdrop/f13/crafting)
@@ -123,7 +123,7 @@
 	minimum_distance = 3
 	extra_projectiles = 2
 	ranged_cooldown_time = 6
-	projectiletype = /obj/item/projectile/bullet/c10mm/simple
+	projectiletype = /obj/projectile/bullet/c10mm/simple
 	projectilefallout/sound = 'fallout/sound/f13weapons/combatrifle.ogg'
 	loot = list(/obj/item/stack/f13Cash/random/med, /obj/effect/spawner/lootdrop/f13/weapon/gun/ammo/tier2)
 	robust_searching = TRUE
@@ -194,7 +194,7 @@
 	retreat_distance = 10
 	minimum_distance = 6
 	ranged_cooldown_time = 10
-	projectiletype = /obj/item/projectile/bullet/a762/sport/simple
+	projectiletype = /obj/projectile/bullet/a762/sport/simple
 	projectilefallout/sound = 'fallout/sound/f13weapons/bozar_fire.ogg'
 	loot = list(/obj/item/stack/f13Cash/random/high, /obj/effect/spawner/bundle/f13/remington, /obj/effect/spawner/lootdrop/f13/armor/random)
 	robust_searching = TRUE
@@ -227,7 +227,7 @@
 	check_friendly_fire = 1
 	minimum_distance = 2
 	ranged_cooldown_time = 3
-	projectiletype = /obj/item/projectile/bullet/pellet/shotgun_buckshot
+	projectiletype = /obj/projectile/bullet/pellet/shotgun_buckshot
 	projectilefallout/sound = 'fallout/sound/f13weapons/auto5.ogg'
 	casingtype = /obj/item/ammo_casing/shotgun
 	loot = list(/obj/effect/spawner/bundle/f13/trenchshotgun, /obj/effect/spawner/lootdrop/f13/weapon/gun/ammo/tier1, /obj/item/stack/f13Cash/random/low)
@@ -255,7 +255,7 @@
 	attack_fallout/sound = 'fallout/sound/weapons/slam.ogg'
 	ranged_cooldown_time = 30
 	extra_projectiles = 5
-	projectiletype = /obj/item/projectile/bullet/m5mm/simple
+	projectiletype = /obj/projectile/bullet/m5mm/simple
 	projectilefallout/sound = 'fallout/sound/f13weapons/automaticrifle_BAR.ogg'
 	loot = list(/obj/item/book/granter/trait/pa_wear, /obj/item/stack/f13Cash/random/high, /obj/item/advanced_crafting_components/alloys, /obj/item/stack/sheet/plasteel/five)
 	speak = list("POWER TO THE ARMOR!", "I AM GOING TO BREAK YOU IN HALF!", "YEAH I COMPENSATE WITH BIG FUCKIN' GUNS", "DODGE THIS!", "PEAK RENEGADE PERFORMANCE!")
@@ -289,7 +289,7 @@
 	check_friendly_fire = 1
 	retreat_distance = 6
 	minimum_distance = 8
-	projectiletype = /obj/item/projectile/bullet/m44/simple
+	projectiletype = /obj/projectile/bullet/m44/simple
 	projectilefallout/sound = 'fallout/sound/f13weapons/44mag.ogg'
 	casingtype = /obj/item/ammo_casing/m44
 	robust_searching = TRUE

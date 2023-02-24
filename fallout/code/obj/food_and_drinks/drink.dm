@@ -29,7 +29,7 @@
 	icon_state = "flask113"
 	list_reagents = list(
 		/datum/reagent/water = 30,
-		/datum/reagent/radium = 10,
+		/datum/reagent/uranium/radium = 10,
 		/datum/reagent/medicine/mine_salve = 20
 	)
 

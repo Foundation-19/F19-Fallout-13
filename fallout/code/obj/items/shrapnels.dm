@@ -27,7 +27,7 @@
 	name = "\improper .38 DumDum bullet"
 	embedding = list(embed_chance=70, fall_chance=7, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10, embed_chance_turf_mod=-100)
 
-/obj/item/projectile/bullet/shrapnel
+/obj/projectile/bullet/shrapnel
 	name = "flying shrapnel shard"
 	damage = 14
 	range = 20
@@ -40,7 +40,7 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 50
 
-/obj/item/projectile/bullet/shrapnel/plasma // plasma grenades
+/obj/projectile/bullet/shrapnel/plasma // plasma grenades
 	name = "plasma split"
 	embedding = list(embed_chance=0, ignore_throwspeed_threshold=FALSE, fall_chance=0, embed_chance_turf_mod=0, payload = /obj/item/shrapnel)
 	custom_materials = list(/datum/material/iron=50)
@@ -57,7 +57,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "plasma1"
 
-/obj/item/projectile/bullet/shrapnel/mega
+/obj/projectile/bullet/shrapnel/mega
 	name = "flying shrapnel hunk"
 	range = 45
 	dismemberment = 15
@@ -66,7 +66,7 @@
 	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0.9
 
-/obj/item/projectile/bullet/pellet/stingball
+/obj/projectile/bullet/pellet/stingball
 	name = "stingball pellet"
 	damage = 3
 	stamina = 10
@@ -80,18 +80,18 @@
 	embed_falloff_tile = -2
 	embedding = list(embed_chance=55, fall_chance=20, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.7, pain_mult=3, jostle_pain_mult=3, rip_time=15, embed_chance_turf_mod=-100, projectile_payload = /obj/item/shrapnel/stingball)
 
-/obj/item/projectile/bullet/pellet/stingball/mega
+/obj/projectile/bullet/pellet/stingball/mega
 	name = "megastingball pellet"
 	ricochets_max = 6
 	ricochet_chance = 110
 
-/obj/item/projectile/bullet/pellet/stingball/breaker
+/obj/projectile/bullet/pellet/stingball/breaker
 	name = "breakbang pellet"
 	damage = 10
 	wound_bonus = 40
 	sharpness = SHARP_NONE
 
-/obj/item/projectile/bullet/pellet/stingball/shred
+/obj/projectile/bullet/pellet/stingball/shred
 	name = "shredbang pellet"
 	damage = 10
 	wound_bonus = 30

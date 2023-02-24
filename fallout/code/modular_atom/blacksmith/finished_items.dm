@@ -327,7 +327,7 @@
 	else if(dispense)
 		cuffs = new type()
 
-	target.equip_to_slot(cuffs, SLOT_LEGCUFFED)
+	target.equip_to_slot(cuffs, ITEM_SLOT_LEGCUFFED)
 
 	if(trashtype && !dispense)
 		qdel(src)

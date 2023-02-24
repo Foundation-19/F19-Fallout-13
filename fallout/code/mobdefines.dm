@@ -10,3 +10,4 @@
 	/// The timer that will remove our indicator for early aborts (like when an user finishes their message)
 	var/typing_indicator_timerid
 	var/mutable_appearance/typing_indicator_current
+	var/damage_threshold_penetration_mob = 0

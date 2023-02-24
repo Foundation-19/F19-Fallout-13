@@ -35,7 +35,7 @@
 			to_chat(user, span_notice("You already have looted [src]."))
 			return
 		for(var/i=0, i<rand(1,4), i++)
-			var/itemtype= pickweight(lootable_trash)
+			var/itemtype= pick_weight(lootable_trash)
 			//var/itemtypebonus= pickweight(lootable_trash)
 			if(itemtype)
 				to_chat(user, span_notice("You scavenge through [src]."))

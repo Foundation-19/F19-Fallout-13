@@ -586,7 +586,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "slighter"
 	heat = 3500
 	light_color = LIGHT_COLOR_CYAN
-	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/radium = 5)
+	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/uranium/radium = 5)
 
 ///////////
 //ROLLING//

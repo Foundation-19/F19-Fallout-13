@@ -14,7 +14,7 @@
 	desc = "A rather odd-looking metal barrel, made of strange metal that somehow hasn't rusted after all this time.<br>There is a strange label on it, but you can't quite make it out..."
 	icon_state = "dangerous"
 	tank_volume = 500
-	reagent_id = /datum/reagent/radium
+	reagent_id = /datum/reagent/uranium/radium
 	light_color = LIGHT_COLOR_GREEN
 	light_power = 3
 	light_range = 2
@@ -141,6 +141,6 @@
 	desc = "Ancient containers with something inside of them. Or are they empty? Actually, that's a lot of barrels standing in a single spot..."
 	icon_state = "four_b"
 	tank_volume = 800
-	reagent_id = /datum/reagent/radium
+	reagent_id = /datum/reagent/uranium/radium
 	anchored = 1
 //	self_weight = 60

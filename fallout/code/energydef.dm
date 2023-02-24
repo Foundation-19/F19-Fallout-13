@@ -316,7 +316,7 @@
 		. = ""
 	else
 		var/obj/item/ammo_casing/energy/E = ammo_type[current_firemode_index]
-		var/obj/item/projectile/energy/BB = E.BB
+		var/obj/projectile/energy/BB = E.BB
 		if(!BB)
 			. = ""
 		else if(BB.nodamage || !BB.damage || BB.damage_type == STAMINA)

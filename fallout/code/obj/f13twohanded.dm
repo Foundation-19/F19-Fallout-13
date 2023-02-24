@@ -53,7 +53,7 @@
 	wound_bonus = WOUNDING_BONUS_SMALL
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
-	attack_verb = list("axed", "chopped", "cleaved", "torn", "hacked")
+	attack_verb_simple = list("axed", "chopped", "cleaved", "torn", "hacked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/twohanded/legionaxe/ComponentInitialize()
@@ -100,7 +100,7 @@
 	throwforce = THROWING_POOR
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
-	attack_verb = list("axed", "chopped", "cleaved", "torn", "hacked")
+	attack_verb_simple = list("axed", "chopped", "cleaved", "torn", "hacked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/twohanded/fireaxe/ComponentInitialize()
@@ -219,7 +219,7 @@
 	bare_wound_bonus = WOUNDING_BONUS_MODEST
 	sharpness = SHARP_POINTY
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "impaled", "jabbed", "torn", "gored")
+	attack_verb_simple = list("attacked", "impaled", "jabbed", "torn", "gored")
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
 
@@ -348,7 +348,7 @@
 	max_reach = 2
 	embedding = list("embedded_impact_pain_multiplier" = 3)
 	custom_materials = null
-	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	attack_verb_simple = list("attacked", "poked", "jabbed", "torn", "gored")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 
@@ -377,7 +377,7 @@
 	icon_prefix = "spearaxe"
 	wielded_icon = "spearaxe2"
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("slashed", "stabbed", "sliced", "gored", "speared", "cut")
+	attack_verb_simple = list("slashed", "stabbed", "sliced", "gored", "speared", "cut")
 	force = WEAPON_FORCE_SPEAR
 	force_unwielded = WEAPON_FORCE_SPEAR
 	force_wielded = WEAPON_FORCE_SPEAR_WIELDED
@@ -409,7 +409,7 @@
 	throwforce = THROWING_POOR
 	throw_range = THROWRANGE_AVERAGE
 	attack_speed = MELEE_SPEED_NORMAL
-	attack_verb = list("beat", "smacked", "clubbed", "clobbered")
+	attack_verb_simple = list("beat", "smacked", "clubbed", "clobbered")
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = SHARP_NONE
 
@@ -446,7 +446,7 @@
 	desc = "Purification in progress."
 	icon_state = "louisville"
 	icon_prefix = "louisville"
-	attack_verb = list("thwacked", "bashed", "louisville slugged", "hit", "bludgeoned", "whacked", "bonked")
+	attack_verb_simple = list("thwacked", "bashed", "louisville slugged", "hit", "bludgeoned", "whacked", "bonked")
 	wielded_icon = "louisville2"
 	force = WEAPON_FORCE_CLUB
 	force_unwielded = WEAPON_FORCE_CLUB
@@ -469,7 +469,7 @@
 	force = WEAPON_FORCE_CLUB
 	force_unwielded = WEAPON_FORCE_CLUB
 	force_wielded = WEAPON_FORCE_CLUB_WIELDED
-	attack_verb = list("smashed", "bashed", "fored", "hit", "bludgeoned", "whacked")
+	attack_verb_simple = list("smashed", "bashed", "fored", "hit", "bludgeoned", "whacked")
 
 /obj/item/twohanded/baseball/golfclub/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -495,7 +495,7 @@
 	throwforce = THROWING_POOR // Huge hammers aren't that great for throwing
 	sharpness = SHARP_NONE
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON * 2
-	attack_verb = list("bashed", "pounded", "bludgeoned", "pummeled", "thrashed")
+	attack_verb_simple = list("bashed", "pounded", "bludgeoned", "pummeled", "thrashed")
 
 
 // Sledgehammer				[Damage MASSIVE, Blacksmithing, Bonus damage structure, Slow] ------------
@@ -534,7 +534,7 @@
 	armour_penetration = PIERCING_MODERATE
 	throwforce = THROWING_POOR
 	throw_range = THROWRANGE_AVERAGE
-	attack_verb = list("bashed", "pounded", "bludgeoned", "pummeled", "thrashed")
+	attack_verb_simple = list("bashed", "pounded", "bludgeoned", "pummeled", "thrashed")
 
 
 // Shaman staff				[ Damage CLUB, Bonus damage STAMINA, TRIBAL ] ----------------------------
@@ -549,7 +549,7 @@
 	force_unwielded = WEAPON_FORCE_BIG_TOOL
 	force_wielded = WEAPON_FORCE_CLUB
 	throw_range = THROWRANGE_AVERAGE
-	attack_verb = list("bashed", "pounded", "bludgeoned", "pummeled", "thrashed")
+	attack_verb_simple = list("bashed", "pounded", "bludgeoned", "pummeled", "thrashed")
 
 /obj/item/twohanded/sledgehammer/shamanstaff/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -565,7 +565,7 @@
 	icon_state = "staff-mars"
 	icon_prefix = "staff-mars"
 	hitsound = "swing_hit"
-	attack_verb = list("bashed", "pounded", "bludgeoned", "pummeled", "enlightened")
+	attack_verb_simple = list("bashed", "pounded", "bludgeoned", "pummeled", "enlightened")
 	wielded_icon = "staff-mars2"
 	force = 5
 	force_unwielded = 5
@@ -625,7 +625,7 @@
 	armour_penetration = PIERCING_MAJOR
 	throwforce = THROWING_PATHETIC
 	throw_speed = 2
-	attack_verb = list("burned", "welded", "cauterized", "melted", "charred")
+	attack_verb_simple = list("burned", "welded", "cauterized", "melted", "charred")
 	hitsound = 'sound/items/welder2.ogg'
 
 /obj/item/twohanded/thermic_lance/afterattack(atom/A, mob/living/user, proximity)
@@ -790,7 +790,7 @@
 	resistance_flags = FIRE_PROOF
 	toolspeed = 0.5
 	tool_behaviour = TOOL_SAW
-	attack_verb = list("sawed", "shredded", "mauled")
+	attack_verb_simple = list("sawed", "shredded", "mauled")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 
 /obj/item/twohanded/chainsaw/ComponentInitialize()
@@ -854,7 +854,7 @@
 		w_class = weight_class_on
 		force = force_on
 		attack_speed = CLICK_CD_MELEE * 0.5
-		attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+		attack_verb_simple = list("sawed", "torn", "cut", "chopped", "diced")
 		playsound(loc, on_sound, 50, TRUE)
 	else
 		user.visible_message("<span class ='notice'>[user] presses the off button, stopping the noise and the carnage.</span>")
@@ -862,7 +862,7 @@
 		inhand_icon_state = off_inhand_icon_state
 		w_class = WEIGHT_CLASS_BULKY
 		force = force_off
-		attack_verb = list("poked", "scraped")
+		attack_verb_simple = list("poked", "scraped")
 		attack_speed = CLICK_CD_MELEE * 1.2
 	add_fingerprint(user)
 
@@ -923,7 +923,7 @@
 		w_class = weight_class_on
 		force = force_on
 		attack_speed = MELEE_SPEED_FASTEST
-		attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+		attack_verb_simple = list("sawed", "torn", "cut", "chopped", "diced")
 		playsound(loc, on_sound, 50, TRUE)
 	else
 		user.visible_message("<span class ='notice'>[user] cuts the throttle on the [src], letting the blades slowly spin down.</span>")
@@ -931,7 +931,7 @@
 		inhand_icon_state = off_inhand_icon_state
 		w_class = WEIGHT_CLASS_BULKY
 		force = force_off
-		attack_verb = list("poked", "scraped")
+		attack_verb_simple = list("poked", "scraped")
 		attack_speed = MELEE_SPEED_SLOWEST
 	add_fingerprint(user)
 /*
@@ -951,7 +951,7 @@ CODE FOR POISON EFFECT
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
 	throwforce = 20
 	throw_speed = 4
-	attack_verb = list("gored")
+	attack_verb_simple = list("gored")
 	var/clonechance = 50
 	var/clonedamage = 12
 	var/clonespeed = 0

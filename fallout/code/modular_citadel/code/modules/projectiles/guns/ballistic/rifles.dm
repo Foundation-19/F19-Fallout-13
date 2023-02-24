@@ -44,18 +44,18 @@
 
 ///projectiles///
 
-/obj/item/projectile/bullet/cflechetteap	//shreds armor
+/obj/projectile/bullet/cflechetteap	//shreds armor
 	name = "flechette (armor piercing)"
 	damage = 8
 	armour_penetration = 0.95
 
-/obj/item/projectile/bullet/cflechettes		//shreds flesh and forces bleeding
+/obj/projectile/bullet/cflechettes		//shreds flesh and forces bleeding
 	name = "flechette (serrated)"
 	damage = 15
 	dismemberment = 10
 	armour_penetration = -2
 
-/obj/item/projectile/bullet/cflechettes/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/cflechettes/on_hit(atom/target, blocked = FALSE)
 	if((blocked != 100) && iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.bleed(10)
@@ -66,7 +66,7 @@
 /obj/item/ammo_casing/caseless/flechetteap
 	name = "flechette (armor piercing)"
 	desc = "A flechette made with a tungsten alloy."
-	projectile_type = /obj/item/projectile/bullet/cflechetteap
+	projectile_type = /obj/projectile/bullet/cflechetteap
 	caliber = "flechette"
 	throwforce = 1
 	throw_speed = 3
@@ -74,7 +74,7 @@
 /obj/item/ammo_casing/caseless/flechettes
 	name = "flechette (serrated)"
 	desc = "A serrated flechette made of a special alloy intended to deform drastically upon penetration of human flesh."
-	projectile_type = /obj/item/projectile/bullet/cflechettes
+	projectile_type = /obj/projectile/bullet/cflechettes
 	caliber = "flechette"
 	throwforce = 2
 	throw_speed = 3
@@ -97,7 +97,7 @@
 
 ///unique variant///
 
-/obj/item/projectile/bullet/cflechetteshredder
+/obj/projectile/bullet/cflechetteshredder
 	name = "flechette (shredder)"
 	damage = 5
 	dismemberment = 40
@@ -105,7 +105,7 @@
 /obj/item/ammo_casing/caseless/flechetteshredder
 	name = "flechette (shredder)"
 	desc = "A serrated flechette made of a special alloy that forms a monofilament edge."
-	projectile_type = /obj/item/projectile/bullet/cflechettes
+	projectile_type = /obj/projectile/bullet/cflechettes
 
 /obj/item/ammo_box/magazine/flechette/shredder
 	name = "flechette magazine (shredder)"
