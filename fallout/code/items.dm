@@ -7,6 +7,7 @@
 
 	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
 	var/stiffness = 0 // How much recoil is caused by moving
+	var/damage_threshold_penetration = 0 // How much DT this thing ignores. Negative values increase the target's effective DT. Cant reduce DT below zero
 
 /obj/item/proc/refresh_upgrades()
 	return

@@ -138,7 +138,7 @@
 //AMMO CASINGS (fire modes)
 
 /obj/item/ammo_casing/energy/laser/scatter/disabler/pump
-	projectile_type = /obj/item/projectile/beam/disabler/weak
+	projectile_type = /obj/projectile/beam/disabler/weak
 	e_cost = 150
 	pellets = 4
 	variance = 30
@@ -146,13 +146,13 @@
 	select_name  = "disable"
 
 /obj/item/ammo_casing/energy/disabler/slug
-	projectile_type = /obj/item/projectile/beam/disabler/slug
+	projectile_type = /obj/projectile/beam/disabler/slug
 	select_name  = "overdrive"
 	e_cost = 200
 	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
 
 /obj/item/ammo_casing/energy/laser/pump
-	projectile_type = /obj/item/projectile/beam/pump
+	projectile_type = /obj/projectile/beam/pump
 	e_cost = 350
 	select_name = "kill"
 	pellets = 6
@@ -160,7 +160,7 @@
 	fire_sound = 'sound/weapons/ParticleBlaster.ogg'
 
 /obj/item/ammo_casing/energy/disabler/pump
-	projectile_type = /obj/item/projectile/energy/disabler/pump
+	projectile_type = /obj/projectile/energy/disabler/pump
 	select_name = "disable"
 	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
 	e_cost = 150
@@ -169,23 +169,23 @@
 
 //PROJECTILES
 
-/obj/item/projectile/beam/disabler/weak
+/obj/projectile/beam/disabler/weak
 	name = "particle blast"
 	damage = 13
 	icon_state = "disablerpellet"
 
-/obj/item/projectile/beam/disabler/slug
+/obj/projectile/beam/disabler/slug
 	name = "positron blast"
 	damage = 80
 	range = 14
 	pixels_per_second = TILES_TO_PIXELS(16.667)
 	icon_state = "disablerslug"
 
-/obj/item/projectile/beam/pump
+/obj/projectile/beam/pump
 	damage = 9
 	range = 6
 
-/obj/item/projectile/energy/disabler/pump
+/obj/projectile/energy/disabler/pump
 	name = "disabling blast"
 	icon_state = "disablerslug"
 	color = null

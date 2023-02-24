@@ -21,13 +21,13 @@
 
 //PROJECTILES
 
-/obj/item/projectile/beam/lasertag/wavemotion
+/obj/projectile/beam/lasertag/wavemotion
 	tracer_type = /obj/effect/projectile/tracer/laser/wavemotion
 	muzzle_type = /obj/effect/projectile/muzzle/laser/wavemotion
 	impact_type = /obj/effect/projectile/impact/laser/wavemotion
 	hitscan = TRUE
 
-/obj/item/projectile/beam/lasertag/dispersal
+/obj/projectile/beam/lasertag/dispersal
 	tracer_type = /obj/effect/projectile/tracer/laser/blue
 	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
 	impact_type = /obj/effect/projectile/impact/laser/blue
@@ -36,13 +36,13 @@
 //AMMO CASINGS
 
 /obj/item/ammo_casing/energy/laser/wavemotion
-	projectile_type = /obj/item/projectile/beam/lasertag/wavemotion
+	projectile_type = /obj/projectile/beam/lasertag/wavemotion
 	select_name = "overdrive"
 	e_cost = 300
 	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
 
 /obj/item/ammo_casing/energy/laser/dispersal
-	projectile_type = /obj/item/projectile/beam/lasertag/dispersal
+	projectile_type = /obj/projectile/beam/lasertag/dispersal
 	select_name = "dispersal"
 	pellets = 5
 	variance = 25

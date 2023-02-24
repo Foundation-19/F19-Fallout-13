@@ -39,7 +39,7 @@
 	ex_heavy = 0
 	ex_light = 0
 	ex_flame = 0
-	shrapnel_type = /obj/item/projectile/bullet/pellet/stingball
+	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 	shrapnel_radius = 8
 
 /obj/item/grenade/f13/frag
@@ -52,7 +52,7 @@
 	ex_heavy = 0
 	ex_light = 2
 	ex_flame = 0
-	shrapnel_type = /obj/item/projectile/bullet/shrapnel
+	shrapnel_type = /obj/projectile/bullet/shrapnel
 	shrapnel_radius = 6
 
 /obj/item/grenade/f13/plasma
@@ -65,7 +65,7 @@
 	ex_heavy = 1
 	ex_light = 4
 	ex_flame = 4
-	shrapnel_type = /obj/item/projectile/bullet/shrapnel/plasma
+	shrapnel_type = /obj/projectile/bullet/shrapnel/plasma
 	shrapnel_radius = 10
 	var/rad_damage = 300
 
@@ -114,7 +114,7 @@
 	throw_range = 7
 	var/rad_damage = 1500
 	var/range = 4
-	shrapnel_type = /obj/item/projectile/energy/nuclear_particle/grenade
+	shrapnel_type = /obj/projectile/energy/nuclear_particle/grenade
 	shrapnel_radius = 6
 
 /obj/item/grenade/f13/radiation/prime(mob/living/lanced_by)
@@ -148,5 +148,5 @@
 	ex_heavy = 0
 	ex_light = 2
 	ex_flame = 0
-	shrapnel_type = /obj/item/projectile/bullet/shrapnel
+	shrapnel_type = /obj/projectile/bullet/shrapnel
 	shrapnel_radius = 4

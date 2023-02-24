@@ -24,14 +24,14 @@
 
 /////////RAYGUN MEMES/////////
 
-/obj/item/projectile/beam/lasertag/ray		//the projectile, compatible with regular laser tag armor
+/obj/projectile/beam/lasertag/ray		//the projectile, compatible with regular laser tag armor
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "ray"
 	name = "ray bolt"
 	eyeblur = 0
 
 /obj/item/ammo_casing/energy/laser/raytag
-	projectile_type = /obj/item/projectile/beam/lasertag/ray
+	projectile_type = /obj/projectile/beam/lasertag/ray
 	select_name = "raytag"
 	fire_sound = 'sound/weapons/raygun.ogg'
 
