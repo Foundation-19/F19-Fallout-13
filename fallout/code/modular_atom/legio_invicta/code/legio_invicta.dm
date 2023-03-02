@@ -343,9 +343,9 @@
 
 /obj/item/storage/survivalkit/legion_rations/PopulateContents()
 	new /obj/item/storage/box/matches(src)
-	new /obj/item/reagent_containers/food/snacks/meatsalted(src)
-	new /obj/item/reagent_containers/food/snacks/breadhard(src)
-	new /obj/item/reagent_containers/food/drinks/flask/survival(src)
+	new /obj/item/food/snacks/meatsalted(src)
+	new /obj/item/food/snacks/breadhard(src)
+	new /obj/item/food/drinks/flask/survival(src)
 
 // proc to make the quiver look empty when empty
 /obj/item/storage/survivalkit/legion_rations/update_icon_state()
@@ -1102,8 +1102,8 @@
 	desc = "Pure honey has antiseptic properties, and probably works just as a sterilizing agent."
 	icon = 'fallout/code/modular_atom/icons/primitive_medical.dmi'
 	icon_state = "sterilizer_honey"
-	apply_method = "smear"
-	sound_squirt = 'fallout/code/modular_atom/sound/honey.ogg'
+//	apply_method = "smear"
+//	sound_squirt = 'fallout/code/modular_atom/sound/honey.ogg'
 
 /* Added to base code
 sound_squirt

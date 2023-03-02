@@ -57,6 +57,7 @@
 	var/list/sideslist = list("heads","tails")
 	merge_type = /obj/item/stack/f13Cash
 	custom_materials = list(/datum/material/f13cash=MINERAL_MATERIAL_AMOUNT)
+	var/latin = 0 // Use weird latin pluralization.
 
 /obj/item/stack/f13Cash/attack_self(mob/user)
 	if (flippable)
@@ -98,10 +99,6 @@
 	. = ..()
 	update_desc()
 	update_icon()
-
-/obj/item/stack/f13Cash/proc/update_desc()
-	var/total_worth = get_item_credit_value()
-	desc = "It's worth [total_worth] [singular_name][ (latin) ? (( amount > 1 ) ? "i" : "us") : (( amount > 1 ) ? "s each" : "")].\n[flavor_desc]"
 
 /obj/item/stack/f13Cash/get_item_credit_value()
 	return (amount*value)

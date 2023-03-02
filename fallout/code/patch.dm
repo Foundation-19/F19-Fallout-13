@@ -26,7 +26,7 @@ Problem children are Jet and Turbo, obviously theyre some kind of vape stuff you
 /obj/item/reagent_containers/pill/patch
 	name = "chemical patch"
 	desc = "A chemical patch for touch based applications."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'fallout/icons/obj/chemical.dmi'
 	icon_state = "bandaid"
 	inhand_icon_state = "bandaid"
 	possible_transfer_amounts = list()

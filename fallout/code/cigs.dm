@@ -23,9 +23,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A simple match stick, used for lighting fine smokables."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "match_unlit"
-	var/lit = FALSE
-	var/burnt = FALSE
-	var/smoketime = 5
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
 	grind_results = list(/datum/reagent/phosphorus = 2)
@@ -47,11 +44,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		icon_state = "match_lit"
 		damtype = "fire"
 		force = 3
-		hitsound = 'sound/f13items/matchstick_lit.ogg' // seem damtype sound overrides in /obj/item parent despite that it shouldnt.
+		hitsound = 'fallout/sound/f13items/matchstick_lit.ogg' // seem damtype sound overrides in /obj/item parent despite that it shouldnt.
 		inhand_icon_state = "cigon"
 		name = "lit match"
 		desc = "A match. This one is lit."
-		attack_verb = list("burnt","singed")
+		attack_verb_simple = list("burnt","singed")
 		START_PROCESSING(SSobj, src)
 		update_icon()
 
@@ -65,7 +62,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		inhand_icon_state = "cigoff"
 		name = "burnt match"
 		desc = "A match. This one has seen better days."
-		attack_verb = list("flicked")
+		attack_verb_simple = list("flicked")
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/match/dropped(mob/user)
@@ -428,10 +425,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	light_power = 0.6
 	light_color = LIGHT_COLOR_FIRE
 	light_on = FALSE
-	var/lit = 0
-	var/fancy = TRUE
-	var/overlay_state
-	var/overlay_list = list(
+	overlay_list = list(
 		"plain",
 		"dame",
 		"thirteen",
@@ -475,12 +469,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		force = 5
 		damtype = "fire"
 		hitsound = 'sound/items/welder.ogg'
-		attack_verb = list("burnt", "singed")
+		attack_verb_simple = list("burnt", "singed")
 		START_PROCESSING(SSobj, src)
 	else
 		hitsound = "swing_hit"
 		force = 0
-		attack_verb = null //human_defense.dm takes care of it
+		attack_verb_simple = null //human_defense.dm takes care of it
 		STOP_PROCESSING(SSobj, src)
 	set_light_on(lit)
 	update_icon()
@@ -556,25 +550,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		"matte",
 		"zoppo" //u cant stoppo th zoppo
 		)
-	var/lighter_color
-	var/list/color_list = list( //Same 16 color selection as electronic assemblies
-		COLOR_ASSEMBLY_BLACK,
-		COLOR_FLOORTILE_GRAY,
-		COLOR_ASSEMBLY_BGRAY,
-		COLOR_ASSEMBLY_WHITE,
-		COLOR_ASSEMBLY_RED,
-		COLOR_ASSEMBLY_ORANGE,
-		COLOR_ASSEMBLY_BEIGE,
-		COLOR_ASSEMBLY_BROWN,
-		COLOR_ASSEMBLY_GOLD,
-		COLOR_ASSEMBLY_YELLOW,
-		COLOR_ASSEMBLY_GURKHA,
-		COLOR_ASSEMBLY_LGREEN,
-		COLOR_ASSEMBLY_GREEN,
-		COLOR_ASSEMBLY_LBLUE,
-		COLOR_ASSEMBLY_BLUE,
-		COLOR_ASSEMBLY_PURPLE
-		)
 
 /obj/item/lighter/greyscale/Initialize()
 	. = ..()
@@ -627,7 +602,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/grown))
+	if(istype(target, /obj/item/food/snacks/grown))
 		var/obj/item/reagent_containers/food/snacks/grown/O = target
 		if(O.dry)
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)

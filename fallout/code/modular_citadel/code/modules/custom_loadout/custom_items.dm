@@ -7,12 +7,12 @@
 	name = "Kiara's Sabre"
 	desc = "This blade looks as dangerous as its owner."
 	icon = 'fallout/icons/obj/custom.dmi'
-	worn_icon = 'icons/mob/clothing/custom_w.dmi'
+	worn_icon = 'fallout/icons/mob/clothing/custom_w.dmi'
 	icon_state = "darksabre"
 	inhand_icon_state = "darksabre"
 	lefthand_file = 'fallout/code/modular_citadel/icons/mob/inhands/stunsword_left.dmi'
 	righthand_file = 'fallout/code/modular_citadel/icons/mob/inhands/stunsword_right.dmi'
-	attack_verb = list("attacked", "struck", "hit")
+	attack_verb_simple = list("attacked", "struck", "hit")
 
 /obj/item/toy/darksabre/get_belt_overlay()
 	return mutable_appearance('fallout/icons/obj/custom.dmi', "darksheath-darksabre")
@@ -48,7 +48,7 @@
 	icon_state = "pine_c"
 	inhand_icon_state = "pine_c"
 	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("slapped")
+	attack_verb_simple = list("slapped")
 	resistance_flags = FLAMMABLE
 	squeak_override = list('sound/misc/server-ready.ogg'= 1)
 
@@ -120,7 +120,7 @@
 	icon = 'fallout/icons/obj/custom.dmi'
 	icon_state = "fritz"
 	inhand_icon_state = "fritz"
-	attack_verb = list("barked", "boofed", "shotgun'd")
+	attack_verb_simple = list("barked", "boofed", "shotgun'd")
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Goodboye" = "fritz", "Badboye" = "fritz_bad")
 	mutantrace_variation = NONE

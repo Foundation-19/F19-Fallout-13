@@ -23,11 +23,11 @@
 	. = ..()
 	cell = new /obj/item/stock_parts/cell(src)
 
-	toastables = typecacheof(list(/obj/item/reagent_containers/food/snacks/breadslice,
-		/obj/item/reagent_containers/food/snacks/bagel,
-		/obj/item/reagent_containers/food/snacks/twobread,
-		/obj/item/reagent_containers/food/snacks/cracker, //Why toast a cracker? Who the fuck knows
-		/obj/item/reagent_containers/food/snacks/customizable/sandwich)) //Ehhhhhhhhhhhhhhhhh. I guess for toaster ovens, and "toast" items
+	toastables = typecacheof(list(/obj/item/food/snacks/breadslice,
+		/obj/item/food/snacks/bagel,
+		/obj/item/food/snacks/twobread,
+		/obj/item/food/snacks/cracker,
+		/obj/item/food/snacks/customizable/sandwich)) //Ehhhhhhhhhhhhhhhhh. I guess for toaster ovens, and "toast" items
 
 	if(!rand(0,9) && isturf(loc) && src.type == /obj/item/trash/f13/electronic/toaster) //Randomized variants. strict type check, not istype, as that checks subtypes
 		new /obj/item/trash/f13/electronic/toaster/oven(get_turf(src))
@@ -137,7 +137,7 @@
 
 
 //Don't judge me
-/obj/item/reagent_containers/food/snacks/bagel
+/obj/item/food/snacks/bagel
 	name = "bagel"
 	desc = "A rounded, dense, donut-like loop of bread. Perfect for toasting, as they're rather chewy untoasted."
 	icon_state = "donut1"// need bagel sprite pfffffffffffffff

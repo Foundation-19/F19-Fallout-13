@@ -1,5 +1,5 @@
 
-/obj/item/reagent_containers/food/snacks/sosjerky/ration
+/obj/item/food/snacks/sosjerky/ration
 	name = "brahmin jerky"
 	desc = "Brahmin jerky strips in a sealed package."
 	list_reagents = list(
