@@ -153,9 +153,6 @@
 /mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
-/mob/living/carbon/attack_drone_secondary(mob/living/simple_animal/drone/user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)

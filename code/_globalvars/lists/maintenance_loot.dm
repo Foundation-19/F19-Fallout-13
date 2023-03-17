@@ -377,30 +377,5 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 #define maint_oddity_weight 1 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg
 #define maint_holiday_weight 3500 // When holiday loot is enabled, it'll give every loot item a 25% chance of being a holiday item
 
-//Loot pool used by default maintenance loot spawners
-GLOBAL_LIST_INIT(maintenance_loot, list(
-	GLOB.trash_loot = maint_trash_weight,
-	GLOB.common_loot = maint_common_weight,
-	GLOB.uncommon_loot = maint_uncommon_weight,
-	GLOB.rarity_loot = maint_rarity_weight,
-	GLOB.oddity_loot = maint_oddity_weight,
-	))
 
-GLOBAL_LIST_INIT(ratking_trash, list(//Garbage: used by the regal rat mob when spawning garbage.
-			/obj/item/cigbutt,
-			/obj/item/trash/candy,
-			/obj/item/trash/cheesie,
-			/obj/item/trash/chips,
-			/obj/item/trash/pistachios,
-			/obj/item/trash/popcorn,
-			/obj/item/trash/raisins,
-			/obj/item/trash/sosjerky,
-			/obj/item/trash/syndi_cakes,
-		))
 
-GLOBAL_LIST_INIT(ratking_coins, list(//Coins: Used by the regal rat mob when spawning coins.
-			/obj/item/coin/iron,
-			/obj/item/coin/plastic,
-			/obj/item/coin/silver,
-			/obj/item/coin/titanium,
-		))

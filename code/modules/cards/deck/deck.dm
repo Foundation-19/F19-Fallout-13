@@ -155,10 +155,6 @@
 	user.put_in_hands(card)
 	user.balloon_alert_to_viewers("draws a card")
 
-/obj/item/toy/cards/deck/attack_hand_secondary(mob/living/user, list/modifiers)
-	attack_hand(user, modifiers, flip_card = TRUE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/item/toy/cards/deck/AltClick(mob/living/user)
 	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
 		if(wielded)

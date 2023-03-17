@@ -190,7 +190,7 @@
 /turf/open/indestructible/ground/outside/desert/Initialize()
 	. = ..()
 	if(prob(2))
-		var/obj/derp = pickweight(loots)
+		var/obj/derp = pick_weight(loots)
 		salvage = new derp()
 	if(icon_state != "wasteland")
 		icon_state = "wasteland[rand(1,31)]"

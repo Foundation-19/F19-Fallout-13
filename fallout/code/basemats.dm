@@ -10,7 +10,6 @@
 /obj/item/stack/ore/blackpowder
 	name = "gunpowder"
 	icon_state = "Blackpowder ore"
-	item_state = "Blackpowder ore"
 	singular_name = "blackpowder"
 	points = 1
 	merge_type = /obj/item/stack/ore/blackpowder
