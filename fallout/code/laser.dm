@@ -644,8 +644,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
-	var/obj/item/gun/energy/minigun/gun
-	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
 
 /obj/item/minigunpack/Initialize()
 	. = ..()
@@ -659,7 +657,7 @@
 /obj/item/minigunpack/on_attack_hand(mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
-			if(user.get_item_by_slot(SLOT_BACK) == src)
+			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
 				armed = 1
 				if(!user.put_in_hands(gun))
 					armed = 0

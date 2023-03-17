@@ -342,17 +342,6 @@
 		return TRUE
 
 
-/obj/item/hand_item/hand/pre_attack_secondary(mob/living/carbon/help_target, mob/living/carbon/helper, params)
-	if(!loc.Adjacent(help_target) || !istype(helper) || !istype(help_target))
-		return ..()
-
-	if(helper.resting)
-		to_chat(helper, span_warning("You can't act gentlemanly when you're lying down!"))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	return SECONDARY_ATTACK_CALL_NORMAL
-
-
 /obj/item/hand_item/hand/attack(mob/living/carbon/target_mob, mob/living/carbon/user, params)
 	if(!loc.Adjacent(target_mob) || !istype(user) || !istype(target_mob))
 		return TRUE

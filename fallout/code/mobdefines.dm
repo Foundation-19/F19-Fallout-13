@@ -11,3 +11,4 @@
 	var/typing_indicator_timerid
 	var/mutable_appearance/typing_indicator_current
 	var/damage_threshold_penetration_mob = 0
+	var/list/possible_a_intents = null//Living

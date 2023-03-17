@@ -28,7 +28,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("stabbed", "slashed", "attacked")
+	attack_verb_simple = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 	sharpness = SHARP_EDGED
 

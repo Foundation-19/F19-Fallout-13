@@ -19,7 +19,6 @@
 						"pink hypovial" = "hypovial-pink"
 						)
 	always_reskinnable = TRUE
-	cached_icon = "hypovial"
 
 /obj/item/reagent_containers/glass/bottle/vial/Initialize()
 	. = ..()
@@ -58,7 +57,6 @@
 						"large purple hypovial" = "hypoviallarge-p",
 						"large black hypovial" = "hypoviallarge-t"
 						)
-	cached_icon = "hypoviallarge"
 
 /obj/item/reagent_containers/glass/bottle/vial/large/bluespace
 	possible_transfer_amounts = list(1,2,5,10,20)

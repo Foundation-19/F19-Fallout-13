@@ -179,12 +179,6 @@
 		return
 	use(user)
 
-/obj/structure/ladder/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //Not be called when right clicking as a monkey. attack_hand_secondary() handles that.
 /obj/structure/ladder/attack_paw(mob/user, list/modifiers)
@@ -195,79 +189,30 @@
 	use(user)
 	return TRUE
 
-/obj/structure/ladder/attack_alien_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/structure/ladder/attack_larva(mob/user, list/modifiers)
 	use(user)
 	return TRUE
-
-/obj/structure/ladder/attack_larva_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/ladder/attack_animal(mob/user, list/modifiers)
 	use(user)
 	return TRUE
 
-/obj/structure/ladder/attack_animal_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/structure/ladder/attack_slime(mob/user, list/modifiers)
 	use(user)
 	return TRUE
 
-/obj/structure/ladder/attack_slime_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/structure/ladder/attackby(obj/item/item, mob/user, params)
 	use(user)
 	return TRUE
-
-/obj/structure/ladder/attackby_secondary(obj/item/item, mob/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/ladder/attack_robot(mob/living/silicon/robot/user)
 	if(user.Adjacent(src))
 		use(user)
 	return TRUE
 
-/obj/structure/ladder/attack_robot_secondary(mob/living/silicon/robot/user)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !user.Adjacent(src))
-		return
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/structure/ladder/attack_pai(mob/user, list/modifiers)
 	use(user)
 	return TRUE
-
-/obj/structure/ladder/attack_pai_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/ladder/attack_ghost(mob/dead/observer/user)

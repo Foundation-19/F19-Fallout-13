@@ -218,13 +218,6 @@
 		return
 	return ..()
 
-/obj/item/toy/singlecard/attackby_secondary(obj/item/item, mob/living/user, modifiers)
-	attackby(item, user, modifiers, flip_card=TRUE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/item/toy/singlecard/attack_hand_secondary(mob/living/carbon/human/user, modifiers)
-	attack_self(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)
 	attack_self(user)

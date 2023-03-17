@@ -6,7 +6,7 @@
 /obj/item/stock_parts/cell/ammo
 	name = "ammo cell"
 	desc = "You shouldn't be holding this."
-	cancharge = 1
+	can_charge = TRUE
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/stock_parts/cell/ammo/update_icon()
@@ -103,4 +103,4 @@
 	icon_state = "aliencell"
 	ratingdesc = FALSE
 	maxcharge = 4000
-	cancharge = 0
+	can_charge = FALSE

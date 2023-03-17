@@ -208,6 +208,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/offensive_notes
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
 	var/override_notes = FALSE
+	///F19 Edit
+	var/damage_threshold_penetration = 0 // How much DT this thing ignores. Negative values increase the target's effective DT. Cant reduce DT below zero
 
 /obj/item/Initialize(mapload)
 

@@ -87,7 +87,7 @@
 	name = ".45-70 FMJ bullet casing"
 	desc = "A .45-70 full metal jacket bullet casing."
 	caliber = CALIBER_4570
-	projectile_type = /obj/projectile/bullet/c4570
+	projectile_type = /obj/item/projectile/bullet/c4570
 	custom_materials = list(
 		/datum/material/iron = MATS_RIFLE_MEDIUM_CASING + MATS_RIFLE_MEDIUM_BULLET,
 		/datum/material/blackpowder = MATS_RIFLE_MEDIUM_POWDER)
@@ -96,7 +96,7 @@
 	name = "shoddy .45-70 bullet casing"
 	desc = "A homemade .45-70 bullet casing."
 	caliber = CALIBER_4570
-	projectile_type = /obj/projectile/bullet/c4570/improvised
+	projectile_type = /obj/item/projectile/bullet/c4570/improvised
 	custom_materials = list(
 		/datum/material/iron = MATS_RIFLE_MEDIUM_CASING + MATS_RIFLE_MEDIUM_BULLET,
 		/datum/material/blackpowder = MATS_RIFLE_MEDIUM_POWDER * MATS_AMMO_POWDER_HANDLOAD_MULT)
@@ -104,12 +104,12 @@
 /obj/item/ammo_casing/c4570/explosive
 	name = ".45-70 explosive bullet casing"
 	desc = "A .45-70 explosive bullet casing."
-	projectile_type = /obj/projectile/bullet/c4570/explosive
+	projectile_type = /obj/item/projectile/bullet/c4570/explosive
 
 /obj/item/ammo_casing/c4570/knockback
 	name = ".45-70 ultradense bullet casing"
 	desc = "A .45-70 ultradense bullet casing."
-	projectile_type = /obj/projectile/bullet/c4570/knockback
+	projectile_type = /obj/item/projectile/bullet/c4570/knockback
 	custom_materials = list(
 		/datum/material/iron = MATS_RIFLE_MEDIUM_CASING + MATS_RIFLE_MEDIUM_BULLET,
 		/datum/material/blackpowder = MATS_RIFLE_MEDIUM_POWDER * MATS_AMMO_POWDER_HANDLOAD_MULT)

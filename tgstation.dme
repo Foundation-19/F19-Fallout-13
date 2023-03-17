@@ -5228,6 +5228,7 @@
 #include "fallout\code\modular_sunset\code\modules\clothing\under\f13.dm"
 #include "fallout\code\modular_sunset\code\modules\fallout\obj\trash_stack.dm"
 #include "fallout\code\modular_sunset\code\modules\food_and_drinks\happy_shark\happy_shark.dm"
+#include "fallout\code\modules\projectiles\projectile\bullets\rifle.dm"
 #include "fallout\code\modules\surgery\bodyparts\helpers.dm"
 #include "fallout\code\obj\automatic.dm"
 #include "fallout\code\obj\bosbasepicker.dm"
