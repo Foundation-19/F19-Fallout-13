@@ -70,9 +70,6 @@
 /obj/item/reagent_containers/attack_self(mob/user)
 	change_transfer_amount(user, FORWARD)
 
-/obj/item/reagent_containers/attack_self_secondary(mob/user)
-	change_transfer_amount(user, BACKWARD)
-
 /obj/item/reagent_containers/proc/mode_change_message(mob/user)
 	return
 
@@ -90,16 +87,6 @@
 	amount_per_transfer_from_this = possible_transfer_amounts[amount_list_position]
 	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
 	mode_change_message(user)
-
-/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
-		return ..()
-	if(user.a_intent != INTENT_HARM)
-		return ..()
-	if (try_splash(user, target))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	return ..()
 
 /// Tries to splash the target. Used on both right-click and normal click when in combat mode.
 /obj/item/reagent_containers/proc/try_splash(mob/user, atom/target)

@@ -42,13 +42,6 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-/obj/item/energy_katana/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(!target.density)
-		jaunt?.teleport(user, target)
-
 /obj/item/energy_katana/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!QDELETED(jaunt))
