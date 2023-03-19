@@ -124,7 +124,6 @@
 	l_hand = /obj/item/gun/energy/e_gun
 	box = /obj/item/storage/box/survival/centcom
 	backpack_contents = list(
-		/obj/item/construction/rcd/loaded/upgraded = 1,
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/pipe_dispenser = 1,
 	)

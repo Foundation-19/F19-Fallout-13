@@ -662,7 +662,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/bong
 	name = "bong"
 	desc = "A water bong used for smoking dried plants."
-	icon = 'icons/obj/bongs.dmi'
+	icon = 'fallout/icons/obj/bongs.dmi'
 	icon_state = null
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_NORMAL
@@ -805,7 +805,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		noise = 70
 		hittext = "hit"
 	//bubbling sound
-	playsound(user.loc,'sound/effects/bonghit.ogg', noise, 1)
+	playsound(user.loc,'fallout/sound/effects/bonghit.ogg', noise, 1)
 
 	last_used_time = world.time
 

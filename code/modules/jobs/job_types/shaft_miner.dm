@@ -86,7 +86,6 @@
 	backpack_contents = list(
 		/obj/item/storage/box/miner_modkits = 1,
 		/obj/item/gun/energy/recharge/kinetic_accelerator = 2,
-		/obj/item/kinetic_crusher/compact = 1,
 		/obj/item/resonator/upgraded = 1,
 	)
 	box = /obj/item/storage/box/survival/mining/bonus
