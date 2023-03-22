@@ -64,10 +64,6 @@
 /obj/item/flashlight/attack_self(mob/user)
 	toggle_light()
 
-/obj/item/flashlight/attack_hand_secondary(mob/user, list/modifiers)
-	attack_self(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
 	if (user.is_blind())
 		user.visible_message(span_suicide("[user] is putting [src] close to [user.p_their()] eyes and turning it on... but [user.p_theyre()] blind!"))

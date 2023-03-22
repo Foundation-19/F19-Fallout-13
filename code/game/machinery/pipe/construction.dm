@@ -350,15 +350,6 @@ Buildable meters
 	. += span_notice("The pipe layer is set to [piping_layer].")
 	. += span_notice("You can change the pipe layer by Right-Clicking the device.")
 
-/obj/item/pipe/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	var/layer_to_set = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
-	set_piping_layer(layer_to_set)
-	balloon_alert(user, "pipe layer set to [piping_layer]")
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/item/pipe/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 

@@ -19,7 +19,7 @@
 /obj/item/broken_bottle
 	name = "broken bottle"
 	desc = "A shattered glass container with sharp edges."
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'fallout/icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
 	force = 9
 	throwforce = 5
@@ -29,7 +29,7 @@
 	inhand_icon_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_simple = list("stabbed", "slashed", "attacked")
-	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
+	var/icon/broken_outline = icon('fallout/icons/obj/drinks.dmi', "broken")
 	sharpness = SHARP_EDGED
 
 /obj/item/broken_bottle/Initialize()
@@ -534,14 +534,14 @@
 /obj/item/export/bottle
 	name = "Report this please"
 	desc = "A sealed bottle of alcohol, ready to be exported"
-	icon = 'icons/obj/drinks.dmi'
+	icon = 'fallout/icons/obj/drinks.dmi'
 	force = 0
 	throwforce = 0
 	throw_speed = 0
 	throw_range = 0
 	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "beer"
-	attack_verb = list("boop", "thunked", "shown")
+	attack_verb_simple = list("boop", "thunked", "shown")
 
 /obj/item/export/bottle/gin
 	icon_state = "ginbottle"

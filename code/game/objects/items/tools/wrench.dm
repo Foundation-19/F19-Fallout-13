@@ -133,3 +133,37 @@
 	icon_state = "bolter_wrench"
 	inhand_icon_state = "bolter_wrench"
 	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/wrench/hightech
+	name = "advanced locking device"
+	desc = "An advanced locking device that uses micro-mechanisms to grasp on and tighten objects with extreme torque accuracy and speed."
+	icon_state = "advancedwrench"
+	inhand_icon_state = "advancedwrench"
+	toolspeed = 0.1
+
+/obj/item/wrench/power
+	name = "hand drill"
+	desc = "A simple powered hand drill. It's fitted with a bolt bit."
+	icon_state = "drill_bolt"
+	inhand_icon_state = "drill"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	usesound = 'sound/items/drill_use.ogg'
+	custom_materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25)
+	//done for balance reasons, making them high value for research, but harder to get
+	force = 8 //might or might not be too high, subject to change
+	w_class = WEIGHT_CLASS_SMALL
+	throwforce = 8
+	attack_verb_simple = list("drilled", "screwed", "jabbed")
+	toolspeed = 0.25
+
+/obj/item/wrench/power/attack_self(mob/user)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	var/obj/item/wirecutters/power/s_drill = new /obj/item/screwdriver/power(drop_location())
+	to_chat(user, span_notice("You attach the screw driver bit to [src]."))
+	qdel(src)
+	user.put_in_active_hand(s_drill)
+
+/obj/item/wrench/power/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return (BRUTELOSS)

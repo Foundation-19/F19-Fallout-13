@@ -19,7 +19,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/a556
+/obj/projectile/bullet/a556
 	name = "5.56 FMJ bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT *  GUN_EXTRA_DAMAGE_T1 * BULLET_MATCH_MULT  //a bit stronger than 5mm, weaker than 7.62mm
 	armour_penetration = BULLET_PENETRATION_LOW
@@ -42,7 +42,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/a556/sport //same as 5.56, but with less pen
+/obj/projectile/bullet/a556/sport //same as 5.56, but with less pen
 	name = "surplus .223 FMJ bullet"
 	damage_threshold_penetration = BULLET_DT_PENETRATION_PISTOL
 	stamina = BULLET_STAMINA_RIFLE_LIGHT * BULLET_SURPLUS_MULT
@@ -62,7 +62,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/a556/improvised
+/obj/projectile/bullet/a556/improvised
 	name = "handloaded .223 FMJ bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT
 	armour_penetration = BULLET_PENETRATION_LOW
@@ -84,7 +84,7 @@
  * WOUNDS: 7.5
  * WNAKED: 5.6
  */
-/obj/item/projectile/bullet/a556/rubber
+/obj/projectile/bullet/a556/rubber
 	name = "5.56 rubber bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT * RUBBERY_DAMAGE_MULT
 	armour_penetration = BULLET_PENETRATION_LOW
@@ -108,7 +108,7 @@
  * WOUNDS: 12.5
  * WNAKED: 9
  */
-/obj/item/projectile/bullet/a556/microshrapnel
+/obj/projectile/bullet/a556/microshrapnel
 	name = "5.56 microshrapnel bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT * BULLET_DAMAGE_MICROSHRAPNEL
 	armour_penetration = BULLET_PENETRATION_LOW
@@ -144,7 +144,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/a556/simple //for simple mobs, separate to allow balancing
+/obj/projectile/bullet/a556/simple //for simple mobs, separate to allow balancing
 	name = "5.56 bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT
 	stamina = BULLET_STAMINA_RIFLE_LIGHT * BULLET_SURPLUS_MULT
@@ -164,7 +164,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/a556/ap/simple //for simple mobs, separate to allow balancing
+/obj/projectile/bullet/a556/ap/simple //for simple mobs, separate to allow balancing
 	name = "5.56 bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT
 	stamina = BULLET_STAMINA_RIFLE_LIGHT * BULLET_SURPLUS_MULT
@@ -184,7 +184,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/a556/match // used by mobs currently
+/obj/projectile/bullet/a556/match // used by mobs currently
 	name = "5.56 match bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_MATCH_MULT
 	stamina = BULLET_STAMINA_RIFLE_LIGHT * BULLET_MATCH_MULT
@@ -198,7 +198,7 @@
 	pixels_per_second = BULLET_SPEED_RIFLE_LIGHT * 2
 
 /*
-/obj/item/projectile/bullet/a556/uraniumtipped
+/obj/projectile/bullet/a556/uraniumtipped
 	name = "5.56 uranium-tipped bullet"
 	damage = -9
 	armour_penetration = 0
@@ -226,7 +226,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/a473
+/obj/projectile/bullet/a473
 	name = "4.73 FMJ bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * GUN_LESS_DAMAGE_T1
 	stamina = BULLET_STAMINA_RIFLE_LIGHT * BULLET_MATCH_MULT
@@ -249,7 +249,7 @@
  * WOUNDS: 7.5
  * WNAKED: 5.7
  */
-/obj/item/projectile/bullet/a473/rubber
+/obj/projectile/bullet/a473/rubber
 	name = "4.73 polyurethane bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT * RUBBERY_DAMAGE_MULT * GUN_LESS_DAMAGE_T1
 	stamina = RUBBERY_STAMINA_RIFLE_LIGHT * BULLET_SURPLUS_MULT
@@ -271,7 +271,7 @@
  * WOUNDS: 6.25
  * WNAKED: 0
  */
-/obj/item/projectile/bullet/a473/incendiary
+/obj/projectile/bullet/a473/incendiary
 	name = "4.73 tracer bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT * BULLET_DAMAGE_FIRE
 	stamina = RUBBERY_STAMINA_PISTOL_MEDIUM * BULLET_SURPLUS_MULT * BULLET_STAMINA_FIRE
@@ -286,7 +286,7 @@
 	sharpness = SHARP_NONE
 	var/fire_stacks = 3
 
-/obj/item/projectile/bullet/a473/incendiary/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/a473/incendiary/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -294,7 +294,7 @@
 		M.IgniteMob()
 
 /*
-/obj/item/projectile/bullet/a473/uraniumtipped
+/obj/projectile/bullet/a473/uraniumtipped
 	name = "4.73 U-235 bullet"
 	damage = -2
 	armour_penetration = 0.3
@@ -308,7 +308,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/a473/dumdum
+/obj/projectile/bullet/a473/dumdum
 	name = "4.73 flat-nose bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_MATCH_MULT
 	stamina = BULLET_STAMINA_RIFLE_LIGHT * BULLET_MATCH_MULT
@@ -330,7 +330,7 @@
  * WOUNDS: 12
  * WNAKED: 7
  */
-/obj/item/projectile/bullet/a473/explosive
+/obj/projectile/bullet/a473/explosive
 	name = "4.73 explosive bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_MATCH_MULT * BULLET_DAMAGE_EXPLOSIVE
 	stamina = BULLET_STAMINA_RIFLE_LIGHT * BULLET_MATCH_MULT * BULLET_STAMINA_EXPLOSIVE
@@ -343,7 +343,7 @@
 
 	pixels_per_second = BULLET_SPEED_RIFLE_LIGHT
 
-/obj/item/projectile/bullet/a473/explosive/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/a473/explosive/on_hit(atom/target, blocked = FALSE)
 	..()
 	if(prob(10))
 		explosion(target, 0, 0, 1, 1, adminlog = FALSE, flame_range = 0)
@@ -357,7 +357,7 @@
  * WOUNDS: 0
  * WNAKED: 0
  */
-/obj/item/projectile/bullet/a473/shock
+/obj/projectile/bullet/a473/shock
 	name = "4.73mm shock bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT * BULLET_DAMAGE_SHOCK
 	stamina = RUBBERY_STAMINA_RIFLE_LIGHT * BULLET_SURPLUS_MULT * BULLET_STAMINA_SHOCK
@@ -372,7 +372,7 @@
 	pixels_per_second = BULLET_SPEED_RIFLE_LIGHT
 	sharpness = SHARP_NONE
 
-/obj/item/projectile/bullet/a473/shock/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/a473/shock/on_hit(atom/target, blocked = FALSE)
 	..()
 	target.emp_act(15)//5 severity is very, very low
 
@@ -383,7 +383,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/a473/hv
+/obj/projectile/bullet/a473/hv
 	name = "4.73mm highvelocity bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_MATCH_MULT
 	stamina = BULLET_STAMINA_RIFLE_LIGHT * BULLET_MATCH_MULT
@@ -415,7 +415,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/m5mm
+/obj/projectile/bullet/m5mm
 	name = "5mm bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT
 	armour_penetration = BULLET_PENETRATION_HEAVY
@@ -438,7 +438,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/m5mm/match
+/obj/projectile/bullet/m5mm/match
 	name = "5mm bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_MATCH_MULT
 	stamina = BULLET_STAMINA_RIFLE_LIGHT * BULLET_MATCH_MULT
@@ -459,7 +459,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/m5mm/improvised
+/obj/projectile/bullet/m5mm/improvised
 	name = "5mm bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT
 	armour_penetration = BULLET_PENETRATION_LOW
@@ -482,7 +482,7 @@
  * WOUNDS: 6.5
  * WNAKED: 3.75
  */
-/obj/item/projectile/bullet/m5mm/simple //for simple mobs, separate to allow balancing
+/obj/projectile/bullet/m5mm/simple //for simple mobs, separate to allow balancing
 	name = "5mm bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT
 	stamina = BULLET_STAMINA_RIFLE_LIGHT * BULLET_SURPLUS_MULT
@@ -502,7 +502,7 @@
  * WOUNDS: 0
  * WNAKED: 0
  */
-/obj/item/projectile/bullet/m5mm/shock
+/obj/projectile/bullet/m5mm/shock
 	name = "5mm shock bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT * BULLET_DAMAGE_SHOCK
 	stamina = RUBBERY_STAMINA_RIFLE_LIGHT * BULLET_HANDLOAD_MULT *  BULLET_STAMINA_SHOCK * 0.4
@@ -517,7 +517,7 @@
 	pixels_per_second = BULLET_SPEED_RIFLE_LIGHT * 2
 	sharpness = SHARP_NONE
 
-/obj/item/projectile/bullet/m5mm/shock/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/m5mm/shock/on_hit(atom/target, blocked = FALSE)
 	..()
 	target.emp_act(15)//5 severity is very, very low
 
@@ -533,7 +533,7 @@
  * WNAKED: 3.75
  */
 // Miniguns are gonna *fuck* --turns out yup, they do
-/obj/item/projectile/bullet/c5mm
+/obj/projectile/bullet/c5mm
 	name = "5mm bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT
 	armour_penetration = BULLET_PENETRATION_HEAVY
@@ -574,7 +574,7 @@
  * WOUNDS: 12.5
  * WNAKED: 15
  */
-/obj/item/projectile/bullet/a762
+/obj/projectile/bullet/a762
 	name = "7.62 FMJ bullet"
 	damage = BULLET_DAMAGE_RIFLE_MEDIUM * BULLET_MATCH_MULT * BULLET_762_DAMAGE_MULT
 	armour_penetration = BULLET_PENETRATION_ABSOLUTE
@@ -597,7 +597,7 @@
  * WOUNDS: 12.5
  * WNAKED: 15
  */
-/obj/item/projectile/bullet/a762/sport
+/obj/projectile/bullet/a762/sport
 	name = "surplus .308 bullet"
 	damage = BULLET_DAMAGE_RIFLE_MEDIUM * BULLET_SURPLUS_MULT * BULLET_762_DAMAGE_MULT
 	armour_penetration = BULLET_PENETRATION_HEAVY
@@ -619,7 +619,7 @@
  * WOUNDS: 7.5
  * WNAKED: 15
  */
-/obj/item/projectile/bullet/a762/improvised
+/obj/projectile/bullet/a762/improvised
 	name = "handloaded .308 bullet"
 	damage = BULLET_DAMAGE_RIFLE_MEDIUM * BULLET_HANDLOAD_MULT
 	armour_penetration = BULLET_PENETRATION_HEAVY
@@ -642,7 +642,7 @@
  * WNAKED: 30
  * Disabled from lathe - Too fucking strong.
  */
-/obj/item/projectile/bullet/a762/rubber
+/obj/projectile/bullet/a762/rubber
 	name = "7.62 rubber bullet"
 	damage = BULLET_DAMAGE_RIFLE_MEDIUM * BULLET_SURPLUS_MULT * RUBBERY_DAMAGE_MULT
 	armour_penetration = BULLET_PENETRATION_LOW
@@ -666,7 +666,7 @@
  * WOUNDS: 12
  * WNAKED: 9
  */
-/obj/item/projectile/bullet/a762/microshrapnel
+/obj/projectile/bullet/a762/microshrapnel
 	name = "7.62 microshrapnel bullet"
 	damage = BULLET_DAMAGE_RIFLE_LIGHT * BULLET_SURPLUS_MULT * BULLET_DAMAGE_MICROSHRAPNEL
 	armour_penetration = BULLET_PENETRATION_LOW
@@ -691,7 +691,7 @@
  * WOUNDS: 25
  * WNAKED: 15
  */
-/obj/item/projectile/bullet/a762/sport/simple //for simple mobs, separate to allow balancing
+/obj/projectile/bullet/a762/sport/simple //for simple mobs, separate to allow balancing
 	name = ".308 bullet"
 	damage = BULLET_DAMAGE_RIFLE_MEDIUM * BULLET_SURPLUS_MULT
 	armour_penetration = BULLET_PENETRATION_ABSOLUTE
@@ -707,7 +707,7 @@
 	pixels_per_second = BULLET_SPEED_RIFLE_MEDIUM
 
 /*
-/obj/item/projectile/bullet/a762/uraniumtipped
+/obj/projectile/bullet/a762/uraniumtipped
 	name = "7.62 uranium-tipped bullet"
 	damage = -10
 	armour_penetration = 0
@@ -737,7 +737,7 @@
  * WOUNDS: 50
  * WNAKED: 30
  */
-/obj/item/projectile/bullet/a50MG
+/obj/projectile/bullet/a50MG
 	name = "match .50MG slug"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_MATCH_MULT
 	armour_penetration = BULLET_PENETRATION_ABSOLUTE
@@ -760,7 +760,7 @@
  * WOUNDS: 40
  * WNAKED: 30
  */
-/obj/item/projectile/bullet/a50MG/surplus
+/obj/projectile/bullet/a50MG/surplus
 	name = "surplus .50MG slug"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_SURPLUS_MULT
 	armour_penetration = BULLET_PENETRATION_ABSOLUTE
@@ -782,7 +782,7 @@
  * WOUNDS: 30
  * WNAKED: 30
  */
-/obj/item/projectile/bullet/a50MG/improvised
+/obj/projectile/bullet/a50MG/improvised
 	name = "handloaded .50MG slug"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_HANDLOAD_MULT
 	armour_penetration = BULLET_PENETRATION_ABSOLUTE
@@ -804,7 +804,7 @@
  * WOUNDS: 40
  * WNAKED: 0
  */
-/obj/item/projectile/bullet/a50MG/incendiary
+/obj/projectile/bullet/a50MG/incendiary
 	name = "incendiary .50MG slug"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_SURPLUS_MULT * BULLET_DAMAGE_FIRE
 	stamina = RUBBERY_STAMINA_RIFLE_HEAVY * BULLET_SURPLUS_MULT * BULLET_STAMINA_FIRE
@@ -819,7 +819,7 @@
 	sharpness = SHARP_NONE
 	var/fire_stacks = 4
 
-/obj/item/projectile/bullet/a50MG/incendiary/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/a50MG/incendiary/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -833,7 +833,7 @@
  * WOUNDS: 80
  * WNAKED: 60
  */
-/obj/item/projectile/bullet/a50MG/explosive
+/obj/projectile/bullet/a50MG/explosive
 	name = "explosive .50MG slug"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_SURPLUS_MULT * BULLET_DAMAGE_EXPLOSIVE
 	stamina = RUBBERY_STAMINA_RIFLE_HEAVY * BULLET_SURPLUS_MULT * BULLET_STAMINA_EXPLOSIVE
@@ -846,7 +846,7 @@
 
 	pixels_per_second = BULLET_SPEED_RIFLE_HEAVY
 
-/obj/item/projectile/bullet/a50MG/explosive/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/a50MG/explosive/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, 0, 1, 1, 1)
 
@@ -858,7 +858,7 @@
  * WNAKED: 150
  * Disabled - Too fucking strong. Literally 1 hit KO.
  */
-/obj/item/projectile/bullet/a50MG/rubber
+/obj/projectile/bullet/a50MG/rubber
 	name = "rubber .50MG slug"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_SURPLUS_MULT * RUBBERY_DAMAGE_MULT
 	armour_penetration = BULLET_PENETRATION_ABSOLUTE
@@ -883,7 +883,7 @@
  * WNAKED: 150
  * Removed from loot-roation - How tf is a round rubber AND a penetrator??
  */
-/obj/item/projectile/bullet/a50MG/penetrator
+/obj/projectile/bullet/a50MG/penetrator
 	name = "penetrator .50MG slug"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_SURPLUS_MULT * RUBBERY_DAMAGE_MULT
 	armour_penetration = BULLET_PENETRATION_ABSOLUTE
@@ -901,7 +901,7 @@
 	movement_type = FLYING | UNSTOPPABLE
 
 /*
-/obj/item/projectile/bullet/a50MG/uraniumtipped
+/obj/projectile/bullet/a50MG/uraniumtipped
 	name = "12.7mm uranium-tipped bullet"
 	damage = -15
 	armour_penetration = 0.2
@@ -915,7 +915,7 @@
  * WOUNDS: 0
  * WNAKED: 0
  */
-/obj/item/projectile/bullet/a50MG/contam
+/obj/projectile/bullet/a50MG/contam
 	name = "contaminated .50MG bullet"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_SURPLUS_MULT * BULLET_DAMAGE_POISON
 	stamina = RUBBERY_STAMINA_RIFLE_HEAVY * BULLET_SURPLUS_MULT * BULLET_STAMINA_POISON
@@ -929,12 +929,12 @@
 	pixels_per_second = BULLET_SPEED_RIFLE_HEAVY
 	var/smoke_radius = 3
 
-/obj/item/projectile/bullet/a50MG/contam/Initialize()
+/obj/projectile/bullet/a50MG/contam/Initialize()
 	. = ..()
 	create_reagents(15, NO_REACT, NO_REAGENTS_VALUE)
 	reagents.add_reagent(/datum/reagent/toxin/metabtoxin, 15)
 
-/obj/item/projectile/bullet/a50MG/contam/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/a50MG/contam/on_hit(atom/target, blocked = FALSE)
 	var/location = get_turf(src)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(location)
@@ -973,7 +973,7 @@
  * WOUNDS: 25
  * WNAKED: 15
  */
-/obj/item/projectile/bullet/c4570
+/obj/projectile/bullet/c4570
 	name = ".45-70 FMJ bullet"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_SURPLUS_MULT * BULLET_4570_DAMAGE_MULT
 	armour_penetration = BULLET_PENETRATION_HEAVY
@@ -995,7 +995,7 @@
  * WOUNDS: 15
  * WNAKED: 15
  */
-/obj/item/projectile/bullet/c4570/improvised
+/obj/projectile/bullet/c4570/improvised
 	name = ".45-70 FMJ bullet"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_HANDLOAD_MULT * BULLET_4570_DAMAGE_MULT
 	armour_penetration = BULLET_PENETRATION_HEAVY
@@ -1017,7 +1017,7 @@
  * WOUNDS: 50
  * WNAKED: 30
  */
-/obj/item/projectile/bullet/c4570/explosive
+/obj/projectile/bullet/c4570/explosive
 	name = ".45-70 explosive bullet"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_MATCH_MULT * BULLET_4570_DAMAGE_MULT * BULLET_DAMAGE_EXPLOSIVE
 	stamina = BULLET_STAMINA_RIFLE_HEAVY * BULLET_MATCH_MULT * BULLET_4570_STAMINA_MULT * BULLET_STAMINA_EXPLOSIVE
@@ -1030,7 +1030,7 @@
 
 	pixels_per_second = BULLET_SPEED_RIFLE_HEAVY * BULLET_4570_SPEED_MULT
 
-/obj/item/projectile/bullet/c4570/explosive/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/c4570/explosive/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, 0, 0, 1, 1, flame_range = 1)
 
@@ -1041,7 +1041,7 @@
  * WOUNDS: 50
  * WNAKED: 30
  */
-/obj/item/projectile/bullet/c4570/acid
+/obj/projectile/bullet/c4570/acid
 	name = ".45-70 acid-tipped bullet"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_MATCH_MULT * BULLET_4570_DAMAGE_MULT * BULLET_DAMAGE_ACID
 	stamina = BULLET_STAMINA_RIFLE_HEAVY * BULLET_MATCH_MULT * BULLET_4570_STAMINA_MULT * BULLET_STAMINA_ACID
@@ -1056,12 +1056,12 @@
 	sharpness = SHARP_NONE
 	var/acid_type = /datum/reagent/toxin/acid/fluacid
 
-/obj/item/projectile/bullet/c4570/acid/Initialize()
+/obj/projectile/bullet/c4570/acid/Initialize()
 	. = ..()
 	create_reagents(10, NO_REACT, NO_REAGENTS_VALUE)
 	reagents.add_reagent(acid_type, 10)
 
-/obj/item/projectile/bullet/c4570/acid/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/c4570/acid/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/M = target
@@ -1076,7 +1076,7 @@
  * WNAKED: 15
  * Knockback Probability
  */
-/obj/item/projectile/bullet/c4570/knockback
+/obj/projectile/bullet/c4570/knockback
 	name = ".45-70 ultradense bullet"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_MATCH_MULT * BULLET_4570_DAMAGE_MULT * BULLET_DAMAGE_EXPLOSIVE
 	stamina = BULLET_STAMINA_RIFLE_HEAVY * BULLET_HANDLOAD_MULT * BULLET_4570_STAMINA_MULT
@@ -1090,7 +1090,7 @@
 	pixels_per_second = BULLET_SPEED_RIFLE_HEAVY * BULLET_4570_SPEED_MULT
 	sharpness = SHARP_NONE
 
-/obj/item/projectile/bullet/c4570/knockback/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/c4570/knockback/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(ismovable(target) && isliving(target) && prob(50))
 		var/atom/movable/M = target
@@ -1126,7 +1126,7 @@
  * WOUNDS: 100
  * WNAKED: 150
  */
-/obj/item/projectile/bullet/c2mm
+/obj/projectile/bullet/c2mm
 	name = "2mm gauss projectile"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_MATCH_MULT * BULLET_GAUSS_DAMAGE_MULT
 	armour_penetration = BULLET_PENETRATION_ABSOLUTE
@@ -1149,7 +1149,7 @@
  * WOUNDS: 100
  * WNAKED: 150
  */
-/obj/item/projectile/bullet/c2mm/blender //welcome to pain town
+/obj/projectile/bullet/c2mm/blender //welcome to pain town
 	name = "2mm blender projectile"
 	damage = BULLET_DAMAGE_RIFLE_HEAVY * BULLET_MATCH_MULT * BULLET_GAUSS_DAMAGE_MULT
 	armour_penetration = BULLET_PENETRATION_ABSOLUTE
@@ -1172,7 +1172,7 @@
 	ricochet_chance = 100
 	var/collats = 3
 
-/obj/item/projectile/bullet/c2mm/blender/process_hit(turf/T, atom/target, qdel_self, hit_something = FALSE)
+/obj/projectile/bullet/c2mm/blender/process_hit(turf/T, atom/target, qdel_self, hit_something = FALSE)
 	if(isliving(target) && collats)
 		collats--
 		temporary_unstoppable_movement = TRUE

@@ -84,3 +84,12 @@
 	worn_icon_state = "cutters"
 	toolspeed = 0.5
 	random_color = FALSE
+
+/obj/item/wirecutters/hightech
+	name = "advanced snapping device"
+	desc = "A mechanically assisted snapping device, capable of cutting anything."
+	icon_state = "advancedwire"
+	inhand_icon_state = "advancedwire"
+	toolspeed = 0.1
+	sharpness = SHARP_EDGED
+	random_color = FALSE

@@ -132,7 +132,7 @@
 	if(!proximity || IS_STAMCRIT(user))
 		return
 	if(istype(A, /turf/closed/mineral))
-		mineral_scan_pulse(get_turf(user), range)
+		mineral_scan_pulse(get_turf(user))
 		playsound(src, 'fallout/code/modular_atom/blacksmith/sound/pickaxe_2.ogg', 70, 1)
 
 /obj/item/mining_scanner/prospector/attack_self(mob/user)
@@ -362,13 +362,13 @@
 	if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
 		M.apply_damage(7, BRUTE, BODY_ZONE_HEAD)
 		playsound(M, 'fallout/code/modular_atom/blacksmith/sound/meatslap.ogg', 80, 1)
-		return eyestab(M,user)
 	else
 		return ..()
 
 /obj/item/melee/smith/dagger/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 100, 10)
+	AddElement(/datum/element/eyestab)
 
 // ------------ BOWIE KNIFE ------------ // [Eyestab]
 /obj/item/melee/smith/dagger/bowie

@@ -5,9 +5,9 @@
 //////////////////////////////////////////
 
 /obj/item/blacksmith
-	icon = 'modular_atom/blacksmith/icons/blacksmith.dmi'
-	righthand_file = 'modular_atom/blacksmith/icons/onmob/righthand.dmi'
-	lefthand_file = 'modular_atom/blacksmith/icons/onmob/lefthand.dmi'
+	icon = 'fallout/code/modular_atom/blacksmith/icons/blacksmith.dmi'
+	righthand_file = 'fallout/code/modular_atom/blacksmith/icons/onmob/righthand.dmi'
+	lefthand_file = 'fallout/code/modular_atom/blacksmith/icons/onmob/lefthand.dmi'
 	force = WEAPON_FORCE_TOOL_LARGE
 	max_integrity = 50
 	w_class = WEIGHT_CLASS_SMALL
@@ -15,7 +15,7 @@
 /obj/item/smithing
 	name = "base class /obj/item/smithing"
 	desc = "Attach a wooden rod."
-	icon = 'modular_atom/blacksmith/icons/blacksmith.dmi'
+	icon = 'fallout/code/modular_atom/blacksmith/icons/blacksmith.dmi'
 	icon_state = "unfinished"
 	material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX
 	light_system = MOVABLE_LIGHT
@@ -30,13 +30,13 @@
 	var/toohot = TRUE // Too hot to touch with bare hands, not tempered yet
 
 /obj/item/smithing/Initialize()
-	add_overlay(image(icon= 'modular_atom/blacksmith/icons/blacksmith.dmi',icon_state="[icon_state]_hot"))
+	add_overlay(image(icon= 'fallout/code/modular_atom/blacksmith/icons/blacksmith.dmi',icon_state="[icon_state]_hot"))
 	set_light_on(TRUE)
 	update_icon()
 	return ..()
 
 /obj/item/smithing/proc/istempered()
-	cut_overlay(image(icon= 'modular_atom/blacksmith/icons/blacksmith.dmi',icon_state="[icon_state]_hot"))
+	cut_overlay(image(icon= 'fallout/code/modular_atom/blacksmith/icons/blacksmith.dmi',icon_state="[icon_state]_hot"))
 	set_light_on(FALSE)
 	update_icon()
 	return
@@ -63,7 +63,7 @@
 		var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 		if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 			H.update_damage_overlays()
-		playsound(src, 'modular_atom/blacksmith/sound/burned.ogg', 15, 1)
+		playsound(src, 'fallout/code/modular_atom/blacksmith/sound/burned.ogg', 15, 1)
 		var/list/hand_items = list(H.get_active_held_item(),H.get_inactive_held_item())
 		if(src in hand_items)
 			H.dropItemToGround(src)
@@ -76,14 +76,14 @@
 	if(istype(I, LEATHER_STRIP))
 		to_chat(user, "<span class='warning'>You start to wrap the leather strip around the [src].</span>")
 		I.use(1)
-		playsound(src, 'modular_atom/blacksmith/sound/latex.ogg', 70, 1)
+		playsound(src, 'fallout/code/modular_atom/blacksmith/sound/latex.ogg', 70, 1)
 		if(!do_after(user, 30, TRUE, src))
 			return
 		startfinish()
 	else if(istype(I, finishingitem))
 		qdel(I)
 		to_chat(user, "<span class='warning'>You start to attach the handle and fittings to the [src].</span>")
-		playsound(src, 'modular_atom/blacksmith/sound/craft_3.ogg', 90, 1)
+		playsound(src, 'fallout/code/modular_atom/blacksmith/sound/craft_3.ogg', 90, 1)
 		if(!do_after(user, 30, TRUE, src))
 			return
 		startfinish()
@@ -180,7 +180,7 @@
 		return ..()
 	else
 		to_chat(user, "<span class='warning'>You try to move the [src], but you burn your hand on it!</span>")
-		playsound(src, 'modular_atom/blacksmith/sound/burned.ogg', 15, 1)
+		playsound(src, 'fallout/code/modular_atom/blacksmith/sound/burned.ogg', 15, 1)
 	if(H)
 		var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 		if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
@@ -235,7 +235,7 @@
 		user.visible_message("[user] begins finishing the [src] into a sword handle.", \
 				"<span class='notice'>You begin wrapping the [src] with leather strips, and shaping the wood into a sword handle.</span>", \
 				"<span class='italics'>You hear faint sounds of handcrafting.</span>")
-		playsound(src, 'modular_atom/blacksmith/sound/craft_3.ogg', 50, 1)
+		playsound(src, 'fallout/code/modular_atom/blacksmith/sound/craft_3.ogg', 50, 1)
 		// 6 Second Timer
 		if(!do_after(user, 40, TRUE, src))
 			return
@@ -262,7 +262,7 @@
 	name = "length of chain"
 	desc = "It rattles and is pretty useless when not attached to stuff"
 	icon_state = "chain"
-	hitsound = 'modular_atom/blacksmith/sound/chain.ogg'
+	hitsound = 'fallout/code/modular_atom/blacksmith/sound/chain.ogg'
 
 
 //////////////////////////////
@@ -393,7 +393,7 @@
 //////////////////////////////////////////////////
 
 /obj/item/smithing/special
-	worn_icon = 'modular_atom/blacksmith/icons/onmob/slot.dmi'
+	worn_icon = 'fallout/code/modular_atom/blacksmith/icons/onmob/slot.dmi'
 	gender = NEUTER
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -413,11 +413,11 @@
 	desc = "A ring."
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_GLOVES
-	attack_verb = list("proposed")
+	attack_verb_simple = list("proposed")
 
 /obj/item/smithing/special/jewelry/ring/equipped(mob/user, slot)
 	. = ..()
-	if (slot == SLOT_GLOVES && istype(user))
+	if (slot == ITEM_SLOT_GLOVES && istype(user))
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "ringbuff", mood_event_on_equip)
 	else
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "ringbuff")
@@ -442,7 +442,7 @@
 	finalitem = new /obj/item/restraints/legcuffs/ballandchain(src)
 	finalforreal.force += QUALITY_MODIFIER*2
 	finalitem = finalforreal
-	finalitem.icon = 'modular_atom/blacksmith/icons/blacksmith.dmi'
+	finalitem.icon = 'fallout/code/modular_atom/blacksmith/icons/blacksmith.dmi'
 	finalitem.icon_state = "ballandchain"
 	finalitem.name = "ball and chain"
 	finalitem.desc = "Clamp it on the prisoners feet. They will need a long time to remove it themselves."

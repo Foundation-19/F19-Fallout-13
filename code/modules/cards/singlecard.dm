@@ -218,10 +218,6 @@
 		return
 	return ..()
 
-
-/obj/item/toy/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)
-	attack_self(user)
-
 /obj/item/toy/singlecard/attack_self(mob/living/carbon/human/user)
 	if(!ishuman(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
 		return

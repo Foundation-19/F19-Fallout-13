@@ -119,10 +119,6 @@
 		if(get_dist(currently_hooked_item,get_turf(src)) < 1)
 			clear_hooked_item()
 
-/obj/item/fishing_rod/attack_self_secondary(mob/user, modifiers)
-	. = ..()
-	ui_interact(user)
-
 /obj/item/fishing_rod/pre_attack(atom/targeted_atom, mob/living/user, params)
 	. = ..()
 	/// Reel in if able

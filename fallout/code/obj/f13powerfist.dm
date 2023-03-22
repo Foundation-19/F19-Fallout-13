@@ -240,7 +240,7 @@
 /obj/item/shishkebabpack
 	name = "shishkebab backpack"
 	desc = "A backpack containing a large quantity of fuel and a pipe attaching it to a long, deadly blade. You ever wanted to set fire to people with a sword?"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'fallout/icons/obj/items_and_weapons.dmi'
 	icon_state = "shishkebabpack"
 	inhand_icon_state = "shishkebabpack"
 	w_class = WEIGHT_CLASS_BULKY
@@ -292,7 +292,7 @@
 
 /obj/item/shishkebabpack/equipped(mob/user, slot)
 	..()
-	if(slot != SLOT_BACK)
+	if(slot != ITEM_SLOT_BACK)
 		remove_sword()
 
 /obj/item/shishkebabpack/proc/remove_sword()

@@ -217,6 +217,15 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 /obj/item/stack/sheet/leather/get_main_recipes()
 	. = ..()
 	. += GLOB.leather_recipes
+
+/obj/item/stack/sheet/leather/five
+	amount = 5
+
+/obj/item/stack/sheet/leather/ten
+	amount = 10
+
+/obj/item/stack/sheet/leather/twenty
+	amount = 20
 /*
  * Sinew
  */
@@ -331,3 +340,22 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 /obj/item/stack/sheet/animalhide/carp/get_main_recipes()
 	. = ..()
 	. += GLOB.carp_recipes
+
+/obj/item/stack/sheet/leatherstrips
+	name = "leather strips"
+	desc = "long leather strips that can be used for crafting various things."
+	singular_name = "strip of leather"
+	icon_state = "leather-strip"
+	inhand_icon_state = "sheet-leather"
+	merge_type = /obj/item/stack/sheet/leatherstrips
+
+GLOBAL_LIST_INIT(leatherstrips_recipes, list (
+	new/datum/stack_recipe("slave labor outfit", /obj/item/clothing/suit/armor/outfit/slavelabor, 2, time = 50),
+	new/datum/stack_recipe("jabroni outfit", /obj/item/clothing/under/jabroni, 4, time = 80),
+	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2, time = 40),
+	new/datum/stack_recipe("pet collar", /obj/item/clothing/neck/petcollar, 2, time = 40)
+))
+
+/obj/item/stack/sheet/leatherstrips/get_main_recipes()
+	. = ..()
+	. += GLOB.leatherstrips_recipes

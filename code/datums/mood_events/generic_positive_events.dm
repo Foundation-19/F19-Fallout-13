@@ -358,3 +358,13 @@
 	description = "Heh heh. \"It's on the mouse\". What a play on words."
 	mood_change = 1
 	timeout = 2 MINUTES
+
+/datum/mood_event/combed
+	description = span_nicegreen("I combed my hair recently.")
+	mood_change = 2
+	timeout = 3 MINUTES
+
+/datum/mood_event/brushed
+	description = span_nicegreen("I brushed my hair recently.")
+	mood_change = 3
+	timeout = 3 MINUTES

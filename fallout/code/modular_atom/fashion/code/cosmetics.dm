@@ -340,7 +340,7 @@
 /obj/item/cosmetics/haircomb //This was painful to make
 	name = "hair comb"
 	desc = "A worn comb made from old plastic."
-	slot_flags = SLOT_EARS
+	slot_flags = ITEM_SLOT_EARS
 	icon_state = "comb"
 	inhand_icon_state = "comb"
 
