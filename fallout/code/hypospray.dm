@@ -203,7 +203,7 @@
 /obj/item/hypospray/mkii
 	name = "hypospray mk.II"
 	icon_state = "hypo2"
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'fallout/icons/obj/syringe.dmi'
 	desc = "A new development from DeForest Medical, this hypospray takes 30-unit vials as the drug supply for easy swapping."
 	w_class = WEIGHT_CLASS_TINY
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/bottle/vial/tiny, /obj/item/reagent_containers/glass/bottle/vial/small)
@@ -396,7 +396,7 @@
 	vial.reagents.reaction(L, method, fraction)
 	vial.reagents.trans_to(target, vial.amount_per_transfer_from_this, log = TRUE)
 	var/long_sound = vial.amount_per_transfer_from_this >= 15
-	playsound(loc, long_sound ? 'sound/items/hypospray_long.ogg' : pick('sound/items/hypospray.ogg','sound/items/hypospray2.ogg'), 50, 1, -1)
+	playsound(loc, long_sound ? 'fallout/sound/items/hypospray_long.ogg' : pick('fallout/sound/items/hypospray.ogg','fallout/sound/items/hypospray2.ogg'), 50, 1, -1)
 	to_chat(user, span_notice("You [fp_verb] [vial.amount_per_transfer_from_this] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units."))
 
 /obj/item/hypospray/mkii/attack_self(mob/living/user)

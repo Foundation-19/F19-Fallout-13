@@ -31,7 +31,7 @@
 				if(state == PREACTIVE)
 					state = ACTIVE
 					update_icon()
-					playsound(get_turf(src),'sound/f13weapons/mine_one.ogg',50)
+					playsound(get_turf(src),'fallout/sound/f13weapons/mine_one.ogg',50)
 					START_PROCESSING(SSobj, src)
 		if(PREACTIVE)
 			state = DISABLED
@@ -49,13 +49,13 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 	if (locate(/mob/living) in range(1, get_turf(src)))
-		playsound(get_turf(src),'sound/f13weapons/mine_five.ogg',50)
+		playsound(get_turf(src),'fallout/sound/f13weapons/mine_five.ogg',50)
 		spawn(5)
 			boom()
 			STOP_PROCESSING(SSobj, src)
 			return
 	if(prob(15))
-		playsound(get_turf(src),'sound/f13weapons/mine_one.ogg',100, extrarange = -5)
+		playsound(get_turf(src),'fallout/sound/f13weapons/mine_one.ogg',100, extrarange = -5)
 
 /*
 /obj/item/bottlecap_mine/proc/on_entered(go/AM)
@@ -101,7 +101,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	density = FALSE
 	anchored = TRUE
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'fallout/icons/obj/items_and_weapons.dmi'
 	icon_state = "uglymine"
 	var/armed = TRUE //we can be armed and unanchored if we want, but this isn't normally the case
 	var/random = FALSE //are our wires random?

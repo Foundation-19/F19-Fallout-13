@@ -5,3 +5,5 @@
 
 /// A different signal, used specifically for flickering the lights during the event
 #define COMSIG_GLOB_GREY_TIDE_LIGHT "grey_tide_light"
+
+#define COMSIG_ITEM_MINE_TRIGGERED "itemineboom"						///from [/obj/item/mine/proc/triggermine]:

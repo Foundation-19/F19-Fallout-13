@@ -78,7 +78,7 @@
 	name = "skills"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "skills"
-	screen_loc = ui_skill_menu
+//	screen_loc = ui_skill_menu
 
 /atom/movable/screen/skills/Click()
 	if(ishuman(usr))
@@ -650,7 +650,7 @@
 /atom/movable/screen/healths/construct
 	icon = 'fallout/icons/hud/screen_construct.dmi'
 	icon_state = "artificer_health0"
-	screen_loc = ui_construct_health
+//	screen_loc = ui_construct_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/healthdoll
@@ -679,7 +679,7 @@
 	icon = 'fallout/icons/blank_title.png'
 	icon_state = ""
 	screen_loc = "1,1"
-	layer = SPLASHSCREEN_LAYER
+//	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 

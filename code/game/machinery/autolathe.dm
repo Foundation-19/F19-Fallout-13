@@ -284,24 +284,6 @@
 
 	return ..()
 
-/obj/machinery/autolathe/attackby_secondary(obj/item/weapon, mob/living/user, params)
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(busy)
-		balloon_alert(user, "it's busy!")
-		return
-
-	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", weapon))
-		return
-
-	if(machine_stat)
-		return SECONDARY_ATTACK_CALL_NORMAL
-
-	if(panel_open)
-		balloon_alert(user, "close the panel first!")
-		return
-
-	return SECONDARY_ATTACK_CALL_NORMAL
-
 /obj/machinery/autolathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)

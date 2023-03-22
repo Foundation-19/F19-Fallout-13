@@ -419,4 +419,34 @@
 		nextrefueltick = world.time + 10
 		reagents.add_reagent(/datum/reagent/fuel, 1)
 
+/obj/item/weldingtool/advanced
+	name = "advanced welding tool"
+	desc = "A modern welding tool combined with an alien welding tool, it never runs out of fuel and works almost as fast."
+	icon = 'fallout/icons/obj/advancedtools.dmi'
+	icon_state = "welder"
+	toolspeed = 0.2
+	light_range = 0
+	change_icons = 0
+
+/obj/item/weldingtool/advanced/process()
+	if(get_fuel() <= max_fuel)
+		reagents.add_reagent(/datum/reagent/fuel, 1)
+	..()
+
+
 #undef WELDER_FUEL_BURN_INTERVAL
+
+/obj/item/weldingtool/hightech
+	name = "advanced welding tool"
+	desc = "A high-tech Quantum heated flamer tool, capable of infinitely replenishing itself using Quantum energy."
+	icon_state = "advancedweld"
+	inhand_icon_state = "advancedweld"
+	light_range = 1
+	toolspeed = 0.1
+	var/nextrefueltick = 0
+
+/obj/item/weldingtool/hightech/process()
+	..()
+	if(get_fuel() < max_fuel && nextrefueltick < world.time)
+		nextrefueltick = world.time + 10
+		reagents.add_reagent(/datum/reagent/fuel, 1)

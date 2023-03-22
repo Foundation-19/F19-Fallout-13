@@ -333,7 +333,7 @@
 		G.recoil_dat = G.recoil_dat.modifyRating(1, 1, weapon_upgrades[GUN_UPGRADE_ONEHANDPENALTY])
 	if(weapon_upgrades[UPGRADE_COLOR])
 		G.color = weapon_upgrades[UPGRADE_COLOR]
-	
+
 	if(!isnull(weapon_upgrades[GUN_UPGRADE_FORCESAFETY]))
 		G.restrict_safety = TRUE
 		G.safety = weapon_upgrades[GUN_UPGRADE_FORCESAFETY]
@@ -506,7 +506,7 @@
 			examine_list += span_warning("Disables the safety toggle of the weapon.")
 		else if(weapon_upgrades[GUN_UPGRADE_FORCESAFETY] == 1)
 			examine_list += span_warning("Forces the safety toggle of the weapon to always be on.")
-		
+
 		if(weapon_upgrades[GUN_UPGRADE_DNALOCK] == 1)
 			examine_list += span_warning("Adds a biometric scanner to the weapon.")
 
@@ -612,6 +612,6 @@
 
 /obj/item/tool_upgrade
 	name = "tool upgrade"
-	icon = 'modular_coyote/eris/icons/tool_upgrades.dmi'
+	icon = 'fallout/code/modular_coyote/eris/icons/tool_upgrades.dmi'
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL

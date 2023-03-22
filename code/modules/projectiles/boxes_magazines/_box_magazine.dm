@@ -38,7 +38,6 @@
 	var/list/valid_new_calibers
 	/// Can this magazine have its caliber changed?
 	var/can_change_caliber = FALSE
-	var/caliber_change_step = MAGAZINE_CALIBER_CHANGE_STEP_0
 
 /obj/item/ammo_box/Initialize(mapload)
 	. = ..()
@@ -181,7 +180,7 @@
 		if(AMMO_BOX_PER_BULLET)
 			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left]"
 		if(AMMO_BOX_FULL_EMPTY)
-			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
+			icon_state = "[multiple_sprite_use_base ? base_icon_state : initial(icon_state)]-[shells_left ? "full" : "empty"]"
 	return ..()
 
 /// Updates the amount of material in this ammo box according to how many bullets are left in it.
@@ -216,117 +215,3 @@
 /obj/item/ammo_box/magazine/handle_atom_del(atom/A)
 	stored_ammo -= A
 	update_ammo_count()
-
-/obj/item/ammo_box/proc/change_caliber(mob/living/user, obj/item/ammo_casing/casing_to_use)
-	if(!can_change_caliber)
-		return FALSE
-	if(!istype(casing_to_use, /obj/item/ammo_casing))
-		return FALSE
-	if(caliber_change_step != MAGAZINE_CALIBER_CHANGE_STEP_3)
-		return FALSE
-	if(casing_to_use.caliber in valid_new_calibers)
-		caliber.len = 0
-		caliber |= casing_to_use.caliber
-		to_chat(user, span_notice("You press \the [casing_to_use] into the glowing hot metal of \the [src]! The casing melts, and leaves behind a hole roughly its diameter! Looks like this mag'll accept [casing_to_use.caliber] now!"))
-		qdel(casing_to_use)
-		if(!been_rebored)
-			name = "rebored [name]"
-			if(fixed_mag && istype(src.loc, /obj/item/gun))
-				var/obj/item/gun/gun_this_is_in = src.loc
-				gun_this_is_in.name = "rebored [gun_this_is_in.name]"
-			been_rebored = TRUE
-		caliber_change_step = MAGAZINE_CALIBER_CHANGE_STEP_0
-		return TRUE
-	else
-		to_chat(user, span_alert("You can't press \the [casing_to_use] into \the [src]! Try a different kind of casing!"))
-		return FALSE
-
-/obj/item/ammo_box/screwdriver_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(.)
-		return
-
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-
-	if(!can_change_caliber)
-		to_chat(user, span_alert("You can't change what kind of casing goes into \the [src]!"))
-		return
-
-	if(length(stored_ammo))
-		var/is_loaded = FALSE
-		for(var/obj/item/ammo_casing/casings in stored_ammo)
-			if(isnull(casings))
-				continue
-			if(casings?.BB)
-				is_loaded = TRUE
-				break
-		if(is_loaded)
-			to_chat(user, span_alert("You need to unload \the [src]!"))
-			return
-
-	switch(caliber_change_step)
-		if(MAGAZINE_CALIBER_CHANGE_STEP_0)
-			to_chat(user, span_notice("You start loosening the fasteners on \the [src]..."))
-			if(I.use_tool(src, user, 5 SECONDS, volume=50))
-				caliber_change_step = MAGAZINE_CALIBER_CHANGE_STEP_1
-				to_chat(user, span_notice("You snap open the fasteners on \the [src]! Next, you'll need some metal parts..."))
-			else
-				to_chat(user, span_alert("You mess up and all the fasteners on \the [src] snap back into place! Shoot!"))
-		if(MAGAZINE_CALIBER_CHANGE_STEP_1)
-			to_chat(user, span_alert("You snap the fasteners back onto \the [src]."))
-			caliber_change_step = MAGAZINE_CALIBER_CHANGE_STEP_0
-		if(MAGAZINE_CALIBER_CHANGE_STEP_2)
-			to_chat(user, span_alert("You knock the parts out of the way and snap the fasteners back onto \the [src]."))
-			var/turf/spawn_it_here = get_turf(user)
-			new /obj/item/stack/crafting/metalparts(spawn_it_here)
-			caliber_change_step = MAGAZINE_CALIBER_CHANGE_STEP_0
-		if(MAGAZINE_CALIBER_CHANGE_STEP_3)
-			to_chat(user, span_alert("You scoop out the glowing hot metal with \the [I], and when \the [src] cools, it seems like it'd gone back to how it was before. Huh."))
-			var/turf/spawn_it_here = get_turf(user)
-			new /obj/item/stack/crafting/metalparts(spawn_it_here)
-			caliber_change_step = MAGAZINE_CALIBER_CHANGE_STEP_0
-
-/obj/item/ammo_box/welder_act(mob/living/user, obj/item/I)
-	. = ..()
-
-	if(.)
-		return
-
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-
-	if(!can_change_caliber)
-		to_chat(user, span_alert("You can't change what kind of casing goes into \the [src]!"))
-		return
-
-	if(length(stored_ammo))
-		var/is_loaded = FALSE
-		for(var/obj/item/ammo_casing/casings in stored_ammo)
-			if(isnull(casings))
-				continue
-			if(casings?.BB)
-				is_loaded = TRUE
-				break
-		if(is_loaded)
-			to_chat(user, span_alert("You need to unload \the [src]!"))
-			return
-
-	switch(caliber_change_step)
-		if(MAGAZINE_CALIBER_CHANGE_STEP_0)
-			to_chat(user, span_alert("You cant weld \the [src] just yet! Try using a screwdriver on the fasteners first!"))
-		if(MAGAZINE_CALIBER_CHANGE_STEP_1)
-			to_chat(user, span_alert("You knock the fasteners on \the [src] back into place."))
-			caliber_change_step = MAGAZINE_CALIBER_CHANGE_STEP_0
-		if(MAGAZINE_CALIBER_CHANGE_STEP_2)
-			if(!I.tool_start_check(user, amount=0))
-				to_chat(user, span_alert("You need at least 5 units of fuel in your welder!"))
-				return
-			to_chat(user, span_notice("You start heating up the parts on \the [src]..."))
-			if(I.use_tool(src, user, 5 SECONDS, amount=5, volume=50))
-				caliber_change_step = MAGAZINE_CALIBER_CHANGE_STEP_3
-				to_chat(user, span_notice("You heat up the parts nice and hot and weld them to \the [src]! It should hold a casing, as a mold..."))
-			else
-				to_chat(user, span_alert("You mess up and \the [src] cools off! Darn!"))
-		if(MAGAZINE_CALIBER_CHANGE_STEP_3)
-			to_chat(user, span_alert("\The [src] is already hot! Quick, put a casing in there!"))

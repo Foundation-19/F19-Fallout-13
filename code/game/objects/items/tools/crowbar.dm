@@ -222,3 +222,11 @@
 
 /obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech, mech_dir)
 	return HAS_TRAIT(src, TRAIT_WIELDED) && LAZYLEN(mech.occupants) && mech.dir == mech_dir
+
+/obj/item/crowbar/hightech
+	name = "advanced prying device"
+	desc = "A mechanically assited prying device, capable of dislodging basically anything."
+	icon_state = "advancedbar"
+	inhand_icon_state = "crowbaradvance"
+	usesound = 'sound/items/jaws_pry.ogg'
+	toolspeed = 0.1

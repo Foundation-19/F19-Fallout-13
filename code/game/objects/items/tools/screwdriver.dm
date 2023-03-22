@@ -152,3 +152,12 @@
 /obj/item/screwdriver/red/Initialize(mapload)
 	. = ..()
 	set_greyscale(colors=list(screwdriver_colors["red"]))
+
+/obj/item/screwdriver/hightech
+	name = "advanced drill"
+	desc = "An extremely precise micro-mechanised saturnite drill, capable of infinite force and pressure."
+	icon_state = "advancedscrew"
+	inhand_icon_state = "advancedscrew"
+	usesound = 'sound/items/pshoom.ogg'
+	toolspeed = 0.1
+	random_color = FALSE

@@ -25,26 +25,10 @@
 	ghoulfriendly = TRUE
 
 /datum/reagent/fuel/holyoil/on_mob_life(mob/living/carbon/M)
-	if(is_servant_of_ratvar(M))
-		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustUnconscious(-60, FALSE)
-		M.AdjustAllImmobility(-30, FALSE)
-		M.AdjustKnockdown(-40, FALSE)
-		M.adjustStaminaLoss(-15, FALSE)
-		M.adjustToxLoss(-5, FALSE, TRUE)
-		M.adjustOxyLoss(-3, FALSE)
-		M.adjustBruteLoss(-3, FALSE)
-		M.adjustFireLoss(-5, FALSE)
-	if(iscultist(M))
-		M.AdjustUnconscious(1, FALSE)
-		M.AdjustAllImmobility(10, FALSE)
-		M.AdjustKnockdown(10, FALSE)
-		M.adjustStaminaLoss(15, FALSE)
-	else
-		M.adjustToxLoss(3, FALSE)
-		M.adjustOxyLoss(2, FALSE)
-		M.adjustStaminaLoss(10, FALSE)
-		holder.remove_reagent(type, 1)
+	M.adjustToxLoss(3, FALSE)
+	M.adjustOxyLoss(2, FALSE)
+	M.adjustStaminaLoss(10, FALSE)
+	holder.remove_reagent(type, 1)
 	return TRUE
 
 //We only get 30u to start with...
