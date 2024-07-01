@@ -39,6 +39,79 @@
 /mob/dead/new_player/prepare_huds()
 	return
 
+// Drawing basic UI panel
+/mob/dead/new_player/proc/new_player_panel()
+	if (client?.interviewee)
+		return
+
+	var/datum/asset/asset_datum = get_asset_datum(/datum/asset/simple/lobby)
+	asset_datum.send(client)
+	var/list/output = list()
+	if(client?.prefs)
+		output += "<center><p>Welcome, <b>[client.prefs.be_random_name ? "random name player" : client.prefs.real_name]</b></p>"
+	output += "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
+
+	if(SSticker.current_state <= GAME_STATE_PREGAME)
+	/*
+		switch(ready)
+			if(PLAYER_NOT_READY)
+				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | <b>Not Ready</b> | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
+			if(PLAYER_READY_TO_PLAY)
+				output += "<p>\[ <b>Ready</b> | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
+			if(PLAYER_READY_TO_OBSERVE)
+				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
+	*/
+		output += "<p>Please be patient, the game is starting soon!</p>"
+		output += "<p><a href='byond://?src=[REF(src)];refresh=1'>(Refresh)</a></p>"
+		output += "<p><a href='byond://?src=[REF(src)];refresh_chat=1)'>(Fix Chat Window)</a></p>"
+	else
+		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Crew Manifest</a></p>"
+		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
+		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
+		output += "<p><a href='byond://?src=[REF(src)];refresh_chat=1)'>(Fix Chat Window)</a></p>"
+
+	if(!IsGuestKey(src.key))
+		output += playerpolls()
+
+	output += "</center>"
+
+	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 250, 265)
+	popup.set_window_options("can_close=0")
+	popup.set_content(output.Join())
+	popup.open(FALSE)
+
+/mob/dead/new_player/proc/playerpolls()
+	var/list/output = list()
+	if (SSdbcore.Connect())
+		var/isadmin = FALSE
+		if(client?.holder)
+			isadmin = TRUE
+		var/datum/db_query/query_get_new_polls = SSdbcore.NewQuery({"
+			SELECT id FROM [format_table_name("poll_question")]
+			WHERE (adminonly = 0 OR :isadmin = 1)
+			AND Now() BETWEEN starttime AND endtime
+			AND id NOT IN (
+				SELECT pollid FROM [format_table_name("poll_vote")]
+				WHERE ckey = :ckey
+			)
+			AND id NOT IN (
+				SELECT pollid FROM [format_table_name("poll_textreply")]
+				WHERE ckey = :ckey
+			)
+		"}, list("isadmin" = isadmin, "ckey" = ckey))
+		var/rs = REF(src)
+		if(!query_get_new_polls.Execute())
+			qdel(query_get_new_polls)
+			return
+		if(query_get_new_polls.NextRow())
+			output += "<p><b><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
+		else
+			output += "<p><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A></p>"
+		qdel(query_get_new_polls)
+		if(QDELETED(src))
+			return
+		return output
+
 /mob/dead/new_player/Topic(href, href_list)
 	if (usr != src)
 		return
@@ -56,6 +129,231 @@
 	if (href_list["votepollref"])
 		var/datum/poll_question/poll = locate(href_list["votepollref"]) in GLOB.polls
 		vote_on_poll_handler(poll, href_list)
+
+	//don't let people get to this unless they are specifically not verified (Age gate checker)
+	if(href_list["Month"] && (CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)))
+		var/player_month = text2num(href_list["Month"])
+		var/player_year = text2num(href_list["Year"])
+
+		var/current_time = world.realtime
+		var/current_month = text2num(time2text(current_time, "MM"))
+		var/current_year = text2num(time2text(current_time, "YYYY"))
+
+		var/player_total_months = (player_year * 12) + player_month
+
+		var/current_total_months = (current_year * 12) + current_month
+
+		var/months_in_eighteen_years = 18 * 12
+
+		var/month_difference = current_total_months - player_total_months
+		if(month_difference > months_in_eighteen_years)
+			age_gate_result = TRUE // they're fine
+		else
+			if(month_difference < months_in_eighteen_years)
+				age_gate_result = FALSE
+			else
+				//they could be 17 or 18 depending on the /day/ they were born in
+				var/current_day = text2num(time2text(current_time, "DD"))
+				var/days_in_months = list(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+				if((player_year % 4) == 0) // leap year so february actually has 29 days
+					days_in_months[2] = 29
+				var/total_days_in_player_month = days_in_months[player_month]
+				var/list/days = list()
+				for(var/number in 1 to total_days_in_player_month)
+					days += number
+				var/player_day = input(src, "What day of the month were you born in.") as anything in days
+				if(player_day <= current_day)
+					//their birthday has passed
+					age_gate_result = TRUE
+				else
+					//it has NOT been their 18th birthday yet
+					age_gate_result = FALSE
+
+	//Determines Relevent Population Cap
+	var/relevant_cap
+	var/hpc = CONFIG_GET(number/hard_popcap)
+	var/epc = CONFIG_GET(number/extreme_popcap)
+	if(hpc && epc)
+		relevant_cap = min(hpc, epc)
+	else
+		relevant_cap = max(hpc, epc)
+
+	if(href_list["show_preferences"])
+		client.prefs.ShowChoices(src)
+		return 1
+
+	if(href_list["ready"])
+		var/tready = text2num(href_list["ready"])
+		//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
+		//This is likely not an actual issue but I don't have time to prove that this
+		//no longer is required
+		if(SSticker.current_state <= GAME_STATE_PREGAME)
+			ready = tready
+		//if it's post initialisation and they're trying to observe we do the needful
+		if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
+			ready = tready
+			make_me_an_observer()
+			return
+
+	if(href_list["refresh"])
+		src << browse(null, "window=playersetup") //closes the player setup window
+		new_player_panel()
+
+	if(href_list["refresh_chat"]) //fortuna addition. asset delivery pain
+		client.nuke_chat()
+
+	if(href_list["late_join"])
+		if(!SSticker || !SSticker.IsRoundInProgress())
+			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
+			return
+
+		if(href_list["late_join"] == "override")
+			LateChoices()
+			return
+
+		if(SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in GLOB.admin_datums)))
+			to_chat(usr, "<span class='danger'>[CONFIG_GET(string/hard_popcap_message)]</span>")
+
+			var/queue_position = SSticker.queued_players.Find(usr)
+			if(queue_position == 1)
+				to_chat(usr, "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>")
+			else if(queue_position)
+				to_chat(usr, "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>")
+			else
+				SSticker.queued_players += usr
+				to_chat(usr, "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len].</span>")
+			return
+
+		if(GLOB.data_core.get_record_by_name(client.prefs.real_name))
+			alert(src, "This character name is already in use. Choose another.")
+			return
+
+		LateChoices()
+
+	if(href_list["manifest"])
+		ViewManifest()
+
+	if(href_list["SelectedJob"])
+		if(!SSticker || !SSticker.IsRoundInProgress())
+			var/msg = "[key_name(usr)] attempted to join the round using a href that shouldn't be available at this moment!"
+			log_admin(msg)
+			message_admins(msg)
+			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
+			return
+
+		if(!GLOB.enter_allowed)
+			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+			return
+
+		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
+			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
+				to_chat(usr, "<span class='warning'>Server is full.</span>")
+				return
+
+		AttemptLateSpawn(href_list["SelectedJob"])
+		return
+
+	if(href_list["JoinAsGhostRole"])
+		if(!GLOB.enter_allowed)
+			to_chat(usr, "<span class='notice'> There is an administrative lock on entering the game!</span>")
+
+		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
+			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
+				to_chat(usr, "<span class='warning'>Server is full.</span>")
+				return
+
+		var/obj/effect/mob_spawn/MS = pick(GLOB.mob_spawners[href_list["JoinAsGhostRole"]])
+		if(MS.attack_ghost(src, latejoinercalling = TRUE))
+			SSticker.queued_players -= src
+			SSticker.queue_delay = 4
+			qdel(src)
+
+	else if(!href_list["late_join"])
+		new_player_panel()
+
+	if(href_list["showpoll"])
+		handle_player_polling()
+		return
+
+	if(href_list["pollid"])
+		var/pollid = href_list["pollid"]
+		if(istext(pollid))
+			pollid = text2num(pollid)
+		if(isnum(pollid) && ISINTEGER(pollid))
+			src.poll_player(pollid)
+		return
+
+	if(href_list["votepollid"] && href_list["votetype"])
+		var/pollid = text2num(href_list["votepollid"])
+		var/votetype = href_list["votetype"]
+		//lets take data from the user to decide what kind of poll this is, without validating it
+		//what could go wrong
+		switch(votetype)
+			if(POLLTYPE_OPTION)
+				var/optionid = text2num(href_list["voteoptionid"])
+				if(vote_on_poll(pollid, optionid))
+					to_chat(usr, "<span class='notice'>Vote successful.</span>")
+				else
+					to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
+			if(POLLTYPE_TEXT)
+				var/replytext = href_list["replytext"]
+				if(log_text_poll_reply(pollid, replytext))
+					to_chat(usr, "<span class='notice'>Feedback logging successful.</span>")
+				else
+					to_chat(usr, "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>")
+			if(POLLTYPE_RATING)
+				var/id_min = text2num(href_list["minid"])
+				var/id_max = text2num(href_list["maxid"])
+
+				if( (id_max - id_min) > 100 )	//Basic exploit prevention
+												//(protip, this stops no exploits)
+					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
+					return
+
+				for(var/optionid = id_min; optionid <= id_max; optionid++)
+					if(!isnull(href_list["o[optionid]"]))	//Test if this optionid was replied to
+						var/rating
+						if(href_list["o[optionid]"] == "abstain")
+							rating = null
+						else
+							rating = text2num(href_list["o[optionid]"])
+							if(!isnum(rating) || !ISINTEGER(rating))
+								return
+
+						if(!vote_on_numval_poll(pollid, optionid, rating))
+							to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
+							return
+				to_chat(usr, "<span class='notice'>Vote successful.</span>")
+			if(POLLTYPE_MULTI)
+				var/id_min = text2num(href_list["minoptionid"])
+				var/id_max = text2num(href_list["maxoptionid"])
+
+				if( (id_max - id_min) > 100 )	//Basic exploit prevention
+					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
+					return
+
+				for(var/optionid = id_min; optionid <= id_max; optionid++)
+					if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
+						var/i = vote_on_multi_poll(pollid, optionid)
+						switch(i)
+							if(0)
+								continue
+							if(1)
+								to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
+								return
+							if(2)
+								to_chat(usr, "<span class='danger'>Maximum replies reached.</span>")
+								break
+				to_chat(usr, "<span class='notice'>Vote successful.</span>")
+			if(POLLTYPE_IRV)
+				if (!href_list["IRVdata"])
+					to_chat(src, "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>")
+					return
+				var/list/votelist = splittext(href_list["IRVdata"], ",")
+				if (!vote_on_irv_poll(pollid, votelist))
+					to_chat(src, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
+					return
+				to_chat(src, "<span class='notice'>Vote successful.</span>")
 
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
 /mob/dead/new_player/proc/make_me_an_observer()
